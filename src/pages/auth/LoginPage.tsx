@@ -42,7 +42,7 @@ export const LoginPage: React.FC = () => {
       backgroundColor: "var(--purple10)",
     },
     title: "Welcome to WorkClever",
-    subTitle: "Login or register to get started!",
+    subTitle: "This website is serving only for demo purposes.",
     action: (
       <Button size="large" onClick={() => setShowWelcomeConfig(false)}>
         Close
