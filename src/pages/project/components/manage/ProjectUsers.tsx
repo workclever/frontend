@@ -1,4 +1,4 @@
-import { Table, Switch } from "antd";
+import { Table, Switch, Tooltip } from "antd";
 import React from "react";
 import { useSelector } from "react-redux";
 import { useMe } from "../../../../hooks/useMe";
@@ -103,31 +103,40 @@ export const ProjectUsers: React.FC = () => {
       dataIndex: "",
       key: "Read",
       render: (item: BasicUserOutput) => {
+        const canUnAssign = isAdmin || !isMe(item.Id);
         return (
-          <Button
-            disabled={!isAdmin || isMe(item.Id)}
-            danger
-            size="small"
-            onClick={() => {
-              Confirm.Show({
-                title: "Are you sure to unassign this person from project?",
-                content: "You will need to assign again.",
-                onConfirm: async () => {
-                  await removeAssignee({
-                    ProjectId: projectId,
-                    Ids: [{ UserId: item.Id }],
-                  });
-                  await deleteManager({
-                    ProjectId: projectId,
-                    UserId: item.Id,
-                  });
-                  refetchProjectUsers();
-                },
-              });
-            }}
+          <Tooltip
+            title={
+              canUnAssign
+                ? "Remove this user from the project"
+                : "You can't unassign yourself"
+            }
           >
-            Unassign
-          </Button>
+            <Button
+              disabled={!canUnAssign}
+              danger
+              size="small"
+              onClick={() => {
+                Confirm.Show({
+                  title: "Are you sure to unassign this person from project?",
+                  content: "You will need to assign again.",
+                  onConfirm: async () => {
+                    await removeAssignee({
+                      ProjectId: projectId,
+                      Ids: [{ UserId: item.Id }],
+                    });
+                    await deleteManager({
+                      ProjectId: projectId,
+                      UserId: item.Id,
+                    });
+                    refetchProjectUsers();
+                  },
+                });
+              }}
+            >
+              Unassign
+            </Button>
+          </Tooltip>
         );
       },
     },

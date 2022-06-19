@@ -17,6 +17,7 @@ export type ButtonProps = {
   ghost?: boolean;
   danger?: boolean;
   children?: React.ReactNode;
+  disabled?: boolean;
 } & NativeButtonProps;
 
 export const Button: React.FC<ButtonProps> = ({
@@ -30,6 +31,8 @@ export const Button: React.FC<ButtonProps> = ({
   style,
   htmlType,
   onClick,
+  disabled,
+  ...rest
 }) => {
   return (
     <AntdButton
@@ -42,6 +45,8 @@ export const Button: React.FC<ButtonProps> = ({
       style={style}
       htmlType={htmlType}
       onClick={onClick}
+      disabled={disabled}
+      {...rest}
     >
       {children}
     </AntdButton>

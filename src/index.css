@@ -134,11 +134,19 @@
   color: var(--mauve1) !important;
 }
 
+.ant-btn-dangerous[disabled] {
+  background-color: var(--red6) !important;
+}
+
 .ant-btn-dashed {
   color: var(--mauve12) !important;
 }
 
 .ant-btn-text {
+  color: var(--gray9) !important;
+}
+
+.ant-btn-primary[disabled] {
   color: var(--gray9) !important;
 }
 
