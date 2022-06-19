@@ -83,3 +83,11 @@ dotnet run
 - [Elastic UI](https://elastic.github.io/eui/#/) for editor
 - [Radix UI Colors](https://www.radix-ui.com/colors) for colors
 - [Dnd Kit](https://github.com/clauderic/dnd-kit) for Drag drop
+
+### TODO
+
+- User forgot password flow
+- User invite flow
+- Write lots of RTL tests
+- Add graph diagram view for board
+- Improve `any` to meaningful types
