@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { colors, PresetColor } from "./colors";
 import { Popover } from "./primitives/Popover";
-import Circle from "react-color/lib/components/circle/Circle";
 
 const ColorPreview = styled.div`
   width: 20px;
@@ -14,6 +13,7 @@ export const ColorPicker: React.FC<{
   onChange?: (color: string) => void;
   previewOnly?: boolean;
 }> = ({ value, onChange, previewOnly }) => {
+  console.log({ value });
   const preview = () => (
     <ColorPreview
       style={{
@@ -31,15 +31,21 @@ export const ColorPicker: React.FC<{
   return (
     <Popover
       content={
-        <Circle
-          width="213px"
-          // TODO: map better
-          colors={colors}
-          color={value}
-          onChange={(e: any) => {
-            onChange && onChange(e.hex);
-          }}
-        />
+        <div style={{ display: "flex", flexWrap: "wrap", width: "120px" }}>
+          {colors.map((r) => (
+            <ColorPreview
+              key={r}
+              style={{
+                backgroundColor: r,
+                marginRight: 4,
+                marginBottom: 4,
+              }}
+              onClick={() => onChange && onChange(r)}
+            >
+              &nbsp;
+            </ColorPreview>
+          ))}
+        </div>
       }
     >
       {preview()}
