@@ -24,8 +24,6 @@
 
 ### Images
 
-# A collapsible section with markdown
-
 <details>
   <summary>Images</summary>
   
