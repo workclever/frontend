@@ -7,20 +7,25 @@ import {
 } from "../services/api";
 
 export const useInitializeSiteContextValue = (): SiteContextType => {
-  const { data: me } = useGetUserQuery(null);
+  const { data: me, isLoading: meLoading } = useGetUserQuery(null);
   const skipRule = {
     skip: !me,
   };
-  const { data: accessedEntities } = useListMyAccessedEntitiesQuery(
-    null,
-    skipRule
-  );
-  const { data: siteSettings } = useGetSiteSettingsQuery(null, skipRule);
-  const { data: userProjects } = useListUserProjectsQuery(null, skipRule);
+  const { data: accessedEntities, isLoading: accessedEntitiesLoading } =
+    useListMyAccessedEntitiesQuery(null, skipRule);
+  const { data: siteSettings, isLoading: siteSettingsLoading } =
+    useGetSiteSettingsQuery(null, skipRule);
+  const { data: userProjects, isLoading: userProjectsLoading } =
+    useListUserProjectsQuery(null, skipRule);
   return {
     me: me?.Data,
     accessedEntities: accessedEntities?.Data || [],
     userProjects: userProjects?.Data || [],
     siteSettings: siteSettings?.Data,
+    initialized:
+      !meLoading &&
+      !accessedEntitiesLoading &&
+      !siteSettingsLoading &&
+      !userProjectsLoading,
   };
 };

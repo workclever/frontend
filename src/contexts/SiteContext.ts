@@ -13,9 +13,11 @@ export type SiteContextType = {
     Permission: Permissions;
   }[];
   userProjects: ProjectType[];
+  initialized: boolean;
 };
 
 export const SiteContext = React.createContext<SiteContextType>({
   accessedEntities: [],
   userProjects: [],
+  initialized: false,
 });

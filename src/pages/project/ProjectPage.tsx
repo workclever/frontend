@@ -64,7 +64,7 @@ export const ProjectPage: React.FC = () => {
         <Inside>
           <>
             <ShinyList<BoardType>
-              title={`${project?.Name}: Select a board`}
+              title={`${project ? project.Name : ""}: Select a board`}
               dataSource={boards}
               nameProp="Name"
               onClick={(r) => goToBoard(r)}

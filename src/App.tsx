@@ -12,6 +12,7 @@ import { NotificationsPage } from "./pages/user/NotificationsPage";
 import { BoardPage } from "./pages/project/BoardPage";
 import { SiteContext } from "./contexts/SiteContext";
 import { useInitializeSiteContextValue } from "./hooks/useInitializeSiteContextValue";
+import { LoadingSpin } from "./components/shared/primitives/LoadingSpin";
 
 const auth = (component: React.ReactElement) => (
   <RequireAuth>{component}</RequireAuth>
@@ -23,6 +24,9 @@ const anon = (component: React.ReactElement) => (
 
 export default function App() {
   const value = useInitializeSiteContextValue();
+  if (!value.initialized) {
+    return <LoadingSpin />;
+  }
   return (
     <SiteContext.Provider value={value}>
       <Routes>
