@@ -24,6 +24,7 @@ export const Modal: React.FC<Props> = ({
     title={title}
     width={width}
     footer={null}
+    centered
     maskStyle={{ backgroundColor: MASK_BG_COLOR }}
     bodyStyle={{
       padding: 0,

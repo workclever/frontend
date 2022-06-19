@@ -157,7 +157,7 @@ export const Columns: React.FC = () => {
         visible={true}
         onCancel={() => setSelectedTaskId(undefined)}
         width={1200}
-        maxHeight={600}
+        maxHeight={1000}
       >
         <TaskDetail
           task={task}

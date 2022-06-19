@@ -13,7 +13,6 @@ export const ColorPicker: React.FC<{
   onChange?: (color: string) => void;
   previewOnly?: boolean;
 }> = ({ value, onChange, previewOnly }) => {
-  console.log({ value });
   const preview = () => (
     <ColorPreview
       style={{
