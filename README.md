@@ -53,10 +53,35 @@
 
 </details>
 
-### Installation
+### Installation & running
 
-TODO
+Execute following commands to run the application.
 
-### Running
+```bash
+git clone https://github.com/workclever/frontend.git
+cd frontend
+yarn
+yarn start
 
-TODO
+```
+
+By default, it will try to connect to `localhost:5001` to access to API.
+
+Execute following commands to run the API application.
+
+```bash
+git clone https://github.com/workclever/backend.git
+cd backend/WorkCleverSolution
+dotnet build
+dotnet run
+```
+
+### Used technologies
+
+- Reactjs
+- [RTK Query](https://redux-toolkit.js.org/rtk-query/overview) for data fetching and storing
+- [Ant Design](https://ant.design) for most of UI components
+- [Ant Design Pro Components](https://procomponents.ant.design) for crud and forms
+- [Elastic UI](https://elastic.github.io/eui/#/) for editor
+- [Radix UI Colors](https://www.radix-ui.com/colors) for colors
+- [Dnd Kit](https://github.com/clauderic/dnd-kit) for Drag drop
