@@ -13,9 +13,9 @@ export const RegisterPage: React.FC = () => {
   const dispatch = useDispatch();
 
   const [formState] = React.useState<RegisterInput>({
-    FullName: "Asd aaa",
-    Email: "asd@asd.com",
-    Password: "Asd32!#",
+    FullName: "",
+    Email: "",
+    Password: "",
   });
 
   const [register, { isLoading, error }] = useRegisterMutation();

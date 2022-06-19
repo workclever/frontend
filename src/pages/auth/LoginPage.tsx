@@ -13,8 +13,8 @@ export const LoginPage: React.FC = () => {
   const dispatch = useDispatch();
 
   const [formState] = React.useState<LoginInput>({
-    Email: "asd@asd.com",
-    Password: "Asd32!#",
+    Email: "",
+    Password: "",
   });
 
   const [login, { isLoading, error }] = useLoginMutation();
