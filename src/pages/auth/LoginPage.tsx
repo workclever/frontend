@@ -1,64 +1,133 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { Form, Input } from "antd";
-import { LoginInput } from "../../types/Auth";
+import { Link, useNavigate } from "react-router-dom";
 import { api, useLoginMutation } from "../../services/api";
 import { setToken } from "../../slices/authSlice";
 import { useDispatch } from "react-redux";
-import { Button } from "../../components/shared/primitives/Button";
 import { HttpResult } from "../../components/shared/HttpResult";
+import {
+  MailOutlined,
+  LockOutlined,
+  RightCircleOutlined,
+} from "@ant-design/icons";
+import {
+  ProFormText,
+  ProFormCheckbox,
+  LoginFormPage,
+} from "@ant-design/pro-components";
+import { Space } from "../../components/shared/primitives/Space";
+import { Button } from "../../components/shared/primitives/Button";
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [formState] = React.useState<LoginInput>({
-    Email: "",
-    Password: "",
-  });
-
   const [login, { isLoading, error }] = useLoginMutation();
 
-  const onFinish = async (formState: LoginInput) => {
+  const onFinish = async (formState: any) => {
+    if (isLoading) {
+      return;
+    }
     const loginOutput = await login(formState).unwrap();
     dispatch(setToken(loginOutput.Data));
     dispatch(api.util.resetApiState());
     navigate("/");
   };
 
+  const [showWelcomeConfig, setShowWelcomeConfig] = React.useState(true);
+  const welcomeConfig: any = {
+    style: {
+      boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.2)",
+      color: "#fff",
+      borderRadius: 8,
+      backgroundColor: "var(--purple10)",
+    },
+    title: "Welcome to WorkClever",
+    subTitle: "Login or register to get started!",
+    action: (
+      <Button size="large" onClick={() => setShowWelcomeConfig(false)}>
+        Close
+      </Button>
+    ),
+  };
+
   return (
-    <div>
-      <Form
-        name="basic"
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 8 }}
-        initialValues={formState}
+    <div
+      style={{
+        height: "100vh",
+      }}
+    >
+      <LoginFormPage
+        backgroundImageUrl="https://gw.alipayobjects.com/zos/rmsportal/FfdJeJRQWjEeGTpqgBKj.png"
+        logo="https://github.githubassets.com/images/modules/logos_page/Octocat.png"
+        title="WorkClever"
+        subTitle="Login"
         onFinish={onFinish}
-        autoComplete="off"
+        submitter={{
+          searchConfig: {
+            submitText: "Login",
+          },
+        }}
+        actions={
+          <Link to="/register">
+            <Space>
+              Register
+              <RightCircleOutlined />
+            </Space>
+          </Link>
+        }
+        activityConfig={showWelcomeConfig ? welcomeConfig : undefined}
       >
-        <HttpResult error={error} />
-        <Form.Item
-          label="Email"
-          name="Email"
-          rules={[{ required: true, message: "Please enter your email" }]}
+        <>
+          <div style={{ paddingBottom: 16 }}>
+            <HttpResult error={error} />
+          </div>
+          <ProFormText
+            name="Email"
+            fieldProps={{
+              size: "large",
+              prefix: <MailOutlined />,
+            }}
+            placeholder="Email"
+            rules={[
+              {
+                required: true,
+                message: "Required",
+              },
+            ]}
+          />
+          <ProFormText.Password
+            name="Password"
+            fieldProps={{
+              size: "large",
+              prefix: <LockOutlined />,
+            }}
+            placeholder={"Password"}
+            rules={[
+              {
+                required: true,
+                message: "Required",
+              },
+            ]}
+          />
+        </>
+        <div
+          style={{
+            marginBottom: 24,
+          }}
         >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          label="Password"
-          name="Password"
-          rules={[{ required: true, message: "Please enter your password!" }]}
-        >
-          <Input.Password />
-        </Form.Item>
-
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit" disabled={isLoading}>
-            Login
-          </Button>
-        </Form.Item>
-      </Form>
+          {/* TODO: remember me functionality is not working */}
+          <ProFormCheckbox noStyle name="rememberMe">
+            Remember me
+          </ProFormCheckbox>
+          {/* <a
+            style={{
+              float: "right",
+            }}
+          >
+            Forgot password
+          </a> */}
+        </div>
+      </LoginFormPage>
     </div>
   );
 };

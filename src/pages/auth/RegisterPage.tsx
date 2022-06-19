@@ -1,26 +1,28 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { Form, Input } from "antd";
-import { RegisterInput } from "../../types/Auth";
+import { Link, useNavigate } from "react-router-dom";
+import { Space } from "antd";
 import { api, useRegisterMutation } from "../../services/api";
 import { setToken } from "../../slices/authSlice";
 import { useDispatch } from "react-redux";
-import { Button } from "../../components/shared/primitives/Button";
 import { HttpResult } from "../../components/shared/HttpResult";
+import {
+  RightCircleOutlined,
+  UserOutlined,
+  LockOutlined,
+  MailOutlined,
+} from "@ant-design/icons";
+import { LoginFormPage, ProFormText } from "@ant-design/pro-components";
 
 export const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [formState] = React.useState<RegisterInput>({
-    FullName: "",
-    Email: "",
-    Password: "",
-  });
-
   const [register, { isLoading, error }] = useRegisterMutation();
 
-  const onFinish = async (formState: RegisterInput) => {
+  const onFinish = async (formState: any) => {
+    if (isLoading) {
+      return;
+    }
     const RegisterOutput = await register(formState).unwrap();
     dispatch(setToken(RegisterOutput.Data));
     dispatch(api.util.resetApiState());
@@ -28,46 +30,79 @@ export const RegisterPage: React.FC = () => {
   };
 
   return (
-    <div>
-      <Form
-        name="basic"
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 8 }}
-        initialValues={formState}
+    <div
+      style={{
+        height: "100vh",
+      }}
+    >
+      <LoginFormPage
+        backgroundImageUrl="https://gw.alipayobjects.com/zos/rmsportal/FfdJeJRQWjEeGTpqgBKj.png"
+        logo="https://github.githubassets.com/images/modules/logos_page/Octocat.png"
+        title="WorkClever"
+        subTitle="Register"
         onFinish={onFinish}
-        autoComplete="off"
+        submitter={{
+          searchConfig: {
+            submitText: "Register",
+          },
+        }}
+        actions={
+          <Link to="/login">
+            <Space>
+              Login
+              <RightCircleOutlined />
+            </Space>
+          </Link>
+        }
       >
-        <HttpResult error={error} />
-        <Form.Item
-          label="Full name"
-          name="FullName"
-          rules={[{ required: true, message: "Please enter your full name" }]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          label="Email"
-          name="Email"
-          rules={[{ required: true, message: "Please enter your email" }]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          label="Password"
-          name="Password"
-          rules={[{ required: true, message: "Please enter your password!" }]}
-        >
-          <Input.Password />
-        </Form.Item>
-
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit" disabled={isLoading}>
-            Register
-          </Button>
-        </Form.Item>
-      </Form>
+        <>
+          <div style={{ paddingBottom: 16 }}>
+            <HttpResult error={error} />
+          </div>
+          <ProFormText
+            name="FullName"
+            fieldProps={{
+              size: "large",
+              prefix: <UserOutlined />,
+            }}
+            placeholder="Full name"
+            rules={[
+              {
+                required: true,
+                message: "Required",
+              },
+            ]}
+          />
+          <ProFormText
+            name="Email"
+            fieldProps={{
+              size: "large",
+              prefix: <MailOutlined />,
+            }}
+            placeholder="Email"
+            rules={[
+              {
+                required: true,
+                message: "Required",
+              },
+            ]}
+          />
+          <ProFormText.Password
+            name="Password"
+            fieldProps={{
+              size: "large",
+              prefix: <LockOutlined />,
+            }}
+            placeholder={"Password"}
+            rules={[
+              {
+                required: true,
+                message: "Required",
+              },
+            ]}
+          />
+        </>
+      </LoginFormPage>
     </div>
   );
 };
