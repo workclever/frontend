@@ -22,7 +22,7 @@
 - Uploading/attaching files to a task
 - Custom task relation types (blocking, duplicating etc..)
 
-### Images
+### Images 🖼️ 🖼️
 
 <details>
   <summary>Images</summary>
