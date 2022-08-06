@@ -24,9 +24,6 @@
 
 ### Images 🖼️ 🖼️
 
-<details>
-  <summary>Images</summary>
-  
   #### Board as kanban
   [![Board as kanban](https://i.gyazo.com/2ec089944b9100aabfe5a233a8d51938.gif)](https://gyazo.com/2ec089944b9100aabfe5a233a8d51938)
   
@@ -37,7 +34,7 @@
 
 [![Task detail](https://i.gyazo.com/94f1bc47ffc17c09a2a9c8143986cadc.png)](https://gyazo.com/94f1bc47ffc17c09a2a9c8143986cadc)
 
-#### roject settings
+#### Project settings
 
 [![Project settings](https://i.gyazo.com/f3cced6ca6f23baae065a59e6bceb38b.gif)](https://gyazo.com/f3cced6ca6f23baae065a59e6bceb38b)
 
@@ -48,8 +45,6 @@
 #### Site settings
 
 [![Site settings](https://i.gyazo.com/62dcf740f2e6616108d17465943eb387.gif)](https://gyazo.com/62dcf740f2e6616108d17465943eb387)
-
-</details>
 
 ### Installation & running
 
@@ -88,6 +83,5 @@ dotnet run
 
 - User forgot password flow
 - User invite flow
-- Write lots of RTL tests
-- Add graph diagram view for board
-- Improve `any` to meaningful types
+- E2E Tests
+- Improve `any` usage to appropriate types (tech debt)
