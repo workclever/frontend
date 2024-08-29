@@ -1,4 +1,4 @@
-import { ModalForm, ProForm, ProFormText } from "@ant-design/pro-components";
+import { ModalForm, ProFormText } from "@ant-design/pro-components";
 import { useAppNavigate } from "../../../hooks/useAppNavigate";
 import { useCreateProjectMutation } from "../../../services/api";
 import { HttpResult } from "../../../components/shared/HttpResult";
@@ -28,10 +28,10 @@ export const CreateProjectModal: React.FC<{ onCancel: () => void }> = ({
   return (
     <ModalForm<CreateProjectModalInput>
       title={"Create new project"}
-      visible
+      open
       autoFocusFirstInput
       modalProps={{
-        width: 300,
+        width: 500,
         cancelText: "Cancel",
         okText: "Save",
         onCancel,
@@ -40,27 +40,25 @@ export const CreateProjectModal: React.FC<{ onCancel: () => void }> = ({
         onFinish(values);
       }}
     >
-      <ProForm.Group>
-        <ProFormText
-          name="Name"
-          label="Name"
-          placeholder="Project name"
-          rules={[{ required: true, message: "Name of the project" }]}
-        />
-        <ProFormText
-          name="Slug"
-          label="Slug"
-          placeholder="Project Slug"
-          rules={[
-            {
-              required: true,
-              message: "Max length is 4, min length is 1 character",
-              max: 4,
-              min: 1,
-            },
-          ]}
-        />
-      </ProForm.Group>
+      <ProFormText
+        name="Name"
+        label="Name"
+        placeholder="Project name"
+        rules={[{ required: true, message: "Name of the project" }]}
+      />
+      <ProFormText
+        name="Slug"
+        label="Slug"
+        placeholder="Project Slug"
+        rules={[
+          {
+            required: true,
+            message: "Max length is 4, min length is 1 character",
+            max: 4,
+            min: 1,
+          },
+        ]}
+      />
       <HttpResult error={createError} result={createResult} />
     </ModalForm>
   );

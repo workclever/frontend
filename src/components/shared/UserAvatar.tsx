@@ -2,6 +2,7 @@ import { Avatar } from "antd";
 import { BACKEND_URL } from "../../constants";
 import { useUser } from "../../hooks/useUser";
 import { Tooltip } from "./primitives/Tooltip";
+import { blue } from "@ant-design/colors";
 
 export const UserAvatar: React.FC<{
   userId: number;
@@ -15,7 +16,7 @@ export const UserAvatar: React.FC<{
 
   const style: React.CSSProperties = {
     cursor: onClick ? "pointer" : "inherit",
-    border: active ? "2px solid var(--purple11)" : "2px solid transparent",
+    border: active ? `2px solid ${blue[2]}` : "2px solid transparent",
   };
 
   const avatarItself = (

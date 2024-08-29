@@ -19,7 +19,7 @@ export const Modal: React.FC<Props> = ({
   maxHeight,
 }) => (
   <AntdModal
-    visible={visible}
+    open={visible}
     onCancel={onCancel}
     title={title}
     width={width}

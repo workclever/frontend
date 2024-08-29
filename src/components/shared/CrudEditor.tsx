@@ -7,7 +7,6 @@ import {
   EditableProTable,
   enUSIntl,
   ProColumns,
-  ConfigProvider,
 } from "@ant-design/pro-components";
 import { TableProps } from "antd";
 import React from "react";
@@ -88,12 +87,7 @@ export const CrudEditor = <T,>({
   };
 
   return (
-    <ConfigProvider
-      value={{
-        intl: enUSIntl,
-        valueTypeMap: {},
-      }}
-    >
+    <>
       {title && <Title level={5}>{title}</Title>}
       <EditableProTable
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -175,6 +169,6 @@ export const CrudEditor = <T,>({
             : undefined
         }
       />
-    </ConfigProvider>
+    </>
   );
 };

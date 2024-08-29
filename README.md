@@ -24,11 +24,13 @@
 
 ### Images 🖼️ 🖼️
 
-  #### Board as kanban
-  [![Board as kanban](https://i.gyazo.com/2ec089944b9100aabfe5a233a8d51938.gif)](https://gyazo.com/2ec089944b9100aabfe5a233a8d51938)
-  
-  #### Board as list
-  [![Board as list](https://i.gyazo.com/dac0f47e0bafb8351de72d5ad627bfaf.gif)](https://gyazo.com/dac0f47e0bafb8351de72d5ad627bfaf)
+#### Board as kanban
+
+[![Board as kanban](https://i.gyazo.com/2ec089944b9100aabfe5a233a8d51938.gif)](https://gyazo.com/2ec089944b9100aabfe5a233a8d51938)
+
+#### Board as list
+
+[![Board as list](https://i.gyazo.com/dac0f47e0bafb8351de72d5ad627bfaf.gif)](https://gyazo.com/dac0f47e0bafb8351de72d5ad627bfaf)
 
 #### Task detail
 
@@ -60,7 +62,7 @@ yarn start
 
 By default, it will try to connect to `localhost:5001` to access to API.
 
-Execute following commands to run the API application.
+Execute following commands to run the API (backend) application.
 
 ```bash
 git clone https://github.com/workclever/backend.git
@@ -76,7 +78,7 @@ dotnet run
 - [Ant Design](https://ant.design) for most of UI components
 - [Ant Design Pro Components](https://procomponents.ant.design) for crud and forms
 - [Elastic UI](https://elastic.github.io/eui/#/) for editor
-- [Radix UI Colors](https://www.radix-ui.com/colors) for colors
+- [@ant-design/colors](https://npmjs.com/package/@ant-design/colors) for colors
 - [Dnd Kit](https://github.com/clauderic/dnd-kit) for Drag drop
 
 ### TODO

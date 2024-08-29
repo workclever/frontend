@@ -4,16 +4,16 @@ import { useAppNavigate } from "../../../hooks/useAppNavigate";
 import React from "react";
 import { useBoards } from "../../../hooks/useBoards";
 import styled from "styled-components";
+import { blue } from "@ant-design/colors";
 
 const BoardItem = styled.div<{ active: boolean }>`
-  color: var(--gray12);
   cursor: pointer;
   padding: 4px;
-  background-color: ${(props) => (props.active ? "var(--purple6)" : "inherit")};
+  background-color: ${(props) => (props.active ? blue[2] : "inherit")};
   border-radius: 4px;
 
   &:hover {
-    background-color: var(--purple5);
+    background-color: ${blue[2]};
   }
 `;
 

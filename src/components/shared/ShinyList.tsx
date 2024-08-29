@@ -5,6 +5,7 @@ import { Button } from "./primitives/Button";
 import { Empty } from "./primitives/Empty";
 import { Space } from "./primitives/Space";
 import { Title } from "./primitives/Title";
+import { blue } from "@ant-design/colors";
 
 type Props<T> = {
   title?: string;
@@ -24,24 +25,19 @@ const Wrapper = styled.div`
 
 const Item = styled.div`
   padding: 16px;
-  border-top: 2px solid var(--gray3);
+  border-top: 1px solid ${blue[2]};
   cursor: pointer;
   display: flex;
   align-items: center;
-  color: var(--mauve12);
-  background-color: var(--purple2);
+  background-color: ${blue[0]};
 
   &:hover {
-    background-color: var(--purple3);
+    background-color: ${blue[1]};
   }
 
   &:last-child {
-    border-bottom: 2px solid var(--gray4);
+    border-bottom: 1px solid ${blue[2]};
   }
-`;
-
-const Subtitle = styled.div`
-  color: var(--mauve10);
 `;
 
 export const ShinyList = <T,>({
@@ -61,7 +57,7 @@ export const ShinyList = <T,>({
           left={<Title level={4}>{title}</Title>}
           right={
             dataSource.length > 0 ? (
-              <Button type="primary" size="large" onClick={onNewClick}>
+              <Button type="primary" onClick={onNewClick}>
                 {newButtonText}
               </Button>
             ) : (
@@ -75,7 +71,7 @@ export const ShinyList = <T,>({
           <>
             <Space direction="vertical">
               <span>{noDataText}</span>
-              <Button type="primary" size="large" onClick={onNewClick}>
+              <Button type="primary" onClick={onNewClick}>
                 {newButtonText}
               </Button>
             </Space>
@@ -91,11 +87,9 @@ export const ShinyList = <T,>({
         >
           <div style={{ flex: 1 }}>
             <div>{r[nameProp] as any}</div>
-            <Subtitle>
-              {subtitleProp && <div>{r[subtitleProp] as any}</div>}
-            </Subtitle>
+            {subtitleProp && <div>{r[subtitleProp] as any}</div>}
           </div>
-          <ArrowRightOutlined style={{ color: "var(--mauve10)" }} />
+          <ArrowRightOutlined />
         </Item>
       ))}
     </Wrapper>

@@ -14,11 +14,11 @@ import { BoardUserAvatars } from "./BoardUserAvatars";
 import { LayoutRightContent } from "../../../../layout/LayoutRightContent";
 import { Space } from "../../../../components/shared/primitives/Space";
 import { Divider } from "../../../../components/shared/primitives/Divider";
+import { blue } from "@ant-design/colors";
 
 const Wrapper = styled.div`
   height: 45px;
   width: calc(100% - 250px);
-  background-color: var(--gray1);
   display: flex;
   align-items: center;
   padding: 0px 8px;
@@ -26,7 +26,7 @@ const Wrapper = styled.div`
   top: 0px;
   left: 250px;
   z-index: 1;
-  border-bottom: 1px solid var(--gray3);
+  border-bottom: 1px solid ${blue[1]};;
 `;
 
 const SearchInput = () => {

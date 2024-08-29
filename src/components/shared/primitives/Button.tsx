@@ -1,6 +1,6 @@
 import { Button as AntdButton } from "antd";
-import { ButtonType } from "antd/lib/button";
-import { BaseButtonProps, ButtonHTMLType } from "antd/lib/button/button";
+import { ButtonHTMLType, ButtonType } from "antd/lib/button";
+import { BaseButtonProps } from "antd/lib/button/button";
 import { SizeType } from "antd/lib/config-provider/SizeContext";
 
 export declare type NativeButtonProps = {

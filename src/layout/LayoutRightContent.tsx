@@ -3,7 +3,6 @@ import { Badge } from "antd";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
 import { EnhancedDropdownMenu } from "../components/shared/EnhancedDropdownMenu";
 import { Button } from "../components/shared/primitives/Button";
 import { Dropdown } from "../components/shared/primitives/Dropdown";
@@ -15,16 +14,6 @@ import { useMe } from "../hooks/useMe";
 import { Me } from "../components/user/Me";
 import { useGetUnreadNotificationsCountQuery } from "../services/api";
 import { logout } from "../slices/authSlice";
-
-const Wrapper = styled.div`
-  button,
-  span {
-    color: var(--mauve9);
-  }
-  svg {
-    fill: var(--mauve9);
-  }
-`;
 
 export const LayoutRightContent = () => {
   const { me, isAdmin } = useMe();
@@ -42,7 +31,7 @@ export const LayoutRightContent = () => {
     React.useState(false);
 
   return (
-    <Wrapper>
+    <>
       <Space>
         {isAdmin && (
           <Link to="/manage">
@@ -96,6 +85,6 @@ export const LayoutRightContent = () => {
           <Me />
         </div>
       </Modal>
-    </Wrapper>
+    </>
   );
 };

@@ -44,7 +44,6 @@ export const MasterDetail: React.FC<Props> = ({
               style={{
                 padding: 16,
                 minHeight: 280,
-                backgroundColor: "var(--gray1)",
               }}
             >
               {Component && <Component />}
@@ -57,7 +56,7 @@ export const MasterDetail: React.FC<Props> = ({
 
   return (
     <Layout>
-      <Content style={{ padding: 8, minHeight: 280, backgroundColor: "var(--gray1)" }}>
+      <Content style={{ padding: 8, minHeight: 280 }}>
         <Tabs defaultActiveKey={selectedKey} onChange={setSelectedKey}>
           {menuItems?.map((r) => (
             <TabPane tab={(r as any).label} key={r?.key}>

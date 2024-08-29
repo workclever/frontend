@@ -10,6 +10,7 @@ import {
   TaskSubtasksUnit,
 } from "./Task";
 import { Space } from "../../../../components/shared/primitives/Space";
+import { blue } from "@ant-design/colors";
 
 const Wrapper = styled.div`
   flex: 1;
@@ -19,13 +20,13 @@ const Wrapper = styled.div`
   margin-bottom: 8px;
   padding: 16px;
   cursor: pointer;
-  border: 1px solid var(--gray3);
-  background-color: var(--gray2);
+  border: 1px solid ${blue[1]};
+  background-color: ${blue[0]};
   border-radius: 4px;
 
   &:hover {
-    background-color: var(--purple2);
-    border-color: var(--purple3);
+    background-color: ${blue[1]};
+    border-color: ${blue[2]};
   }
 `;
 

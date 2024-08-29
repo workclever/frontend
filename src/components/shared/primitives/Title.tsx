@@ -1,3 +1,4 @@
+import { gray } from "@ant-design/colors";
 import { Typography } from "antd";
 
 type Props = {
@@ -10,7 +11,7 @@ export const Title: React.FC<Props> = ({ children, level, style }) => {
   style = style || {};
   style = {
     ...style,
-    color: "var(--mauve12)",
+    color: gray[9],
   };
   return (
     <Typography.Title level={level} style={style}>

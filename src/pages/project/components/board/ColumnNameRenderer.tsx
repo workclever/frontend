@@ -1,7 +1,7 @@
 import { DeleteColumnOutlined, EditOutlined } from "@ant-design/icons";
 import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 import { Badge } from "antd";
-import { ItemType } from "antd/lib/menu/hooks/useItems";
+import { ItemType } from "antd/es/menu/interface";
 import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
@@ -24,7 +24,6 @@ const ColumnListWrapper = styled.div`
   padding: 4px;
   padding-left: 8px;
   cursor: pointer;
-  background-color: var(--gray2);
 `;
 
 const ColumnKanbanWrapper = styled.div`

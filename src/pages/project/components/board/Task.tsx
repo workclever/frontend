@@ -34,6 +34,7 @@ import { Confirm } from "../../../../components/shared/Confirm";
 import { Tooltip } from "../../../../components/shared/primitives/Tooltip";
 import { Space } from "../../../../components/shared/primitives/Space";
 import { Tag } from "../../../../components/shared/primitives/Tag";
+import { gray } from "@ant-design/colors";
 
 export type Props = {
   listeners: DraggableSyntheticListeners;
@@ -56,7 +57,7 @@ export const TaskCommentsUnit: React.FC<Pick<Props, "task">> = ({ task }) => {
 
   return (
     <Tooltip title={`${taskCommentsCount} comment(s)`}>
-      <span style={{ color: "var(--gray8)" }}>
+      <span style={{ color: gray[8] }}>
         {taskCommentsCount}
         <MessageOutlined style={{ marginLeft: 4 }} />
       </span>
@@ -76,7 +77,7 @@ export const TaskSubtasksUnit: React.FC<
 
   return (
     <Tooltip title={`${subtasks.length} subtasks(s)`}>
-      <span style={{ color: "var(--gray8)" }}>
+      <span>
         {subtasks.length}
         <ForkOutlined style={{ marginLeft: 4 }} />
       </span>
@@ -100,7 +101,7 @@ const FieldTag: React.FC<{ color?: string; children?: any }> = ({
     <Tag
       style={{
         border: "none",
-        backgroundColor: color || "var(--gray9)",
+        backgroundColor: color || gray[2],
         color: "#efefef",
       }}
     >

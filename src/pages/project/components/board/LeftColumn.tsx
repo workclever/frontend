@@ -17,16 +17,15 @@ import { EntityClasses, Permissions } from "../../../../types/Roles";
 import { BoardList } from "../BoardList";
 import { ProjectSettings } from "../manage/ProjectSettings";
 import { useNavigate } from "react-router-dom";
+import { blue } from "@ant-design/colors";
 
 const Header = styled.div`
   position: fixed;
   left: 0;
   top: 0;
-  background-color: var(--purple9);
-  border-bottom: 2px solid var(--purple8);
+  border-bottom: 1px solid ${blue[1]};
   padding: 14px;
   width: 250px;
-  color: var(--gray2);
   cursor: pointer;
 `;
 
@@ -35,8 +34,9 @@ const BottomWrapper = styled.div`
   bottom: 0;
   left: 0;
   width: 250px;
-  border-top: 1px solid var(--purple4);
-  background-color: var(--purple3);
+  border-top: 1px solid ${blue[1]};
+  border-right: 1px solid ${blue[1]};
+  background-color: ${blue[0]};
   padding: 8px;
 `;
 
@@ -61,9 +61,7 @@ export const LeftColumn = () => {
         <FlexBasicLayout
           left={
             <div onClick={() => navigate("/")}>
-              <ArrowLeftOutlined
-                style={{ color: "var(--gray2)", paddingRight: 8 }}
-              />
+              <ArrowLeftOutlined style={{ paddingRight: 8 }} />
               Go back
             </div>
           }
@@ -77,7 +75,7 @@ export const LeftColumn = () => {
         <FlexBasicLayout
           left={
             <Button size="small" type="text">
-              <QuestionCircleOutlined style={{ color: "var(--gray10)" }} />
+              <QuestionCircleOutlined />
             </Button>
           }
           right={
@@ -88,7 +86,7 @@ export const LeftColumn = () => {
               showWarning={false}
             >
               <Button size="small" onClick={showProjectSettings} type="text">
-                <SettingOutlined style={{ color: "var(--gray10)" }} />
+                <SettingOutlined />
               </Button>
             </Permission>
           }

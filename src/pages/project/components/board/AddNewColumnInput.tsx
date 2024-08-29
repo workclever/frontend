@@ -10,13 +10,8 @@ import {
 import { ToggleOnClick } from "../../../../components/shared/ToggleOnClick";
 
 const TextWrapper = styled.div`
-  color: var(--gray9);
   cursor: pointer;
   width: 280px;
-
-  &:hover {
-    color: var(--mauve12);
-  }
 `;
 
 export const AddNewColumnInput: React.FC = () => {

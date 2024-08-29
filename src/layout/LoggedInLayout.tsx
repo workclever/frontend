@@ -19,7 +19,6 @@ export const LoggedInLayout: React.FC<Props> = ({ children }) => {
         collapsedButtonRender={false}
         // collapsed
         headerRender={false}
-        disableContentMargin
       >
         {children}
       </ProLayout>

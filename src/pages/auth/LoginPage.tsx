@@ -39,7 +39,6 @@ export const LoginPage: React.FC = () => {
       boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.2)",
       color: "#fff",
       borderRadius: 8,
-      backgroundColor: "var(--purple10)",
     },
     title: "Welcome to WorkClever",
     subTitle: "This website is serving only for demo purposes.",

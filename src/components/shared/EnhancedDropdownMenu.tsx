@@ -1,6 +1,6 @@
 import { EllipsisOutlined } from "@ant-design/icons";
 import { Dropdown, Menu } from "antd";
-import { ItemType } from "antd/lib/menu/hooks/useItems";
+import { ItemType } from "antd/es/menu/interface";
 import React from "react";
 import { DropdownProps } from "./primitives/Dropdown";
 

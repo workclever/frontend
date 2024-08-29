@@ -16,6 +16,7 @@ import { Button } from "../shared/primitives/Button";
 import { Tooltip } from "../shared/primitives/Tooltip";
 import { Space } from "../shared/primitives/Space";
 import { Text } from "../shared/primitives/Text";
+import { gray } from "@ant-design/colors";
 
 const TaskInfo: React.FC<{ taskId?: number }> = ({ taskId }) => {
   const task = useTask(taskId);
@@ -66,7 +67,7 @@ export const UserNotifications: React.FC<{ showAll: boolean }> = ({
   return (
     <ProList
       style={{
-        backgroundColor: "var(--gray1)",
+        backgroundColor: gray[0],
         width: showAll ? "100%" : 450,
         boxShadow: showAll
           ? "inherit"

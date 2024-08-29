@@ -11,21 +11,28 @@ import {
   TaskSubtasksUnit,
 } from "./Task";
 import { Space } from "../../../../components/shared/primitives/Space";
+import { blue } from "@ant-design/colors";
 
 const Wrapper = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: var(--gray2);
+  border-top: 1px solid ${blue[1]};
+  border-left: 1px solid ${blue[1]};
+  border-right: 1px solid ${blue[1]};
+  background-color: ${blue[0]};
   margin-bottom: 0px;
   cursor: pointer;
-  border-bottom: 1px solid var(--gray3);
   padding-left: 8px;
 
   &:hover {
-    background-color: var(--purple2);
-    border-color: var(--purple3);
+    background-color: ${blue[1]};
+    border-color: ${blue[2]};
+  }
+
+  &:last-child {
+    border-bottom: 1px solid ${blue[1]};
   }
 `;
 

@@ -1,9 +1,7 @@
 import {
   ProColumns,
   TableDropdown,
-  enUSIntl,
   ProTable,
-  ConfigProvider,
 } from "@ant-design/pro-components";
 import { uniq } from "lodash";
 import React, { useContext } from "react";
@@ -149,48 +147,41 @@ export const Users = () => {
   };
 
   return (
-    <ConfigProvider
-      value={{
-        intl: enUSIntl,
-        valueTypeMap: {},
-      }}
-    >
-      <>
-        <ProTable
-          columns={columns}
-          dataSource={getDataSource()}
-          rowKey="Id"
-          footer={() => (
-            <Button type="primary" onClick={() => setCreating(true)}>
-              Create new user
-            </Button>
-          )}
-          expandable={{
-            expandedRowRender: (record) => <TableUserDetail user={record} />,
-            rowExpandable: () => true,
-          }}
-          pagination={{
-            showQuickJumper: true,
-          }}
-          search={{
-            filterType: "light",
-          }}
-          beforeSearchSubmit={beforeSearchSubmit}
+    <>
+      <ProTable
+        columns={columns}
+        dataSource={getDataSource()}
+        rowKey="Id"
+        footer={() => (
+          <Button type="primary" onClick={() => setCreating(true)}>
+            Create new user
+          </Button>
+        )}
+        expandable={{
+          expandedRowRender: (record) => <TableUserDetail user={record} />,
+          rowExpandable: () => true,
+        }}
+        pagination={{
+          showQuickJumper: true,
+        }}
+        search={{
+          filterType: "light",
+        }}
+        beforeSearchSubmit={beforeSearchSubmit}
+      />
+      {editing && (
+        <EditUserModal
+          editingUser={editing}
+          onExit={() => setEditing(undefined)}
         />
-        {editing && (
-          <EditUserModal
-            editingUser={editing}
-            onExit={() => setEditing(undefined)}
-          />
-        )}
-        {creating && <CreateUserModal onExit={() => setCreating(false)} />}
-        {editingRolesUser && (
-          <EditRolesModal
-            editingUser={editingRolesUser}
-            onExit={() => setEditingRolesUser(undefined)}
-          />
-        )}
-      </>
-    </ConfigProvider>
+      )}
+      {creating && <CreateUserModal onExit={() => setCreating(false)} />}
+      {editingRolesUser && (
+        <EditRolesModal
+          editingUser={editingRolesUser}
+          onExit={() => setEditingRolesUser(undefined)}
+        />
+      )}
+    </>
   );
 };

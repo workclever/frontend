@@ -4,11 +4,12 @@ import { RcFile, UploadChangeParam } from "antd/lib/upload";
 import { UploadFile } from "antd/lib/upload/interface";
 import React from "react";
 import { useSelector } from "react-redux";
-import ImgCrop from "antd-img-crop";
+// import ImgCrop from "antd-img-crop";
 import styled from "styled-components";
 import { BACKEND_URL, API_URL } from "../../constants";
 import { useMe } from "../../hooks/useMe";
 import { selectAuthToken } from "../../slices/authSlice";
+import { gray } from "@ant-design/colors";
 
 const computeAvatarUrl = (url?: string) => {
   if (!url) {
@@ -26,7 +27,7 @@ const EditIconWrapper = styled.span`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: var(--gray1);
+  color: ${gray[1]};
 `;
 
 export const UploadAvatarButton = () => {
@@ -109,20 +110,21 @@ export const UploadAvatarButton = () => {
   };
 
   return (
-    <ImgCrop
-      rotate
-      modalTitle="Crop image"
-      modalOk="Upload"
-      modalCancel="Cancel"
+    // TODO replace antd-img-crop ImgCrop
+    // <ImgCrop
+    //   rotate
+    //   modalTitle="Crop image"
+    //   modalOk="Upload"
+    //   modalCancel="Cancel"
+    // >
+    <Upload
+      name="file"
+      listType="picture-card"
+      {...props}
+      style={{ width: 40 }}
     >
-      <Upload
-        name="file"
-        listType="picture-card"
-        {...props}
-        style={{ width: 40 }}
-      >
-        {imageUrl ? existingAvatar() : uploadButton}
-      </Upload>
-    </ImgCrop>
+      {imageUrl ? existingAvatar() : uploadButton}
+    </Upload>
+    // </ImgCrop>
   );
 };

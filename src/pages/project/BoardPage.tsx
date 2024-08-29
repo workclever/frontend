@@ -10,11 +10,11 @@ import {
 import { BoardHeader } from "./components/board/BoardHeader";
 import { Columns } from "./components/board/Columns";
 import { LeftColumn } from "./components/board/LeftColumn";
+import { blue } from "@ant-design/colors";
 
 const LeftWrapper = styled.div`
   width: 250px;
-  background-color: var(--purple3);
-  border-right: 1px solid var(--purple5);
+  border-right: 1px solid ${blue[1]};
   flex-shrink: 0;
   overflow-y: auto;
   height: 100vh;
@@ -24,7 +24,6 @@ const LeftWrapper = styled.div`
 
 const RightWrapper = styled.div`
   margin-left: 250px;
-  background-color: var(--gray1);
 `;
 
 const ColumnsWrapper = styled.div`

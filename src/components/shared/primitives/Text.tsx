@@ -1,3 +1,4 @@
+import { gray } from "@ant-design/colors";
 import { Typography } from "antd";
 
 type Props = {
@@ -12,7 +13,7 @@ export const Text: React.FC<Props> = ({ children, strong, style, onClick }) => {
   style = style || {};
   style = {
     ...style,
-    color: style.color || "var(--mauve12)",
+    color: style.color || gray[9],
   };
   return (
     <Typography.Text strong={strong} style={style} onClick={onClick}>

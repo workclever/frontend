@@ -1,8 +1,9 @@
-import { PageHeader } from "antd";
+import { PageHeader } from "@ant-design/pro-components";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import { LayoutRightContent } from "./LayoutRightContent";
+import { gray } from "@ant-design/colors";
 
 export const LayoutWithHeader: React.FC<{
   children: React.ReactElement;
@@ -29,16 +30,15 @@ export const LayoutWithHeader: React.FC<{
         title={
           <span
             onClick={() => (hideBackButton ? navigate("/") : goBack())}
-            style={{ cursor: "pointer", color: "var(--gray1)" }}
+            style={{ cursor: "pointer" }}
           >
             {title}
           </span>
         }
         subTitle={
-          subTitle && <span style={{ color: "var(--gray4)" }}>{subTitle}</span>
+          subTitle && <span style={{ color: gray[2] }}>{subTitle}</span>
         }
         extra={[<LayoutRightContent key="1" />]}
-        style={{ backgroundColor: "var(--purple10)" }}
       ></PageHeader>
       <div style={{ padding: 16 }}>{children}</div>
     </div>

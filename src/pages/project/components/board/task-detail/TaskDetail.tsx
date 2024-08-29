@@ -23,6 +23,7 @@ import {
 } from "../../../../../components/shared/primitives/Tabs";
 import { Space } from "../../../../../components/shared/primitives/Space";
 import { Divider } from "../../../../../components/shared/primitives/Divider";
+import { blue } from "@ant-design/colors";
 
 type Props = {
   task: TaskType;
@@ -102,7 +103,7 @@ const TaskDetailKanbanLayout: React.FC<Props> = ({
 }) => {
   return (
     <Row gutter={4} wrap={false}>
-      <Col flex="auto" style={{ padding: 8, backgroundColor: "var(--mauve1)" }}>
+      <Col flex="auto" style={{ padding: 8 }}>
         <Space direction="vertical" style={{ width: "100%" }}>
           <TaskEditableDescription task={task} />
           <TaskRelations task={task} onTaskSelect={onTaskSelect} />
@@ -118,9 +119,8 @@ const TaskDetailKanbanLayout: React.FC<Props> = ({
       <Col
         flex="340px"
         style={{
-          backgroundColor: "var(--mauve2)",
           padding: 8,
-          borderLeft: "1px solid var(--mauve4)",
+          borderLeft: `1px solid ${blue[1]}`,
         }}
       >
         <Reporter task={task} />

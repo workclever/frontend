@@ -10,12 +10,13 @@ import {
 import { ColumnType } from "../../../../types/Project";
 import { ToggleOnClick } from "../../../../components/shared/ToggleOnClick";
 import { Tooltip } from "../../../../components/shared/primitives/Tooltip";
+import { gray } from "@ant-design/colors";
 
 const TextWrapper = styled.span`
-  color: var(--gray9);
+  color: ${gray[0]};
   cursor: pointer;
   &:hover {
-    color: var(--mauve12);
+    color: ${gray[5]};
   }
 `;
 

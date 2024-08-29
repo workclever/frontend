@@ -1,5 +1,6 @@
 import { CloseOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { List, Comment as AntdComment, Form, ConfigProvider } from "antd";
+import { List, Form, ConfigProvider } from "antd";
+import { Comment as AntdComment } from "@ant-design/compatible";
 import React from "react";
 import { useFormattedDateTime } from "../../../../../hooks/useFormattedDateTime";
 import { useMe } from "../../../../../hooks/useMe";
@@ -42,7 +43,6 @@ const Comment: React.FC<{
         type="text"
         onClick={() => setEditing(!editing)}
         icon={editing ? <CloseOutlined /> : <EditOutlined />}
-        style={{ color: "var(--gray8)" }}
       />
     </Tooltip>
   );
@@ -65,12 +65,7 @@ const Comment: React.FC<{
         <LoadingSpin />
       ) : (
         <Tooltip title="Delete comment">
-          <Button
-            size="small"
-            type="text"
-            icon={<DeleteOutlined />}
-            style={{ color: "var(--gray8)" }}
-          />
+          <Button size="small" type="text" icon={<DeleteOutlined />} />
         </Tooltip>
       )}
     </Confirm.Embed>
