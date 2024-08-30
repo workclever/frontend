@@ -85,5 +85,3 @@ dotnet run
 
 - User forgot password flow
 - User invite flow
-- E2E Tests
-- Improve `any` usage to appropriate types (tech debt)
