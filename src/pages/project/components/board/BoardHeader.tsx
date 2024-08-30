@@ -29,12 +29,12 @@ const Wrapper = styled.div`
   border-bottom: 1px solid ${blue[1]}; ;
 `;
 
-const SearchInput = () => {
+const FilterInput = () => {
   const dispatch = useDispatch();
   const onChange = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(
       setBoardFilter({
-        key: "searchText",
+        key: "filterText",
         value: e.target.value,
       })
     );
@@ -44,7 +44,7 @@ const SearchInput = () => {
       allowClear
       onChange={onChange}
       style={{ width: 180 }}
-      placeholder="Search tasks"
+      placeholder="Filter tasks"
     />
   );
 };
@@ -62,7 +62,7 @@ export const BoardHeader: React.FC = () => {
   return (
     <Wrapper>
       <Space>
-        <SearchInput />
+        <FilterInput />
         <BoardUserAvatars />
       </Space>
       <div style={{ flex: 1 }} />

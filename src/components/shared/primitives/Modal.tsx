@@ -1,5 +1,4 @@
 import { Modal as AntdModal } from "antd";
-import { MASK_BG_COLOR } from "../../constants";
 
 type Props = {
   title?: React.ReactNode;
@@ -25,7 +24,6 @@ export const Modal: React.FC<Props> = ({
     width={width}
     footer={null}
     centered
-    maskStyle={{ backgroundColor: MASK_BG_COLOR }}
     bodyStyle={{
       padding: 0,
       overflow: "auto",

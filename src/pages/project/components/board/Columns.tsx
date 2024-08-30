@@ -19,10 +19,7 @@ import { AddNewCardInput } from "./AddNewCardInput";
 import { AddNewColumnInput } from "./AddNewColumnInput";
 import { TaskDetail } from "./task-detail/TaskDetail";
 import { Drawer } from "antd";
-import { MASK_BG_COLOR } from "../../../../components/constants";
-import { TaskEditableTitle } from "./task-detail/TaskEditableTitle";
 import { useBoardData } from "../../../../hooks/useBoardData";
-import { Modal } from "../../../../components/shared/primitives/Modal";
 
 const DndInsideContainers: React.FC<{
   vertical: boolean;
@@ -138,36 +135,7 @@ export const Columns: React.FC = () => {
     vertical,
     onTaskSelect,
     onTaskDelete,
-    boardViewType,
   } = useBoardData();
-
-  const renderTaskDetailModal = () => {
-    if (!selectedTaskId) {
-      return undefined;
-    }
-
-    const task = findTask(selectedTaskId);
-    if (!task) {
-      return null;
-    }
-
-    return (
-      <Modal
-        title={<TaskEditableTitle task={task} onTaskSelect={onTaskSelect} />}
-        visible={true}
-        onCancel={() => setSelectedTaskId(undefined)}
-        width={1200}
-        maxHeight={1000}
-      >
-        <TaskDetail
-          task={task}
-          onTaskSelect={onTaskSelect}
-          findSubtasks={findSubtasks}
-          onTaskDelete={onTaskDelete}
-        />
-      </Modal>
-    );
-  };
 
   const renderTaskDetailDrawer = () => {
     if (!selectedTaskId) {
@@ -186,7 +154,6 @@ export const Columns: React.FC = () => {
         destroyOnClose
         closable={false}
         width={"40%"}
-        maskStyle={{ backgroundColor: MASK_BG_COLOR }}
       >
         <TaskDetail
           task={task}
@@ -208,8 +175,7 @@ export const Columns: React.FC = () => {
         findTask={findTask}
         onTaskSelect={onTaskSelect}
       />
-      {boardViewType === "kanban" && <>{renderTaskDetailModal()}</>}
-      {boardViewType === "list" && <>{renderTaskDetailDrawer()}</>}
+      {renderTaskDetailDrawer()}
     </div>
   );
 };

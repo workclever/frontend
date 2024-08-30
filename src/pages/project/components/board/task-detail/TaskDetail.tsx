@@ -137,10 +137,11 @@ const TaskDetailKanbanLayout: React.FC<Props> = ({
   );
 };
 
-const TaskDetailListLayout: React.FC<Props> = ({
+export const TaskDetail: React.FC<Props> = ({
   task,
-  onTaskSelect,
   findSubtasks,
+  onTaskDelete,
+  onTaskSelect,
 }) => {
   const Pad: React.FC<{ children: React.ReactNode }> = (props) => (
     <div style={{ padding: 4 }}>{props.children}</div>
@@ -157,6 +158,10 @@ const TaskDetailListLayout: React.FC<Props> = ({
           <Space style={{ width: "100%" }}>
             <Reporter task={task} />
             <Assignee task={task} />
+          </Space>
+          <Space style={{ marginTop: 8 }}>
+            <TaskMover task={task} />
+            <TaskDelete task={task} onTaskDelete={onTaskDelete} />
           </Space>
         </Pad>
         <Divider style={{ margin: 0, padding: 0 }} />
@@ -177,18 +182,4 @@ const TaskDetailListLayout: React.FC<Props> = ({
       </Space>
     </>
   );
-};
-
-export const TaskDetail: React.FC<Props> = (props) => {
-  const boardViewType = useSelector(selectBoardViewType);
-
-  if (boardViewType === "list") {
-    return <TaskDetailListLayout {...props} />;
-  }
-
-  if (boardViewType === "kanban") {
-    return <TaskDetailKanbanLayout {...props} />;
-  }
-
-  return <>unimplemented task detail layout</>;
 };

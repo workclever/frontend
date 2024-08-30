@@ -62,7 +62,7 @@ export const useTaskUpdateProperty = (task: TaskType) => {
         return;
       }
 
-      // eslint-disable-next-line eqeqeq
+       
       if (internalTask[params.property] == params.value) {
         console.log("no need to go to api for task");
         return;

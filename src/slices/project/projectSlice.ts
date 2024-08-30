@@ -3,7 +3,7 @@ import { RootState } from "../../store";
 import { BoardViewType } from "../../types/Project";
 
 export type BoardFilters = {
-  searchText?: string;
+  filterText?: string;
   userIds?: number[];
 };
 

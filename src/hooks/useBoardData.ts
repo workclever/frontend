@@ -60,8 +60,8 @@ export const useBoardData = () => {
     });
 
     let nonSubtasksFiltered = nonSubtasks;
-    if (boardFilters.searchText) {
-      const trimedFilter = boardFilters.searchText.trim();
+    if (boardFilters.filterText) {
+      const trimedFilter = boardFilters.filterText.trim();
       nonSubtasksFiltered = nonSubtasksFiltered.filter(
         (r) =>
           r.Title.toLowerCase().indexOf(trimedFilter.toLowerCase()) > -1 ||

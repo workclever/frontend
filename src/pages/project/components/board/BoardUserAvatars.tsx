@@ -43,15 +43,18 @@ export const BoardUserAvatars = () => {
   };
 
   return (
-    <Avatar.Group maxPopoverTrigger="click">
-      {userIds.map((userId) => (
-        <UserAvatar
-          key={userId}
-          active={isActive(userId)}
-          userId={userId}
-          onClick={() => onUserClick(userId)}
-        />
-      ))}
-    </Avatar.Group>
+    <div style={{ display: "flex", alignItems: "center" }}>
+      <div style={{ marginRight: 4 }}>Filter by users:</div>
+      <Avatar.Group max={{ popover: { trigger: "click" } }}>
+        {userIds.map((userId) => (
+          <UserAvatar
+            key={userId}
+            active={isActive(userId)}
+            userId={userId}
+            onClick={() => onUserClick(userId)}
+          />
+        ))}
+      </Avatar.Group>
+    </div>
   );
 };

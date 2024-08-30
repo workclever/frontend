@@ -4,7 +4,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { store } from "./store";
 import { Provider } from "react-redux";
-import "@elastic/eui/dist/eui_theme_light.css";
+// import "@elastic/eui/dist/eui_theme_light.css";
 import { EuiProvider } from "@elastic/eui";
 
 // TODO remove while getting rid of @elastic/eui

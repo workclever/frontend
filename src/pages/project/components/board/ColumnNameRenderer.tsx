@@ -76,9 +76,9 @@ export const ColumnNameRenderer: React.FC<{
   ) : undefined;
 
   const titleRenderer = (
-    <Title level={5} style={{ flex: 1, marginBottom: 0 }}>
-      <Badge color={column.Color} />
-      {column.Name}
+    <Title level={5} style={{ display: "flex", flex: 1, marginBottom: 0 }}>
+      <Badge color={column.Color} style={{ marginRight: 8 }} />
+      <div style={{ flex: 1 }}>{column.Name}</div>
       <span style={{ marginLeft: 4 }}> {manageColumnRenderer}</span>
     </Title>
   );

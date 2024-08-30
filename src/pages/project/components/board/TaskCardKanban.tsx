@@ -20,13 +20,12 @@ const Wrapper = styled.div`
   margin-bottom: 8px;
   padding: 16px;
   cursor: pointer;
-  border: 1px solid ${blue[1]};
-  background-color: ${blue[0]};
+  background-color: white;
   border-radius: 4px;
+  filter: drop-shadow(0px 1px 1px #bababa);
 
   &:hover {
-    background-color: ${blue[1]};
-    border-color: ${blue[2]};
+    background-color: ${blue[0]};
   }
 `;
 
