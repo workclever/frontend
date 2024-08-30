@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
@@ -8,6 +7,9 @@ import { store } from "./store";
 import { Provider } from "react-redux";
 import "@elastic/eui/dist/eui_theme_light.css";
 import { EuiProvider } from "@elastic/eui";
+
+// TODO remove while getting rid of @elastic/eui
+import "./components/shared/editor/icon-fix";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
