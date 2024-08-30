@@ -6,7 +6,7 @@ import { useCreateBoardColumnMutation } from "../../../../services/api";
 import {
   selectSelectedProjectId,
   selectSelectedBoardId,
-} from "../../../../slices/projectSlice";
+} from "../../../../slices/project/projectSlice";
 import { ToggleOnClick } from "../../../../components/shared/ToggleOnClick";
 
 const TextWrapper = styled.div`

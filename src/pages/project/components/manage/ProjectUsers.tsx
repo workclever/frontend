@@ -10,7 +10,7 @@ import {
   useDeleteManagerUserForProjectMutation,
   useListProjectUserAccessesQuery,
 } from "../../../../services/api";
-import { selectSelectedProjectId } from "../../../../slices/projectSlice";
+import { selectSelectedProjectId } from "../../../../slices/project/projectSlice";
 import { BasicUserOutput } from "../../../../types/Project";
 import { EntityClasses, Permissions } from "../../../../types/Roles";
 import { Confirm } from "../../../../components/shared/Confirm";

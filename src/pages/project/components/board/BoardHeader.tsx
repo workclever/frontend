@@ -8,7 +8,7 @@ import {
   selectBoardViewType,
   setBoardFilter,
   setBoardViewType,
-} from "../../../../slices/projectSlice";
+} from "../../../../slices/project/projectSlice";
 import { BoardViewType } from "../../../../types/Project";
 import { BoardUserAvatars } from "./BoardUserAvatars";
 import { LayoutRightContent } from "../../../../layout/LayoutRightContent";

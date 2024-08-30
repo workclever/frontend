@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { useListProjectUsersQuery } from "../services/api";
-import { selectSelectedProjectId } from "../slices/projectSlice";
+import { selectSelectedProjectId } from "../slices/project/projectSlice";
 
 export const useProjectUsers = () => {
   const selectedProjectId = useSelector(selectSelectedProjectId);

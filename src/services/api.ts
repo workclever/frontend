@@ -13,7 +13,7 @@ import { dictionaryEndpoints } from "./endpoints/dictionaryEndpoint";
 import { siteSettingsEndpoints } from "./endpoints/siteSettingsEndpoints";
 import { customFieldEndpoints } from "./endpoints/customFieldEndpoints";
 import { API_URL } from "../constants";
-import { selectAuthToken } from "../slices/authSlice";
+import { selectAuthToken } from "../slices/auth/authSlice";
 import { userNotificationEndpoints } from "./endpoints/userNotificationEndpoints";
 import { TagTypes } from "./tags";
 

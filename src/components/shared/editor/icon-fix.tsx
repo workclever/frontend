@@ -1,5 +1,5 @@
+// @ts-nocheck
 import { appendIconComponentCache } from "@elastic/eui/es/components/icon/icon";
-
 import { icon as accessibility } from "@elastic/eui/es/components/icon/assets/accessibility";
 import { icon as addDataApp } from "@elastic/eui/es/components/icon/assets/app_add_data";
 import { icon as advancedSettingsApp } from "@elastic/eui/es/components/icon/assets/app_advanced_settings";

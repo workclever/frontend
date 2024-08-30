@@ -16,7 +16,7 @@ import { TaskDelete } from "./TaskDelete";
 import { TaskAttachments } from "./TaskAttachments";
 import { TaskEditableTitle } from "./TaskEditableTitle";
 import { useSelector } from "react-redux";
-import { selectBoardViewType } from "../../../../../slices/projectSlice";
+import { selectBoardViewType } from "../../../../../slices/project/projectSlice";
 import {
   Tabs,
   TabPane,

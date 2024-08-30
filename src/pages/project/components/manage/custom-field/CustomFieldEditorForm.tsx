@@ -13,7 +13,7 @@ import {
   useUpdateCustomFieldMutation,
   useDeleteCustomFieldMutation,
 } from "../../../../../services/api";
-import { selectSelectedProjectId } from "../../../../../slices/projectSlice";
+import { selectSelectedProjectId } from "../../../../../slices/project/projectSlice";
 import {
   CustomFieldSelectOption,
   CustomFieldType,

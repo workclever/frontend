@@ -1,5 +1,6 @@
 import {
   ArrowLeftOutlined,
+  PlusOutlined,
   QuestionCircleOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
@@ -12,12 +13,13 @@ import { Button } from "../../../../components/shared/primitives/Button";
 import { Modal } from "../../../../components/shared/primitives/Modal";
 import { Title } from "../../../../components/shared/primitives/Title";
 import { useCurrentProject } from "../../../../hooks/useCurrentProject";
-import { selectSelectedProjectId } from "../../../../slices/projectSlice";
+import { selectSelectedProjectId } from "../../../../slices/project/projectSlice";
 import { EntityClasses, Permissions } from "../../../../types/Roles";
 import { BoardList } from "../BoardList";
 import { ProjectSettings } from "../manage/ProjectSettings";
 import { useNavigate } from "react-router-dom";
 import { blue } from "@ant-design/colors";
+import { CreateBoardModal } from "./CreateBoardModal";
 
 const Header = styled.div`
   position: fixed;
@@ -44,16 +46,9 @@ export const LeftColumn = () => {
   const navigate = useNavigate();
   const project = useCurrentProject();
   const selectedProjectId = useSelector(selectSelectedProjectId);
-  const [projectSettingsVisible, setProjectSettingsVisible] =
+  const [showProjectSettingsModal, setShowProjectSettingsModal] =
     React.useState(false);
-
-  const showProjectSettings = () => {
-    setProjectSettingsVisible(true);
-  };
-
-  const onClose = () => {
-    setProjectSettingsVisible(false);
-  };
+  const [showCreateBoardModal, setShowCreateBoardModal] = React.useState(false);
 
   return (
     <div style={{ padding: 12 }}>
@@ -68,7 +63,25 @@ export const LeftColumn = () => {
         />
       </Header>
       <div style={{ paddingTop: 45 }}>
-        <Title level={5}>{project?.Name}</Title>
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          <Title level={5} style={{ flex: 1 }}>
+            {project?.Name}
+          </Title>
+          <Permission
+            entityClass={EntityClasses.Project}
+            entityId={Number(selectedProjectId)}
+            permission={Permissions.CanManageProject}
+            showWarning={false}
+          >
+            <Button
+              size="small"
+              onClick={() => setShowCreateBoardModal(true)}
+              type="text"
+            >
+              <PlusOutlined />
+            </Button>
+          </Permission>
+        </div>
         <BoardList />
       </div>
       <BottomWrapper>
@@ -85,7 +98,11 @@ export const LeftColumn = () => {
               permission={Permissions.CanManageProject}
               showWarning={false}
             >
-              <Button size="small" onClick={showProjectSettings} type="text">
+              <Button
+                size="small"
+                onClick={() => setShowProjectSettingsModal(true)}
+                type="text"
+              >
                 <SettingOutlined />
               </Button>
             </Permission>
@@ -94,14 +111,17 @@ export const LeftColumn = () => {
       </BottomWrapper>
       <Modal
         title="Project settings"
-        onCancel={onClose}
-        visible={projectSettingsVisible}
+        onCancel={() => setShowProjectSettingsModal(false)}
+        visible={showProjectSettingsModal}
         width={800}
       >
         <div style={{ padding: 8 }}>
           <ProjectSettings />
         </div>
       </Modal>
+      {showCreateBoardModal && (
+        <CreateBoardModal onCancel={() => setShowCreateBoardModal(false)} />
+      )}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setSelectedTaskId } from "../slices/projectSlice";
+import { goToProject, setSelectedTaskId } from "../slices/project/projectSlice";
 import { BoardType, TaskType } from "../types/Project";
 
 export const useAppNavigate = () => {
@@ -9,7 +9,7 @@ export const useAppNavigate = () => {
 
   return {
     goToProject: (projectId: number) => {
-      navigate(`/project/${projectId}`);
+      dispatch(goToProject(projectId));
     },
     goToBoard: (board: BoardType) => {
       navigate(`/project/${board.ProjectId}/board/${board.Id}`);

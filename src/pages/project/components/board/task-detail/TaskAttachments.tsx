@@ -3,7 +3,7 @@ import { Upload, message, UploadProps } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { UploadChangeParam } from "antd/lib/upload";
 import { API_URL, BACKEND_URL } from "../../../../../constants";
-import { selectAuthToken } from "../../../../../slices/authSlice";
+import { selectAuthToken } from "../../../../../slices/auth/authSlice";
 import { useSelector } from "react-redux";
 import { useListTaskAttachmentsQuery } from "../../../../../services/api";
 import { UploadFile } from "antd/lib/upload/interface";

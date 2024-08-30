@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { BACKEND_URL, API_URL } from "../../constants";
 import { useMe } from "../../hooks/useMe";
-import { selectAuthToken } from "../../slices/authSlice";
+import { selectAuthToken } from "../../slices/auth/authSlice";
 import { gray } from "@ant-design/colors";
 
 const computeAvatarUrl = (url?: string) => {

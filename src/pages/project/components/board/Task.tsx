@@ -29,7 +29,7 @@ import { EnhancedDropdownMenu } from "../../../../components/shared/EnhancedDrop
 import { TaskCardKanban } from "./TaskCardKanban";
 import { TaskCardCompact } from "./TaskCardCompact";
 import { useSelector } from "react-redux";
-import { selectBoardViewType } from "../../../../slices/projectSlice";
+import { selectBoardViewType } from "../../../../slices/project/projectSlice";
 import { Confirm } from "../../../../components/shared/Confirm";
 import { Tooltip } from "../../../../components/shared/primitives/Tooltip";
 import { Space } from "../../../../components/shared/primitives/Space";

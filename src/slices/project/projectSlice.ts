@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../store";
-import { BoardViewType } from "../types/Project";
+import { RootState } from "../../store";
+import { BoardViewType } from "../../types/Project";
 
 export type BoardFilters = {
   searchText?: string;
@@ -50,6 +50,7 @@ export const projectSlice = createSlice({
     setBoardViewType: (state, action: PayloadAction<BoardViewType>) => {
       state.boardViewType[Number(state.selectedBoardId)] = action.payload;
     },
+    goToProject: (_state, _action: PayloadAction<number>) => {},
   },
 });
 
@@ -59,6 +60,7 @@ export const {
   setSelectedTaskId,
   setBoardFilter,
   setBoardViewType,
+  goToProject,
 } = projectSlice.actions;
 
 export const selectSelectedProjectId = (state: RootState) =>

@@ -1,4 +1,3 @@
-import { ProLayout } from "@ant-design/pro-components";
 import React from "react";
 
 type Props = {
@@ -12,16 +11,7 @@ export const LoggedInLayout: React.FC<Props> = ({ children }) => {
         height: "100vh",
       }}
     >
-      <ProLayout
-        location={{
-          pathname: "/home",
-        }}
-        collapsedButtonRender={false}
-        // collapsed
-        headerRender={false}
-      >
-        {children}
-      </ProLayout>
+      {children}
     </div>
   );
 };

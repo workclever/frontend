@@ -10,7 +10,7 @@ import { omit } from "lodash";
 import { BaseOutput } from "../../../../types/BaseOutput";
 import { Confirm } from "../../../../components/shared/Confirm";
 import { useSelector } from "react-redux";
-import { selectSelectedProjectId } from "../../../../slices/projectSlice";
+import { selectSelectedProjectId } from "../../../../slices/project/projectSlice";
 import { Button } from "../../../../components/shared/primitives/Button";
 import { Space } from "../../../../components/shared/primitives/Space";
 import { Divider } from "../../../../components/shared/primitives/Divider";

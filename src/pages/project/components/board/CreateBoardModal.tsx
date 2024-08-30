@@ -3,9 +3,9 @@ import { useSelector } from "react-redux";
 import { HttpResult } from "../../../../components/shared/HttpResult";
 import { useAppNavigate } from "../../../../hooks/useAppNavigate";
 import { useCreateBoardMutation } from "../../../../services/api";
-import { selectSelectedProjectId } from "../../../../slices/projectSlice";
+import { selectSelectedProjectId } from "../../../../slices/project/projectSlice";
 
-type CreateProjectModalInput = {
+type FormValuesType = {
   Name: string;
 };
 
@@ -17,7 +17,7 @@ export const CreateBoardModal: React.FC<{ onCancel: () => void }> = ({
   const [createBoard, { error: createError, data: createResult }] =
     useCreateBoardMutation();
 
-  const onFinish = async (values: CreateProjectModalInput) => {
+  const onFinish = async (values: FormValuesType) => {
     const result = await createBoard({
       Name: values.Name,
       ProjectId: Number(selectedProjectId),
@@ -29,9 +29,9 @@ export const CreateBoardModal: React.FC<{ onCancel: () => void }> = ({
   };
 
   return (
-    <ModalForm<CreateProjectModalInput>
+    <ModalForm<FormValuesType>
       title={"Create new board"}
-      visible
+      open
       autoFocusFirstInput
       modalProps={{
         width: 300,

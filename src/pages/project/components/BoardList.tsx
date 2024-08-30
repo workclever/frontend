@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { selectSelectedBoardId } from "../../../slices/projectSlice";
+import { selectSelectedBoardId } from "../../../slices/project/projectSlice";
 import { useAppNavigate } from "../../../hooks/useAppNavigate";
 import React from "react";
 import { useBoards } from "../../../hooks/useBoards";

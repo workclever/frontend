@@ -8,7 +8,7 @@ import {
 import {
   selectSelectedBoardId,
   selectSelectedProjectId,
-} from "../../../../../../slices/projectSlice";
+} from "../../../../../../slices/project/projectSlice";
 import { TaskType } from "../../../../../../types/Project";
 import { HttpResult } from "../../../../../../components/shared/HttpResult";
 import { TaskSearchInput } from "../../../shared/TaskSearchInput";

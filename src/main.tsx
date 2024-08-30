@@ -2,7 +2,6 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter } from "react-router-dom";
 import { store } from "./store";
 import { Provider } from "react-redux";
 import "@elastic/eui/dist/eui_theme_light.css";
@@ -18,9 +17,7 @@ root.render(
   // <React.StrictMode>
   <EuiProvider colorMode="light">
     <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <App />
     </Provider>
   </EuiProvider>
   // </React.StrictMode>

@@ -10,7 +10,7 @@ import { useDeleteColumnMutation } from "../../../../services/api";
 import {
   selectBoardViewType,
   selectSelectedProjectId,
-} from "../../../../slices/projectSlice";
+} from "../../../../slices/project/projectSlice";
 import { ColumnType } from "../../../../types/Project";
 import { EntityClasses, Permissions } from "../../../../types/Roles";
 import { Confirm } from "../../../../components/shared/Confirm";

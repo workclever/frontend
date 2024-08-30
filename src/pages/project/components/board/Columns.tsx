@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import {
   selectSelectedBoardId,
   selectSelectedProjectId,
-} from "../../../../slices/projectSlice";
+} from "../../../../slices/project/projectSlice";
 import { debounce } from "lodash";
 import { Items, DndColumnContainers } from "../dnd/DndColumnContainers";
 import { ColumnNameRenderer } from "./ColumnNameRenderer";

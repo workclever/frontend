@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { useGetProjectQuery } from "../services/api";
-import { selectSelectedProjectId } from "../slices/projectSlice";
+import { selectSelectedProjectId } from "../slices/project/projectSlice";
 
 export const useCurrentProject = () => {
   const selectedProjectId = useSelector(selectSelectedProjectId);

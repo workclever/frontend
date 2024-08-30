@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { api } from "./services/api";
-import { authReducer } from "./slices/authSlice";
-import { projectReducer } from "./slices/projectSlice";
+import { authReducer } from "./slices/auth/authSlice";
+import { projectReducer } from "./slices/project/projectSlice";
 import { isRejectedWithValue, Middleware } from "@reduxjs/toolkit";
 import { message } from "antd";
+import createSagaMiddleware from "redux-saga";
+import { rootSaga } from "./slices/rootSaga";
 
 export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
   if (isRejectedWithValue(action)) {
@@ -23,6 +25,8 @@ export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
   return next(action);
 };
 
+const sagaMiddleware = createSagaMiddleware();
+
 export const store = configureStore({
   reducer: {
     [api.reducerPath]: api.reducer,
@@ -33,8 +37,10 @@ export const store = configureStore({
     getDefaultMiddleware({
       immutableCheck: false,
       serializableCheck: false,
-    }).concat(api.middleware, rtkQueryErrorLogger),
+    }).concat(api.middleware, rtkQueryErrorLogger, sagaMiddleware),
 });
+
+sagaMiddleware.run(rootSaga);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

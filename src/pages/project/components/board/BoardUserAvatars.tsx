@@ -6,7 +6,7 @@ import {
   selectBoardFilters,
   selectSelectedBoardId,
   setBoardFilter,
-} from "../../../../slices/projectSlice";
+} from "../../../../slices/project/projectSlice";
 import { UserAvatar } from "../../../../components/shared/UserAvatar";
 
 export const BoardUserAvatars = () => {

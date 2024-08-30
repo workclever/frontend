@@ -1,10 +1,11 @@
 import { api, useUpdateTaskPropertyMutation } from "../services/api";
-import { selectSelectedProjectId } from "../slices/projectSlice";
+import { selectSelectedProjectId } from "../slices/project/projectSlice";
 import { TaskType } from "../types/Project";
 import { useDispatch, useSelector } from "react-redux";
 import { optimisticUpdateDependOnApi } from "./optimisticUpdateDependOnApi";
 import { AnyAction } from "@reduxjs/toolkit";
 import { useProjectTasks } from "./useProjectTasks";
+import { BaseOutput } from "../types/BaseOutput";
 
 type UpdateTaskPropertyParams<T extends keyof TaskType = keyof TaskType> = {
   property: T;
@@ -23,7 +24,7 @@ export const useTaskUpdateProperty = (task: TaskType) => {
     const action = api.util.updateQueryData(
       "listProjectTasks",
       Number(selectedProjectId),
-      (draft) => {
+      (draft: BaseOutput<TaskType[]>) => {
         const taskToUpdate = (draft?.Data || []).find(
           (r) => r.Id === tempTask.Id
         ) as TaskType;

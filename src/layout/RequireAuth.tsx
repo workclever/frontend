@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
-import { selectAuthToken } from "../slices/authSlice";
+import { selectAuthToken } from "../slices/auth/authSlice";
 
 type Props = {
   children?: React.ReactNode;

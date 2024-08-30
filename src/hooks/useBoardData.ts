@@ -6,7 +6,7 @@ import {
   selectBoardFilters,
   selectBoardViewType,
   setSelectedTaskId as setSelectedTaskIdAction,
-} from "../slices/projectSlice";
+} from "../slices/project/projectSlice";
 import { BoardType, ColumnType, TaskType } from "../types/Project";
 import { useAppNavigate } from "./useAppNavigate";
 import { useBoards } from "./useBoards";
@@ -116,7 +116,7 @@ export const useBoardData = () => {
   }, []);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const onTaskDelete = React.useCallback((task: TaskType) => {
+  const onTaskDelete = React.useCallback((_task: TaskType) => {
     setSelectedTaskId(undefined);
     goToBoard(currentBoard);
   }, []);

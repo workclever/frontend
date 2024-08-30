@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useListProjectTasksQuery } from "../services/api";
-import { selectSelectedProjectId } from "../slices/projectSlice";
+import { selectSelectedProjectId } from "../slices/project/projectSlice";
 import { TaskType } from "../types/Project";
 
 export const useProjectTasks = (): { [key: number]: TaskType } => {

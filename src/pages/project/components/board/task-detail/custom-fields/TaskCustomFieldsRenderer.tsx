@@ -7,7 +7,7 @@ import {
 import {
   selectSelectedBoardId,
   selectSelectedProjectId,
-} from "../../../../../../slices/projectSlice";
+} from "../../../../../../slices/project/projectSlice";
 import { TaskType } from "../../../../../../types/Project";
 import styled from "styled-components";
 import { CustomFieldRow } from "./units/CustomFieldRow";

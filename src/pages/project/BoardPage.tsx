@@ -1,16 +1,19 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { Button } from "../../components/shared/primitives/Button";
 import { Empty } from "../../components/shared/primitives/Empty";
 import { Space } from "../../components/shared/primitives/Space";
 import {
-  selectSelectedBoardId,
   selectBoardViewType,
-} from "../../slices/projectSlice";
+  setSelectedProjectId,
+  setSelectedBoardId,
+} from "../../slices/project/projectSlice";
 import { BoardHeader } from "./components/board/BoardHeader";
 import { Columns } from "./components/board/Columns";
 import { LeftColumn } from "./components/board/LeftColumn";
 import { blue } from "@ant-design/colors";
+import { useParams } from "react-router-dom";
+import React from "react";
 
 const LeftWrapper = styled.div`
   width: 250px;
@@ -36,11 +39,24 @@ const ColumnsWrapper = styled.div`
 `;
 
 export const BoardPage = () => {
-  const selectedBoardId = useSelector(selectSelectedBoardId);
+  const dispatch = useDispatch();
+  const { projectId, boardId } = useParams();
   const boardViewType = useSelector(selectBoardViewType);
 
+  React.useEffect(() => {
+    if (projectId) {
+      dispatch(setSelectedProjectId(Number(projectId)));
+    }
+  }, [projectId]);
+
+  React.useEffect(() => {
+    if (boardId) {
+      dispatch(setSelectedBoardId(Number(boardId)));
+    }
+  }, [boardId]);
+
   const renderBoard = () => {
-    if (!selectedBoardId) {
+    if (!boardId) {
       return null;
     }
     return (
@@ -79,7 +95,7 @@ export const BoardPage = () => {
   };
 
   const renderContent = () => {
-    if (selectedBoardId) {
+    if (boardId) {
       return renderBoard();
     }
     return newBoardTrigger();

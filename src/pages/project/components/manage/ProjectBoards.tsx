@@ -7,7 +7,7 @@ import {
   useCreateBoardMutation,
   useDeleteBoardMutation,
 } from "../../../../services/api";
-import { selectSelectedProjectId } from "../../../../slices/projectSlice";
+import { selectSelectedProjectId } from "../../../../slices/project/projectSlice";
 import { BoardType } from "../../../../types/Project";
 import { CrudEditor } from "../../../../components/shared/CrudEditor";
 

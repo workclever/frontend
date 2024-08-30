@@ -13,7 +13,7 @@ import { UserNotifications } from "../components/user/UserNotifications";
 import { useMe } from "../hooks/useMe";
 import { Me } from "../components/user/Me";
 import { useGetUnreadNotificationsCountQuery } from "../services/api";
-import { logout } from "../slices/authSlice";
+import { logout } from "../slices/auth/authSlice";
 
 export const LayoutRightContent = () => {
   const { me, isAdmin } = useMe();

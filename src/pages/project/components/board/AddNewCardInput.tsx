@@ -6,7 +6,7 @@ import { useCreateTaskMutation } from "../../../../services/api";
 import {
   selectSelectedProjectId,
   selectSelectedBoardId,
-} from "../../../../slices/projectSlice";
+} from "../../../../slices/project/projectSlice";
 import { ColumnType } from "../../../../types/Project";
 import { ToggleOnClick } from "../../../../components/shared/ToggleOnClick";
 import { Tooltip } from "../../../../components/shared/primitives/Tooltip";

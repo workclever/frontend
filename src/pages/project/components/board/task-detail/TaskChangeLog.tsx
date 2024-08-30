@@ -6,7 +6,7 @@ import { useColumns } from "../../../../../hooks/useColumns";
 import { useFormattedDateTime } from "../../../../../hooks/useFormattedDateTime";
 import { useUser } from "../../../../../hooks/useUser";
 import { useListTaskChangeLogQuery } from "../../../../../services/api";
-import { selectSelectedBoardId } from "../../../../../slices/projectSlice";
+import { selectSelectedBoardId } from "../../../../../slices/project/projectSlice";
 import { TaskChangeLogType, TaskType } from "../../../../../types/Project";
 import { UserAvatar } from "../../../../../components/shared/UserAvatar";
 import { LoadingSpin } from "../../../../../components/shared/primitives/LoadingSpin";

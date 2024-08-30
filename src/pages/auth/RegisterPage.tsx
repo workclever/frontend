@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Space } from "antd";
 import { api, useRegisterMutation } from "../../services/api";
-import { setToken } from "../../slices/authSlice";
+import { setToken } from "../../slices/auth/authSlice";
 import { useDispatch } from "react-redux";
 import { HttpResult } from "../../components/shared/HttpResult";
 import {

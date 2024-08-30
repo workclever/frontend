@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { Button } from "../../../../../components/shared/primitives/Button";
 import { Modal } from "../../../../../components/shared/primitives/Modal";
 import { useListCustomFieldsQuery } from "../../../../../services/api";
-import { selectSelectedProjectId } from "../../../../../slices/projectSlice";
+import { selectSelectedProjectId } from "../../../../../slices/project/projectSlice";
 import { CustomField } from "../../../../../types/CustomField";
 import {
   createCustomFieldValues,
