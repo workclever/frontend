@@ -5,7 +5,7 @@ import {
   useUpdateProjectMutation,
 } from "../../../../services/api";
 import { HttpResult } from "../../../../components/shared/HttpResult";
-import { ProDescriptions } from "@ant-design/pro-components";
+import { FormItemProps, ProDescriptions } from "@ant-design/pro-components";
 import { omit } from "lodash";
 import { BaseOutput } from "../../../../types/BaseOutput";
 import { Confirm } from "../../../../components/shared/Confirm";
@@ -35,7 +35,7 @@ export const ProjectMeta: React.FC = () => {
     return "error";
   };
 
-  const getFormItemProps = (field: string) => {
+  const getFormItemProps = (field: string): FormItemProps | undefined => {
     const obj = updatedProps[field];
     if (!obj || obj.Result.Succeed) {
       return undefined;
@@ -43,7 +43,8 @@ export const ProjectMeta: React.FC = () => {
     return {
       validateStatus: "error",
       help: obj.Result.Message,
-      placeholder: field,
+      // TODO placeholder doesn't exist on FormItemProps type
+      // placeholder: field,
     };
   };
 

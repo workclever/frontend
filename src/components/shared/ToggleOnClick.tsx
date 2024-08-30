@@ -1,8 +1,8 @@
 import React from "react";
 
 type Props = {
-  defaultComponent: any;
-  toggledComponent: any;
+  defaultComponent: React.ReactNode;
+  toggledComponent: React.ReactNode;
 };
 
 export const ToggleOnClick: React.FC<Props> = ({

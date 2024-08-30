@@ -2,10 +2,16 @@ import { Button, Form, Input } from "antd";
 import { useChangePasswordMutation } from "../../services/api";
 import { HttpResult } from "../shared/HttpResult";
 
+type FormValuesType = {
+  OldPassword: string;
+  NewPassword: string;
+  NewPasswordRepeat: string;
+};
+
 export const ChangePassword = () => {
   const [changePassword, { error, data }] = useChangePasswordMutation();
 
-  const onFinish = async (values: any) => {
+  const onFinish = async (values: FormValuesType) => {
     if (values.NewPassword !== values.NewPasswordRepeat) {
       alert("Password confirmation doesn't match with the new password");
       return;
@@ -17,7 +23,7 @@ export const ChangePassword = () => {
   };
   return (
     <>
-      <Form
+      <Form<FormValuesType>
         name="change-password"
         initialValues={{}}
         onFinish={onFinish}

@@ -16,7 +16,7 @@ type TooltipPlacement =
 
 type Props = {
   title?: string;
-  children: any;
+  children: React.ReactNode;
   placement?: TooltipPlacement;
 };
 

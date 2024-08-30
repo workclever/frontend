@@ -1,4 +1,3 @@
-import { EndpointBuilder } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { BaseOutput } from "../../types/BaseOutput";
 import {
   UpdateTaskPropertyInput,
@@ -6,10 +5,9 @@ import {
   TaskType,
   TaskAttachmentType,
 } from "../../types/Project";
+import { Builder } from "../types";
 
-export const taskEndpoints = (
-  builder: EndpointBuilder<ReturnType<any>, string, "api">
-) => ({
+export const taskEndpoints = (builder: Builder) => ({
   listProjectTasks: builder.query<BaseOutput<TaskType[]>, number>({
     query: (id) => ({ url: `/Task/ListProjectTasks?projectId=${id}` }),
     providesTags: ["Task"],

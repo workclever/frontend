@@ -1,11 +1,13 @@
-import { Layout, Menu, MenuProps } from "antd";
-import { Content } from "antd/lib/layout/layout";
+import Layout, { Content } from "antd/lib/layout/layout";
 import Sider from "antd/lib/layout/Sider";
 import React from "react";
 import { Tabs, TabPane } from "./primitives/Tabs";
+import Menu, { MenuProps } from "antd/lib/menu";
+import { ItemType } from "antd/lib/menu/interface";
 
 type Props = {
   menuItems: MenuProps["items"];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   components: { [menuKey: string]: any };
   mode: "menu" | "tab";
 };
@@ -16,8 +18,10 @@ export const MasterDetail: React.FC<Props> = ({
   mode,
 }) => {
   const firstItem = menuItems ? menuItems[0] : undefined;
-  const [selectedKey, setSelectedKey] = React.useState<any>(firstItem?.key);
-  const Component = components[selectedKey];
+  const [selectedKey, setSelectedKey] = React.useState<React.Key | undefined>(
+    firstItem?.key
+  );
+  const Component = selectedKey ? components[selectedKey] : null;
 
   if (mode === "menu") {
     return (
@@ -34,7 +38,9 @@ export const MasterDetail: React.FC<Props> = ({
             <Sider width={250}>
               <Menu
                 mode="inline"
-                defaultSelectedKeys={[selectedKey]}
+                defaultSelectedKeys={
+                  selectedKey ? [selectedKey.toString()] : []
+                }
                 style={{ height: "100%" }}
                 items={menuItems}
                 onClick={({ key }) => setSelectedKey(key)}
@@ -57,9 +63,12 @@ export const MasterDetail: React.FC<Props> = ({
   return (
     <Layout>
       <Content style={{ padding: 8, minHeight: 280 }}>
-        <Tabs defaultActiveKey={selectedKey} onChange={setSelectedKey}>
-          {menuItems?.map((r) => (
-            <TabPane tab={(r as any).label} key={r?.key}>
+        <Tabs
+          defaultActiveKey={selectedKey?.toString()}
+          onChange={setSelectedKey}
+        >
+          {menuItems?.map((r: ItemType) => (
+            <TabPane tab={r && "label" in r ? r.label : r?.key} key={r?.key}>
               {Component && <Component />}
             </TabPane>
           ))}

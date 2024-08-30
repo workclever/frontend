@@ -28,7 +28,7 @@ import { Space } from "../../../../../components/shared/primitives/Space";
 export const createCustomFieldValues = {
   CustomFieldId: 0,
   FieldName: "",
-  FieldType: "",
+  FieldType: "" as CustomFieldType,
   Enabled: true,
   ShowInTaskCard: true,
   SelectOptions: [] as CustomFieldSelectOption[],
@@ -59,7 +59,7 @@ export const CustomFieldEditorForm: React.FC<{
     isSelectableCustomFieldType(initialValues.FieldType as CustomFieldType)
   );
 
-  const onFinish = async (values: any) => {
+  const onFinish = async (values: typeof createCustomFieldValues) => {
     if (isUpdateMode) {
       await updateCustomField({
         CustomFieldId: Number(initialValues.CustomFieldId),

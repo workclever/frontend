@@ -2,7 +2,7 @@ import { Modal, ModalFuncProps } from "antd";
 import React from "react";
 
 type Props = {
-  children?: any;
+  children?: React.ReactNode;
   title: string;
   content?: string;
   onConfirm: () => void;

@@ -1,9 +1,7 @@
-import { EndpointBuilder } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { BaseOutput } from "../../types/BaseOutput";
+import { Builder } from "../types";
 
-export const authEndpoints = (
-  builder: EndpointBuilder<ReturnType<any>, string, "api">
-) => ({
+export const authEndpoints = (builder: Builder) => ({
   login: builder.mutation<
     BaseOutput<string>,
     {

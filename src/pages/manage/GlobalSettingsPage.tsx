@@ -7,9 +7,10 @@ import { Roles } from "../../types/Roles";
 import { EditSiteSettings } from "./components/EditSiteSettings";
 import { RelationshipTypeDefinitions } from "./components/RelationshipTypeDefinitions";
 import { Users } from "./components/Users";
+import { MenuProps } from "antd/lib/menu";
 
 export const GlobalSettingsPage = () => {
-  const menuItems: any = [
+  const menuItems: MenuProps["items"] = [
     {
       label: "Site Settings",
       key: "site-settings",

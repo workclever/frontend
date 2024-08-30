@@ -1,4 +1,4 @@
-import { MenuProps } from "antd";
+import { MenuProps } from "antd/lib/menu";
 import { KeyOutlined, UserOutlined } from "@ant-design/icons";
 import { MasterDetail } from "../shared/MasterDetail";
 import { Account } from "./Account";

@@ -55,9 +55,9 @@ export const UserNotifications: React.FC<{ showAll: boolean }> = ({
       setNotificationsRead(null);
     }
   }, [setNotificationsRead, unreadNotificationsCount]);
-  const [expandedRowKeys, setExpandedRowKeys] = React.useState<readonly any[]>(
-    []
-  );
+  const [expandedRowKeys, setExpandedRowKeys] = React.useState<
+    readonly React.Key[]
+  >([]);
 
   const navigate = useNavigate();
   const { goToTask } = useAppNavigate();

@@ -1,10 +1,8 @@
-import { EndpointBuilder } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { BaseOutput } from "../../types/BaseOutput";
 import { TaskCommentType } from "../../types/Project";
+import { Builder } from "../types";
 
-export const taskCommentEndpoints = (
-  builder: EndpointBuilder<ReturnType<any>, string, "api">
-) => ({
+export const taskCommentEndpoints = (builder: Builder) => ({
   listTaskComments: builder.query<
     BaseOutput<{ [taskId: number]: TaskCommentType[] }>,
     number

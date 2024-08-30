@@ -142,7 +142,7 @@ const TaskDetailListLayout: React.FC<Props> = ({
   onTaskSelect,
   findSubtasks,
 }) => {
-  const Pad = (props: any) => (
+  const Pad: React.FC<{ children: React.ReactNode }> = (props) => (
     <div style={{ padding: 4 }}>{props.children}</div>
   );
 

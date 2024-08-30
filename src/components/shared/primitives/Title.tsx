@@ -2,7 +2,7 @@ import { gray } from "@ant-design/colors";
 import { Typography } from "antd";
 
 type Props = {
-  children: any;
+  children: React.ReactNode;
   level?: 1 | 2 | 3 | 4 | 5;
   style?: React.CSSProperties;
 };

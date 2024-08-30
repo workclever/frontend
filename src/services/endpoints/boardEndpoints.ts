@@ -1,10 +1,8 @@
-import { EndpointBuilder } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { BaseOutput } from "../../types/BaseOutput";
 import { BoardType } from "../../types/Project";
+import { Builder } from "../types";
 
-export const boardEndpoints = (
-  builder: EndpointBuilder<ReturnType<any>, string, "api">
-) => ({
+export const boardEndpoints = (builder: Builder) => ({
   listAllBoards: builder.query<BaseOutput<BoardType[]>, null>({
     query: () => ({ url: `/Board/ListAllBoards` }),
     providesTags: ["Board"],

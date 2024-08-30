@@ -8,7 +8,7 @@ type Props = {
   align?: "start" | "end" | "center" | "baseline";
   split?: React.ReactNode;
   wrap?: boolean;
-  children: any;
+  children: React.ReactNode;
 };
 
 export const Space: React.FC<Props> = ({

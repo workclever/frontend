@@ -12,7 +12,7 @@ export const RelationTypeSelector: React.FC<{
     <Select
       value={value}
       placeholder="Relation type"
-      onSelect={(option: any) => onSelect(option)}
+      onSelect={(option) => onSelect(option)}
       style={{ width: 150 }}
     >
       {relationTypeDefs.map((r) => (

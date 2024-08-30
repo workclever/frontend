@@ -1,10 +1,10 @@
 import { UserOutlined, LaptopOutlined } from "@ant-design/icons";
-import { MenuProps } from "antd";
 import { ProjectBoards } from "./ProjectBoards";
 import { ProjectMeta } from "./ProjectMeta";
 import { ProjectUsers } from "./ProjectUsers";
 import { MasterDetail } from "../../../../components/shared/MasterDetail";
 import { CustomFieldList } from "./custom-field/CustomFieldList";
+import { MenuProps } from "antd/lib/menu";
 
 export const ProjectSettings = () => {
   const menuItems: MenuProps["items"] = [

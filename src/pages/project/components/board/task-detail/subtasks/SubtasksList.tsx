@@ -23,6 +23,10 @@ import {
 import { Space } from "../../../../../../components/shared/primitives/Space";
 import { Modal } from "../../../../../../components/shared/primitives/Modal";
 
+type ManuTaskFormValuesType = {
+  Title: string;
+};
+
 export const SubtasksList: React.FC<{
   task: TaskType;
   onTaskSelect: (task: TaskType) => void;
@@ -42,7 +46,7 @@ export const SubtasksList: React.FC<{
 
   const [form] = Form.useForm();
 
-  const onFinishManualTask = async (values: any) => {
+  const onFinishManualTask = async (values: ManuTaskFormValuesType) => {
     await createTask({
       ProjectId: Number(selectedProjectId),
       BoardId: Number(selectedBoardId),
@@ -126,7 +130,7 @@ export const SubtasksList: React.FC<{
                 </Space>
               </TabPane>
               <TabPane tab="Manual task creation" key="2">
-                <Form
+                <Form<ManuTaskFormValuesType>
                   name="basic"
                   initialValues={{
                     Title: "",

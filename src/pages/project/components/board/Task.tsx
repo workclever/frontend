@@ -35,6 +35,7 @@ import { Tooltip } from "../../../../components/shared/primitives/Tooltip";
 import { Space } from "../../../../components/shared/primitives/Space";
 import { Tag } from "../../../../components/shared/primitives/Tag";
 import { gray } from "@ant-design/colors";
+import { MenuProps } from "antd/lib/menu";
 
 export type Props = {
   listeners: DraggableSyntheticListeners;
@@ -93,7 +94,7 @@ export const TaskAssigneeUnit: React.FC<Pick<Props, "task">> = ({ task }) => {
   return <UserAvatar userId={task.AssigneeUserId} />;
 };
 
-const FieldTag: React.FC<{ color?: string; children?: any }> = ({
+const FieldTag: React.FC<{ color?: string; children?: React.ReactNode }> = ({
   color,
   children,
 }) => {
@@ -244,7 +245,7 @@ export const Task: React.FC<Props> = ({
     Permissions.CanManageProject,
     EntityClasses.Project
   );
-  const menuItems: any = [
+  const menuItems: MenuProps["items"] = [
     {
       label: "Edit",
       key: "1",

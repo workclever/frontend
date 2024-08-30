@@ -1,11 +1,12 @@
-import { EndpointBuilder } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { BaseOutput } from "../../types/BaseOutput";
 import { TaskRelationTypeDef } from "../../types/TaskRelationTypeDef";
+import { Builder } from "../types";
 
-export const taskRelationTypeDefEndpoints = (
-  builder: EndpointBuilder<ReturnType<any>, string, "api">
-) => ({
-  listTaskRelationTypeDefs: builder.query<BaseOutput<TaskRelationTypeDef[]>, null>({
+export const taskRelationTypeDefEndpoints = (builder: Builder) => ({
+  listTaskRelationTypeDefs: builder.query<
+    BaseOutput<TaskRelationTypeDef[]>,
+    null
+  >({
     query: () => ({ url: `/TaskRelationTypeDef/ListTaskRelationTypeDefs` }),
     providesTags: ["TaskRelationTypeDef"],
   }),

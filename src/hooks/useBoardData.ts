@@ -115,6 +115,7 @@ export const useBoardData = () => {
     }
   }, []);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onTaskDelete = React.useCallback((task: TaskType) => {
     setSelectedTaskId(undefined);
     goToBoard(currentBoard);

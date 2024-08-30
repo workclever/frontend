@@ -479,7 +479,7 @@ export function DndColumnContainers({
               id={containerId}
               items={items[containerId]}
               style={containerStyle}
-              onRemove={() => handleRemove(containerId)}
+              // onRemove={() => handleRemove(containerId)}
               renderContainer={renderContainer}
             >
               <SortableContext items={items[containerId]} strategy={strategy}>
@@ -578,11 +578,11 @@ export function DndColumnContainers({
     );
   }
 
-  function handleRemove(containerID: UniqueIdentifier) {
-    setContainers((containers) =>
-      containers.filter((id) => id !== containerID)
-    );
-  }
+  // function handleRemove(containerID: UniqueIdentifier) {
+  //   setContainers((containers) =>
+  //     containers.filter((id) => id !== containerID)
+  //   );
+  // }
 
   function getNextContainerId() {
     const containerIds = Object.keys(items);

@@ -3,11 +3,7 @@ import {
   DeleteFilled,
   EditOutlined,
 } from "@ant-design/icons";
-import {
-  EditableProTable,
-  enUSIntl,
-  ProColumns,
-} from "@ant-design/pro-components";
+import { EditableProTable, ProColumns } from "@ant-design/pro-components";
 import { TableProps } from "antd";
 import React from "react";
 import { BaseOutput } from "../../types/BaseOutput";

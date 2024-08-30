@@ -121,6 +121,10 @@ const CommentList: React.FC<{
   </ConfigProvider>
 );
 
+type FormValuesType = {
+  content: string;
+};
+
 const Editor: React.FC<{
   task: TaskType;
   mode: "create" | "update";
@@ -138,7 +142,7 @@ const Editor: React.FC<{
 
   const [form] = Form.useForm();
 
-  const onFinish = async (params: any) => {
+  const onFinish = async (params: FormValuesType) => {
     if (mode === "create") {
       await createComment({
         Content: params.content,
@@ -158,7 +162,7 @@ const Editor: React.FC<{
 
   return (
     <>
-      <Form
+      <Form<FormValuesType>
         name="basic"
         initialValues={initialValues}
         onFinish={onFinish}

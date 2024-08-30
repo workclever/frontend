@@ -26,12 +26,12 @@ const Wrapper = styled.div`
   top: 0px;
   left: 250px;
   z-index: 1;
-  border-bottom: 1px solid ${blue[1]};;
+  border-bottom: 1px solid ${blue[1]}; ;
 `;
 
 const SearchInput = () => {
   const dispatch = useDispatch();
-  const onChange = debounce((e: any) => {
+  const onChange = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(
       setBoardFilter({
         key: "searchText",

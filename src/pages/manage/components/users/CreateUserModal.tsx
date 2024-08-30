@@ -2,13 +2,19 @@ import { ModalForm, ProForm, ProFormText } from "@ant-design/pro-components";
 import { useCreateUserMutation } from "../../../../services/api";
 import { HttpResult } from "../../../../components/shared/HttpResult";
 
+type FormValuesType = {
+  Email: string;
+  FullName: string;
+  Password: string;
+};
+
 export const CreateUserModal: React.FC<{
   onExit: () => void;
 }> = ({ onExit }) => {
   const [createUser, { data: createResult, error: createError }] =
     useCreateUserMutation();
 
-  const onFinish = async (values: any) => {
+  const onFinish = async (values: FormValuesType) => {
     await createUser({
       Email: values.Email,
       FullName: values.FullName,
@@ -17,9 +23,9 @@ export const CreateUserModal: React.FC<{
   };
 
   return (
-    <ModalForm<any>
+    <ModalForm<FormValuesType>
       title={"Create user"}
-      visible
+      open
       autoFocusFirstInput
       modalProps={{
         width: 400,

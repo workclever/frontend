@@ -3,6 +3,10 @@ import { HttpResult } from "../../../../components/shared/HttpResult";
 import { useUpdateUserMutation } from "../../../../services/api";
 import { BasicUserOutput } from "../../../../types/Project";
 
+type FormValuesType = {
+  FullName: string;
+};
+
 export const EditUserModal: React.FC<{
   editingUser: BasicUserOutput;
   onExit: () => void;
@@ -10,7 +14,7 @@ export const EditUserModal: React.FC<{
   const [updateUser, { data: updateResult, error: updateError }] =
     useUpdateUserMutation();
 
-  const onFinish = async (values: any) => {
+  const onFinish = async (values: FormValuesType) => {
     await updateUser({
       UserId: editingUser?.Id,
       FullName: values.FullName,
@@ -18,7 +22,7 @@ export const EditUserModal: React.FC<{
   };
 
   return (
-    <ModalForm<any>
+    <ModalForm<FormValuesType>
       title={`Edit user ${editingUser.Email}`}
       visible
       autoFocusFirstInput

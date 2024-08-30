@@ -4,6 +4,7 @@ import { useProjectUsers } from "../../../../hooks/useProjectUsers";
 import { useListAllUsersQuery } from "../../../../services/api";
 import { UserAvatar } from "../../../../components/shared/UserAvatar";
 import { Text } from "../../../../components/shared/primitives/Text";
+import { DefaultOptionType } from "antd/lib/select";
 
 type Props = {
   title: string;
@@ -29,8 +30,9 @@ export const UserSelector: React.FC<Props> = ({
   const computedUsers = withAllUsers ? allUsers?.Data || [] : users;
 
   // Update when renderer changed
-  const onFilter = (input: string, option: any) => {
-    const spanPath = option.children[1].props.children;
+  const onFilter = (input: string, option: DefaultOptionType) => {
+    const spanPath =
+      option && option.children ? option.children[1].props.children : "";
     return spanPath.toLowerCase().indexOf(input.toLowerCase()) >= 0;
   };
 
@@ -45,6 +47,8 @@ export const UserSelector: React.FC<Props> = ({
         onChange={(value) => onChange(value || 0)}
         allowClear={selectedUserId !== 0}
         onClear={() => onChange && onChange(0)}
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         filterOption={onFilter}
         loading={loading}
         disabled={loading || disabled}

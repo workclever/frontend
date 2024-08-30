@@ -14,12 +14,14 @@ const TextWrapper = styled.div`
   width: 280px;
 `;
 
+type FormValuesType = { Name: string };
+
 export const AddNewColumnInput: React.FC = () => {
   const selectedBoardId = useSelector(selectSelectedBoardId);
   const [createBoardColumn, { isLoading }] = useCreateBoardColumnMutation();
   const selectedProjectId = useSelector(selectSelectedProjectId);
 
-  const onFinish = async (values: any) => {
+  const onFinish = async (values: FormValuesType) => {
     await createBoardColumn({
       ProjectId: Number(selectedProjectId),
       BoardId: Number(selectedBoardId),
@@ -33,8 +35,9 @@ export const AddNewColumnInput: React.FC = () => {
       <PlusOutlined /> Add new column
     </TextWrapper>
   );
+
   const toggledComponent = (
-    <Form
+    <Form<FormValuesType>
       name="basic"
       initialValues={{
         Name: "",

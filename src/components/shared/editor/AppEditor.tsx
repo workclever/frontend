@@ -1,20 +1,21 @@
-import { EuiMarkdownEditor, EuiMarkdownEditorProps } from "@elastic/eui";
+import {
+  EuiMarkdownEditor,
+  EuiMarkdownEditorProps,
+  EuiMarkdownParseError,
+} from "@elastic/eui";
 import React from "react";
 
 type Props = {
   showToolbar: boolean;
   value?: string;
   onChange?: (newValue: string) => void;
-  onBlur?: (e: any) => void;
   height?: number;
   initialViewMode: EuiMarkdownEditorProps["initialViewMode"];
 };
 
 export const AppEditor: React.FC<Props> = ({
-  showToolbar,
   value,
   onChange,
-  onBlur,
   height = 350,
   initialViewMode,
 }) => {
@@ -26,9 +27,13 @@ export const AppEditor: React.FC<Props> = ({
     onChange && onChange(e);
   };
 
-  const onParse = React.useCallback((err: any, { messages, ast }: any) => {
-    setMessages(err ? [err] : messages);
-  }, []);
+  const onParse = React.useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (error: EuiMarkdownParseError | null, { messages }: any) => {
+      setMessages(error ? [error] : messages);
+    },
+    []
+  );
 
   return (
     <EuiMarkdownEditor

@@ -1,4 +1,3 @@
-import { EndpointBuilder } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { BaseOutput } from "../../types/BaseOutput";
 import {
   CustomField,
@@ -6,10 +5,9 @@ import {
   CustomFieldType,
   TaskCustomFields,
 } from "../../types/CustomField";
+import { Builder } from "../types";
 
-export const customFieldEndpoints = (
-  builder: EndpointBuilder<ReturnType<any>, string, "api">
-) => ({
+export const customFieldEndpoints = (builder: Builder) => ({
   listCustomFields: builder.query<BaseOutput<CustomField[]>, number>({
     query: (id) => ({ url: `/CustomField/ListCustomFields?projectId=${id}` }),
     providesTags: ["CustomField"],

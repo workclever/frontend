@@ -1,9 +1,7 @@
-import { EndpointBuilder } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { BaseOutput } from "../../types/BaseOutput";
+import { Builder } from "../types";
 
-export const dictionaryEndpoints = (
-  builder: EndpointBuilder<ReturnType<any>, string, "api">
-) => ({
+export const dictionaryEndpoints = (builder: Builder) => ({
   GetTimeZones: builder.query<BaseOutput<string[]>, null>({
     query: () => ({ url: `/Dictionary/GetTimeZones?` }),
   }),

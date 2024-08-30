@@ -15,6 +15,7 @@ import { customFieldEndpoints } from "./endpoints/customFieldEndpoints";
 import { API_URL } from "../constants";
 import { selectAuthToken } from "../slices/authSlice";
 import { userNotificationEndpoints } from "./endpoints/userNotificationEndpoints";
+import { TagTypes } from "./tags";
 
 export const baseQuery = fetchBaseQuery({
   baseUrl: API_URL,
@@ -31,19 +32,7 @@ export const baseQuery = fetchBaseQuery({
 export const api = createApi({
   reducerPath: "api",
   baseQuery,
-  tagTypes: [
-    "Project",
-    "Task",
-    "TaskRelation",
-    "ChangeLog",
-    "TaskComments",
-    "Board",
-    "User",
-    "UserRole",
-    "ProjectManagers",
-    "TaskRelationTypeDef",
-    "GetUser",
-  ],
+  tagTypes: TagTypes,
   endpoints: (builder) => ({
     ...authEndpoints(builder),
     ...userEndpoints(builder),

@@ -17,13 +17,15 @@ import {
 import { Space } from "../../components/shared/primitives/Space";
 import { Button } from "../../components/shared/primitives/Button";
 
+type FormValuesType = { Email: string; Password: string };
+
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [login, { isLoading, error }] = useLoginMutation();
 
-  const onFinish = async (formState: any) => {
+  const onFinish = async (formState: FormValuesType) => {
     if (isLoading) {
       return;
     }
@@ -34,7 +36,9 @@ export const LoginPage: React.FC = () => {
   };
 
   const [showWelcomeConfig, setShowWelcomeConfig] = React.useState(true);
-  const welcomeConfig: any = {
+  const welcomeConfig: React.ComponentProps<
+    typeof LoginFormPage
+  >["activityConfig"] = {
     style: {
       boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.2)",
       color: "#fff",
@@ -55,7 +59,7 @@ export const LoginPage: React.FC = () => {
         height: "100vh",
       }}
     >
-      <LoginFormPage
+      <LoginFormPage<FormValuesType>
         backgroundImageUrl="https://gw.alipayobjects.com/zos/rmsportal/FfdJeJRQWjEeGTpqgBKj.png"
         logo="https://github.githubassets.com/images/modules/logos_page/Octocat.png"
         title="WorkClever"

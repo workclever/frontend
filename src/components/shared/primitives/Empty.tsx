@@ -1,7 +1,8 @@
 import { Empty as AntdEmpty } from "antd";
+import React from "react";
 
 type Props = {
-  children: any;
+  children: React.ReactNode;
 };
 
 export const Empty: React.FC<Props> = ({ children }) => (

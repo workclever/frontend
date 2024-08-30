@@ -7,6 +7,11 @@ import {
 } from "../../../../services/api";
 import { BasicUserOutput } from "../../../../types/Project";
 
+type FormValuesType = {
+  UserId: number;
+  Roles: string[];
+};
+
 export const EditRolesModal: React.FC<{
   editingUser: BasicUserOutput;
   onExit: () => void;
@@ -23,7 +28,7 @@ export const EditRolesModal: React.FC<{
     { data: addUserToRolesResult, error: addUserToRolesError },
   ] = useAddUserToRolesMutation();
 
-  const onFinish = async (values: any) => {
+  const onFinish = async (values: FormValuesType) => {
     await addUserToRoles({
       UserId: editingUser.Id,
       Roles: values.Roles,
@@ -35,7 +40,7 @@ export const EditRolesModal: React.FC<{
   }
 
   return (
-    <ModalForm<any>
+    <ModalForm<FormValuesType>
       title={`Edit roles of ${editingUser.Email}`}
       visible
       autoFocusFirstInput

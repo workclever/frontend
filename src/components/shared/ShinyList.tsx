@@ -40,7 +40,7 @@ const Item = styled.div`
   }
 `;
 
-export const ShinyList = <T,>({
+export const ShinyList = <T extends { Id: number }>({
   title,
   dataSource,
   nameProp,
@@ -80,14 +80,14 @@ export const ShinyList = <T,>({
       )}
       {dataSource.map((r) => (
         <Item
-          key={(r as any)["Id"]}
+          key={r.Id}
           onClick={() => {
             onClick && onClick(r);
           }}
         >
           <div style={{ flex: 1 }}>
-            <div>{r[nameProp] as any}</div>
-            {subtitleProp && <div>{r[subtitleProp] as any}</div>}
+            <div>{r[nameProp] as unknown as string}</div>
+            {subtitleProp && <div>{r[subtitleProp] as unknown as string}</div>}
           </div>
           <ArrowRightOutlined />
         </Item>

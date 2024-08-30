@@ -18,7 +18,7 @@ export const SubtaskItem: React.FC<{
   const onConvertToTaskClick = () => {
     updateTask({
       property: "ParentTaskItemId",
-      value: null,
+      value: undefined,
     });
   };
   return (

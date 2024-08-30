@@ -1,10 +1,8 @@
-import { EndpointBuilder } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { BaseOutput } from "../../types/BaseOutput";
 import { SiteSettings } from "../../types/SiteSettings";
+import { Builder } from "../types";
 
-export const siteSettingsEndpoints = (
-  builder: EndpointBuilder<ReturnType<any>, string, "api">
-) => ({
+export const siteSettingsEndpoints = (builder: Builder) => ({
   getSiteSettings: builder.query<BaseOutput<SiteSettings>, null>({
     query: () => ({ url: "/SiteSettings/GetSiteSettings" }),
     providesTags: ["SiteSettings"],

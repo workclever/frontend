@@ -1,10 +1,8 @@
-import { EndpointBuilder } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { BaseOutput } from "../../types/BaseOutput";
 import { ListBoardColumnsOutput } from "../../types/Project";
+import { Builder } from "../types";
 
-export const columnEndpoints = (
-  builder: EndpointBuilder<ReturnType<any>, string, "api">
-) => ({
+export const columnEndpoints = (builder: Builder) => ({
   listBoardColumns: builder.query<ListBoardColumnsOutput, number>({
     query: (id) => ({ url: `/Column/ListBoardColumns?boardId=${id}` }),
     providesTags: ["Column"],

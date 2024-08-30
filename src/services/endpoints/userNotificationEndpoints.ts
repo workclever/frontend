@@ -1,10 +1,8 @@
-import { EndpointBuilder } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { BaseOutput } from "../../types/BaseOutput";
 import { UserNotificationType } from "../../types/User";
+import { Builder } from "../types";
 
-export const userNotificationEndpoints = (
-  builder: EndpointBuilder<ReturnType<any>, string, "api">
-) => ({
+export const userNotificationEndpoints = (builder: Builder) => ({
   listUserNotifications: builder.query<
     BaseOutput<UserNotificationType[]>,
     number

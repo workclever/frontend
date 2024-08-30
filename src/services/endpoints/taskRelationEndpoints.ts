@@ -1,10 +1,8 @@
-import { EndpointBuilder } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { BaseOutput } from "../../types/BaseOutput";
 import { ListTaskRelationsOutput } from "../../types/Project";
+import { Builder } from "../types";
 
-export const taskRelationEndpoints = (
-  builder: EndpointBuilder<ReturnType<any>, string, "api">
-) => ({
+export const taskRelationEndpoints = (builder: Builder) => ({
   createTaskRelation: builder.mutation<
     BaseOutput<string>,
     {

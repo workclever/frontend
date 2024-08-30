@@ -34,7 +34,7 @@ export const TaskAttachments: React.FC<{ task: TaskType }> = ({ task }) => {
     },
   };
 
-  const defaultFileList: UploadFile<any>[] = attachmentsData.map((r) => ({
+  const defaultFileList: UploadFile[] = attachmentsData.map((r) => ({
     name: r.Name,
     uid: r.AttachmentUrl,
     url: `${BACKEND_URL}${r.AttachmentUrl}`,

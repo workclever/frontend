@@ -72,7 +72,7 @@ export const TaskEditableTitle: React.FC<Props> = ({ task, onTaskSelect }) => {
                 setTempTitle(value);
                 onUpdatePropertyDebounced({
                   property: "Title",
-                  value: value,
+                  value,
                 });
               },
               onCancel: () => {

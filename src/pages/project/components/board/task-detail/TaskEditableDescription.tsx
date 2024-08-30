@@ -12,7 +12,7 @@ type Props = {
 export const TaskEditableDescription: React.FC<Props> = ({ task }) => {
   const { updateTask, error } = useTaskUpdateProperty(task);
 
-  const onChange = (e: any) => {
+  const onChange = (e: string) => {
     updateTask({
       property: "Description",
       value: e,

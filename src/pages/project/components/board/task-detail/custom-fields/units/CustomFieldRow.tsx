@@ -35,7 +35,7 @@ export const CustomFieldRow: React.FC<{
   const [createCustomFieldTaskValue, { isLoading }] =
     useCreateCustomFieldTaskValueMutation();
 
-  const onUpdateValue = (newValue: any) => {
+  const onUpdateValue = (newValue: string | number | number[] | boolean) => {
     createCustomFieldTaskValue({
       TaskId: task.Id,
       CustomFieldId: field.Id,
@@ -61,7 +61,7 @@ export const CustomFieldRow: React.FC<{
   }, [activeInputId, field]);
 
   const getInput = () => {
-    const inputs: { [key: string]: any } = {
+    const inputs: { [key: string]: React.ReactNode } = {
       [CustomFieldType.Text]: (
         <CustomFieldRowText
           field={field}

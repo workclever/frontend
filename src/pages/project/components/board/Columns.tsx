@@ -23,12 +23,11 @@ import { MASK_BG_COLOR } from "../../../../components/constants";
 import { TaskEditableTitle } from "./task-detail/TaskEditableTitle";
 import { useBoardData } from "../../../../hooks/useBoardData";
 import { Modal } from "../../../../components/shared/primitives/Modal";
-import { gray } from "@ant-design/colors";
 
 const DndInsideContainers: React.FC<{
   vertical: boolean;
   findTask: (id: number) => TaskType;
-  onTaskSelect: any;
+  onTaskSelect: (task: TaskType) => void;
   findSubtasks: (id: number) => TaskType[];
   findColumn: any;
   dndItems: {
@@ -181,7 +180,7 @@ export const Columns: React.FC = () => {
     }
 
     return (
-      (<Drawer
+      <Drawer
         open
         onClose={() => setSelectedTaskId(undefined)}
         destroyOnClose
@@ -195,7 +194,7 @@ export const Columns: React.FC = () => {
           findSubtasks={findSubtasks}
           onTaskDelete={onTaskDelete}
         />
-      </Drawer>)
+      </Drawer>
     );
   };
 

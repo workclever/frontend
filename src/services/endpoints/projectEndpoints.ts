@@ -1,11 +1,9 @@
-import { EndpointBuilder } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { BaseOutput } from "../../types/BaseOutput";
 import { BasicUserOutput, ProjectType } from "../../types/Project";
 import { EntityClasses, UserEntityAccess } from "../../types/Roles";
+import { Builder } from "../types";
 
-export const projectEndpoints = (
-  builder: EndpointBuilder<ReturnType<any>, string, "api">
-) => ({
+export const projectEndpoints = (builder: Builder) => ({
   listProjectUsers: builder.query<BaseOutput<BasicUserOutput[]>, number>({
     query: (id) => ({ url: `/Project/ListProjectUsers?projectId=${id}` }),
   }),

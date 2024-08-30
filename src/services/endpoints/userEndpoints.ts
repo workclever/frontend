@@ -1,12 +1,10 @@
-import { EndpointBuilder } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { BaseOutput } from "../../types/BaseOutput";
 import { BasicUserOutput, ListUserProjectsOutput } from "../../types/Project";
 import { EntityClasses, Permissions } from "../../types/Roles";
 import { GetUserOutput } from "../../types/User";
+import { Builder } from "../types";
 
-export const userEndpoints = (
-  builder: EndpointBuilder<ReturnType<any>, string, "api">
-) => ({
+export const userEndpoints = (builder: Builder) => ({
   getUser: builder.query<GetUserOutput, null>({
     query: () => ({ url: "/User/GetUser" }),
     providesTags: ["GetUser"],
@@ -79,7 +77,7 @@ export const userEndpoints = (
     >,
     null
   >({
-    query: (id) => ({ url: `/User/GetAllRoles` }),
+    query: () => ({ url: `/User/GetAllRoles` }),
   }),
   addUserToRoles: builder.mutation<
     BaseOutput<string>,
@@ -108,7 +106,7 @@ export const userEndpoints = (
     query: () => ({
       url: `/User/ListMyAccessedEntities`,
     }),
-    providesTags: ["AccessedEntities"]
+    providesTags: ["AccessedEntities"],
   }),
   changePassword: builder.mutation<
     BaseOutput<string>,

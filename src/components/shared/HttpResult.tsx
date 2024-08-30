@@ -6,10 +6,10 @@ type Props = {
   style?: React.CSSProperties;
   error?:
     | {
-        data: BaseOutput<any>;
+        data: BaseOutput<unknown>;
       }
     | SerializedError;
-  result?: BaseOutput<any>;
+  result?: BaseOutput<unknown>;
 };
 
 export const HttpResult: React.FC<Props> = ({ error, result, style }) => {

@@ -13,13 +13,19 @@ import {
 } from "@ant-design/icons";
 import { LoginFormPage, ProFormText } from "@ant-design/pro-components";
 
+type FormValuesType = {
+  FullName: string;
+  Email: string;
+  Password: string;
+};
+
 export const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [register, { isLoading, error }] = useRegisterMutation();
 
-  const onFinish = async (formState: any) => {
+  const onFinish = async (formState: FormValuesType) => {
     if (isLoading) {
       return;
     }
@@ -35,7 +41,7 @@ export const RegisterPage: React.FC = () => {
         height: "100vh",
       }}
     >
-      <LoginFormPage
+      <LoginFormPage<FormValuesType>
         backgroundImageUrl="https://gw.alipayobjects.com/zos/rmsportal/FfdJeJRQWjEeGTpqgBKj.png"
         logo="https://github.githubassets.com/images/modules/logos_page/Octocat.png"
         title="WorkClever"

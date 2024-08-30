@@ -6,9 +6,9 @@ import { optimisticUpdateDependOnApi } from "./optimisticUpdateDependOnApi";
 import { AnyAction } from "@reduxjs/toolkit";
 import { useProjectTasks } from "./useProjectTasks";
 
-type UpdateTaskPropertyParams = {
-  property: keyof TaskType;
-  value: any;
+type UpdateTaskPropertyParams<T extends keyof TaskType = keyof TaskType> = {
+  property: T;
+  value: TaskType[T];
 };
 
 export const useTaskUpdateProperty = (task: TaskType) => {

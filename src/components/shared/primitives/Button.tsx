@@ -7,6 +7,7 @@ export declare type NativeButtonProps = {
   htmlType?: ButtonHTMLType;
   onClick?: React.MouseEventHandler<HTMLElement>;
 } & BaseButtonProps &
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Omit<React.ButtonHTMLAttributes<any>, "type" | "onClick">;
 
 export type ButtonProps = {

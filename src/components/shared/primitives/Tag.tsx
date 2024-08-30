@@ -1,9 +1,9 @@
 import { Tag as AntdTag } from "antd";
 
 type Props = {
-  color?: any;
+  color?: string;
   style?: React.CSSProperties;
-  children?: any;
+  children?: React.ReactNode;
 };
 
 export const Tag: React.FC<Props> = ({ color, style, children }) => (

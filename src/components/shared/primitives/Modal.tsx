@@ -6,7 +6,7 @@ type Props = {
   visible: boolean;
   onCancel?: () => void;
   width?: number;
-  children: any;
+  children: React.ReactNode;
   maxHeight?: number;
 };
 
