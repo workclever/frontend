@@ -1,4 +1,9 @@
-import { Modal as AntdModal } from "antd";
+import AtlasKitModal, {
+  ModalBody,
+  ModalHeader,
+  ModalTitle,
+  ModalTransition,
+} from "@atlaskit/modal-dialog";
 
 type Props = {
   title?: React.ReactNode;
@@ -9,6 +14,7 @@ type Props = {
   maxHeight?: number;
 };
 
+// TODOAK close button
 export const Modal: React.FC<Props> = ({
   visible,
   onCancel,
@@ -16,20 +22,17 @@ export const Modal: React.FC<Props> = ({
   width,
   children,
   maxHeight,
-}) => (
-  <AntdModal
-    open={visible}
-    onCancel={onCancel}
-    title={title}
-    width={width}
-    footer={null}
-    centered
-    bodyStyle={{
-      padding: 0,
-      overflow: "auto",
-      maxHeight,
-    }}
-  >
-    {children}
-  </AntdModal>
-);
+}) => {
+  return (
+    <ModalTransition>
+      {visible && (
+        <AtlasKitModal width={width} height={maxHeight} onClose={onCancel}>
+          <ModalHeader>
+            <ModalTitle>{title}</ModalTitle>
+          </ModalHeader>
+          <ModalBody>{children}</ModalBody>
+        </AtlasKitModal>
+      )}
+    </ModalTransition>
+  );
+};

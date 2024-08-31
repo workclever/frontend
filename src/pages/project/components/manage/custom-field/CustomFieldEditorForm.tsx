@@ -1,4 +1,4 @@
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { MinusCircleOutlined } from "@ant-design/icons";
 import {
   ProForm,
   ProFormText,
@@ -103,7 +103,7 @@ export const CustomFieldEditorForm: React.FC<{
         searchConfig: {
           submitText: "Save",
         },
-        render: (props, doms) => {
+        render: (_props, doms) => {
           return [
             // Get the 'Submit' dom only - on need to render reset (which is [0] item)
             doms[1],
@@ -119,7 +119,7 @@ export const CustomFieldEditorForm: React.FC<{
                   onCloseModal();
                 }}
               >
-                <Button danger>Delete field</Button>
+                <Button appearance="danger">Delete field</Button>
               </Confirm.Embed>
             ),
           ];
@@ -175,15 +175,15 @@ export const CustomFieldEditorForm: React.FC<{
               ))}
               <Form.Item>
                 <Button
-                  type="dashed"
+                  appearance="discovery"
                   onClick={() =>
                     add({
                       Color: randomColor(),
                       Name: `Option ${fields.length + 1}`,
                     })
                   }
-                  block
-                  icon={<PlusOutlined />}
+                  // TODOAK  block
+                  // TODOAK iconAfter={<PlusOutlined />}
                 >
                   Add select option
                 </Button>

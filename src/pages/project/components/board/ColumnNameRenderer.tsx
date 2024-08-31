@@ -1,6 +1,5 @@
 import { DeleteColumnOutlined, EditOutlined } from "@ant-design/icons";
 import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
-import { Badge } from "antd";
 import { ItemType } from "antd/es/menu/interface";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -77,7 +76,14 @@ export const ColumnNameRenderer: React.FC<{
 
   const titleRenderer = (
     <Title level={5} style={{ display: "flex", flex: 1, marginBottom: 0 }}>
-      <Badge color={column.Color} style={{ marginRight: 8 }} />
+      <div
+        style={{
+          marginRight: 8,
+          width: 5,
+          height: 5,
+          backgroundColor: column.Color,
+        }}
+      />
       <div style={{ flex: 1 }}>{column.Name}</div>
       <span style={{ marginLeft: 4 }}> {manageColumnRenderer}</span>
     </Title>

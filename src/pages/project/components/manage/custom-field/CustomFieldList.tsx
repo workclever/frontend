@@ -65,7 +65,7 @@ export const CustomFieldList = () => {
         size="small"
         footer={() => (
           <Button
-            type="primary"
+            appearance="primary"
             onClick={() => {
               setInitialValues(createCustomFieldValues);
               setShowFormModalVisible(true);

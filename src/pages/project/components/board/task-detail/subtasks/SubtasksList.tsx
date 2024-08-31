@@ -1,4 +1,4 @@
-import { ConfigProvider, List, Form, Input } from "antd";
+import { ConfigProvider, Form, Input } from "antd";
 import React from "react";
 import { useSelector } from "react-redux";
 import {
@@ -16,12 +16,10 @@ import { TaskDetailBlock } from "../TaskDetailBlock";
 import { isSubtask } from "../utils";
 import { SubtaskItem } from "./SubtaskItem";
 import { Button } from "../../../../../../components/shared/primitives/Button";
-import {
-  Tabs,
-  TabPane,
-} from "../../../../../../components/shared/primitives/Tabs";
-import { Space } from "../../../../../../components/shared/primitives/Space";
 import { Modal } from "../../../../../../components/shared/primitives/Modal";
+import { List } from "../../../../../../components/shared/primitives/List";
+import Tabs, { Tab, TabList, TabPanel } from "@atlaskit/tabs";
+import { Stack, xcss } from "@atlaskit/primitives";
 
 type ManuTaskFormValuesType = {
   Title: string;
@@ -83,9 +81,7 @@ export const SubtasksList: React.FC<{
           renderEmpty={() => <>There is no subtasks found for this task</>}
         >
           <List
-            itemLayout="horizontal"
             dataSource={subtasks}
-            split={false}
             renderItem={(task) => (
               <SubtaskItem
                 key={(task as TaskType).Id}
@@ -104,16 +100,25 @@ export const SubtasksList: React.FC<{
           width={600}
         >
           <div style={{ padding: 16 }}>
-            <Tabs defaultActiveKey="1" size="small">
-              <TabPane tab="Search task" key="1">
-                <Space direction="vertical">
+            <Tabs id="default">
+              <TabList>
+                <Tab>Search task</Tab>
+                <Tab>Manual task creation</Tab>
+              </TabList>
+              <TabPanel>
+                <Stack
+                  space="space.100"
+                  xcss={xcss({
+                    marginTop: "space.100",
+                  })}
+                >
                   <TaskSearchInput
-                    value={searchFoundTask?.Id}
+                    selectedTaskId={searchFoundTask?.Id}
                     onFind={onTaskSearchFound}
                   />
                   <Button
-                    disabled={!searchFoundTask}
-                    type="primary"
+                    isDisabled={!searchFoundTask}
+                    appearance="primary"
                     onClick={() => {
                       createSubtaskRelation({
                         ParentTaskItemId: task.Id,
@@ -127,34 +132,44 @@ export const SubtasksList: React.FC<{
                     error={createSubtaskRelationError}
                     result={createSubtaskRelationResult}
                   />
-                </Space>
-              </TabPane>
-              <TabPane tab="Manual task creation" key="2">
-                <Form<ManuTaskFormValuesType>
-                  name="basic"
-                  initialValues={{
-                    Title: "",
-                  }}
-                  onFinish={onFinishManualTask}
-                  autoComplete="off"
-                  form={form}
+                </Stack>
+              </TabPanel>
+              <TabPanel>
+                <Stack
+                  space="space.100"
+                  xcss={xcss({
+                    marginTop: "space.100",
+                  })}
                 >
-                  <Form.Item
-                    name="Title"
-                    rules={[
-                      { required: true, message: "Please enter task title" },
-                    ]}
+                  <Form<ManuTaskFormValuesType>
+                    name="basic"
+                    initialValues={{
+                      Title: "",
+                    }}
+                    onFinish={onFinishManualTask}
+                    autoComplete="off"
+                    form={form}
                   >
-                    <Input placeholder="Create a new sub task" />
-                  </Form.Item>
-                  <Form.Item>
-                    <Button htmlType="submit" type="primary">
-                      Create subtask
-                    </Button>
-                  </Form.Item>
-                </Form>
-                <HttpResult error={createTaskError} result={createTaskResult} />
-              </TabPane>
+                    <Form.Item
+                      name="Title"
+                      rules={[
+                        { required: true, message: "Please enter task title" },
+                      ]}
+                    >
+                      <Input placeholder="Create a new sub task" />
+                    </Form.Item>
+                    <Form.Item>
+                      <Button type="submit" appearance="primary">
+                        Create subtask
+                      </Button>
+                    </Form.Item>
+                  </Form>
+                  <HttpResult
+                    error={createTaskError}
+                    result={createTaskResult}
+                  />
+                </Stack>
+              </TabPanel>
             </Tabs>
           </div>
         </Modal>

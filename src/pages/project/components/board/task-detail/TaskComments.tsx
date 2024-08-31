@@ -1,6 +1,4 @@
-import { CloseOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { List, Form, ConfigProvider } from "antd";
-import { Comment as AntdComment } from "@ant-design/compatible";
+import { Form } from "antd";
 import React from "react";
 import { useFormattedDateTime } from "../../../../../hooks/useFormattedDateTime";
 import { useMe } from "../../../../../hooks/useMe";
@@ -21,6 +19,9 @@ import { Button } from "../../../../../components/shared/primitives/Button";
 import { Tooltip } from "../../../../../components/shared/primitives/Tooltip";
 import { LoadingSpin } from "../../../../../components/shared/primitives/LoadingSpin";
 import { Text } from "../../../../../components/shared/primitives/Text";
+import { List } from "../../../../../components/shared/primitives/List";
+import AtlasKitComment, { CommentTime, CommentAction } from "@atlaskit/comment";
+import { Stack, xcss } from "@atlaskit/primitives";
 
 type Props = {
   task: TaskType;
@@ -37,14 +38,7 @@ const Comment: React.FC<{
   const formattedDateTime = useFormattedDateTime(comment.DateCreated);
 
   const editAction = (
-    <Tooltip title={editing ? "" : "Edit comment"}>
-      <Button
-        size="small"
-        type="text"
-        onClick={() => setEditing(!editing)}
-        icon={editing ? <CloseOutlined /> : <EditOutlined />}
-      />
-    </Tooltip>
+    <CommentAction onClick={() => setEditing(!editing)}>Edit</CommentAction>
   );
 
   const [deleteComment, { isLoading: isDeleting }] =
@@ -61,13 +55,13 @@ const Comment: React.FC<{
       title="Are you sure to delete this comment?"
       onConfirm={onDeleteClick}
     >
-      {isDeleting ? (
-        <LoadingSpin />
-      ) : (
-        <Tooltip title="Delete comment">
-          <Button size="small" type="text" icon={<DeleteOutlined />} />
-        </Tooltip>
-      )}
+      <CommentAction>
+        {isDeleting ? (
+          <LoadingSpin />
+        ) : (
+          <Tooltip title="Delete comment">Delete</Tooltip>
+        )}
+      </CommentAction>
     </Confirm.Embed>
   );
   const actions = isAdmin || isMe ? [editAction, deleteAction] : undefined;
@@ -77,11 +71,7 @@ const Comment: React.FC<{
   };
 
   return (
-    <AntdComment
-      style={{
-        padding: 0,
-        margin: 0,
-      }}
+    <AtlasKitComment
       content={
         editing ? (
           <Editor
@@ -96,9 +86,7 @@ const Comment: React.FC<{
       }
       author={<Text strong>{fullName}</Text>}
       avatar={<UserAvatar userId={comment.UserId} />}
-      datetime={
-        <Tooltip title={formattedDateTime}>{formattedDateTime}</Tooltip>
-      }
+      time={<CommentTime>{formattedDateTime}</CommentTime>}
       actions={actions}
     />
   );
@@ -107,19 +95,19 @@ const Comment: React.FC<{
 const CommentList: React.FC<{
   task: TaskType;
   comments: TaskCommentType[];
-}> = ({ task, comments }) => (
-  <ConfigProvider renderEmpty={() => <>No comments found, add a comment</>}>
+}> = ({ task, comments }) => {
+  if (comments.length === 0) {
+    return <>No comments found, add a comment</>;
+  }
+  return (
     <List
       dataSource={comments}
-      header=""
-      itemLayout="horizontal"
       renderItem={(comment) => (
         <Comment key={comment.Id} task={task} comment={comment} />
       )}
-      style={{ padding: 0 }}
     />
-  </ConfigProvider>
-);
+  );
+};
 
 type FormValuesType = {
   content: string;
@@ -182,10 +170,10 @@ const Editor: React.FC<{
         </Form.Item>
         <Form.Item>
           <Button
-            htmlType="submit"
-            type="primary"
-            loading={isLoading}
-            disabled={isLoading}
+            type="submit"
+            appearance="primary"
+            isLoading={isLoading}
+            isDisabled={isLoading}
           >
             {mode === "create" ? "Comment" : "Update"}
           </Button>
@@ -203,12 +191,18 @@ export const TaskComments: React.FC<Props> = ({ task }) => {
   const { data: comments } = useListTaskCommentsQuery(task.BoardId);
   const commentsData = comments?.Data || {};
   return (
-    <>
+    <Stack
+      space="space.100"
+      xcss={xcss({
+        marginTop: "space.100",
+        width: "100%",
+      })}
+    >
       <CommentList task={task} comments={commentsData[task.Id] || []} />
-      <AntdComment
+      <AtlasKitComment
         avatar={<UserAvatar userId={0} />}
         content={<Editor task={task} mode="create" />}
       />
-    </>
+    </Stack>
   );
 };

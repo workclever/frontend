@@ -73,11 +73,7 @@ export const LeftColumn = () => {
             permission={Permissions.CanManageProject}
             showWarning={false}
           >
-            <Button
-              size="small"
-              onClick={() => setShowCreateBoardModal(true)}
-              type="text"
-            >
+            <Button onClick={() => setShowCreateBoardModal(true)}>
               <PlusOutlined />
             </Button>
           </Permission>
@@ -87,7 +83,7 @@ export const LeftColumn = () => {
       <BottomWrapper>
         <FlexBasicLayout
           left={
-            <Button size="small" type="text">
+            <Button>
               <QuestionCircleOutlined />
             </Button>
           }
@@ -98,11 +94,7 @@ export const LeftColumn = () => {
               permission={Permissions.CanManageProject}
               showWarning={false}
             >
-              <Button
-                size="small"
-                onClick={() => setShowProjectSettingsModal(true)}
-                type="text"
-              >
+              <Button onClick={() => setShowProjectSettingsModal(true)}>
                 <SettingOutlined />
               </Button>
             </Permission>

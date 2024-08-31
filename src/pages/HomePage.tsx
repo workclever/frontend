@@ -25,9 +25,8 @@ export const HomePage = () => {
               You don't have any project! To get started, create a project first
             </span>
             <Button
-              type="primary"
+              appearance="primary"
               onClick={() => setShowCreateProjectModal(true)}
-              size="large"
             >
               Create Now
             </Button>

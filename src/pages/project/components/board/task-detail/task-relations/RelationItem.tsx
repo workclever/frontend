@@ -1,15 +1,14 @@
-import { EditOutlined } from "@ant-design/icons";
-import { List } from "antd";
+// import { EditOutlined } from "@ant-design/icons";
 import React from "react";
 import { useTask } from "../../../../../../hooks/useTask";
 import { useTaskRelationTypeDefs } from "../../../../../../hooks/useTaskRelationTypeDefs";
 import { TaskType, TaskRelationType } from "../../../../../../types/Project";
-import { HoverableListItem } from "../../../../../../components/shared/HoverableListItem";
 import { TaskIdRenderer } from "../../../../../../components/shared/TaskIdRenderer";
 import { NewRelationModal } from "./NewRelationModal";
 import { Button } from "../../../../../../components/shared/primitives/Button";
 import { Space } from "../../../../../../components/shared/primitives/Space";
 import { Tag } from "../../../../../../components/shared/primitives/Tag";
+import { blue } from "@ant-design/colors";
 
 export const RelationItem: React.FC<{
   baseTask: TaskType;
@@ -41,32 +40,27 @@ export const RelationItem: React.FC<{
   };
 
   return (
-    <HoverableListItem>
-      <List.Item
-        style={{ padding: 0 }}
-        extra={
-          <Button
-            onClick={() => setEditing(true)}
-            icon={<EditOutlined style={{ fontSize: 14 }} />}
-            size="small"
-          />
-        }
+    <>
+      <div
+        style={{ display: "flex", alignItems: "center", flexDirection: "row" }}
       >
-        <List.Item.Meta
-          title={
-            <div
-              style={{ display: "flex", alignItems: "center", padding: 5 }}
-              onClick={() => onTaskSelect(relatedTask)}
-            >
-              <Space>
-                <Tag>{operationName()}</Tag>
-                <TaskIdRenderer task={relatedTask} />
-                <span>{relatedTask?.Title}</span>
-              </Space>
-            </div>
-          }
-        />
-      </List.Item>
+        <div
+          style={{ display: "flex", alignItems: "center", padding: 5, flex: 1 }}
+          onClick={() => onTaskSelect(relatedTask)}
+        >
+          <Space>
+            <Tag style={{ backgroundColor: blue[1] }}>{operationName()}</Tag>
+            <TaskIdRenderer task={relatedTask} />
+            <span>{relatedTask?.Title}</span>
+          </Space>
+        </div>
+        <Button
+          onClick={() => setEditing(true)}
+          // TODOAK iconAfter={<EditOutlined style={{ fontSize: 14 }} />}
+        >
+          edit
+        </Button>
+      </div>
       {editing && (
         <NewRelationModal
           task={baseTask}
@@ -76,6 +70,6 @@ export const RelationItem: React.FC<{
           taskRelation={taskRelation}
         />
       )}
-    </HoverableListItem>
+    </>
   );
 };

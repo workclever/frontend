@@ -1,5 +1,6 @@
 import { Task } from "./Task";
 import { ColumnType, TaskType } from "../../../../types/Project";
+// @ts-ignore
 import hash from "object-hash";
 import React from "react";
 import {
@@ -18,7 +19,7 @@ import { ColumnNameRenderer } from "./ColumnNameRenderer";
 import { AddNewCardInput } from "./AddNewCardInput";
 import { AddNewColumnInput } from "./AddNewColumnInput";
 import { TaskDetail } from "./task-detail/TaskDetail";
-import { Drawer } from "antd";
+import AtlastKitDrawer from "@atlaskit/drawer";
 import { useBoardData } from "../../../../hooks/useBoardData";
 
 const DndInsideContainers: React.FC<{
@@ -53,7 +54,7 @@ const DndInsideContainers: React.FC<{
   const customFieldsVisibleOnCard = (customFields?.Data || []).filter(
     (r) => r.ShowInTaskCard && r.Enabled
   );
-  const renderTaskItem = ({ columnId, itemId, hovering, listeners }: any) => {
+  const renderTaskItem = ({ itemId, listeners }: any) => {
     const task = findTask(Number(itemId));
     return (
       task && (
@@ -148,12 +149,11 @@ export const Columns: React.FC = () => {
     }
 
     return (
-      <Drawer
-        open
+      <AtlastKitDrawer
+        isOpen
         onClose={() => setSelectedTaskId(undefined)}
-        destroyOnClose
-        closable={false}
-        width={"40%"}
+        width="wide"
+        enterFrom="left"
       >
         <TaskDetail
           task={task}
@@ -161,7 +161,7 @@ export const Columns: React.FC = () => {
           findSubtasks={findSubtasks}
           onTaskDelete={onTaskDelete}
         />
-      </Drawer>
+      </AtlastKitDrawer>
     );
   };
 

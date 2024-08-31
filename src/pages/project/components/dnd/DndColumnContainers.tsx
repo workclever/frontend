@@ -153,7 +153,7 @@ export function DndColumnContainers({
   strategy = verticalListSortingStrategy,
   trashable = false,
   vertical = false,
-  scrollable,
+  // scrollable,
   renderContainer,
   onColumnDrop,
   renderNewContainerInput,

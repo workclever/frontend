@@ -76,6 +76,7 @@ export const {
   useDeleteTaskCommentMutation,
   useGetTaskQuery,
   useCreateTaskRelationMutation,
+  // TODO search shouldn't be mutation
   useSearchTasksMutation,
   useListTaskRelationsQuery,
   useDeleteTaskRelationMutation,

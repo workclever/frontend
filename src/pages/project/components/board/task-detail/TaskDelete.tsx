@@ -23,9 +23,7 @@ export const TaskDelete: React.FC<{
       showWarning={false}
     >
       <Confirm.Embed title="Delete task permanently?" onConfirm={onConfirm}>
-        <Button danger size="small">
-          Delete task
-        </Button>
+        <Button appearance="danger">Delete task</Button>
       </Confirm.Embed>
     </Permission>
   );

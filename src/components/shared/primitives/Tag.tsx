@@ -1,13 +1,9 @@
-import { Tag as AntdTag } from "antd";
-
 type Props = {
-  color?: string;
-  style?: React.CSSProperties;
   children?: React.ReactNode;
+
+  style?: React.CSSProperties;
 };
 
-export const Tag: React.FC<Props> = ({ color, style, children }) => (
-  <AntdTag color={color} style={style}>
-    {children}
-  </AntdTag>
+export const Tag: React.FC<Props> = ({ children, style }) => (
+  <div style={{ ...style, padding: 4 }}>{children}</div>
 );

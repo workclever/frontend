@@ -9,6 +9,7 @@ import { EuiProvider } from "@elastic/eui";
 
 // TODO remove while getting rid of @elastic/eui
 import "./components/shared/editor/icon-fix";
+import "@atlaskit/css-reset";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

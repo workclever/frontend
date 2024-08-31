@@ -113,9 +113,8 @@ export const ProjectUsers: React.FC = () => {
             }
           >
             <Button
-              disabled={!canUnAssign}
-              danger
-              size="small"
+              isDisabled={!canUnAssign}
+              appearance="danger"
               onClick={() => {
                 Confirm.Show({
                   title: "Are you sure to unassign this person from project?",
@@ -156,8 +155,8 @@ export const ProjectUsers: React.FC = () => {
           unSelectedText="Unselected"
         />
         <Button
-          disabled={!newUserId}
-          type="primary"
+          isDisabled={!newUserId}
+          appearance="primary"
           onClick={async () => {
             if (newUserId) {
               await createAssignee({

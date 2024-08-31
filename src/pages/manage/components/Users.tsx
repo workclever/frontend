@@ -153,7 +153,7 @@ export const Users = () => {
         dataSource={getDataSource()}
         rowKey="Id"
         footer={() => (
-          <Button type="primary" onClick={() => setCreating(true)}>
+          <Button appearance="primary" onClick={() => setCreating(true)}>
             Create new user
           </Button>
         )}

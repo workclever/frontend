@@ -35,7 +35,7 @@ export const LayoutRightContent = () => {
       <Space>
         {isAdmin && (
           <Link to="/manage">
-            <Button type="text">Admin</Button>
+            <Button>Admin</Button>
           </Link>
         )}
         <Space size="large">

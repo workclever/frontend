@@ -1,7 +1,6 @@
-import { InputRef } from "antd";
 import React from "react";
 import { CustomField } from "../../../../../../../types/CustomField";
-import Field from "@ant-design/pro-field";
+import { Checkbox as AtlasKitCheckbox } from "@atlaskit/checkbox";
 
 export const CustomFieldRowBool: React.FC<{
   loading: boolean;
@@ -12,13 +11,6 @@ export const CustomFieldRowBool: React.FC<{
 }> = ({ loading, fieldValue, onUpdateValue, onBlur }) => {
   fieldValue = fieldValue || false;
   const [tempValue, setTempValue] = React.useState(fieldValue);
-  const ref = React.useRef<InputRef>();
-
-  React.useEffect(() => {
-    if (ref.current) {
-      ref.current.focus();
-    }
-  }, [ref]);
 
   React.useEffect(() => {
     if (tempValue !== fieldValue) {
@@ -26,16 +18,22 @@ export const CustomFieldRowBool: React.FC<{
     }
   }, [tempValue]);
 
+  console.log({ fieldValue });
+
   return (
-    <Field
+    <AtlasKitCheckbox
+      // Field value can be true or 'true' due to how it's kept in DB
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-       
-      value={fieldValue == "true" || fieldValue === true}
-      valueType="switch"
-      mode={"edit"}
-      onChange={setTempValue}
-      fieldProps={{ width: "100%", onBlur, disabled: loading, ref }}
+      isChecked={fieldValue == "true" || fieldValue === true}
+      onChange={(r) => {
+        setTempValue(r.target.checked);
+        // When user selects a date we close the datePicker, in any case user have weird interaction so this is good of bad
+        setTimeout(onBlur, 0);
+      }}
+      onBlur={onBlur}
+      isDisabled={loading}
+      autoFocus
     />
   );
 };

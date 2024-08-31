@@ -29,13 +29,14 @@ import { EnhancedDropdownMenu } from "../../../../components/shared/EnhancedDrop
 import { TaskCardKanban } from "./TaskCardKanban";
 import { TaskCardCompact } from "./TaskCardCompact";
 import { useSelector } from "react-redux";
-import { selectBoardViewType } from "../../../../slices/project/projectSlice";
+// import { selectBoardViewType } from "../../../../slices/projectSlice";
 import { Confirm } from "../../../../components/shared/Confirm";
 import { Tooltip } from "../../../../components/shared/primitives/Tooltip";
 import { Space } from "../../../../components/shared/primitives/Space";
 import { Tag } from "../../../../components/shared/primitives/Tag";
 import { gray } from "@ant-design/colors";
 import { MenuProps } from "antd/lib/menu";
+import { selectBoardViewType } from "../../../../slices/project/projectSlice";
 
 export type Props = {
   listeners: DraggableSyntheticListeners;

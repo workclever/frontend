@@ -1,8 +1,20 @@
-import { Select } from "antd";
 import React from "react";
 import { CustomField } from "../../../../../../../types/CustomField";
 import { ColorPicker } from "../../../../../../../components/shared/ColorPicker";
-import { Space } from "../../../../../../../components/shared/primitives/Space";
+import AtlasKitSelect from "@atlaskit/select";
+import { styled } from "styled-components";
+
+const CustomOptionWrapper = styled.div`
+  padding: 4px 8px;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+
+  &:hover {
+    background-color: #fafafa;
+    cursor: pointer;
+  }
+`;
 
 export const CustomFieldRowMultiSelect: React.FC<{
   loading: boolean;
@@ -20,25 +32,42 @@ export const CustomFieldRowMultiSelect: React.FC<{
   }, [tempValue]);
 
   return (
-    <Select
+    <AtlasKitSelect
       placeholder="..."
-      value={tempValue}
-      onChange={setTempValue}
-      style={{ width: "100%" }}
-      mode="multiple"
-      loading={loading}
+      value={field.SelectOptions?.filter((r) => fieldValue?.includes(r.Id)).map(
+        (r) => ({
+          label: r.Name,
+          value: r.Id,
+        })
+      )}
+      onChange={(value) => setTempValue(value.map((r) => r.value))}
+      isLoading={loading}
+      isMulti
       onBlur={onBlur}
       autoFocus
-      defaultOpen
-    >
-      {field.SelectOptions.map((r) => (
-        <Select.Option key={r.Id} value={r.Id}>
-          <Space>
-            <ColorPicker value={r.Color} previewOnly />
-            {r.Name}
-          </Space>
-        </Select.Option>
-      ))}
-    </Select>
+      defaultMenuIsOpen
+      // zIndex has to be higher than Modal to be visible
+      styles={{
+        menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+        container: (base) => ({ ...base, width: "100%" }),
+      }}
+      options={field.SelectOptions?.map((r) => {
+        return { value: r.Id, label: r.Name };
+      })}
+      components={{
+        Option: (props) => (
+          <CustomOptionWrapper onClick={() => props.selectOption(props.data)}>
+            <ColorPicker
+              value={
+                field.SelectOptions?.find((r) => r.Id === props.data.value)
+                  ?.Color
+              }
+              previewOnly
+            />
+            <span>{props.data.label}</span>
+          </CustomOptionWrapper>
+        ),
+      }}
+    />
   );
 };

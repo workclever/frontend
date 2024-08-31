@@ -126,29 +126,25 @@ export const CrudEditor = <T,>({
           onlyOneLineEditorAlertMessage:
             "Only one row can be edited at same time",
           onlyAddOneLineAlertMessage: "You can add one row at a time",
-          saveText: (
-            <Button type="primary" size="small">
-              Save
-            </Button>
-          ),
+          saveText: <Button appearance="primary">Save</Button>,
           deleteText: (
             <Tooltip
               title={_delete?.modalTitle || "Delete row?"}
               placement="bottom"
             >
-              <Button danger ghost size="small">
+              <Button appearance="danger">
                 <DeleteFilled />
               </Button>
             </Tooltip>
           ),
           cancelText: (
             <Tooltip title={"Cancel operation"} placement="bottom">
-              <Button size="small">
+              <Button>
                 <CloseCircleOutlined />
               </Button>
             </Tooltip>
           ),
-          actionRender: (row, config, defaultDom) => getActions(defaultDom),
+          actionRender: (_row, _config, defaultDom) => getActions(defaultDom),
         }}
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore

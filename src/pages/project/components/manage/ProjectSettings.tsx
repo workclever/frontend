@@ -2,39 +2,37 @@ import { UserOutlined, LaptopOutlined } from "@ant-design/icons";
 import { ProjectBoards } from "./ProjectBoards";
 import { ProjectMeta } from "./ProjectMeta";
 import { ProjectUsers } from "./ProjectUsers";
-import { MasterDetail } from "../../../../components/shared/MasterDetail";
+import {
+  MasterDetail,
+  MasterDetailMetaType,
+} from "../../../../components/shared/MasterDetail";
 import { CustomFieldList } from "./custom-field/CustomFieldList";
-import { MenuProps } from "antd/lib/menu";
 
 export const ProjectSettings = () => {
-  const menuItems: MenuProps["items"] = [
+  const menuItems: MasterDetailMetaType[] = [
     {
       label: "Meta",
-      key: "meta",
       icon: <LaptopOutlined />,
     },
     {
       label: "Boards",
-      key: "boards",
       icon: <UserOutlined />,
     },
     {
       label: "Users",
-      key: "users",
       icon: <UserOutlined />,
     },
     {
       label: "Custom fields",
-      key: "fields",
       icon: <UserOutlined />,
     },
   ];
 
   const components = {
-    meta: () => <ProjectMeta />,
-    users: () => <ProjectUsers />,
-    boards: () => <ProjectBoards />,
-    fields: () => <CustomFieldList />,
+    0: () => <ProjectMeta />,
+    1: () => <ProjectBoards />,
+    2: () => <ProjectUsers />,
+    3: () => <CustomFieldList />,
   };
 
   return (

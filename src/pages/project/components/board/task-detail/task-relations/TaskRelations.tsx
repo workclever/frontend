@@ -1,10 +1,10 @@
-import { ConfigProvider, List } from "antd";
 import React from "react";
 import { useListTaskRelationsQuery } from "../../../../../../services/api";
 import { TaskType } from "../../../../../../types/Project";
 import { TaskDetailBlock } from "../TaskDetailBlock";
 import { RelationItem } from "./RelationItem";
 import { NewRelationModal } from "./NewRelationModal";
+import { List } from "../../../../../../components/shared/primitives/List";
 
 export const TaskRelations: React.FC<{
   task: TaskType;
@@ -24,13 +24,11 @@ export const TaskRelations: React.FC<{
         onClickPlusIcon={() => setShowRelationSearchModal(true)}
         defaultExpanded={relations.length > 0}
       >
-        <ConfigProvider
-          renderEmpty={() => <>There is no related tasks found for this task</>}
-        >
+        {relations.length === 0 ? (
+          <>There is no related tasks found for this task</>
+        ) : (
           <List
-            itemLayout="horizontal"
             dataSource={relations}
-            split={false}
             renderItem={(taskRelation) => (
               <RelationItem
                 key={taskRelation.Id}
@@ -41,7 +39,7 @@ export const TaskRelations: React.FC<{
               />
             )}
           />
-        </ConfigProvider>
+        )}
       </TaskDetailBlock>
       {showRelationSearchModal && (
         <NewRelationModal

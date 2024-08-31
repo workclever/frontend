@@ -1,25 +1,22 @@
-import { MenuProps } from "antd/lib/menu";
 import { KeyOutlined, UserOutlined } from "@ant-design/icons";
-import { MasterDetail } from "../shared/MasterDetail";
+import { MasterDetail, MasterDetailMetaType } from "../shared/MasterDetail";
 import { Account } from "./Account";
 import { ChangePassword } from "./ChangePassword";
 
 export const Me = () => {
-  const menuItems: MenuProps["items"] = [
+  const menuItems: MasterDetailMetaType[] = [
     {
       label: "Account",
-      key: "1",
       icon: <UserOutlined />,
     },
     {
       label: "Password",
-      key: "2",
       icon: <KeyOutlined />,
     },
   ];
   const components = {
-    1: () => <Account />,
-    2: () => <ChangePassword />,
+    0: () => <Account />,
+    1: () => <ChangePassword />,
   };
 
   return (

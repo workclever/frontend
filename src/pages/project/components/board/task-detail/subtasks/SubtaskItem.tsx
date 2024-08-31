@@ -1,9 +1,7 @@
-import { RollbackOutlined } from "@ant-design/icons";
-import { List } from "antd";
+// import { RollbackOutlined } from "@ant-design/icons";
 import { useTaskUpdateProperty } from "../../../../../../hooks/useTaskUpdateProperty";
 import { TaskType } from "../../../../../../types/Project";
 import { Confirm } from "../../../../../../components/shared/Confirm";
-import { HoverableListItem } from "../../../../../../components/shared/HoverableListItem";
 import { UserAvatar } from "../../../../../../components/shared/UserAvatar";
 import { TaskIdRenderer } from "../../../../../../components/shared/TaskIdRenderer";
 import { Button } from "../../../../../../components/shared/primitives/Button";
@@ -22,44 +20,37 @@ export const SubtaskItem: React.FC<{
     });
   };
   return (
-    <HoverableListItem>
-      <List.Item
-        style={{ padding: 0 }}
-        extra={
-          <>
-            <Space>
-              {task.AssigneeUserId ? (
-                <UserAvatar userId={task.AssigneeUserId} />
-              ) : null}
-              <Tooltip title="Convert to task?">
-                <Confirm.Embed
-                  title="Convert to task?"
-                  onConfirm={onConvertToTaskClick}
-                >
-                  <Button
-                    icon={<RollbackOutlined />}
-                    style={{ fontSize: 14 }}
-                    size="small"
-                  />
-                </Confirm.Embed>
-              </Tooltip>
-            </Space>
-          </>
-        }
+    <>
+      <div
+        style={{ display: "flex", alignItems: "center", flexDirection: "row" }}
       >
-        <List.Item.Meta
-          title={
-            <div
-              style={{ padding: 5, cursor: "pointer" }}
-              onClick={() => onTaskSelect(task)}
+        <div
+          style={{ padding: 5, cursor: "pointer", flex: 1 }}
+          onClick={() => onTaskSelect(task)}
+        >
+          <Space>
+            <TaskIdRenderer task={task} /> {task.Title}
+          </Space>
+        </div>
+        <Space>
+          {task.AssigneeUserId ? (
+            <UserAvatar userId={task.AssigneeUserId} />
+          ) : null}
+          <Tooltip title="Convert to task?">
+            <Confirm.Embed
+              title="Convert to task?"
+              onConfirm={onConvertToTaskClick}
             >
-              <Space>
-                <TaskIdRenderer task={task} /> {task.Title}
-              </Space>
-            </div>
-          }
-        />
-      </List.Item>
-    </HoverableListItem>
+              <Button
+              // TODOAK iconAfter={<RollbackOutlined />}
+              // TODOAK  style={{ fontSize: 14 }}
+              >
+                subs
+              </Button>
+            </Confirm.Embed>
+          </Tooltip>
+        </Space>
+      </div>
+    </>
   );
 };
