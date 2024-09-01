@@ -1,5 +1,4 @@
 import { useMe } from "./useMe";
-// @ts-ignore
 import { formatInTimeZone } from "date-fns-tz";
 import { parseJSON } from "date-fns";
 import { useContext } from "react";

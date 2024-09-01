@@ -1,20 +1,8 @@
+import { Select } from "antd";
 import React from "react";
 import { CustomField } from "../../../../../../../types/CustomField";
 import { ColorPicker } from "../../../../../../../components/shared/ColorPicker";
-import AtlasKitSelect from "@atlaskit/select";
-import styled from "styled-components";
-
-const CustomOptionWrapper = styled.div`
-  padding: 4px 8px;
-  display: flex;
-  flex-direction: row;
-  gap: 8px;
-
-  &:hover {
-    background-color: #fafafa;
-    cursor: pointer;
-  }
-`;
+import { Space } from "../../../../../../../components/shared/primitives/Space";
 
 export const CustomFieldRowSelect: React.FC<{
   loading: boolean;
@@ -32,42 +20,24 @@ export const CustomFieldRowSelect: React.FC<{
   }, [tempValue]);
 
   return (
-    <AtlasKitSelect
+    <Select
       placeholder="..."
-      value={{
-        value: tempValue,
-        label: field.SelectOptions?.find((r) => r.Id === tempValue)?.Name || "",
-      }}
-      onChange={(value) =>
-        value?.value ? setTempValue(Number(value?.value)) : setTempValue(0)
-      }
-      isLoading={loading}
-      isClearable
+      value={tempValue}
+      onChange={setTempValue}
+      style={{ width: "100%" }}
+      loading={loading}
       onBlur={onBlur}
       autoFocus
-      defaultMenuIsOpen
-      // zIndex has to be higher than Modal to be visible
-      styles={{
-        menuPortal: (base) => ({ ...base, zIndex: 9999 }),
-        container: (base) => ({ ...base, width: "100%" }),
-      }}
-      options={field.SelectOptions?.map((r) => {
-        return { value: r.Id, label: r.Name };
-      })}
-      components={{
-        Option: (props) => (
-          <CustomOptionWrapper onClick={() => props.selectOption(props.data)}>
-            <ColorPicker
-              value={
-                field.SelectOptions?.find((r) => r.Id === props.data.value)
-                  ?.Color
-              }
-              previewOnly
-            />
-            <span>{props.data.label}</span>
-          </CustomOptionWrapper>
-        ),
-      }}
-    />
+      defaultOpen
+    >
+      {field.SelectOptions.map((r) => (
+        <Select.Option key={r.Id} value={r.Id}>
+          <Space>
+            <ColorPicker value={r.Color} previewOnly />
+            {r.Name}
+          </Space>
+        </Select.Option>
+      ))}
+    </Select>
   );
 };

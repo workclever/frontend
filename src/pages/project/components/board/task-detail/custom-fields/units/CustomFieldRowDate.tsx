@@ -1,8 +1,9 @@
+import { InputRef } from "antd";
 import React from "react";
 import { CustomField } from "../../../../../../../types/CustomField";
-import { DatePicker as AtlasKitDatePicker } from "@atlaskit/datetime-picker";
+import Field from "@ant-design/pro-field";
 
-// TODO: use SiteSettings `DefaultDateFormat`
+// TODO: fix onBlur not working
 export const CustomFieldRowDate: React.FC<{
   loading: boolean;
   field: CustomField;
@@ -12,6 +13,13 @@ export const CustomFieldRowDate: React.FC<{
 }> = ({ loading, fieldValue, onUpdateValue, onBlur }) => {
   fieldValue = fieldValue || "";
   const [tempValue, setTempValue] = React.useState(fieldValue);
+  const ref = React.useRef<InputRef>();
+
+  React.useEffect(() => {
+    if (ref.current) {
+      ref.current.focus();
+    }
+  }, [ref]);
 
   React.useEffect(() => {
     if (tempValue !== fieldValue) {
@@ -22,26 +30,22 @@ export const CustomFieldRowDate: React.FC<{
   const computedFieldValue = () => {
     if (fieldValue) {
       if (fieldValue === "null" || fieldValue === "Invalid date") {
-        return new Date().toISOString();
+        return new Date();
       }
 
-      return new Date(fieldValue).toISOString();
+      return new Date(fieldValue);
     }
 
-    return new Date().toISOString();
+    return new Date();
   };
 
   return (
-    <AtlasKitDatePicker
+    <Field
       value={computedFieldValue()}
-      onChange={(e) => {
-        setTempValue(e);
-        // When user selects a date we close the datePicker, in any case user have weird interaction so this is good of bad
-        setTimeout(onBlur, 0);
-      }}
-      onBlur={onBlur}
-      isDisabled={loading}
-      autoFocus
+      valueType="date"
+      mode={"edit"}
+      onChange={(e) => setTempValue(e)}
+      fieldProps={{ width: "100%", onBlur, disabled: loading, autoFocus: true }}
     />
   );
 };

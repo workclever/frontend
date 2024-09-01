@@ -57,7 +57,7 @@ export const ShinyList = <T extends { Id: number }>({
           left={<Title level={4}>{title}</Title>}
           right={
             dataSource.length > 0 ? (
-              <Button appearance="primary" onClick={onNewClick}>
+              <Button type="primary" onClick={onNewClick}>
                 {newButtonText}
               </Button>
             ) : (
@@ -71,7 +71,7 @@ export const ShinyList = <T extends { Id: number }>({
           <>
             <Space direction="vertical">
               <span>{noDataText}</span>
-              <Button appearance="primary" onClick={onNewClick}>
+              <Button type="primary" onClick={onNewClick}>
                 {newButtonText}
               </Button>
             </Space>

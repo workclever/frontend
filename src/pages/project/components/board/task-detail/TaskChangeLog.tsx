@@ -1,3 +1,4 @@
+import { Timeline } from "antd";
 import React from "react";
 import { useSelector } from "react-redux";
 import { useBoards } from "../../../../../hooks/useBoards";
@@ -9,9 +10,6 @@ import { selectSelectedBoardId } from "../../../../../slices/project/projectSlic
 import { TaskChangeLogType, TaskType } from "../../../../../types/Project";
 import { UserAvatar } from "../../../../../components/shared/UserAvatar";
 import { LoadingSpin } from "../../../../../components/shared/primitives/LoadingSpin";
-import { Flex, Stack, xcss } from "@atlaskit/primitives";
-import AtlasKitComment, { CommentTime } from "@atlaskit/comment";
-import { Text } from "../../../../../components/shared/primitives/Text";
 
 type Props = {
   task: TaskType;
@@ -88,16 +86,14 @@ const ChangeLogItem: React.FC<{ item: TaskChangeLogType }> = ({ item }) => {
   const { user } = useUser(item.UserId);
   const formattedDateTime = useFormattedDateTime(item.DateCreated);
   return (
-    <AtlasKitComment
-      avatar={user && <UserAvatar userId={user?.Id} />}
-      author={<Text strong>{user?.FullName}</Text>}
-      content={
-        <Flex direction="row" gap="space.050">
-          updated <ChangeLogValues item={item} />
-        </Flex>
-      }
-      time={<CommentTime>{formattedDateTime}</CommentTime>}
-    />
+    <Timeline.Item>
+      <div>
+        {user && <UserAvatar userId={user?.Id} />}
+        <strong>{user?.FullName}</strong> updated{" "}
+        <ChangeLogValues item={item} />
+      </div>
+      <i>{formattedDateTime} </i>
+    </Timeline.Item>
   );
 };
 
@@ -110,16 +106,10 @@ export const TaskChangeLog: React.FC<Props> = ({ task }) => {
   }
 
   return (
-    <Stack
-      space="space.100"
-      xcss={xcss({
-        marginTop: "space.100",
-        width: "100%",
-      })}
-    >
+    <Timeline>
       {changeLogsData.map((item) => (
         <ChangeLogItem key={item.Id} item={item} />
       ))}
-    </Stack>
+    </Timeline>
   );
 };

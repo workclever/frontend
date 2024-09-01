@@ -1,3 +1,4 @@
+import { Avatar } from "antd";
 import { uniq } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import { useProjectTasks } from "../../../../hooks/useProjectTasks";
@@ -44,15 +45,16 @@ export const BoardUserAvatars = () => {
   return (
     <div style={{ display: "flex", alignItems: "center" }}>
       <div style={{ marginRight: 4 }}>Filter by users:</div>
-      {userIds.map((userId, index) => (
-        <span key={userId} style={{ marginLeft: index > 0 ? -12 : 0 }}>
+      <Avatar.Group max={{ popover: { trigger: "click" } }}>
+        {userIds.map((userId) => (
           <UserAvatar
+            key={userId}
             active={isActive(userId)}
             userId={userId}
             onClick={() => onUserClick(userId)}
           />
-        </span>
-      ))}
+        ))}
+      </Avatar.Group>
     </div>
   );
 };

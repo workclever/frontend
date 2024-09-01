@@ -1,6 +1,6 @@
-import React, { ChangeEvent } from "react";
+import { InputRef, Input } from "antd";
+import React from "react";
 import { CustomField } from "../../../../../../../types/CustomField";
-import AtlasKitTextField from "@atlaskit/textfield";
 
 export const CustomFieldRowText: React.FC<{
   loading: boolean;
@@ -12,8 +12,7 @@ export const CustomFieldRowText: React.FC<{
 }> = ({ fieldValue, onUpdateValue, inputType, onBlur }) => {
   fieldValue = fieldValue || "";
   const [tempValue, setTempValue] = React.useState(fieldValue);
-  const ref = React.useRef<any>();
-  const originalValue = React.useRef(fieldValue);
+  const ref = React.useRef<InputRef>();
 
   React.useEffect(() => {
     if (ref.current) {
@@ -28,27 +27,17 @@ export const CustomFieldRowText: React.FC<{
   }, [tempValue]);
 
   return (
-    <AtlasKitTextField
+    <Input
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       ref={ref}
       placeholder="..."
       value={tempValue}
-      onChange={(e: ChangeEvent<HTMLInputElement>) =>
-        setTempValue(e.target.value)
-      }
+      onChange={(e) => setTempValue(e.target.value)}
       type={inputType}
       style={{ width: "100%" }}
       onBlur={onBlur}
-      onKeyDown={(e) => {
-        if (e.key === "Enter") {
-          onBlur();
-        }
-        if (e.key === "Escape") {
-          e.preventDefault();
-          e.stopPropagation();
-          onUpdateValue(originalValue.current);
-          onBlur();
-        }
-      }}
+      onPressEnter={onBlur}
     />
   );
 };

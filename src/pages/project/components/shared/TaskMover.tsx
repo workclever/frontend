@@ -1,3 +1,4 @@
+import { Select } from "antd";
 import React from "react";
 import { useBoards } from "../../../../hooks/useBoards";
 import { TaskType } from "../../../../types/Project";
@@ -10,7 +11,6 @@ import { HttpResult } from "../../../../components/shared/HttpResult";
 import { Popover } from "../../../../components/shared/primitives/Popover";
 import { Button } from "../../../../components/shared/primitives/Button";
 import { Space } from "../../../../components/shared/primitives/Space";
-import AtlasKitSelect from "@atlaskit/select";
 
 const SelectTitle = styled.div`
   font-weight: bold;
@@ -68,48 +68,42 @@ export const TaskMover: React.FC<Props> = ({ task }) => {
     <Space direction="vertical">
       <div>
         <SelectTitle>Board</SelectTitle>
-        <AtlasKitSelect
-          styles={{ container: (base) => ({ ...base, width: "200px" }) }}
+        <Select
+          style={{ width: 150 }}
           placeholder="Board"
-          value={{
-            value: tempBoardId,
-            label: boards.find((r) => r.Id === tempBoardId)?.Name,
-          }}
-          onChange={(value) => setTempBoardId(Number(value?.value))}
-          isClearable
-          options={boards.map((r) => {
-            return {
-              label: r.Name,
-              value: r.Id,
-            };
-          })}
-        />
+          value={tempBoardId}
+          onChange={setTempBoardId}
+          allowClear={true}
+        >
+          {boards.map((board) => (
+            <Select.Option key={board.Id} value={board.Id}>
+              {board.Name}
+            </Select.Option>
+          ))}
+        </Select>
       </div>
       <div>
         <SelectTitle>Column</SelectTitle>
-        <AtlasKitSelect
-          styles={{ container: (base) => ({ ...base, width: "200px" }) }}
+        <Select
+          style={{ width: 150 }}
           placeholder="Column"
-          value={{
-            value: tempColumnId,
-            label: columns.find((r) => r.Id === tempBoardId)?.Name,
-          }}
-          onChange={(value) => setTempColumnId(Number(value?.value))}
-          isClearable
+          value={tempColumnId}
+          onChange={setTempColumnId}
+          allowClear={true}
           disabled={hasNoColumns}
-          options={columns.map((r) => {
-            return {
-              label: r.Name,
-              value: r.Id,
-            };
-          })}
-        />
+        >
+          {columns.map((column) => (
+            <Select.Option key={column.Id} value={column.Id}>
+              {column.Name}
+            </Select.Option>
+          ))}
+        </Select>
       </div>
       <Button
-        isDisabled={hasNoColumns || isMoving}
-        // TODOAK  style={{ marginTop: 4 }}
+        disabled={hasNoColumns || isMoving}
+        style={{ marginTop: 4 }}
         onClick={onMoveButtonClick}
-        isLoading={isMoving}
+        loading={isMoving}
       >
         Move
       </Button>
@@ -119,7 +113,7 @@ export const TaskMover: React.FC<Props> = ({ task }) => {
 
   return (
     <Popover content={content}>
-      <Button>Move Task</Button>
+      <Button size="small">Move Task</Button>
     </Popover>
   );
 };

@@ -1,8 +1,8 @@
-// import {
-//   DownCircleOutlined,
-//   PlusOutlined,
-//   UpCircleOutlined,
-// } from "@ant-design/icons";
+import {
+  DownCircleOutlined,
+  PlusOutlined,
+  UpCircleOutlined,
+} from "@ant-design/icons";
 import React from "react";
 import styled from "styled-components";
 import { FlexBasicLayout } from "../../../../../components/shared/FlexBasicLayout";
@@ -35,30 +35,26 @@ export const TaskDetailBlock: React.FC<{
   const [expanded, setExpanded] = React.useState(defaultExpanded);
 
   const toggleExpand = () => setExpanded((e) => !e);
-  const IconedButton: React.FC<Pick<ButtonProps, "onClick" | "iconBefore">> = ({
-    iconBefore,
+  const IconedButton: React.FC<Pick<ButtonProps, "onClick" | "icon">> = ({
+    icon,
     onClick,
-  }) => (
-    <Button iconBefore={iconBefore} onClick={onClick}>
-      &nbsp;
-    </Button>
-  );
+  }) => <Button size="small" type="text" icon={icon} onClick={onClick} />;
 
   const plusButton = showPlusIcon && (
     <IconedButton
-      // TODOAK iconBefore={<PlusOutlined style={{ fontSize: 12 }} />}
+      icon={<PlusOutlined style={{ fontSize: 12 }} />}
       onClick={() => onClickPlusIcon && onClickPlusIcon()}
     />
   );
 
   const collapseButton = !expanded ? (
     <IconedButton
-      // TODOAK iconBefore={<DownCircleOutlined style={{ fontSize: 12 }} />}
+      icon={<DownCircleOutlined style={{ fontSize: 12 }} />}
       onClick={toggleExpand}
     />
   ) : (
     <IconedButton
-      // TODOAK iconBefore={<UpCircleOutlined style={{ fontSize: 12 }} />}
+      icon={<UpCircleOutlined style={{ fontSize: 12 }} />}
       onClick={toggleExpand}
     />
   );

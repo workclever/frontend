@@ -79,7 +79,7 @@ export const UserNotifications: React.FC<{ showAll: boolean }> = ({
         !showAll ? (
           <Button
             key="show-all"
-            appearance="primary"
+            type="primary"
             onClick={() => navigate("/me/notifications")}
           >
             Show All

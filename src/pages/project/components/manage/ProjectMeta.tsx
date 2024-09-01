@@ -119,7 +119,9 @@ export const ProjectMeta: React.FC = () => {
           deleteProject(projectId);
         }}
       >
-        <Button appearance="danger">Delete project</Button>
+        <Button danger size="small">
+          Delete project
+        </Button>
       </Confirm.Embed>
     </Space>
   );

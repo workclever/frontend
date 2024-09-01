@@ -1,7 +1,6 @@
-import { Form, Input } from "antd";
+import { Button, Form, Input } from "antd";
 import { useChangePasswordMutation } from "../../services/api";
 import { HttpResult } from "../shared/HttpResult";
-import { Button } from "../shared/primitives/Button";
 
 type FormValuesType = {
   OldPassword: string;
@@ -58,7 +57,7 @@ export const ChangePassword = () => {
         </Form.Item>
 
         <Form.Item>
-          <Button appearance="primary" type="submit">
+          <Button type="primary" htmlType="submit">
             Change password
           </Button>
         </Form.Item>

@@ -11,7 +11,7 @@ export type CustomField = {
 };
 
 export type CustomFieldSelectOption = {
-  Id: number;
+  Id?: number;
   Color: PresetColor;
   Name: string;
 };

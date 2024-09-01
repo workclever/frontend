@@ -13,6 +13,7 @@ import { BoardViewType } from "../../../../types/Project";
 import { BoardUserAvatars } from "./BoardUserAvatars";
 import { LayoutRightContent } from "../../../../layout/LayoutRightContent";
 import { Space } from "../../../../components/shared/primitives/Space";
+import { Divider } from "../../../../components/shared/primitives/Divider";
 import { blue } from "@ant-design/colors";
 
 const Wrapper = styled.div`
@@ -80,6 +81,7 @@ export const BoardHeader: React.FC = () => {
           },
         ]}
       />
+      <Divider type="vertical" style={{ height: "100%" }} />
       <LayoutRightContent />
     </Wrapper>
   );

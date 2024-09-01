@@ -85,7 +85,9 @@ export const BoardPage = () => {
               There is no board in this project, create a board to be able to
               create tasks
             </span>
-            <Button appearance="primary">Create Now</Button>
+            <Button type="primary" size="large">
+              Create Now
+            </Button>
           </Space>
         </>
       </Empty>

@@ -1,10 +1,9 @@
-import AtlasKitAvatar from "@atlaskit/avatar";
+import { Avatar } from "antd";
 import { BACKEND_URL } from "../../constants";
 import { useUser } from "../../hooks/useUser";
 import { Tooltip } from "./primitives/Tooltip";
-import { blue, magenta } from "@ant-design/colors";
+import { blue, green, magenta } from "@ant-design/colors";
 
-// TODO create initials of avatar
 export const UserAvatar: React.FC<{
   userId: number;
   hideTooltip?: boolean;
@@ -26,12 +25,9 @@ export const UserAvatar: React.FC<{
 
   const avatarItself = (
     <span onClick={onClick}>
-      <AtlasKitAvatar
-        src={computedUrl}
-        borderColor={active ? "blue" : "inherit"}
-        size="small"
-        name={user?.FullName}
-      />
+      <Avatar src={computedUrl} style={style} size={22} alt={user?.FullName}>
+        {user?.FullName?.charAt(0)}
+      </Avatar>
     </span>
   );
 

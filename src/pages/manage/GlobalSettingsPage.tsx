@@ -1,8 +1,5 @@
 import { LaptopOutlined, UsergroupAddOutlined } from "@ant-design/icons";
-import {
-  MasterDetail,
-  MasterDetailMetaType,
-} from "../../components/shared/MasterDetail";
+import { MasterDetail } from "../../components/shared/MasterDetail";
 import { Role } from "../../components/shared/Role";
 import { LayoutWithHeader } from "../../layout/LayoutWithHeader";
 import { LoggedInLayout } from "../../layout/LoggedInLayout";
@@ -10,27 +7,31 @@ import { Roles } from "../../types/Roles";
 import { EditSiteSettings } from "./components/EditSiteSettings";
 import { RelationshipTypeDefinitions } from "./components/RelationshipTypeDefinitions";
 import { Users } from "./components/Users";
+import { MenuProps } from "antd/lib/menu";
 
 export const GlobalSettingsPage = () => {
-  const menuItems: MasterDetailMetaType[] = [
+  const menuItems: MenuProps["items"] = [
     {
       label: "Site Settings",
+      key: "site-settings",
       icon: <LaptopOutlined />,
     },
     {
       label: "Relationship Definitions",
+      key: "relationship-defs",
       icon: <LaptopOutlined />,
     },
     {
       label: "Users",
+      key: "users",
       icon: <UsergroupAddOutlined />,
     },
   ];
 
   const components = {
-    0: () => <EditSiteSettings />,
-    1: () => <RelationshipTypeDefinitions />,
-    2: () => <Users />,
+    "site-settings": () => <EditSiteSettings />,
+    "relationship-defs": () => <RelationshipTypeDefinitions />,
+    users: () => <Users />,
   };
 
   return (

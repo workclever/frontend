@@ -92,7 +92,7 @@ export const NewRelationModal: React.FC<{
           <Space>
             <span style={{ width: 80, display: "inline-block" }}>Task</span>
             <TaskSearchInput
-              selectedTaskId={targetTask?.Id}
+              value={targetTask?.Id}
               onFind={onTaskFound}
               disabled={mode === "update"}
             />
@@ -101,8 +101,8 @@ export const NewRelationModal: React.FC<{
             <Space>
               <Button
                 onClick={onButtonClick}
-                isDisabled={!targetTask || !relationTypeDefId || isLoading}
-                isLoading={isLoading}
+                disabled={!targetTask || !relationTypeDefId || isLoading}
+                loading={isLoading}
               >
                 {button}
               </Button>
@@ -116,7 +116,7 @@ export const NewRelationModal: React.FC<{
                     onUpdate();
                   }}
                 >
-                  <Button isLoading={isDeleting} appearance="danger">
+                  <Button loading={isDeleting} danger>
                     Delete relation
                   </Button>
                 </Confirm.Embed>

@@ -1,6 +1,6 @@
 import { TaskType } from "../../../../../types/Project";
 import { Upload, message, UploadProps } from "antd";
-// import { UploadOutlined } from "@ant-design/icons";
+import { UploadOutlined } from "@ant-design/icons";
 import { UploadChangeParam } from "antd/lib/upload";
 import { API_URL, BACKEND_URL } from "../../../../../constants";
 import { selectAuthToken } from "../../../../../slices/auth/authSlice";
@@ -51,11 +51,7 @@ export const TaskAttachments: React.FC<{ task: TaskType }> = ({ task }) => {
         {...props}
         defaultFileList={defaultFileList}
       >
-        <Button
-        // iconAfter={<UploadOutlined />}
-        >
-          Click to Upload
-        </Button>
+        <Button icon={<UploadOutlined />}>Click to Upload</Button>
       </Upload>
     </TaskDetailBlock>
   );

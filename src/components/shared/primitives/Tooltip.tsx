@@ -1,16 +1,30 @@
-import AtlasKitTooltip from "@atlaskit/tooltip";
+import { Tooltip as AntdTooltip } from "antd";
 
-type AtlasKitTooltipProps = React.ComponentProps<typeof AtlasKitTooltip>;
+type TooltipPlacement =
+  | "top"
+  | "left"
+  | "right"
+  | "bottom"
+  | "topLeft"
+  | "topRight"
+  | "bottomLeft"
+  | "bottomRight"
+  | "leftTop"
+  | "leftBottom"
+  | "rightTop"
+  | "rightBottom";
 
 type Props = {
-  title: AtlasKitTooltipProps["content"];
-  placement?: AtlasKitTooltipProps["position"];
+  title?: string;
   children: React.ReactNode;
+  placement?: TooltipPlacement;
 };
+
+// TODO: Fix tooltip is not visible with <Button>
 export const Tooltip: React.FC<Props> = ({ title, children, placement }) => {
   return (
-    <AtlasKitTooltip content={title} position={placement}>
+    <AntdTooltip title={title} placement={placement}>
       {children}
-    </AtlasKitTooltip>
+    </AntdTooltip>
   );
 };

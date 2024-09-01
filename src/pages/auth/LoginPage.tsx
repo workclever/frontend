@@ -46,7 +46,11 @@ export const LoginPage: React.FC = () => {
     },
     title: "Welcome to WorkClever",
     subTitle: "This website is serving only for demo purposes.",
-    action: <Button onClick={() => setShowWelcomeConfig(false)}>Close</Button>,
+    action: (
+      <Button size="large" onClick={() => setShowWelcomeConfig(false)}>
+        Close
+      </Button>
+    ),
   };
 
   return (
