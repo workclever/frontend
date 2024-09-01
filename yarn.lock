@@ -602,27 +602,6 @@
     "@popperjs/core" "^2.11.8"
     react-popper "^2.3.0"
 
-"@atlaskit/popup@^1.23.2":
-  version "1.23.2"
-  resolved "https://registry.yarnpkg.com/@atlaskit/popup/-/popup-1.23.2.tgz#dd2fa78ac1f7cb81f3cb3d53185cbaa841219ed7"
-  integrity sha512-mK8KSxvBw5zFnI3lc448ALdLmOttipdlWNnOgjkp7hEP8ciLbKFXGjyIVWVW4HxhKJ/THL9YCu3l1Ov4DYqEIw==
-  dependencies:
-    "@atlaskit/ds-lib" "^2.5.0"
-    "@atlaskit/layering" "^0.4.0"
-    "@atlaskit/platform-feature-flags" "^0.3.0"
-    "@atlaskit/popper" "^6.2.0"
-    "@atlaskit/portal" "^4.9.0"
-    "@atlaskit/primitives" "^12.0.0"
-    "@atlaskit/theme" "^13.0.0"
-    "@atlaskit/tokens" "^1.59.0"
-    "@babel/runtime" "^7.0.0"
-    "@emotion/react" "^11.7.1"
-    bind-event-listener "^3.0.0"
-    focus-trap "^2.4.5"
-    memoize-one "^6.0.0"
-    react-uid "^2.2.0"
-    tiny-invariant "^1.2.0"
-
 "@atlaskit/portal@^4.9.0":
   version "4.9.1"
   resolved "https://registry.yarnpkg.com/@atlaskit/portal/-/portal-4.9.1.tgz#db70427b8f50dd577a5a60aaf4a5140ec558912d"
@@ -6633,13 +6612,6 @@ focus-lock@^1.3.5:
   dependencies:
     tslib "^2.0.3"
 
-focus-trap@^2.4.5:
-  version "2.4.6"
-  resolved "https://registry.yarnpkg.com/focus-trap/-/focus-trap-2.4.6.tgz#332b475b317cec6a4a129f5307ce7ebc0da90b40"
-  integrity sha512-vWZTPtBU6pBoyWZDRZJHkXsyP2ZCZBHE3DRVXnSVdQKH/mcDtu9S5Kz8CUDyIqpfZfLEyI9rjKJLnc4Y40BRBg==
-  dependencies:
-    tabbable "^1.0.3"
-
 follow-redirects@^1.0.0, follow-redirects@^1.14.9:
   version "1.15.1"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.1.tgz#0ca6a452306c9b276e4d3127483e29575e207ad5"
@@ -11651,11 +11623,6 @@ symbol-tree@^3.2.4:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.4.tgz#430637d248ba77e078883951fb9aa0eed7c63fa2"
   integrity sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==
-
-tabbable@^1.0.3:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/tabbable/-/tabbable-1.1.3.tgz#0e4ee376f3631e42d7977a074dbd2b3827843081"
-  integrity sha512-nOWwx35/JuDI4ONuF0ZTo6lYvI0fY0tZCH1ErzY2EXfu4az50ZyiUX8X073FLiZtmWUVlkRnuXsehjJgCw9tYg==
 
 tabbable@^5.3.3:
   version "5.3.3"

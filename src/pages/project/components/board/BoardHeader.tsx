@@ -1,6 +1,5 @@
 import { AppstoreOutlined, BarsOutlined } from "@ant-design/icons";
-import { Segmented } from "antd";
-import AtlasKitTextField from "@atlaskit/textfield";
+import { Input, Segmented } from "antd";
 import { debounce } from "lodash";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -40,11 +39,11 @@ const FilterInput = () => {
     );
   }, 200);
   return (
-    <AtlasKitTextField
+    <Input
+      allowClear
       onChange={onChange}
       style={{ width: 180 }}
       placeholder="Filter tasks"
-      appearance="subtle"
     />
   );
 };

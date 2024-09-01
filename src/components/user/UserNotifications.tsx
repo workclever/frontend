@@ -6,13 +6,17 @@ import {
   useSetNotificationsReadMutation,
 } from "../../services/api";
 import { UserAvatar } from "../shared/UserAvatar";
+import { ProList } from "@ant-design/pro-components";
+import { useNavigate } from "react-router-dom";
+import { UserNotificationType } from "../../types/User";
 import { useAppNavigate } from "../../hooks/useAppNavigate";
 import { TaskIdRenderer } from "../shared/TaskIdRenderer";
 import { useProjectTasks } from "../../hooks/useProjectTasks";
+import { Button } from "../shared/primitives/Button";
 import { Tooltip } from "../shared/primitives/Tooltip";
 import { Space } from "../shared/primitives/Space";
 import { Text } from "../shared/primitives/Text";
-import { List } from "../shared/primitives/List";
+import { gray } from "@ant-design/colors";
 
 const TaskInfo: React.FC<{ taskId?: number }> = ({ taskId }) => {
   const task = useTask(taskId);
@@ -34,11 +38,10 @@ const TaskInfo: React.FC<{ taskId?: number }> = ({ taskId }) => {
 const NOTIFICATIONS_DROPDOWN_LIMIT = 5;
 const NOTIFICATIONS_ALL_LIMIT = 50;
 
-// TODO showall
 export const UserNotifications: React.FC<{ showAll: boolean }> = ({
   showAll,
 }) => {
-  const { data: notifications } = useListUserNotificationsQuery(
+  const { data: notifications, isLoading } = useListUserNotificationsQuery(
     showAll ? NOTIFICATIONS_ALL_LIMIT : NOTIFICATIONS_DROPDOWN_LIMIT
   );
   const [setNotificationsRead] = useSetNotificationsReadMutation();
@@ -52,35 +55,67 @@ export const UserNotifications: React.FC<{ showAll: boolean }> = ({
       setNotificationsRead(null);
     }
   }, [setNotificationsRead, unreadNotificationsCount]);
+  const [expandedRowKeys, setExpandedRowKeys] = React.useState<
+    readonly React.Key[]
+  >([]);
 
+  const navigate = useNavigate();
   const { goToTask } = useAppNavigate();
   const tasks = useProjectTasks();
 
-  if (notifications?.Data.length === 0) {
-    return <div>You don't have any notifications</div>;
-  }
-
+  // TODO: check no data chinese text
   return (
-    <List
-      dataSource={notifications?.Data || []}
-      renderItem={(item) => {
-        return (
-          <div
-            onClick={() => {
-              if (item.TaskId) {
-                // TODO improve goToTask to be in saga
-                const task = tasks[item.TaskId];
-                if (task) {
-                  goToTask(task);
-                }
-              }
-            }}
+    <ProList
+      style={{
+        backgroundColor: gray[0],
+        width: showAll ? "100%" : 450,
+        boxShadow: showAll
+          ? "inherit"
+          : "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
+      }}
+      rowKey="Id"
+      headerTitle={showAll ? undefined : "Notifications"}
+      toolBarRender={() => [
+        !showAll ? (
+          <Button
+            key="show-all"
+            appearance="primary"
+            onClick={() => navigate("/me/notifications")}
           >
-            <UserAvatar userId={item.ByUserId} />
-            <TaskInfo taskId={item.TaskId} />
-            {item.Content}
-          </div>
-        );
+            Show All
+          </Button>
+        ) : null,
+      ]}
+      dataSource={notifications?.Data || []}
+      loading={isLoading}
+      expandable={
+        showAll
+          ? {}
+          : { expandedRowKeys, onExpandedRowsChange: setExpandedRowKeys }
+      }
+      onRow={(record: UserNotificationType) => ({
+        onClick: () => {
+          if (record.TaskId) {
+            const task = tasks[record.TaskId];
+            if (task) {
+              goToTask(task);
+            }
+          }
+        },
+      })}
+      metas={{
+        title: {
+          // dataIndex: "Type",
+        },
+        avatar: {
+          render: (_, item) => <UserAvatar userId={item.ByUserId} />,
+        },
+        subTitle: {
+          render: (_, item) => <TaskInfo taskId={item.TaskId} />,
+        },
+        description: {
+          dataIndex: "Content",
+        },
       }}
     />
   );

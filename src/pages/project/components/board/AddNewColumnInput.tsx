@@ -1,5 +1,5 @@
 import { PlusOutlined } from "@ant-design/icons";
-import { Form } from "antd";
+import { Form, Input } from "antd";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useCreateBoardColumnMutation } from "../../../../services/api";
@@ -8,7 +8,6 @@ import {
   selectSelectedBoardId,
 } from "../../../../slices/project/projectSlice";
 import { ToggleOnClick } from "../../../../components/shared/ToggleOnClick";
-import AtlasKitTextField from "@atlaskit/textfield";
 
 const TextWrapper = styled.div`
   cursor: pointer;
@@ -51,11 +50,7 @@ export const AddNewColumnInput: React.FC = () => {
         name="Name"
         rules={[{ required: true, message: "Please enter name" }]}
       >
-        <AtlasKitTextField
-          autoFocus
-          placeholder="Create new column"
-          isDisabled={isLoading}
-        />
+        <Input autoFocus placeholder="Create new column" disabled={isLoading} />
       </Form.Item>
     </Form>
   );

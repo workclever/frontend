@@ -1,4 +1,4 @@
-import { ConfigProvider, Form } from "antd";
+import { ConfigProvider, Form, Input } from "antd";
 import React from "react";
 import { useSelector } from "react-redux";
 import {
@@ -20,7 +20,6 @@ import { Modal } from "../../../../../../components/shared/primitives/Modal";
 import { List } from "../../../../../../components/shared/primitives/List";
 import Tabs, { Tab, TabList, TabPanel } from "@atlaskit/tabs";
 import { Stack, xcss } from "@atlaskit/primitives";
-import AtlasKitTextField from "@atlaskit/textfield";
 
 type ManuTaskFormValuesType = {
   Title: string;
@@ -157,7 +156,7 @@ export const SubtasksList: React.FC<{
                         { required: true, message: "Please enter task title" },
                       ]}
                     >
-                      <AtlasKitTextField placeholder="Create a new sub task" />
+                      <Input placeholder="Create a new sub task" />
                     </Form.Item>
                     <Form.Item>
                       <Button type="submit" appearance="primary">
