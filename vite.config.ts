@@ -1,21 +1,22 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
+import pluginChecker from "vite-plugin-checker";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [pluginChecker({ typescript: true }), react()],
   server: {
     port: 3000,
   },
   resolve: {
     alias: {
-      'rc-util': path.resolve(__dirname, 'node_modules/rc-util'),
-      'rc-util/lib': path.resolve(__dirname, 'node_modules/rc-util/lib'),
-      'rc-util/es': path.resolve(__dirname, 'node_modules/rc-util/es'),
+      "rc-util": path.resolve(__dirname, "node_modules/rc-util"),
+      "rc-util/lib": path.resolve(__dirname, "node_modules/rc-util/lib"),
+      "rc-util/es": path.resolve(__dirname, "node_modules/rc-util/es"),
     },
   },
   optimizeDeps: {
-    include: ['rc-util', 'rc-util/lib', 'rc-util/es'],
+    include: ["rc-util", "rc-util/lib", "rc-util/es"],
   },
 });
