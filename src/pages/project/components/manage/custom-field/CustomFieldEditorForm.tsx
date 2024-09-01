@@ -103,7 +103,7 @@ export const CustomFieldEditorForm: React.FC<{
         searchConfig: {
           submitText: "Save",
         },
-        render: (props, doms) => {
+        render: (_props, doms) => {
           return [
             // Get the 'Submit' dom only - on need to render reset (which is [0] item)
             doms[1],

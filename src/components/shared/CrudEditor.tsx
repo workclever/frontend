@@ -148,7 +148,7 @@ export const CrudEditor = <T,>({
               </Button>
             </Tooltip>
           ),
-          actionRender: (row, config, defaultDom) => getActions(defaultDom),
+          actionRender: (_row, _config, defaultDom) => getActions(defaultDom),
         }}
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore

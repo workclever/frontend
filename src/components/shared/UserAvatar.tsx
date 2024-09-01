@@ -2,7 +2,7 @@ import { Avatar } from "antd";
 import { BACKEND_URL } from "../../constants";
 import { useUser } from "../../hooks/useUser";
 import { Tooltip } from "./primitives/Tooltip";
-import { blue, green, magenta } from "@ant-design/colors";
+import { blue, magenta } from "@ant-design/colors";
 
 export const UserAvatar: React.FC<{
   userId: number;

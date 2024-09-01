@@ -1,5 +1,6 @@
 import { Task } from "./Task";
 import { ColumnType, TaskType } from "../../../../types/Project";
+// @ts-ignore
 import hash from "object-hash";
 import React from "react";
 import {
@@ -53,7 +54,7 @@ const DndInsideContainers: React.FC<{
   const customFieldsVisibleOnCard = (customFields?.Data || []).filter(
     (r) => r.ShowInTaskCard && r.Enabled
   );
-  const renderTaskItem = ({ columnId, itemId, hovering, listeners }: any) => {
+  const renderTaskItem = ({ itemId, listeners }: any) => {
     const task = findTask(Number(itemId));
     return (
       task && (
