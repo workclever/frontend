@@ -20,5 +20,8 @@ export const useAppNavigate = () => {
         `/project/${task.ProjectId}/board/${task.BoardId}?taskId=${task.Id}`
       );
     },
+    goToNotifications: () => {
+      navigate("/me/notifications");
+    },
   };
 };

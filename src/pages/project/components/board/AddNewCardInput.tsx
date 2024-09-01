@@ -1,5 +1,5 @@
 import { PlusOutlined } from "@ant-design/icons";
-import { Form, Input } from "antd";
+import { Form } from "antd";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useCreateTaskMutation } from "../../../../services/api";
@@ -11,6 +11,7 @@ import { ColumnType } from "../../../../types/Project";
 import { ToggleOnClick } from "../../../../components/shared/ToggleOnClick";
 import { Tooltip } from "../../../../components/shared/primitives/Tooltip";
 import { gray } from "@ant-design/colors";
+import AtlasKitTextField from "@atlaskit/textfield";
 
 const TextWrapper = styled.span`
   color: ${gray[0]};
@@ -57,10 +58,10 @@ export const AddNewCardInput: React.FC<{ column: ColumnType }> = ({
         name="Title"
         rules={[{ required: true, message: "Please enter title" }]}
       >
-        <Input
+        <AtlasKitTextField
           autoFocus
           placeholder="Create a new task..."
-          disabled={isLoading}
+          isDisabled={isLoading}
         />
       </Form.Item>
     </Form>

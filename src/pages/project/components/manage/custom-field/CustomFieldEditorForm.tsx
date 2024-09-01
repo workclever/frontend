@@ -5,7 +5,7 @@ import {
   ProFormSelect,
   ProFormSwitch,
 } from "@ant-design/pro-components";
-import { Form, Input } from "antd";
+import { Form } from "antd";
 import React from "react";
 import { useSelector } from "react-redux";
 import {
@@ -24,6 +24,7 @@ import { HttpResult } from "../../../../../components/shared/HttpResult";
 import { randomColor } from "../../../../../components/shared/colors";
 import { Button } from "../../../../../components/shared/primitives/Button";
 import { Space } from "../../../../../components/shared/primitives/Space";
+import AtlasKitTextField from "@atlaskit/textfield";
 
 export const createCustomFieldValues = {
   CustomFieldId: 0,
@@ -168,7 +169,7 @@ export const CustomFieldEditorForm: React.FC<{
                     name={[index, "Name"]}
                     rules={[{ required: true }]}
                   >
-                    <Input />
+                    <AtlasKitTextField />
                   </Form.Item>
                   <MinusCircleOutlined onClick={() => remove(field.name)} />
                 </Space>
