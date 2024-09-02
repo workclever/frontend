@@ -18,21 +18,14 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-top: 1px solid ${blue[1]};
-  border-left: 1px solid ${blue[1]};
-  border-right: 1px solid ${blue[1]};
-  background-color: ${blue[0]};
+  background-color: white;
   margin-bottom: 0px;
   cursor: pointer;
-  padding-left: 8px;
+  padding: 4px 8px;
+  border-bottom: 1px solid #eaeaea;
 
   &:hover {
-    background-color: ${blue[1]};
-    border-color: ${blue[2]};
-  }
-
-  &:last-child {
-    border-bottom: 1px solid ${blue[1]};
+    background-color: ${blue[0]};
   }
 `;
 
@@ -51,7 +44,7 @@ export const TaskCardCompact: React.FC<Props> = ({
             <Text>{task.Title}</Text>
           </Space>
         </div>
-        <div style={{ display: "flex" }}>
+        <div style={{ display: "flex", alignItems: "center" }}>
           <RenderTaskCustomFieldsUnit task={task} customFields={customFields} />
           <ColHeader>
             <TaskCommentsUnit task={task} />

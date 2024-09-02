@@ -11,13 +11,12 @@ import {
 import { BoardHeader } from "./components/board/BoardHeader";
 import { Columns } from "./components/board/Columns";
 import { LeftColumn } from "./components/board/LeftColumn";
-import { blue } from "@ant-design/colors";
 import { useParams } from "react-router-dom";
 import React from "react";
 
 const LeftWrapper = styled.div`
   width: 250px;
-  border-right: 1px solid ${blue[1]};
+  border-right: 1px solid #eaeaea;
   flex-shrink: 0;
   overflow-y: auto;
   height: 100vh;

@@ -38,9 +38,9 @@ export const AddNewCardInput: React.FC<{ column: ColumnType }> = ({
   };
 
   const defaultComponent = (
-    <Tooltip title={`Add new task to ${column.Name} column`}>
+    <Tooltip title={`Add a new task to ${column.Name} column`}>
       <TextWrapper>
-        <PlusOutlined /> Add new task
+        <PlusOutlined /> New task
       </TextWrapper>
     </Tooltip>
   );

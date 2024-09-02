@@ -14,7 +14,6 @@ import { BoardUserAvatars } from "./BoardUserAvatars";
 import { LayoutRightContent } from "../../../../layout/LayoutRightContent";
 import { Space } from "../../../../components/shared/primitives/Space";
 import { Divider } from "../../../../components/shared/primitives/Divider";
-import { blue } from "@ant-design/colors";
 
 const Wrapper = styled.div`
   height: 45px;
@@ -26,7 +25,8 @@ const Wrapper = styled.div`
   top: 0px;
   left: 250px;
   z-index: 1;
-  border-bottom: 1px solid ${blue[1]}; ;
+  border-bottom: 1px solid #eaeaea;
+  background-color: white;
 `;
 
 const FilterInput = () => {
@@ -44,7 +44,8 @@ const FilterInput = () => {
       allowClear
       onChange={onChange}
       style={{ width: 180 }}
-      placeholder="Filter tasks"
+      placeholder="Filter tasks..."
+      variant="borderless"
     />
   );
 };

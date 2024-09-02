@@ -32,7 +32,7 @@ export const AddNewColumnInput: React.FC = () => {
 
   const defaultComponent = (
     <TextWrapper>
-      <PlusOutlined /> Add new column
+      <PlusOutlined /> New column
     </TextWrapper>
   );
 
