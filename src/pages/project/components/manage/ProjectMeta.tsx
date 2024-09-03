@@ -14,7 +14,9 @@ import { selectSelectedProjectId } from "@app/slices/project/projectSlice";
 import { Button } from "@app/components/shared/primitives/Button";
 import { Space } from "@app/components/shared/primitives/Space";
 import { Divider } from "@app/components/shared/primitives/Divider";
+import { ProjectType } from "@app/types/Project";
 
+// TODO eliminate updatedProps since it's not working properly
 export const ProjectMeta: React.FC = () => {
   const projectId = Number(useSelector(selectSelectedProjectId));
   const { data, error } = useGetProjectQuery(projectId);
@@ -23,7 +25,7 @@ export const ProjectMeta: React.FC = () => {
   const [deleteProject] = useDeleteProjectMutation();
   const [updatedProps, setUpdatedProps] = React.useState<{
     [prop: string]: {
-      Result: BaseOutput<any>;
+      Result: BaseOutput<string>;
     };
   }>({});
 
@@ -51,7 +53,7 @@ export const ProjectMeta: React.FC = () => {
   return (
     <Space direction="vertical" style={{ width: "100%" }}>
       <HttpResult error={error} />
-      <ProDescriptions
+      <ProDescriptions<ProjectType>
         column={1}
         bordered
         size="small"
@@ -64,7 +66,7 @@ export const ProjectMeta: React.FC = () => {
               const result = await updateProject({
                 ProjectId: projectId,
                 ...omit(project, "Id"),
-                [propKey]: newInfo[propKey],
+                [propKey]: newInfo[propKey as keyof ProjectType],
               }).unwrap();
 
               setUpdatedProps({
@@ -74,6 +76,7 @@ export const ProjectMeta: React.FC = () => {
                 },
               });
               return true;
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } catch (e: any) {
               setUpdatedProps({
                 ...updatedProps,
@@ -86,7 +89,9 @@ export const ProjectMeta: React.FC = () => {
           },
         }}
       >
-        <ProDescriptions.Item label="Id">{project?.Id}</ProDescriptions.Item>
+        <ProDescriptions.Item label="Id" editable={false}>
+          {project?.Id}
+        </ProDescriptions.Item>
         <ProDescriptions.Item
           title="Name"
           dataIndex={"Name"}
@@ -95,7 +100,7 @@ export const ProjectMeta: React.FC = () => {
             status: getFieldStatus("Name"),
             placeholder: "Name",
           }}
-          formItemProps={getFormItemProps("Name") as any}
+          formItemProps={getFormItemProps("Name")}
         >
           {project?.Name}
         </ProDescriptions.Item>
@@ -107,7 +112,7 @@ export const ProjectMeta: React.FC = () => {
             status: getFieldStatus("Slug"),
             placeholder: "Slug",
           }}
-          formItemProps={getFormItemProps("Slug") as any}
+          formItemProps={getFormItemProps("Slug")}
         >
           {project?.Slug}
         </ProDescriptions.Item>

@@ -27,6 +27,7 @@ export const Account = () => {
         editable={{
           type: "multiple",
           onSave: async (keypath, newInfo) => {
+            console.log({ keypath, newInfo });
             if (keypath === "FullName") {
               updateUser({
                 UserId: Number(me?.Id),
@@ -64,6 +65,7 @@ export const Account = () => {
           dataIndex={"Timezone"}
           fieldProps={{
             options: tzOptions,
+            showSearch: true,
           }}
           valueType="select"
         >

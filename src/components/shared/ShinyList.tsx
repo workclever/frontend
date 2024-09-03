@@ -82,7 +82,9 @@ export const ShinyList = <T extends { Id: number }>({
         <Item
           key={r.Id}
           onClick={() => {
-            onClick && onClick(r);
+            if (onClick) {
+              onClick(r);
+            }
           }}
         >
           <div style={{ flex: 1 }}>

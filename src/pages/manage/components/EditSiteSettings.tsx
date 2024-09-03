@@ -5,6 +5,7 @@ import {
 } from "@app/services/api";
 import { ProDescriptions } from "@ant-design/pro-components";
 import { Title } from "@app/components/shared/primitives/Title";
+import { SiteSettings } from "@app/types/SiteSettings";
 
 const dateFormats = {
   "dd/MM/yyyy": "dd/MM/yyyy",
@@ -33,7 +34,7 @@ export const EditSiteSettings = () => {
   return (
     <>
       <Title level={5}>Site settings</Title>
-      <ProDescriptions
+      <ProDescriptions<SiteSettings>
         column={1}
         bordered
         labelStyle={{ width: 150 }}
