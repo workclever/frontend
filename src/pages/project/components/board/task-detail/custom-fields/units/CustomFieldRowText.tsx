@@ -1,6 +1,6 @@
 import { InputRef, Input } from "antd";
 import React from "react";
-import { CustomField } from "../../../../../../../types/CustomField";
+import { CustomField } from "@app/types/CustomField";
 
 export const CustomFieldRowText: React.FC<{
   loading: boolean;

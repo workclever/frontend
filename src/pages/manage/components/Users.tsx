@@ -5,20 +5,20 @@ import {
 } from "@ant-design/pro-components";
 import { uniq } from "lodash";
 import React from "react";
-import { Button } from "../../../components/shared/primitives/Button";
-import { UserAvatar } from "../../../components/shared/UserAvatar";
+import { Button } from "@app/components/shared/primitives/Button";
+import { UserAvatar } from "@app/components/shared/UserAvatar";
 import {
   useGetUserAssignedProjectIdsQuery,
   useGetUserRolesQuery,
   useListAllUsersQuery,
   useListUserProjectsQuery,
-} from "../../../services/api";
-import { BasicUserOutput } from "../../../types/Project";
+} from "@app/services/api";
+import { BasicUserOutput } from "@app/types/Project";
 import { CreateUserModal } from "./users/CreateUserModal";
 import { EditRolesModal } from "./users/EditRolesModal";
 import { EditUserModal } from "./users/EditUserModal";
-import { Text } from "../../../components/shared/primitives/Text";
-import { Space } from "../../../components/shared/primitives/Space";
+import { Text } from "@app/components/shared/primitives/Text";
+import { Space } from "@app/components/shared/primitives/Space";
 
 const TableUserDetail: React.FC<{ user: BasicUserOutput }> = ({ user }) => {
   const { data: userAssignedProjectIds } = useGetUserAssignedProjectIdsQuery(

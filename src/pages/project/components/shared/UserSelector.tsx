@@ -1,9 +1,9 @@
 import { Select } from "antd";
 import React from "react";
-import { useProjectUsers } from "../../../../hooks/useProjectUsers";
-import { useListAllUsersQuery } from "../../../../services/api";
-import { UserAvatar } from "../../../../components/shared/UserAvatar";
-import { Text } from "../../../../components/shared/primitives/Text";
+import { useProjectUsers } from "@app/hooks/useProjectUsers";
+import { useListAllUsersQuery } from "@app/services/api";
+import { UserAvatar } from "@app/components/shared/UserAvatar";
+import { Text } from "@app/components/shared/primitives/Text";
 import { DefaultOptionType } from "antd/lib/select";
 
 type Props = {

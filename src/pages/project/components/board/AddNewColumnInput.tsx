@@ -2,12 +2,12 @@ import { PlusOutlined } from "@ant-design/icons";
 import { Form, Input } from "antd";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { useCreateBoardColumnMutation } from "../../../../services/api";
+import { useCreateBoardColumnMutation } from "@app/services/api";
 import {
   selectSelectedProjectId,
   selectSelectedBoardId,
-} from "../../../../slices/project/projectSlice";
-import { ToggleOnClick } from "../../../../components/shared/ToggleOnClick";
+} from "@app/slices/project/projectSlice";
+import { ToggleOnClick } from "@app/components/shared/ToggleOnClick";
 
 const TextWrapper = styled.div`
   cursor: pointer;

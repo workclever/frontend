@@ -8,12 +8,12 @@ import {
   selectBoardViewType,
   setBoardFilter,
   setBoardViewType,
-} from "../../../../slices/project/projectSlice";
-import { BoardViewType } from "../../../../types/Project";
+} from "@app/slices/project/projectSlice";
+import { BoardViewType } from "@app/types/Project";
 import { BoardUserAvatars } from "./BoardUserAvatars";
-import { LayoutRightContent } from "../../../../layout/LayoutRightContent";
-import { Space } from "../../../../components/shared/primitives/Space";
-import { Divider } from "../../../../components/shared/primitives/Divider";
+import { LayoutRightContent } from "@app/layout/LayoutRightContent";
+import { Space } from "@app/components/shared/primitives/Space";
+import { Divider } from "@app/components/shared/primitives/Divider";
 
 const Wrapper = styled.div`
   height: 45px;

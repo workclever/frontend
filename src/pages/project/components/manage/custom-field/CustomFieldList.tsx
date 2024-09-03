@@ -2,11 +2,11 @@ import { EditOutlined } from "@ant-design/icons";
 import { Table } from "antd";
 import React from "react";
 import { useSelector } from "react-redux";
-import { Button } from "../../../../../components/shared/primitives/Button";
-import { Modal } from "../../../../../components/shared/primitives/Modal";
-import { useListCustomFieldsQuery } from "../../../../../services/api";
-import { selectSelectedProjectId } from "../../../../../slices/project/projectSlice";
-import { CustomField } from "../../../../../types/CustomField";
+import { Button } from "@app/components/shared/primitives/Button";
+import { Modal } from "@app/components/shared/primitives/Modal";
+import { useListCustomFieldsQuery } from "@app/services/api";
+import { selectSelectedProjectId } from "@app/slices/project/projectSlice";
+import { CustomField } from "@app/types/CustomField";
 import {
   createCustomFieldValues,
   CustomFieldEditorForm,

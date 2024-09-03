@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { TaskIdRenderer } from "../../../../components/shared/TaskIdRenderer";
-import { Text } from "../../../../components/shared/primitives/Text";
+import { TaskIdRenderer } from "@app/components/shared/TaskIdRenderer";
+import { Text } from "@app/components/shared/primitives/Text";
 import { ColHeader } from "./ColumnListHeader";
 import {
   Props,
@@ -10,7 +10,7 @@ import {
   TaskCommentsUnit,
   TaskSubtasksUnit,
 } from "./Task";
-import { Space } from "../../../../components/shared/primitives/Space";
+import { Space } from "@app/components/shared/primitives/Space";
 import { blue } from "@ant-design/colors";
 
 const Wrapper = styled.div`

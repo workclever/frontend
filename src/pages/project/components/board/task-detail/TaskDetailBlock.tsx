@@ -5,13 +5,13 @@ import {
 } from "@ant-design/icons";
 import React from "react";
 import styled from "styled-components";
-import { FlexBasicLayout } from "../../../../../components/shared/FlexBasicLayout";
+import { FlexBasicLayout } from "@app/components/shared/FlexBasicLayout";
 import {
   Button,
   ButtonProps,
-} from "../../../../../components/shared/primitives/Button";
-import { Space } from "../../../../../components/shared/primitives/Space";
-import { Text } from "../../../../../components/shared/primitives/Text";
+} from "@app/components/shared/primitives/Button";
+import { Space } from "@app/components/shared/primitives/Space";
+import { Text } from "@app/components/shared/primitives/Text";
 
 const Content = styled.div`
   padding: 4px;

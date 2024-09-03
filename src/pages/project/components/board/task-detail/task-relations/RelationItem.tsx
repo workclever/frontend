@@ -1,15 +1,15 @@
 import { EditOutlined } from "@ant-design/icons";
 import { List } from "antd";
 import React from "react";
-import { useTask } from "../../../../../../hooks/useTask";
-import { useTaskRelationTypeDefs } from "../../../../../../hooks/useTaskRelationTypeDefs";
-import { TaskType, TaskRelationType } from "../../../../../../types/Project";
-import { HoverableListItem } from "../../../../../../components/shared/HoverableListItem";
-import { TaskIdRenderer } from "../../../../../../components/shared/TaskIdRenderer";
+import { useTask } from "@app/hooks/useTask";
+import { useTaskRelationTypeDefs } from "@app/hooks/useTaskRelationTypeDefs";
+import { TaskType, TaskRelationType } from "@app/types/Project";
+import { HoverableListItem } from "@app/components/shared/HoverableListItem";
+import { TaskIdRenderer } from "@app/components/shared/TaskIdRenderer";
 import { NewRelationModal } from "./NewRelationModal";
-import { Button } from "../../../../../../components/shared/primitives/Button";
-import { Space } from "../../../../../../components/shared/primitives/Space";
-import { Tag } from "../../../../../../components/shared/primitives/Tag";
+import { Button } from "@app/components/shared/primitives/Button";
+import { Space } from "@app/components/shared/primitives/Space";
+import { Tag } from "@app/components/shared/primitives/Tag";
 
 export const RelationItem: React.FC<{
   baseTask: TaskType;

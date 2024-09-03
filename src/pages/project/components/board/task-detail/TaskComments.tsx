@@ -2,25 +2,25 @@ import { CloseOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { List, Form, ConfigProvider } from "antd";
 import { Comment as AntdComment } from "@ant-design/compatible";
 import React from "react";
-import { useFormattedDateTime } from "../../../../../hooks/useFormattedDateTime";
-import { useMe } from "../../../../../hooks/useMe";
-import { useUser } from "../../../../../hooks/useUser";
+import { useFormattedDateTime } from "@app/hooks/useFormattedDateTime";
+import { useMe } from "@app/hooks/useMe";
+import { useUser } from "@app/hooks/useUser";
 import {
   useCreateTaskCommentMutation,
   useDeleteTaskCommentMutation,
   useListTaskCommentsQuery,
   useUpdateTaskCommentMutation,
-} from "../../../../../services/api";
-import { TaskCommentType, TaskType } from "../../../../../types/Project";
-import { Confirm } from "../../../../../components/shared/Confirm";
-import { AppEditor } from "../../../../../components/shared/editor/AppEditor";
-import { EditorToRenderer } from "../../../../../components/shared/editor/EditorToRenderer";
-import { HttpResult } from "../../../../../components/shared/HttpResult";
-import { UserAvatar } from "../../../../../components/shared/UserAvatar";
-import { Button } from "../../../../../components/shared/primitives/Button";
-import { Tooltip } from "../../../../../components/shared/primitives/Tooltip";
-import { LoadingSpin } from "../../../../../components/shared/primitives/LoadingSpin";
-import { Text } from "../../../../../components/shared/primitives/Text";
+} from "@app/services/api";
+import { TaskCommentType, TaskType } from "@app/types/Project";
+import { Confirm } from "@app/components/shared/Confirm";
+import { AppEditor } from "@app/components/shared/editor/AppEditor";
+import { EditorToRenderer } from "@app/components/shared/editor/EditorToRenderer";
+import { HttpResult } from "@app/components/shared/HttpResult";
+import { UserAvatar } from "@app/components/shared/UserAvatar";
+import { Button } from "@app/components/shared/primitives/Button";
+import { Tooltip } from "@app/components/shared/primitives/Tooltip";
+import { LoadingSpin } from "@app/components/shared/primitives/LoadingSpin";
+import { Text } from "@app/components/shared/primitives/Text";
 
 type Props = {
   task: TaskType;

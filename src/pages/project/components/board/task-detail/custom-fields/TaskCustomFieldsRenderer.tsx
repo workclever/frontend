@@ -3,15 +3,15 @@ import { useSelector } from "react-redux";
 import {
   useListCustomFieldsQuery,
   useListTaskCustomFieldValuesByBoardQuery,
-} from "../../../../../../services/api";
+} from "@app/services/api";
 import {
   selectSelectedBoardId,
   selectSelectedProjectId,
-} from "../../../../../../slices/project/projectSlice";
-import { TaskType } from "../../../../../../types/Project";
+} from "@app/slices/project/projectSlice";
+import { TaskType } from "@app/types/Project";
 import styled from "styled-components";
 import { CustomFieldRow } from "./units/CustomFieldRow";
-import { Text } from "../../../../../../components/shared/primitives/Text";
+import { Text } from "@app/components/shared/primitives/Text";
 
 const TableContainer = styled.div``;
 

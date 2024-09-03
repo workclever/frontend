@@ -1,8 +1,8 @@
-import { TaskType } from "../../../../../types/Project";
+import { TaskType } from "@app/types/Project";
 import React from "react";
-import { useTaskUpdateProperty } from "../../../../../hooks/useTaskUpdateProperty";
-import { HttpResult } from "../../../../../components/shared/HttpResult";
-import { AppEditor } from "../../../../../components/shared/editor/AppEditor";
+import { useTaskUpdateProperty } from "@app/hooks/useTaskUpdateProperty";
+import { HttpResult } from "@app/components/shared/HttpResult";
+import { AppEditor } from "@app/components/shared/editor/AppEditor";
 import { debounce } from "lodash";
 
 type Props = {

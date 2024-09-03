@@ -2,7 +2,7 @@ import { UserOutlined, LaptopOutlined } from "@ant-design/icons";
 import { ProjectBoards } from "./ProjectBoards";
 import { ProjectMeta } from "./ProjectMeta";
 import { ProjectUsers } from "./ProjectUsers";
-import { MasterDetail } from "../../../../components/shared/MasterDetail";
+import { MasterDetail } from "@app/components/shared/MasterDetail";
 import { CustomFieldList } from "./custom-field/CustomFieldList";
 import { MenuProps } from "antd/lib/menu";
 

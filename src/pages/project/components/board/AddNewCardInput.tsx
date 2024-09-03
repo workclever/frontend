@@ -2,14 +2,14 @@ import { PlusOutlined } from "@ant-design/icons";
 import { Form, Input } from "antd";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { useCreateTaskMutation } from "../../../../services/api";
+import { useCreateTaskMutation } from "@app/services/api";
 import {
   selectSelectedProjectId,
   selectSelectedBoardId,
-} from "../../../../slices/project/projectSlice";
-import { ColumnType } from "../../../../types/Project";
-import { ToggleOnClick } from "../../../../components/shared/ToggleOnClick";
-import { Tooltip } from "../../../../components/shared/primitives/Tooltip";
+} from "@app/slices/project/projectSlice";
+import { ColumnType } from "@app/types/Project";
+import { ToggleOnClick } from "@app/components/shared/ToggleOnClick";
+import { Tooltip } from "@app/components/shared/primitives/Tooltip";
 import { gray } from "@ant-design/colors";
 
 const TextWrapper = styled.span`

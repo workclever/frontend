@@ -1,15 +1,15 @@
 import { ProColumns } from "@ant-design/pro-components";
 import React from "react";
 import { useSelector } from "react-redux";
-import { useBoards } from "../../../../hooks/useBoards";
+import { useBoards } from "@app/hooks/useBoards";
 import {
   useUpdateBoardMutation,
   useCreateBoardMutation,
   useDeleteBoardMutation,
-} from "../../../../services/api";
-import { selectSelectedProjectId } from "../../../../slices/project/projectSlice";
-import { BoardType } from "../../../../types/Project";
-import { CrudEditor } from "../../../../components/shared/CrudEditor";
+} from "@app/services/api";
+import { selectSelectedProjectId } from "@app/slices/project/projectSlice";
+import { BoardType } from "@app/types/Project";
+import { CrudEditor } from "@app/components/shared/CrudEditor";
 
 export const ProjectBoards: React.FC = () => {
   const projectId = Number(useSelector(selectSelectedProjectId));

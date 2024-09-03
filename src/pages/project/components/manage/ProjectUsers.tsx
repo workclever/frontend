@@ -1,7 +1,7 @@
 import { Table, Switch, Tooltip } from "antd";
 import React from "react";
 import { useSelector } from "react-redux";
-import { useMe } from "../../../../hooks/useMe";
+import { useMe } from "@app/hooks/useMe";
 import {
   useListProjectUsersQuery,
   useCreateProjectAssigneeMutation,
@@ -9,16 +9,16 @@ import {
   useCreateManagerUserForProjectMutation,
   useDeleteManagerUserForProjectMutation,
   useListProjectUserAccessesQuery,
-} from "../../../../services/api";
-import { selectSelectedProjectId } from "../../../../slices/project/projectSlice";
-import { BasicUserOutput } from "../../../../types/Project";
-import { EntityClasses, Permissions } from "../../../../types/Roles";
-import { Confirm } from "../../../../components/shared/Confirm";
-import { UserAvatar } from "../../../../components/shared/UserAvatar";
+} from "@app/services/api";
+import { selectSelectedProjectId } from "@app/slices/project/projectSlice";
+import { BasicUserOutput } from "@app/types/Project";
+import { EntityClasses, Permissions } from "@app/types/Roles";
+import { Confirm } from "@app/components/shared/Confirm";
+import { UserAvatar } from "@app/components/shared/UserAvatar";
 import { UserSelector } from "../shared/UserSelector";
-import { Button } from "../../../../components/shared/primitives/Button";
-import { Space } from "../../../../components/shared/primitives/Space";
-import { Divider } from "../../../../components/shared/primitives/Divider";
+import { Button } from "@app/components/shared/primitives/Button";
+import { Space } from "@app/components/shared/primitives/Space";
+import { Divider } from "@app/components/shared/primitives/Divider";
 
 export const ProjectUsers: React.FC = () => {
   const projectId = Number(useSelector(selectSelectedProjectId));

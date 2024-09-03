@@ -1,12 +1,12 @@
 import { ProColumns } from "@ant-design/pro-components";
-import { CrudEditor } from "../../../components/shared/CrudEditor";
-import { useTaskRelationTypeDefs } from "../../../hooks/useTaskRelationTypeDefs";
+import { CrudEditor } from "@app/components/shared/CrudEditor";
+import { useTaskRelationTypeDefs } from "@app/hooks/useTaskRelationTypeDefs";
 import {
   useUpdateTaskRelationTypeDefMutation,
   useCreateTaskRelationTypeDefMutation,
   useDeleteTaskRelationTypeDefMutation,
-} from "../../../services/api";
-import { TaskRelationTypeDef } from "../../../types/TaskRelationTypeDef";
+} from "@app/services/api";
+import { TaskRelationTypeDef } from "@app/types/TaskRelationTypeDef";
 
 export const RelationshipTypeDefinitions = () => {
   const data = useTaskRelationTypeDefs();

@@ -1,6 +1,6 @@
 import { Select } from "antd";
-import { useTaskRelationTypeDefs } from "../../../../../hooks/useTaskRelationTypeDefs";
-import { TaskRelationType } from "../../../../../types/Project";
+import { useTaskRelationTypeDefs } from "@app/hooks/useTaskRelationTypeDefs";
+import { TaskRelationType } from "@app/types/Project";
 
 export const RelationTypeSelector: React.FC<{
   value?: number;

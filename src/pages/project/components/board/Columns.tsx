@@ -1,5 +1,5 @@
 import { Task } from "./Task";
-import { ColumnType, TaskType } from "../../../../types/Project";
+import { ColumnType, TaskType } from "@app/types/Project";
 // @ts-ignore
 import hash from "object-hash";
 import React from "react";
@@ -7,12 +7,12 @@ import {
   useListCustomFieldsQuery,
   useUpdateColumnOrdersMutation,
   useUpdateTaskOrdersMutation,
-} from "../../../../services/api";
+} from "@app/services/api";
 import { useSelector } from "react-redux";
 import {
   selectSelectedBoardId,
   selectSelectedProjectId,
-} from "../../../../slices/project/projectSlice";
+} from "@app/slices/project/projectSlice";
 import { debounce } from "lodash";
 import { Items, DndColumnContainers } from "../dnd/DndColumnContainers";
 import { ColumnNameRenderer } from "./ColumnNameRenderer";
@@ -20,7 +20,7 @@ import { AddNewCardInput } from "./AddNewCardInput";
 import { AddNewColumnInput } from "./AddNewColumnInput";
 import { TaskDetail } from "./task-detail/TaskDetail";
 import { Drawer } from "antd";
-import { useBoardData } from "../../../../hooks/useBoardData";
+import { useBoardData } from "@app/hooks/useBoardData";
 
 const DndInsideContainers: React.FC<{
   vertical: boolean;

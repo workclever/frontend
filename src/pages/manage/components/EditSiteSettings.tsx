@@ -2,9 +2,9 @@ import {
   useGetSiteSettingsQuery,
   useGetTimeZonesQuery,
   useUpdateSiteSettingMutation,
-} from "../../../services/api";
+} from "@app/services/api";
 import { ProDescriptions } from "@ant-design/pro-components";
-import { Title } from "../../../components/shared/primitives/Title";
+import { Title } from "@app/components/shared/primitives/Title";
 
 const dateFormats = {
   "dd/MM/yyyy": "dd/MM/yyyy",

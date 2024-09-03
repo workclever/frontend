@@ -1,6 +1,6 @@
 import { InputRef } from "antd";
 import React from "react";
-import { CustomField } from "../../../../../../../types/CustomField";
+import { CustomField } from "@app/types/CustomField";
 import Field from "@ant-design/pro-field";
 
 export const CustomFieldRowBool: React.FC<{

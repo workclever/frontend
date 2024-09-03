@@ -1,7 +1,7 @@
 import { ModalForm, ProForm, ProFormText } from "@ant-design/pro-components";
-import { HttpResult } from "../../../../components/shared/HttpResult";
-import { useUpdateUserMutation } from "../../../../services/api";
-import { BasicUserOutput } from "../../../../types/Project";
+import { HttpResult } from "@app/components/shared/HttpResult";
+import { useUpdateUserMutation } from "@app/services/api";
+import { BasicUserOutput } from "@app/types/Project";
 
 type FormValuesType = {
   FullName: string;

@@ -1,11 +1,11 @@
-import { TaskType } from "../../../../../types/Project";
+import { TaskType } from "@app/types/Project";
 import { UserSelector } from "../../shared/UserSelector";
 import { TaskMover } from "../../shared/TaskMover";
 import React from "react";
-import { useTaskUpdateProperty } from "../../../../../hooks/useTaskUpdateProperty";
-import { useUpdateTaskAssigneeUserMutation } from "../../../../../services/api";
+import { useTaskUpdateProperty } from "@app/hooks/useTaskUpdateProperty";
+import { useUpdateTaskAssigneeUserMutation } from "@app/services/api";
 import { TaskEditableDescription } from "./TaskEditableDescription";
-import { optimisticUpdateDependOnApi } from "../../../../../hooks/optimisticUpdateDependOnApi";
+import { optimisticUpdateDependOnApi } from "@app/hooks/optimisticUpdateDependOnApi";
 import { TaskComments } from "./TaskComments";
 import { TaskChangeLog } from "./TaskChangeLog";
 import { TaskRelations } from "./task-relations/TaskRelations";
@@ -17,9 +17,9 @@ import { TaskEditableTitle } from "./TaskEditableTitle";
 import {
   Tabs,
   TabPane,
-} from "../../../../../components/shared/primitives/Tabs";
-import { Space } from "../../../../../components/shared/primitives/Space";
-import { Divider } from "../../../../../components/shared/primitives/Divider";
+} from "@app/components/shared/primitives/Tabs";
+import { Space } from "@app/components/shared/primitives/Space";
+import { Divider } from "@app/components/shared/primitives/Divider";
 
 type Props = {
   task: TaskType;

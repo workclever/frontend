@@ -1,7 +1,7 @@
 import { ModalForm, ProFormText } from "@ant-design/pro-components";
-import { useAppNavigate } from "../../../hooks/useAppNavigate";
-import { useCreateProjectMutation } from "../../../services/api";
-import { HttpResult } from "../../../components/shared/HttpResult";
+import { useAppNavigate } from "@app/hooks/useAppNavigate";
+import { useCreateProjectMutation } from "@app/services/api";
+import { HttpResult } from "@app/components/shared/HttpResult";
 
 type CreateProjectModalInput = {
   Name: string;

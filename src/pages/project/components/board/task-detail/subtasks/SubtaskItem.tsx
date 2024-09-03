@@ -1,14 +1,14 @@
 import { RollbackOutlined } from "@ant-design/icons";
 import { List } from "antd";
-import { useTaskUpdateProperty } from "../../../../../../hooks/useTaskUpdateProperty";
-import { TaskType } from "../../../../../../types/Project";
-import { Confirm } from "../../../../../../components/shared/Confirm";
-import { HoverableListItem } from "../../../../../../components/shared/HoverableListItem";
-import { UserAvatar } from "../../../../../../components/shared/UserAvatar";
-import { TaskIdRenderer } from "../../../../../../components/shared/TaskIdRenderer";
-import { Button } from "../../../../../../components/shared/primitives/Button";
-import { Tooltip } from "../../../../../../components/shared/primitives/Tooltip";
-import { Space } from "../../../../../../components/shared/primitives/Space";
+import { useTaskUpdateProperty } from "@app/hooks/useTaskUpdateProperty";
+import { TaskType } from "@app/types/Project";
+import { Confirm } from "@app/components/shared/Confirm";
+import { HoverableListItem } from "@app/components/shared/HoverableListItem";
+import { UserAvatar } from "@app/components/shared/UserAvatar";
+import { TaskIdRenderer } from "@app/components/shared/TaskIdRenderer";
+import { Button } from "@app/components/shared/primitives/Button";
+import { Tooltip } from "@app/components/shared/primitives/Tooltip";
+import { Space } from "@app/components/shared/primitives/Space";
 
 export const SubtaskItem: React.FC<{
   task: TaskType;

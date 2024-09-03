@@ -12,18 +12,18 @@ import {
   useCreateCustomFieldMutation,
   useUpdateCustomFieldMutation,
   useDeleteCustomFieldMutation,
-} from "../../../../../services/api";
-import { selectSelectedProjectId } from "../../../../../slices/project/projectSlice";
+} from "@app/services/api";
+import { selectSelectedProjectId } from "@app/slices/project/projectSlice";
 import {
   CustomFieldSelectOption,
   CustomFieldType,
-} from "../../../../../types/CustomField";
-import { ColorPicker } from "../../../../../components/shared/ColorPicker";
-import { Confirm } from "../../../../../components/shared/Confirm";
-import { HttpResult } from "../../../../../components/shared/HttpResult";
-import { randomColor } from "../../../../../components/shared/colors";
-import { Button } from "../../../../../components/shared/primitives/Button";
-import { Space } from "../../../../../components/shared/primitives/Space";
+} from "@app/types/CustomField";
+import { ColorPicker } from "@app/components/shared/ColorPicker";
+import { Confirm } from "@app/components/shared/Confirm";
+import { HttpResult } from "@app/components/shared/HttpResult";
+import { randomColor } from "@app/components/shared/colors";
+import { Button } from "@app/components/shared/primitives/Button";
+import { Space } from "@app/components/shared/primitives/Space";
 
 export const createCustomFieldValues = {
   CustomFieldId: 0,

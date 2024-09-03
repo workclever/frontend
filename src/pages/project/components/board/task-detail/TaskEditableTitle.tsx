@@ -1,14 +1,14 @@
 import { Typography } from "antd";
-import { TaskType } from "../../../../../types/Project";
+import { TaskType } from "@app/types/Project";
 import React from "react";
 import { debounce } from "lodash";
-import { useTaskUpdateProperty } from "../../../../../hooks/useTaskUpdateProperty";
-import { HttpResult } from "../../../../../components/shared/HttpResult";
-import { useTask } from "../../../../../hooks/useTask";
-import { useBoards } from "../../../../../hooks/useBoards";
-import { TaskIdRenderer } from "../../../../../components/shared/TaskIdRenderer";
-import { Tooltip } from "../../../../../components/shared/primitives/Tooltip";
-import { Text } from "../../../../../components/shared/primitives/Text";
+import { useTaskUpdateProperty } from "@app/hooks/useTaskUpdateProperty";
+import { HttpResult } from "@app/components/shared/HttpResult";
+import { useTask } from "@app/hooks/useTask";
+import { useBoards } from "@app/hooks/useBoards";
+import { TaskIdRenderer } from "@app/components/shared/TaskIdRenderer";
+import { Tooltip } from "@app/components/shared/primitives/Tooltip";
+import { Text } from "@app/components/shared/primitives/Text";
 
 type Props = {
   task: TaskType;

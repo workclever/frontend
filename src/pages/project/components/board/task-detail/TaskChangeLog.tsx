@@ -1,15 +1,15 @@
 import { Timeline } from "antd";
 import React from "react";
 import { useSelector } from "react-redux";
-import { useBoards } from "../../../../../hooks/useBoards";
-import { useColumns } from "../../../../../hooks/useColumns";
-import { useFormattedDateTime } from "../../../../../hooks/useFormattedDateTime";
-import { useUser } from "../../../../../hooks/useUser";
-import { useListTaskChangeLogQuery } from "../../../../../services/api";
-import { selectSelectedBoardId } from "../../../../../slices/project/projectSlice";
-import { TaskChangeLogType, TaskType } from "../../../../../types/Project";
-import { UserAvatar } from "../../../../../components/shared/UserAvatar";
-import { LoadingSpin } from "../../../../../components/shared/primitives/LoadingSpin";
+import { useBoards } from "@app/hooks/useBoards";
+import { useColumns } from "@app/hooks/useColumns";
+import { useFormattedDateTime } from "@app/hooks/useFormattedDateTime";
+import { useUser } from "@app/hooks/useUser";
+import { useListTaskChangeLogQuery } from "@app/services/api";
+import { selectSelectedBoardId } from "@app/slices/project/projectSlice";
+import { TaskChangeLogType, TaskType } from "@app/types/Project";
+import { UserAvatar } from "@app/components/shared/UserAvatar";
+import { LoadingSpin } from "@app/components/shared/primitives/LoadingSpin";
 
 type Props = {
   task: TaskType;

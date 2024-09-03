@@ -6,18 +6,18 @@ import {
 } from "@ant-design/icons";
 import React from "react";
 import styled from "styled-components";
-import { FlexBasicLayout } from "../../../../components/shared/FlexBasicLayout";
-import { Permission } from "../../../../components/shared/Permission";
-import { Button } from "../../../../components/shared/primitives/Button";
-import { Modal } from "../../../../components/shared/primitives/Modal";
-import { useCurrentProject } from "../../../../hooks/useCurrentProject";
-import { EntityClasses, Permissions } from "../../../../types/Roles";
+import { FlexBasicLayout } from "@app/components/shared/FlexBasicLayout";
+import { Permission } from "@app/components/shared/Permission";
+import { Button } from "@app/components/shared/primitives/Button";
+import { Modal } from "@app/components/shared/primitives/Modal";
+import { useCurrentProject } from "@app/hooks/useCurrentProject";
+import { EntityClasses, Permissions } from "@app/types/Roles";
 import { BoardList } from "../BoardList";
 import { ProjectSettings } from "../manage/ProjectSettings";
 import { useNavigate } from "react-router-dom";
 import { blue, gray } from "@ant-design/colors";
 import { CreateBoardModal } from "./CreateBoardModal";
-import { useListUserProjectsQuery } from "../../../../services/api";
+import { useListUserProjectsQuery } from "@app/services/api";
 
 const Header = styled.div`
   position: fixed;

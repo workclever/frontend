@@ -4,24 +4,21 @@ import { useSelector } from "react-redux";
 import {
   useCreateSubtaskRelationMutation,
   useCreateTaskMutation,
-} from "../../../../../../services/api";
+} from "@app/services/api";
 import {
   selectSelectedBoardId,
   selectSelectedProjectId,
-} from "../../../../../../slices/project/projectSlice";
-import { TaskType } from "../../../../../../types/Project";
-import { HttpResult } from "../../../../../../components/shared/HttpResult";
-import { TaskSearchInput } from "../../../shared/TaskSearchInput";
+} from "@app/slices/project/projectSlice";
+import { TaskType } from "@app/types/Project";
+import { HttpResult } from "@app/components/shared/HttpResult";
 import { TaskDetailBlock } from "../TaskDetailBlock";
 import { isSubtask } from "../utils";
 import { SubtaskItem } from "./SubtaskItem";
-import { Button } from "../../../../../../components/shared/primitives/Button";
-import {
-  Tabs,
-  TabPane,
-} from "../../../../../../components/shared/primitives/Tabs";
-import { Space } from "../../../../../../components/shared/primitives/Space";
-import { Modal } from "../../../../../../components/shared/primitives/Modal";
+import { Button } from "@app/components/shared/primitives/Button";
+import { Tabs, TabPane } from "@app/components/shared/primitives/Tabs";
+import { Space } from "@app/components/shared/primitives/Space";
+import { Modal } from "@app/components/shared/primitives/Modal";
+import { TaskSearchInput } from "../../../shared/TaskSearchInput";
 
 type ManuTaskFormValuesType = {
   Title: string;

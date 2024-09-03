@@ -1,9 +1,9 @@
-import { useDeleteTaskMutation } from "../../../../../services/api";
-import { TaskType } from "../../../../../types/Project";
-import { EntityClasses, Permissions } from "../../../../../types/Roles";
-import { Confirm } from "../../../../../components/shared/Confirm";
-import { Permission } from "../../../../../components/shared/Permission";
-import { Button } from "../../../../../components/shared/primitives/Button";
+import { useDeleteTaskMutation } from "@app/services/api";
+import { TaskType } from "@app/types/Project";
+import { EntityClasses, Permissions } from "@app/types/Roles";
+import { Confirm } from "@app/components/shared/Confirm";
+import { Permission } from "@app/components/shared/Permission";
+import { Button } from "@app/components/shared/primitives/Button";
 
 export const TaskDelete: React.FC<{
   task: TaskType;

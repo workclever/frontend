@@ -1,13 +1,13 @@
 import { Avatar } from "antd";
 import { uniq } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
-import { useProjectTasks } from "../../../../hooks/useProjectTasks";
+import { useProjectTasks } from "@app/hooks/useProjectTasks";
 import {
   selectBoardFilters,
   selectSelectedBoardId,
   setBoardFilter,
-} from "../../../../slices/project/projectSlice";
-import { UserAvatar } from "../../../../components/shared/UserAvatar";
+} from "@app/slices/project/projectSlice";
+import { UserAvatar } from "@app/components/shared/UserAvatar";
 
 export const BoardUserAvatars = () => {
   const dispatch = useDispatch();

@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
-import { selectSelectedBoardId } from "../../../slices/project/projectSlice";
-import { useAppNavigate } from "../../../hooks/useAppNavigate";
+import { selectSelectedBoardId } from "@app/slices/project/projectSlice";
+import { useAppNavigate } from "@app/hooks/useAppNavigate";
 import React from "react";
 import styled from "styled-components";
 import { blue } from "@ant-design/colors";
-import { useListAllBoardsQuery } from "../../../services/api";
+import { useListAllBoardsQuery } from "@app/services/api";
 
 const BoardItem = styled.div<{ active: boolean }>`
   cursor: pointer;

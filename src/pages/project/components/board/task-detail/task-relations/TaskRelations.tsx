@@ -1,7 +1,7 @@
 import { ConfigProvider, List } from "antd";
 import React from "react";
-import { useListTaskRelationsQuery } from "../../../../../../services/api";
-import { TaskType } from "../../../../../../types/Project";
+import { useListTaskRelationsQuery } from "@app/services/api";
+import { TaskType } from "@app/types/Project";
 import { TaskDetailBlock } from "../TaskDetailBlock";
 import { RelationItem } from "./RelationItem";
 import { NewRelationModal } from "./NewRelationModal";

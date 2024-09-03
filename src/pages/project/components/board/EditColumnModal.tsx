@@ -1,9 +1,9 @@
 import { ModalForm, ProForm, ProFormText } from "@ant-design/pro-components";
 import { omit } from "lodash";
 import React from "react";
-import { useUpdateBoardColumnMutation } from "../../../../services/api";
-import { ColumnType } from "../../../../types/Project";
-import { ColorPicker } from "../../../../components/shared/ColorPicker";
+import { useUpdateBoardColumnMutation } from "@app/services/api";
+import { ColumnType } from "@app/types/Project";
+import { ColorPicker } from "@app/components/shared/ColorPicker";
 
 export const EditColumnModal: React.FC<{
   onCancel: () => void;

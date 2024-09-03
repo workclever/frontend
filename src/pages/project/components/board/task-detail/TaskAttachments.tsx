@@ -1,14 +1,14 @@
-import { TaskType } from "../../../../../types/Project";
+import { TaskType } from "@app/types/Project";
 import { Upload, message, UploadProps } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { UploadChangeParam } from "antd/lib/upload";
-import { API_URL, BACKEND_URL } from "../../../../../constants";
-import { selectAuthToken } from "../../../../../slices/auth/authSlice";
+import { API_URL, BACKEND_URL } from "@app/constants";
+import { selectAuthToken } from "@app/slices/auth/authSlice";
 import { useSelector } from "react-redux";
-import { useListTaskAttachmentsQuery } from "../../../../../services/api";
+import { useListTaskAttachmentsQuery } from "@app/services/api";
 import { UploadFile } from "antd/lib/upload/interface";
 import { TaskDetailBlock } from "./TaskDetailBlock";
-import { Button } from "../../../../../components/shared/primitives/Button";
+import { Button } from "@app/components/shared/primitives/Button";
 
 export const TaskAttachments: React.FC<{ task: TaskType }> = ({ task }) => {
   const token = useSelector(selectAuthToken);

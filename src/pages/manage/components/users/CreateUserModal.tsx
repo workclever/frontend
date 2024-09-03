@@ -1,6 +1,6 @@
 import { ModalForm, ProForm, ProFormText } from "@ant-design/pro-components";
-import { useCreateUserMutation } from "../../../../services/api";
-import { HttpResult } from "../../../../components/shared/HttpResult";
+import { useCreateUserMutation } from "@app/services/api";
+import { HttpResult } from "@app/components/shared/HttpResult";
 
 type FormValuesType = {
   Email: string;

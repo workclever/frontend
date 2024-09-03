@@ -1,16 +1,16 @@
 import { Select } from "antd";
 import React from "react";
-import { useBoards } from "../../../../hooks/useBoards";
-import { TaskType } from "../../../../types/Project";
+import { useBoards } from "@app/hooks/useBoards";
+import { TaskType } from "@app/types/Project";
 import styled from "styled-components";
-import { useColumns } from "../../../../hooks/useColumns";
-import { useMoveTaskToColumnMutation } from "../../../../services/api";
-import { useTaskUpdateProperty } from "../../../../hooks/useTaskUpdateProperty";
-import { optimisticUpdateDependOnApi } from "../../../../hooks/optimisticUpdateDependOnApi";
-import { HttpResult } from "../../../../components/shared/HttpResult";
-import { Popover } from "../../../../components/shared/primitives/Popover";
-import { Button } from "../../../../components/shared/primitives/Button";
-import { Space } from "../../../../components/shared/primitives/Space";
+import { useColumns } from "@app/hooks/useColumns";
+import { useMoveTaskToColumnMutation } from "@app/services/api";
+import { useTaskUpdateProperty } from "@app/hooks/useTaskUpdateProperty";
+import { optimisticUpdateDependOnApi } from "@app/hooks/optimisticUpdateDependOnApi";
+import { HttpResult } from "@app/components/shared/HttpResult";
+import { Popover } from "@app/components/shared/primitives/Popover";
+import { Button } from "@app/components/shared/primitives/Button";
+import { Space } from "@app/components/shared/primitives/Space";
 
 const SelectTitle = styled.div`
   font-weight: bold;

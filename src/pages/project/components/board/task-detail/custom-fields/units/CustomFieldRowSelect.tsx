@@ -1,8 +1,8 @@
 import { Select } from "antd";
 import React from "react";
-import { CustomField } from "../../../../../../../types/CustomField";
-import { ColorPicker } from "../../../../../../../components/shared/ColorPicker";
-import { Space } from "../../../../../../../components/shared/primitives/Space";
+import { CustomField } from "@app/types/CustomField";
+import { ColorPicker } from "@app/components/shared/ColorPicker";
+import { Space } from "@app/components/shared/primitives/Space";
 
 export const CustomFieldRowSelect: React.FC<{
   loading: boolean;

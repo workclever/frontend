@@ -2,10 +2,10 @@ import { Select } from "antd";
 import { debounce, uniqBy } from "lodash";
 import React from "react";
 import { useSelector } from "react-redux";
-import { useTask } from "../../../../hooks/useTask";
-import { useSearchTasksMutation } from "../../../../services/api";
-import { selectSelectedProjectId } from "../../../../slices/project/projectSlice";
-import { TaskType } from "../../../../types/Project";
+import { useTask } from "@app/hooks/useTask";
+import { useSearchTasksMutation } from "@app/services/api";
+import { selectSelectedProjectId } from "@app/slices/project/projectSlice";
+import { TaskType } from "@app/types/Project";
 
 export const TaskSearchInput: React.FC<{
   value?: number;

@@ -3,17 +3,17 @@ import {
   useDeleteProjectMutation,
   useGetProjectQuery,
   useUpdateProjectMutation,
-} from "../../../../services/api";
-import { HttpResult } from "../../../../components/shared/HttpResult";
+} from "@app/services/api";
+import { HttpResult } from "@app/components/shared/HttpResult";
 import { FormItemProps, ProDescriptions } from "@ant-design/pro-components";
 import { omit } from "lodash";
-import { BaseOutput } from "../../../../types/BaseOutput";
-import { Confirm } from "../../../../components/shared/Confirm";
+import { BaseOutput } from "@app/types/BaseOutput";
+import { Confirm } from "@app/components/shared/Confirm";
 import { useSelector } from "react-redux";
-import { selectSelectedProjectId } from "../../../../slices/project/projectSlice";
-import { Button } from "../../../../components/shared/primitives/Button";
-import { Space } from "../../../../components/shared/primitives/Space";
-import { Divider } from "../../../../components/shared/primitives/Divider";
+import { selectSelectedProjectId } from "@app/slices/project/projectSlice";
+import { Button } from "@app/components/shared/primitives/Button";
+import { Space } from "@app/components/shared/primitives/Space";
+import { Divider } from "@app/components/shared/primitives/Divider";
 
 export const ProjectMeta: React.FC = () => {
   const projectId = Number(useSelector(selectSelectedProjectId));

@@ -1,13 +1,13 @@
 import { DraggableSyntheticListeners } from "@dnd-kit/core";
 import { message } from "antd";
-import { TaskType } from "../../../../types/Project";
-import { UserAvatar } from "../../../../components/shared/UserAvatar";
+import { TaskType } from "@app/types/Project";
+import { UserAvatar } from "@app/components/shared/UserAvatar";
 import {
   useDeleteTaskMutation,
   useListTaskCommentsQuery,
   useListTaskCustomFieldValuesByBoardQuery,
   useSendTaskToTopOrBottomMutation,
-} from "../../../../services/api";
+} from "@app/services/api";
 import {
   CheckOutlined,
   CloseOutlined,
@@ -19,21 +19,21 @@ import {
   MessageOutlined,
   UpCircleOutlined,
 } from "@ant-design/icons";
-import { CustomField, CustomFieldType } from "../../../../types/CustomField";
+import { CustomField, CustomFieldType } from "@app/types/CustomField";
 import React from "react";
-import { EntityClasses, Permissions } from "../../../../types/Roles";
-import { useMe } from "../../../../hooks/useMe";
+import { EntityClasses, Permissions } from "@app/types/Roles";
+import { useMe } from "@app/hooks/useMe";
 import copy from "copy-to-clipboard";
-import { useFormattedDate } from "../../../../hooks/useFormattedDate";
-import { EnhancedDropdownMenu } from "../../../../components/shared/EnhancedDropdownMenu";
+import { useFormattedDate } from "@app/hooks/useFormattedDate";
+import { EnhancedDropdownMenu } from "@app/components/shared/EnhancedDropdownMenu";
 import { TaskCardKanban } from "./TaskCardKanban";
 import { TaskCardCompact } from "./TaskCardCompact";
 import { useSelector } from "react-redux";
-import { selectBoardViewType } from "../../../../slices/project/projectSlice";
-import { Confirm } from "../../../../components/shared/Confirm";
-import { Tooltip } from "../../../../components/shared/primitives/Tooltip";
-import { Space } from "../../../../components/shared/primitives/Space";
-import { Tag } from "../../../../components/shared/primitives/Tag";
+import { selectBoardViewType } from "@app/slices/project/projectSlice";
+import { Confirm } from "@app/components/shared/Confirm";
+import { Tooltip } from "@app/components/shared/primitives/Tooltip";
+import { Space } from "@app/components/shared/primitives/Space";
+import { Tag } from "@app/components/shared/primitives/Tag";
 import { gray } from "@ant-design/colors";
 import { MenuProps } from "antd/lib/menu";
 

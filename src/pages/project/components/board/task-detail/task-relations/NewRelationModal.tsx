@@ -3,15 +3,15 @@ import {
   useCreateTaskRelationMutation,
   useUpdateTaskRelationMutation,
   useDeleteTaskRelationMutation,
-} from "../../../../../../services/api";
-import { TaskType, TaskRelationType } from "../../../../../../types/Project";
-import { Confirm } from "../../../../../../components/shared/Confirm";
-import { HttpResult } from "../../../../../../components/shared/HttpResult";
-import { TaskSearchInput } from "../../../shared/TaskSearchInput";
+} from "@app/services/api";
+import { TaskType, TaskRelationType } from "@app/types/Project";
+import { Confirm } from "@app/components/shared/Confirm";
+import { HttpResult } from "@app/components/shared/HttpResult";
 import { RelationTypeSelector } from "../RelationTypeSelector";
-import { Button } from "../../../../../../components/shared/primitives/Button";
-import { Space } from "../../../../../../components/shared/primitives/Space";
-import { Modal } from "../../../../../../components/shared/primitives/Modal";
+import { Button } from "@app/components/shared/primitives/Button";
+import { Space } from "@app/components/shared/primitives/Space";
+import { Modal } from "@app/components/shared/primitives/Modal";
+import { TaskSearchInput } from "../../../shared/TaskSearchInput";
 
 export const NewRelationModal: React.FC<{
   task: TaskType;

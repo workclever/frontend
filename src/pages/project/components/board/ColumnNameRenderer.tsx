@@ -5,20 +5,20 @@ import { ItemType } from "antd/es/menu/interface";
 import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { useMe } from "../../../../hooks/useMe";
-import { useDeleteColumnMutation } from "../../../../services/api";
+import { useMe } from "@app/hooks/useMe";
+import { useDeleteColumnMutation } from "@app/services/api";
 import {
   selectBoardViewType,
   selectSelectedProjectId,
-} from "../../../../slices/project/projectSlice";
-import { ColumnType } from "../../../../types/Project";
-import { EntityClasses, Permissions } from "../../../../types/Roles";
-import { Confirm } from "../../../../components/shared/Confirm";
-import { EnhancedDropdownMenu } from "../../../../components/shared/EnhancedDropdownMenu";
-import { FlexBasicLayout } from "../../../../components/shared/FlexBasicLayout";
+} from "@app/slices/project/projectSlice";
+import { ColumnType } from "@app/types/Project";
+import { EntityClasses, Permissions } from "@app/types/Roles";
+import { Confirm } from "@app/components/shared/Confirm";
+import { EnhancedDropdownMenu } from "@app/components/shared/EnhancedDropdownMenu";
+import { FlexBasicLayout } from "@app/components/shared/FlexBasicLayout";
 import { EditColumnModal } from "./EditColumnModal";
 import { ColumnListHeader } from "./ColumnListHeader";
-import { Title } from "../../../../components/shared/primitives/Title";
+import { Title } from "@app/components/shared/primitives/Title";
 
 const ColumnListWrapper = styled.div`
   padding: 4px;

@@ -1,11 +1,11 @@
 import { ModalForm, ProForm, ProFormSelect } from "@ant-design/pro-components";
-import { HttpResult } from "../../../../components/shared/HttpResult";
+import { HttpResult } from "@app/components/shared/HttpResult";
 import {
   useGetAllRolesQuery,
   useGetUserRolesQuery,
   useAddUserToRolesMutation,
-} from "../../../../services/api";
-import { BasicUserOutput } from "../../../../types/Project";
+} from "@app/services/api";
+import { BasicUserOutput } from "@app/types/Project";
 
 type FormValuesType = {
   UserId: number;

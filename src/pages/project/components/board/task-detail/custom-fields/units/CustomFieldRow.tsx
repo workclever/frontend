@@ -1,20 +1,20 @@
 import { debounce } from "lodash";
 import React from "react";
 import styled from "styled-components";
-import { LoadingSpin } from "../../../../../../../components/shared/primitives/LoadingSpin";
-import { useCreateCustomFieldTaskValueMutation } from "../../../../../../../services/api";
+import { LoadingSpin } from "@app/components/shared/primitives/LoadingSpin";
+import { useCreateCustomFieldTaskValueMutation } from "@app/services/api";
 import {
   CustomField,
   CustomFieldValue,
   CustomFieldType,
-} from "../../../../../../../types/CustomField";
-import { TaskType } from "../../../../../../../types/Project";
-import { RenderTaskCustomField } from "../../../Task";
+} from "@app/types/CustomField";
+import { TaskType } from "@app/types/Project";
 import { CustomFieldRowBool } from "./CustomFieldRowBool";
 import { CustomFieldRowDate } from "./CustomFieldRowDate";
 import { CustomFieldRowMultiSelect } from "./CustomFieldRowMultiSelect";
 import { CustomFieldRowSelect } from "./CustomFieldRowSelect";
 import { CustomFieldRowText } from "./CustomFieldRowText";
+import { RenderTaskCustomField } from "../../../Task";
 
 const CustomFieldValuePreview = styled.div`
   padding: 4px;

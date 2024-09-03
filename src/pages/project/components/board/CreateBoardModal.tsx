@@ -1,9 +1,9 @@
 import { ModalForm, ProForm, ProFormText } from "@ant-design/pro-components";
 import { useSelector } from "react-redux";
-import { HttpResult } from "../../../../components/shared/HttpResult";
-import { useAppNavigate } from "../../../../hooks/useAppNavigate";
-import { useCreateBoardMutation } from "../../../../services/api";
-import { selectSelectedProjectId } from "../../../../slices/project/projectSlice";
+import { HttpResult } from "@app/components/shared/HttpResult";
+import { useAppNavigate } from "@app/hooks/useAppNavigate";
+import { useCreateBoardMutation } from "@app/services/api";
+import { selectSelectedProjectId } from "@app/slices/project/projectSlice";
 
 type FormValuesType = {
   Name: string;
