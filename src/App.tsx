@@ -17,7 +17,7 @@ import { BoardPage } from "./pages/project/BoardPage";
 import { LoadingSpin } from "./components/shared/primitives/LoadingSpin";
 import { history } from "./history";
 import { useDispatch, useSelector } from "react-redux";
-import { loadAppStarted, selectAppLoading } from "./slices/project/appSlice";
+import { loadAppStarted, selectAppLoading } from "./slices/app/appSlice";
 import { TaskDetailPage } from "./pages/project/components/board/task-detail/TaskDetailPage";
 
 const auth = (component: React.ReactElement) => (

@@ -1,7 +1,7 @@
 import { fork } from "redux-saga/effects";
-import { appSaga } from "./project/appSaga";
-import { navigateSaga } from "./project/navigateSaga";
-import { taskDetailSaga } from "./project/taskDetailSaga";
+import { appSaga } from "./app/appSaga";
+import { navigateSaga } from "./navigate/navigateSaga";
+import { taskDetailSaga } from "./taskDetail/taskDetailSaga";
 
 export function* rootSaga() {
   yield fork(appSaga);

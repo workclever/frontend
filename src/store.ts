@@ -6,9 +6,9 @@ import { isRejectedWithValue, Middleware } from "@reduxjs/toolkit";
 import { message } from "antd";
 import createSagaMiddleware from "redux-saga";
 import { rootSaga } from "./slices/rootSaga";
-import { appReducer } from "./slices/project/appSlice";
-import { taskDetailReducer } from "./slices/project/taskDetailSlice";
-import { navigateReducer } from "./slices/project/navigateSlice";
+import { appReducer } from "./slices/app/appSlice";
+import { navigateReducer } from "./slices/navigate/navigateSlice";
+import { taskDetailReducer } from "./slices/taskDetail/taskDetailSlice";
 
 export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
   if (isRejectedWithValue(action)) {

@@ -10,7 +10,7 @@ import {
   setSelectedBoardId,
   setSelectedProjectId,
   setSelectedTaskId,
-} from "./projectSlice";
+} from "../project/projectSlice";
 
 const queryConfig = {
   forceRefetch: true,
