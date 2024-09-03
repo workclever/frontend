@@ -1,57 +1,38 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { LayoutWithHeader } from "../layout/LayoutWithHeader";
 import { LoggedInLayout } from "../layout/LoggedInLayout";
 import { CreateProjectModal } from "./project/components/CreateProjectModal";
-import { useAppNavigate } from "../hooks/useAppNavigate";
-import { ShinyList } from "../components/shared/ShinyList";
-import { ProjectType } from "../types/Project";
 import { Button } from "../components/shared/primitives/Button";
 import { Space } from "../components/shared/primitives/Space";
 import { Empty } from "../components/shared/primitives/Empty";
-import { useListUserProjectsQuery } from "../services/api";
+import { useDispatch } from "react-redux";
+import { loadRecentProject } from "@app/slices/app/appSlice";
 
 export const HomePage = () => {
-  const { goToProject } = useAppNavigate();
-  const { data: userProjects } = useListUserProjectsQuery(null);
+  const dispatch = useDispatch();
   const [showCreateProjectModal, setShowCreateProjectModal] =
     React.useState<boolean>(false);
+
+  useEffect(() => {
+    dispatch(loadRecentProject());
+  }, [dispatch]);
 
   const newProjectTrigger = () => {
     return (
       <Empty>
-        <>
-          <Space direction="vertical">
-            <span>
-              You don't have any project! To get started, create a project first
-            </span>
-            <Button
-              type="primary"
-              onClick={() => setShowCreateProjectModal(true)}
-              size="large"
-            >
-              Create Now
-            </Button>
-          </Space>
-        </>
+        <Space direction="vertical">
+          <div>
+            You don't have any project! To get started, create a project first
+          </div>
+          <Button
+            type="primary"
+            onClick={() => setShowCreateProjectModal(true)}
+            size="large"
+          >
+            Create Now
+          </Button>
+        </Space>
       </Empty>
-    );
-  };
-
-  const renderContent = () => {
-    if (userProjects?.Data.length === 0) {
-      return newProjectTrigger();
-    }
-
-    return (
-      <ShinyList<ProjectType>
-        title="Your projects"
-        dataSource={userProjects?.Data || []}
-        nameProp="Name"
-        subtitleProp="Slug"
-        onClick={(r) => goToProject(r.Id)}
-        newButtonText="New project"
-        onNewClick={() => setShowCreateProjectModal(true)}
-      />
     );
   };
 
@@ -59,7 +40,7 @@ export const HomePage = () => {
     <LoggedInLayout>
       <LayoutWithHeader title="WorkClever" hideBackButton>
         <>
-          {renderContent()}
+          {newProjectTrigger()}
           {showCreateProjectModal && (
             <CreateProjectModal
               onCancel={() => setShowCreateProjectModal(false)}

@@ -19,7 +19,7 @@ export const TaskDetailPage = () => {
   }, [dispatch, taskId]);
 
   return (
-    <BoardLayout>
+    <BoardLayout mode="task">
       {task?.Data && (
         <TaskDetail
           task={task.Data}

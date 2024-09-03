@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
 
 interface AppState {
@@ -13,16 +13,18 @@ export const appSlice = createSlice({
   name: "project",
   initialState,
   reducers: {
-    loadAppStarted: (state, _action: PayloadAction) => {
+    loadAppStarted: (state) => {
       state.loading = true;
     },
-    loadAppFinished: (state, _action: PayloadAction) => {
+    loadAppFinished: (state) => {
       state.loading = false;
     },
+    loadRecentProject: () => {},
   },
 });
 
-export const { loadAppStarted, loadAppFinished } = appSlice.actions;
+export const { loadAppStarted, loadAppFinished, loadRecentProject } =
+  appSlice.actions;
 
 export const selectAppLoading = (state: RootState) => state.app.loading;
 

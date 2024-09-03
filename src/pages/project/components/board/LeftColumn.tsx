@@ -18,6 +18,8 @@ import { useNavigate } from "react-router-dom";
 import { blue, gray } from "@ant-design/colors";
 import { CreateBoardModal } from "./CreateBoardModal";
 import { useListUserProjectsQuery } from "@app/services/api";
+import { useDispatch } from "react-redux";
+import { setSelectedProjectId } from "@app/slices/project/projectSlice";
 
 const Wrapper = styled.div`
   padding: 12px;
@@ -47,6 +49,7 @@ const BottomWrapper = styled.div`
 
 export const LeftColumn = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const currentProject = useCurrentProject();
   const [showProjectSettingsModal, setShowProjectSettingsModal] =
     React.useState(false);
@@ -87,7 +90,10 @@ export const LeftColumn = () => {
                 >
                   <Button
                     size="small"
-                    onClick={() => setShowCreateBoardModal(true)}
+                    onClick={() => {
+                      dispatch(setSelectedProjectId(project.Id));
+                      setShowCreateBoardModal(true);
+                    }}
                     type="text"
                   >
                     <PlusOutlined />

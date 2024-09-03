@@ -1,6 +1,8 @@
 import { styled } from "styled-components";
 import { BoardHeader } from "./BoardHeader";
 import { LeftColumn } from "./LeftColumn";
+import { useSelector } from "react-redux";
+import { selectBoardViewType } from "@app/slices/project/projectSlice";
 
 const LeftWrapper = styled.div`
   width: 250px;
@@ -22,14 +24,27 @@ const ContentWrapper = styled.div`
   padding: 8px;
   overflow-y: hidden;
   overflow-x: auto;
-  height: calc(100vh - 48px);
   width: 100%;
   background-color: white;
 `;
 
-export const BoardLayout: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+export const BoardLayout: React.FC<{
+  children: React.ReactNode;
+  mode: "board" | "task";
+}> = ({ children, mode }) => {
+  const boardViewType = useSelector(selectBoardViewType);
+
+  const getHeight = () => {
+    if (mode === "task") {
+      return "100%";
+    }
+    if (boardViewType === "kanban") {
+      return "calc(100vh - 48px)";
+    }
+
+    return "100%";
+  };
+
   return (
     <div style={{ display: "flex" }}>
       <LeftWrapper>
@@ -37,7 +52,13 @@ export const BoardLayout: React.FC<{ children: React.ReactNode }> = ({
       </LeftWrapper>
       <RightWrapper>
         <BoardHeader />
-        <ContentWrapper>{children}</ContentWrapper>
+        <ContentWrapper
+          style={{
+            height: getHeight(),
+          }}
+        >
+          {children}
+        </ContentWrapper>
       </RightWrapper>
     </div>
   );

@@ -34,7 +34,7 @@ export const BoardPage = () => {
       return null;
     }
     return (
-      <BoardLayout>
+      <BoardLayout mode="board">
         {(boardViewType === "kanban" || boardViewType === "list") && (
           <Columns />
         )}
