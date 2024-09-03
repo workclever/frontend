@@ -7,6 +7,8 @@ import { message } from "antd";
 import createSagaMiddleware from "redux-saga";
 import { rootSaga } from "./slices/rootSaga";
 import { appReducer } from "./slices/project/appSlice";
+import { taskDetailReducer } from "./slices/project/taskDetailSlice";
+import { navigateReducer } from "./slices/project/navigateSlice";
 
 export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
   if (isRejectedWithValue(action)) {
@@ -34,6 +36,8 @@ export const store = configureStore({
     auth: authReducer,
     project: projectReducer,
     app: appReducer,
+    taskDetail: taskDetailReducer,
+    navigate: navigateReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -52,9 +52,9 @@ export const LeftColumn = () => {
       <Header>
         <FlexBasicLayout
           left={
-            <div onClick={() => navigate("/")}>
+            <div onClick={() => navigate(-1)}>
               <ArrowLeftOutlined style={{ paddingRight: 8 }} />
-              Go back
+              Back
             </div>
           }
         />

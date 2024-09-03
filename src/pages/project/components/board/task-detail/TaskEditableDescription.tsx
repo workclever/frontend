@@ -20,7 +20,9 @@ export const TaskEditableDescription: React.FC<Props> = ({ task }) => {
   };
 
   const debouncedOnChange = debounce((value: string) => {
-    onChange && onChange(value);
+    if (onChange) {
+      onChange(value);
+    }
   }, 1000);
 
   return (

@@ -18,6 +18,7 @@ import { LoadingSpin } from "./components/shared/primitives/LoadingSpin";
 import { history } from "./history";
 import { useDispatch, useSelector } from "react-redux";
 import { loadAppStarted, selectAppLoading } from "./slices/project/appSlice";
+import { TaskDetailPage } from "./pages/project/components/board/task-detail/TaskDetailPage";
 
 const auth = (component: React.ReactElement) => (
   <RequireAuth>{component}</RequireAuth>
@@ -47,6 +48,7 @@ export default function App() {
           <Route path="/project/:projectId" element={auth(<Outlet />)}>
             <Route path="board/:boardId" element={<BoardPage />} />
           </Route>
+          <Route path="task/:taskId" element={<TaskDetailPage />} />
           <Route
             path="/me/notifications"
             element={auth(<NotificationsPage />)}

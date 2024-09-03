@@ -7,7 +7,7 @@ import {
   selectBoardViewType,
   setSelectedTaskId as setSelectedTaskIdAction,
 } from "../slices/project/projectSlice";
-import { BoardType, ColumnType, TaskType } from "../types/Project";
+import { BoardType, TaskType } from "../types/Project";
 import { useAppNavigate } from "./useAppNavigate";
 import { useBoards } from "./useBoards";
 import { useColumns } from "./useColumns";
@@ -90,7 +90,7 @@ export const useBoardData = () => {
   }, [columns, nonSubtasks, boardFilters]);
 
   const findColumn = React.useCallback(
-    (id: ColumnType) => columns.find((r) => r.Id === Number(id)),
+    (id: number) => columns.find((r) => r.Id === id),
     [columns]
   );
 
@@ -111,7 +111,6 @@ export const useBoardData = () => {
   const onTaskSelect = React.useCallback((task: TaskType) => {
     if (task) {
       goToTask(task);
-      setSelectedTaskId(task.Id);
     }
   }, []);
 

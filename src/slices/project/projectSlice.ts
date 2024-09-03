@@ -50,6 +50,7 @@ export const projectSlice = createSlice({
     setBoardViewType: (state, action: PayloadAction<BoardViewType>) => {
       state.boardViewType[Number(state.selectedBoardId)] = action.payload;
     },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     goToProject: (_state, _action: PayloadAction<number>) => {},
   },
 });
@@ -60,7 +61,6 @@ export const {
   setSelectedTaskId,
   setBoardFilter,
   setBoardViewType,
-  goToProject,
 } = projectSlice.actions;
 
 export const selectSelectedProjectId = (state: RootState) =>

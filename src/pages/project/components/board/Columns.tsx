@@ -1,5 +1,6 @@
 import { Task } from "./Task";
 import { ColumnType, TaskType } from "@app/types/Project";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import hash from "object-hash";
 import React from "react";
@@ -18,8 +19,6 @@ import { Items, DndColumnContainers } from "../dnd/DndColumnContainers";
 import { ColumnNameRenderer } from "./ColumnNameRenderer";
 import { AddNewCardInput } from "./AddNewCardInput";
 import { AddNewColumnInput } from "./AddNewColumnInput";
-import { TaskDetail } from "./task-detail/TaskDetail";
-import { Drawer } from "antd";
 import { useBoardData } from "@app/hooks/useBoardData";
 
 const DndInsideContainers: React.FC<{
@@ -27,7 +26,7 @@ const DndInsideContainers: React.FC<{
   findTask: (id: number) => TaskType;
   onTaskSelect: (task: TaskType) => void;
   findSubtasks: (id: number) => TaskType[];
-  findColumn: any;
+  findColumn: (id: number) => ColumnType | undefined;
   dndItems: {
     [key: string]: string[];
   };
@@ -128,43 +127,12 @@ const DndInsideContainers: React.FC<{
 export const Columns: React.FC = () => {
   const {
     dndItems,
-    selectedTaskId,
-    setSelectedTaskId,
     findColumn,
     findTask,
     findSubtasks,
     vertical,
     onTaskSelect,
-    onTaskDelete,
   } = useBoardData();
-
-  const renderTaskDetailDrawer = () => {
-    if (!selectedTaskId) {
-      return undefined;
-    }
-
-    const task = findTask(selectedTaskId);
-    if (!task) {
-      return null;
-    }
-
-    return (
-      <Drawer
-        open
-        onClose={() => setSelectedTaskId(undefined)}
-        destroyOnClose
-        closable={false}
-        width={"40%"}
-      >
-        <TaskDetail
-          task={task}
-          onTaskSelect={onTaskSelect}
-          findSubtasks={findSubtasks}
-          onTaskDelete={onTaskDelete}
-        />
-      </Drawer>
-    );
-  };
 
   return (
     <div key={hash({ dndItems })}>
@@ -176,7 +144,6 @@ export const Columns: React.FC = () => {
         findTask={findTask}
         onTaskSelect={onTaskSelect}
       />
-      {renderTaskDetailDrawer()}
     </div>
   );
 };

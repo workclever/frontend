@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
 
-interface ProjectState {
+interface AppState {
   loading: boolean;
 }
 
-const initialState: ProjectState = {
+const initialState: AppState = {
   loading: true,
 };
 

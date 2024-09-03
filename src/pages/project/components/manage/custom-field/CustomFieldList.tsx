@@ -14,7 +14,9 @@ import {
 
 export const CustomFieldList = () => {
   const projectId = Number(useSelector(selectSelectedProjectId));
-  const { data: customFields } = useListCustomFieldsQuery(projectId);
+  const { data: customFields } = useListCustomFieldsQuery(projectId, {
+    skip: !projectId,
+  });
   const customFieldsData = customFields?.Data || [];
 
   const [initialValues, setInitialValues] = React.useState<

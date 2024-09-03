@@ -14,16 +14,13 @@ import { TaskCustomFieldsRenderer } from "./custom-fields/TaskCustomFieldsRender
 import { TaskDelete } from "./TaskDelete";
 import { TaskAttachments } from "./TaskAttachments";
 import { TaskEditableTitle } from "./TaskEditableTitle";
-import {
-  Tabs,
-  TabPane,
-} from "@app/components/shared/primitives/Tabs";
+import { Tabs, TabPane } from "@app/components/shared/primitives/Tabs";
 import { Space } from "@app/components/shared/primitives/Space";
 import { Divider } from "@app/components/shared/primitives/Divider";
+import { useAppNavigate } from "@app/hooks/useAppNavigate";
 
 type Props = {
   task: TaskType;
-  onTaskSelect: (task: TaskType) => void;
   onTaskDelete: (task: TaskType) => void;
   findSubtasks: (id: number) => TaskType[];
 };
@@ -95,11 +92,16 @@ export const TaskDetail: React.FC<Props> = ({
   task,
   findSubtasks,
   onTaskDelete,
-  onTaskSelect,
 }) => {
+  const { goToTask } = useAppNavigate();
+
   const Pad: React.FC<{ children: React.ReactNode }> = (props) => (
     <div style={{ padding: 4 }}>{props.children}</div>
   );
+
+  const onTaskSelect = (task: TaskType) => {
+    goToTask(task);
+  };
 
   return (
     <>
