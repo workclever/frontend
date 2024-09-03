@@ -1,6 +1,7 @@
 import {
   ArrowLeftOutlined,
   PlusOutlined,
+  ProjectOutlined,
   QuestionCircleOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
@@ -47,6 +48,18 @@ const BottomWrapper = styled.div`
   padding: 8px;
 `;
 
+const ProjectItemWrapper = styled.div`
+  &:hover .project-plus-icon {
+    display: inline-block !important;
+  }
+`;
+
+const ProjectItem = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 8px;
+`;
+
 export const LeftColumn = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -69,39 +82,50 @@ export const LeftColumn = () => {
         />
       </Header>
       <div style={{ marginTop: 45 }}>
-        <div style={{ marginBottom: 8 }}>Your projects</div>
+        {/* <div style={{ marginBottom: 8 }}>Your projects</div> */}
         {userProjects?.Data.map((project) => {
           return (
-            <div key={project.Id}>
-              <div
-                key={project.Id}
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  marginTop: 8,
-                }}
-              >
-                <div style={{ flex: 1, color: gray[4] }}>{project?.Name}</div>
+            <ProjectItemWrapper key={project.Id}>
+              <ProjectItem>
+                <div
+                  style={{
+                    flex: 1,
+                    color: gray[4],
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <ProjectOutlined
+                    style={{ fontSize: "11px", color: "gray" }}
+                  />
+                  <span style={{ marginLeft: 8 }}>{project?.Name}</span>
+                </div>
                 <Permission
                   entityClass={EntityClasses.Project}
                   entityId={project.Id}
                   permission={Permissions.CanManageProject}
                   showWarning={false}
                 >
-                  <Button
-                    size="small"
+                  <span
                     onClick={() => {
                       dispatch(setSelectedProjectId(project.Id));
                       setShowCreateBoardModal(true);
                     }}
-                    type="text"
+                    style={{ cursor: "pointer" }}
                   >
-                    <PlusOutlined />
-                  </Button>
+                    <PlusOutlined
+                      style={{
+                        fontSize: "11px",
+                        color: "gray",
+                        display: "none",
+                      }}
+                      className="project-plus-icon"
+                    />
+                  </span>
                 </Permission>
-              </div>
+              </ProjectItem>
               <BoardList projectId={project.Id} />
-            </div>
+            </ProjectItemWrapper>
           );
         })}
       </div>

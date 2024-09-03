@@ -3,17 +3,22 @@ import { selectSelectedBoardId } from "@app/slices/project/projectSlice";
 import { useAppNavigate } from "@app/hooks/useAppNavigate";
 import React from "react";
 import styled from "styled-components";
-import { blue } from "@ant-design/colors";
 import { useListAllBoardsQuery } from "@app/services/api";
 
+const Wrapper = styled.div`
+  border-left: 1px solid #ededed;
+  margin-left: 6px;
+  margin-top: 8px;
+  padding-left: 8px;
+`;
+
 const BoardItem = styled.div<{ active: boolean }>`
-  cursor: pointer;
   padding: 4px;
-  background-color: ${(props) => (props.active ? blue[0] : "inherit")};
+  background-color: ${(props) => (props.active ? "#ededed" : "inherit")};
   border-radius: 4px;
 
   &:hover {
-    background-color: ${blue[1]};
+    background-color: #ededed;
   }
 `;
 
@@ -23,7 +28,7 @@ export const BoardList: React.FC<{ projectId: number }> = ({ projectId }) => {
   const { goToBoard } = useAppNavigate();
 
   return (
-    <div>
+    <Wrapper>
       {allBoards?.Data.filter((r) => r.ProjectId === projectId).map((r) => (
         <BoardItem
           key={r.Id}
@@ -33,6 +38,6 @@ export const BoardList: React.FC<{ projectId: number }> = ({ projectId }) => {
           {r.Name}
         </BoardItem>
       ))}
-    </div>
+    </Wrapper>
   );
 };

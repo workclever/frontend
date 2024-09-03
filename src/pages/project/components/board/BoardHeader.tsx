@@ -50,7 +50,9 @@ const FilterInput = () => {
   );
 };
 
-export const BoardHeader: React.FC = () => {
+export const BoardHeader: React.FC<{ showBoardActions: boolean }> = ({
+  showBoardActions,
+}) => {
   const dispatch = useDispatch();
   const boardViewType = useSelector(selectBoardViewType);
 
@@ -62,10 +64,12 @@ export const BoardHeader: React.FC = () => {
 
   return (
     <Wrapper>
-      <Space>
-        <FilterInput />
-        <BoardUserAvatars />
-      </Space>
+      {showBoardActions && (
+        <Space>
+          <FilterInput />
+          <BoardUserAvatars />
+        </Space>
+      )}
       <div style={{ flex: 1 }} />
       <Segmented
         size="small"

@@ -21,13 +21,13 @@ export const BoardPage = () => {
     if (projectId) {
       dispatch(setSelectedProjectId(Number(projectId)));
     }
-  }, [projectId]);
+  }, [dispatch, projectId]);
 
   React.useEffect(() => {
     if (boardId) {
       dispatch(setSelectedBoardId(Number(boardId)));
     }
-  }, [boardId]);
+  }, [dispatch, boardId]);
 
   const renderBoard = () => {
     if (!boardId) {
