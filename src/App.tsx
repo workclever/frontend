@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Routes,
   Route,
@@ -14,10 +14,10 @@ import { RegisterPage } from "./pages/auth/RegisterPage";
 import { GlobalSettingsPage } from "./pages/manage/GlobalSettingsPage";
 import { NotificationsPage } from "./pages/user/NotificationsPage";
 import { BoardPage } from "./pages/project/BoardPage";
-import { SiteContext } from "./contexts/SiteContext";
-import { useInitializeSiteContextValue } from "./hooks/useInitializeSiteContextValue";
 import { LoadingSpin } from "./components/shared/primitives/LoadingSpin";
 import { history } from "./history";
+import { useDispatch, useSelector } from "react-redux";
+import { loadAppStarted, selectAppLoading } from "./slices/project/appSlice";
 
 const auth = (component: React.ReactElement) => (
   <RequireAuth>{component}</RequireAuth>
@@ -28,29 +28,34 @@ const anon = (component: React.ReactElement) => (
 );
 
 export default function App() {
-  const value = useInitializeSiteContextValue();
-  if (!value.initialized) {
+  const dispatch = useDispatch();
+  const loading = useSelector(selectAppLoading);
+
+  useEffect(() => {
+    dispatch(loadAppStarted());
+  }, [dispatch]);
+
+  if (loading) {
     return <LoadingSpin />;
   }
+
   return (
-    <SiteContext.Provider value={value}>
-      <HistoryRouter history={history}>
-        <Routes>
-          <Route element={<BaseLayout />}>
-            <Route path="/" element={auth(<HomePage />)} />
-            <Route path="/project/:projectId" element={auth(<Outlet />)}>
-              <Route path="board/:boardId" element={<BoardPage />} />
-            </Route>
-            <Route
-              path="/me/notifications"
-              element={auth(<NotificationsPage />)}
-            />
-            <Route path="/login" element={anon(<LoginPage />)} />
-            <Route path="/register" element={anon(<RegisterPage />)} />
-            <Route path="/manage" element={auth(<GlobalSettingsPage />)} />
+    <HistoryRouter history={history}>
+      <Routes>
+        <Route element={<BaseLayout />}>
+          <Route path="/" element={auth(<HomePage />)} />
+          <Route path="/project/:projectId" element={auth(<Outlet />)}>
+            <Route path="board/:boardId" element={<BoardPage />} />
           </Route>
-        </Routes>
-      </HistoryRouter>
-    </SiteContext.Provider>
+          <Route
+            path="/me/notifications"
+            element={auth(<NotificationsPage />)}
+          />
+          <Route path="/login" element={anon(<LoginPage />)} />
+          <Route path="/register" element={anon(<RegisterPage />)} />
+          <Route path="/manage" element={auth(<GlobalSettingsPage />)} />
+        </Route>
+      </Routes>
+    </HistoryRouter>
   );
 }

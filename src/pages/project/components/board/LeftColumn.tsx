@@ -4,7 +4,7 @@ import {
   QuestionCircleOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components";
 import { FlexBasicLayout } from "../../../../components/shared/FlexBasicLayout";
 import { Permission } from "../../../../components/shared/Permission";
@@ -17,7 +17,7 @@ import { ProjectSettings } from "../manage/ProjectSettings";
 import { useNavigate } from "react-router-dom";
 import { blue, gray } from "@ant-design/colors";
 import { CreateBoardModal } from "./CreateBoardModal";
-import { SiteContext } from "../../../../contexts/SiteContext";
+import { useListUserProjectsQuery } from "../../../../services/api";
 
 const Header = styled.div`
   position: fixed;
@@ -45,7 +45,7 @@ export const LeftColumn = () => {
   const [showProjectSettingsModal, setShowProjectSettingsModal] =
     React.useState(false);
   const [showCreateBoardModal, setShowCreateBoardModal] = React.useState(false);
-  const { userProjects } = useContext(SiteContext);
+  const { data: userProjects } = useListUserProjectsQuery(null);
 
   return (
     <div style={{ padding: 12, backgroundColor: "white", height: "100%" }}>
@@ -61,7 +61,7 @@ export const LeftColumn = () => {
       </Header>
       <div style={{ marginTop: 45 }}>
         <div style={{ marginBottom: 8 }}>Your projects</div>
-        {userProjects.map((project) => {
+        {userProjects?.Data.map((project) => {
           return (
             <>
               <div

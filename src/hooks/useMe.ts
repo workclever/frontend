@@ -1,10 +1,14 @@
-import React, { useContext } from "react";
-import { SiteContext } from "../contexts/SiteContext";
+import React from "react";
 import { Roles, EntityClasses, Permissions } from "../types/Roles";
+import {
+  useGetUserQuery,
+  useListMyAccessedEntitiesQuery,
+} from "../services/api";
 
 export const useMe = () => {
-  const { me, accessedEntities } = useContext(SiteContext);
-  const roles = me?.Roles || [];
+  const { data: me } = useGetUserQuery(null);
+  const { data: accessedEntities } = useListMyAccessedEntitiesQuery(null);
+  const roles = me?.Data.Roles || [];
 
   const hasRole = React.useCallback(
     (role: Roles) => {
@@ -24,11 +28,11 @@ export const useMe = () => {
       return true;
     }
     if (entityId === "all") {
-      return !!(accessedEntities || []).find(
+      return !!(accessedEntities?.Data || []).find(
         (r) => r.Permission === permission && r.EntityClass === entityClass
       );
     }
-    return !!(accessedEntities || []).find(
+    return !!(accessedEntities?.Data || []).find(
       (r) =>
         r.EntityId === entityId &&
         r.Permission === permission &&
@@ -37,11 +41,11 @@ export const useMe = () => {
   };
 
   const isMe = (userId: number) => {
-    return userId === me?.Id;
+    return userId === me?.Data.Id;
   };
 
   return {
-    me: me,
+    me: me?.Data,
     isAdmin,
     accessedEntities: accessedEntities || [],
     hasAccess,

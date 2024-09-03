@@ -4,14 +4,14 @@ import {
   ProTable,
 } from "@ant-design/pro-components";
 import { uniq } from "lodash";
-import React, { useContext } from "react";
+import React from "react";
 import { Button } from "../../../components/shared/primitives/Button";
 import { UserAvatar } from "../../../components/shared/UserAvatar";
-import { SiteContext } from "../../../contexts/SiteContext";
 import {
   useGetUserAssignedProjectIdsQuery,
   useGetUserRolesQuery,
   useListAllUsersQuery,
+  useListUserProjectsQuery,
 } from "../../../services/api";
 import { BasicUserOutput } from "../../../types/Project";
 import { CreateUserModal } from "./users/CreateUserModal";
@@ -24,10 +24,10 @@ const TableUserDetail: React.FC<{ user: BasicUserOutput }> = ({ user }) => {
   const { data: userAssignedProjectIds } = useGetUserAssignedProjectIdsQuery(
     user.Id
   );
-  const { userProjects } = useContext(SiteContext);
+  const { data: userProjects } = useListUserProjectsQuery(null);
 
   const computedProjects = uniq(userAssignedProjectIds?.Data || [])
-    .map((id) => userProjects.find((r) => r.Id === id))
+    .map((id) => userProjects?.Data.find((r) => r.Id === id))
     .map((r) => r?.Name)
     .join(", ");
 

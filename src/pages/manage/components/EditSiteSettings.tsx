@@ -1,10 +1,9 @@
 import {
+  useGetSiteSettingsQuery,
   useGetTimeZonesQuery,
   useUpdateSiteSettingMutation,
 } from "../../../services/api";
 import { ProDescriptions } from "@ant-design/pro-components";
-import { useContext } from "react";
-import { SiteContext } from "../../../contexts/SiteContext";
 import { Title } from "../../../components/shared/primitives/Title";
 
 const dateFormats = {
@@ -18,7 +17,8 @@ const dateTimeFormats = {
 };
 
 export const EditSiteSettings = () => {
-  const { siteSettings } = useContext(SiteContext);
+  const { data: siteSettings } = useGetSiteSettingsQuery(null);
+
   const [updateSetting] = useUpdateSiteSettingMutation();
   const { data: tz } = useGetTimeZonesQuery(null);
   const tzOptions = (tz?.Data || []).map((r) => ({
@@ -70,7 +70,7 @@ export const EditSiteSettings = () => {
           }}
           valueType="select"
         >
-          {siteSettings.DefaultTimezone}
+          {siteSettings.Data.DefaultTimezone}
         </ProDescriptions.Item>
         <ProDescriptions.Item
           title="Date format"
@@ -78,7 +78,7 @@ export const EditSiteSettings = () => {
           valueType="select"
           valueEnum={dateFormats}
         >
-          {siteSettings.DefaultDateFormat}
+          {siteSettings.Data.DefaultDateFormat}
         </ProDescriptions.Item>
         <ProDescriptions.Item
           title="Date time format"
@@ -86,7 +86,7 @@ export const EditSiteSettings = () => {
           valueType="select"
           valueEnum={dateTimeFormats}
         >
-          {siteSettings.DefaultDateTimeFormat}
+          {siteSettings.Data.DefaultDateTimeFormat}
         </ProDescriptions.Item>
       </ProDescriptions>
     </>

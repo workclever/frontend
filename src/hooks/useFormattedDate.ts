@@ -1,12 +1,11 @@
 import { format } from "date-fns";
-import { useContext } from "react";
-import { SiteContext } from "../contexts/SiteContext";
+import { useGetSiteSettingsQuery } from "../services/api";
 
 const fallbackDefaultDateFormat = "MM/dd/yyyy";
 
 export const useFormattedDate = (date: string) => {
-  const { siteSettings } = useContext(SiteContext);
-  const defaultDateFormat = siteSettings?.DefaultDateFormat.trim();
+  const { data: siteSettings } = useGetSiteSettingsQuery(null);
+  const defaultDateFormat = siteSettings?.Data.DefaultDateFormat.trim();
   try {
     return format(
       new Date(date),

@@ -6,6 +6,7 @@ import { isRejectedWithValue, Middleware } from "@reduxjs/toolkit";
 import { message } from "antd";
 import createSagaMiddleware from "redux-saga";
 import { rootSaga } from "./slices/rootSaga";
+import { appReducer } from "./slices/project/appSlice";
 
 export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
   if (isRejectedWithValue(action)) {
@@ -32,6 +33,7 @@ export const store = configureStore({
     [api.reducerPath]: api.reducer,
     auth: authReducer,
     project: projectReducer,
+    app: appReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

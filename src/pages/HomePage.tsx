@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import { SiteContext } from "../contexts/SiteContext";
+import React from "react";
 import { LayoutWithHeader } from "../layout/LayoutWithHeader";
 import { LoggedInLayout } from "../layout/LoggedInLayout";
 import { CreateProjectModal } from "./project/components/CreateProjectModal";
@@ -9,10 +8,11 @@ import { ProjectType } from "../types/Project";
 import { Button } from "../components/shared/primitives/Button";
 import { Space } from "../components/shared/primitives/Space";
 import { Empty } from "../components/shared/primitives/Empty";
+import { useListUserProjectsQuery } from "../services/api";
 
 export const HomePage = () => {
   const { goToProject } = useAppNavigate();
-  const { userProjects } = useContext(SiteContext);
+  const { data: userProjects } = useListUserProjectsQuery(null);
   const [showCreateProjectModal, setShowCreateProjectModal] =
     React.useState<boolean>(false);
 
@@ -38,14 +38,14 @@ export const HomePage = () => {
   };
 
   const renderContent = () => {
-    if (userProjects.length === 0) {
+    if (userProjects?.Data.length === 0) {
       return newProjectTrigger();
     }
 
     return (
       <ShinyList<ProjectType>
         title="Your projects"
-        dataSource={userProjects}
+        dataSource={userProjects?.Data || []}
         nameProp="Name"
         subtitleProp="Slug"
         onClick={(r) => goToProject(r.Id)}
