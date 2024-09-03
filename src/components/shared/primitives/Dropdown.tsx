@@ -1,5 +1,6 @@
 import { Dropdown as AntdDropdown } from "antd";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 declare const Placements: [
   "topLeft",
   "topCenter",
@@ -10,7 +11,7 @@ declare const Placements: [
   "top",
   "bottom"
 ];
-declare type Placement = typeof Placements[number];
+declare type Placement = (typeof Placements)[number];
 
 export type DropdownProps = {
   trigger?: ("click" | "hover" | "contextMenu")[];

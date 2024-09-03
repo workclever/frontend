@@ -19,6 +19,12 @@ import { blue, gray } from "@ant-design/colors";
 import { CreateBoardModal } from "./CreateBoardModal";
 import { useListUserProjectsQuery } from "@app/services/api";
 
+const Wrapper = styled.div`
+  padding: 12px;
+  background-color: #fafafa;
+  height: 100%;
+`;
+
 const Header = styled.div`
   position: fixed;
   left: 0;
@@ -48,7 +54,7 @@ export const LeftColumn = () => {
   const { data: userProjects } = useListUserProjectsQuery(null);
 
   return (
-    <div style={{ padding: 12, backgroundColor: "white", height: "100%" }}>
+    <Wrapper>
       <Header>
         <FlexBasicLayout
           left={
@@ -63,7 +69,7 @@ export const LeftColumn = () => {
         <div style={{ marginBottom: 8 }}>Your projects</div>
         {userProjects?.Data.map((project) => {
           return (
-            <>
+            <div key={project.Id}>
               <div
                 key={project.Id}
                 style={{
@@ -89,7 +95,7 @@ export const LeftColumn = () => {
                 </Permission>
               </div>
               <BoardList projectId={project.Id} />
-            </>
+            </div>
           );
         })}
       </div>
@@ -131,6 +137,6 @@ export const LeftColumn = () => {
       {showCreateBoardModal && (
         <CreateBoardModal onCancel={() => setShowCreateBoardModal(false)} />
       )}
-    </div>
+    </Wrapper>
   );
 };

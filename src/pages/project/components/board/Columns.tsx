@@ -89,11 +89,13 @@ const DndInsideContainers: React.FC<{
       vertical={vertical}
       renderContainer={(columnId, children, listeners) => {
         const column = findColumn(columnId) as ColumnType;
-        const columnContainerStyle = {
+        const columnContainerStyle: React.CSSProperties = {
           width: vertical ? "100%" : "280px",
-          height: "100%",
+          height: vertical ? "100%" : `calc(100vh - 58px)`,
           marginBottom: vertical ? 16 : 0,
-          paddingRight: vertical ? 0 : 8,
+          padding: 8,
+          backgroundColor: "#fafafa",
+          overflowY: "auto",
         };
 
         const columnInnerStyle = {

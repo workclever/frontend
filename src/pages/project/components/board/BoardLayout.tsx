@@ -1,6 +1,5 @@
 import { styled } from "styled-components";
 import { BoardHeader } from "./BoardHeader";
-import { Columns } from "./Columns";
 import { LeftColumn } from "./LeftColumn";
 
 const LeftWrapper = styled.div`
@@ -21,10 +20,11 @@ const RightWrapper = styled.div`
 const ContentWrapper = styled.div`
   margin-top: 40px;
   padding: 8px;
-  overflow-y: auto;
+  overflow-y: hidden;
   overflow-x: auto;
   height: calc(100vh - 48px);
   width: 100%;
+  background-color: white;
 `;
 
 export const BoardLayout: React.FC<{ children: React.ReactNode }> = ({
