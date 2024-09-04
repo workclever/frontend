@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 // import "@elastic/eui/dist/eui_theme_light.css";
 import { EuiProvider } from "@elastic/eui";
 
-// TODO remove while getting rid of @elastic/eui
+// remove while getting rid of @elastic/eui
 import "./components/shared/editor/icon-fix";
 
 const root = ReactDOM.createRoot(

@@ -4,7 +4,7 @@ import { RcFile, UploadChangeParam } from "antd/lib/upload";
 import { UploadFile } from "antd/lib/upload/interface";
 import React from "react";
 import { useSelector } from "react-redux";
-// import ImgCrop from "antd-img-crop";
+import ImgCrop from "antd-img-crop";
 import styled from "styled-components";
 import { BACKEND_URL, API_URL } from "../../constants";
 import { useMe } from "../../hooks/useMe";
@@ -110,21 +110,15 @@ export const UploadAvatarButton = () => {
   };
 
   return (
-    // TODO replace antd-img-crop ImgCrop
-    // <ImgCrop
-    //   rotate
-    //   modalTitle="Crop image"
-    //   modalOk="Upload"
-    //   modalCancel="Cancel"
-    // >
-    <Upload
-      name="file"
-      listType="picture-card"
-      {...props}
-      style={{ width: 40 }}
-    >
-      {imageUrl ? existingAvatar() : uploadButton}
-    </Upload>
-    // </ImgCrop>
+    <ImgCrop modalTitle="Crop image" modalOk="Upload" modalCancel="Cancel">
+      <Upload
+        name="file"
+        listType="picture-card"
+        {...props}
+        style={{ width: 40 }}
+      >
+        {imageUrl ? existingAvatar() : uploadButton}
+      </Upload>
+    </ImgCrop>
   );
 };

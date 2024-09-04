@@ -20,7 +20,6 @@ type Props = {
   placement?: TooltipPlacement;
 };
 
-// TODO: Fix tooltip is not visible with <Button>
 export const Tooltip: React.FC<Props> = ({ title, children, placement }) => {
   return (
     <AntdTooltip title={title} placement={placement}>

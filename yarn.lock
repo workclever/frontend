@@ -3754,12 +3754,13 @@ ansi-styles@^5.0.0:
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-5.2.0.tgz#07449690ad45777d1924ac2abb2fc8895dba836b"
   integrity sha512-Cxwpt2SfTzTtXcfOlzGEee8O+c+MmUgGrNiBcXnuWxuFJHe6a5Hz7qwhwe5OgaSYI0IJvkLqWX1ASG+cJOkEiA==
 
-antd-img-crop@^4.2.3:
-  version "4.2.3"
-  resolved "https://registry.yarnpkg.com/antd-img-crop/-/antd-img-crop-4.2.3.tgz#9d1127415e1230fed27d691482363985f4eb188d"
-  integrity sha512-YZgsUdfHnkBCOQ1sLXTwfVRgBdMRM//joddFnSlWe/QU52m8PPbBxtgt0YdEf+UTPXOAx6RQJp1gUjAmMU2knA==
+antd-img-crop@4.23.0:
+  version "4.23.0"
+  resolved "https://registry.yarnpkg.com/antd-img-crop/-/antd-img-crop-4.23.0.tgz#8d5981c5934f2f1aa0d0795a433be4b6bd1d74a8"
+  integrity sha512-JtQoUmR3GqXoG+hsYXRxCBC60AgUKbbvArbnd8/5UmmuyVcQzBnumfoQTdC9wczWQuxRIpkPwsdOge6CCeepqg==
   dependencies:
-    react-easy-crop "^4.1.5"
+    react-easy-crop "^5.0.8"
+    tslib "^2.6.3"
 
 antd@5.20.3:
   version "5.20.3"
@@ -9779,13 +9780,13 @@ react-dropzone@^11.7.1:
     file-selector "^0.4.0"
     prop-types "^15.8.1"
 
-react-easy-crop@^4.1.5:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/react-easy-crop/-/react-easy-crop-4.2.0.tgz#f856e972f73f6ff320c2144c7db3af7cfb6022ea"
-  integrity sha512-NJdeG6JPlOvXPNcQlmyEyjuseTiZVDa0M5X6BwTxSPR30MG3ROsSHKeGl5SQdI3TfmsoEgvl7MbM+AjFGj+faw==
+react-easy-crop@^5.0.8:
+  version "5.0.8"
+  resolved "https://registry.yarnpkg.com/react-easy-crop/-/react-easy-crop-5.0.8.tgz#6cf5be061c0ec6dc0c6ee7413974c34e35bf7475"
+  integrity sha512-KjulxXhR5iM7+ATN2sGCum/IyDxGw7xT0dFoGcqUP+ysaPU5Ka7gnrDa2tUHFHUoMNyPrVZ05QA+uvMgC5ym/g==
   dependencies:
     normalize-wheel "^1.0.1"
-    tslib "2.0.1"
+    tslib "^2.0.1"
 
 react-element-to-jsx-string@^15.0.0:
   version "15.0.0"
@@ -11257,11 +11258,6 @@ tsconfig-paths@^3.14.1:
     minimist "^1.2.6"
     strip-bom "^3.0.0"
 
-tslib@2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.0.1.tgz#410eb0d113e5b6356490eec749603725b021b43e"
-  integrity sha512-SgIkNheinmEBgx1IUNirK0TUD4X9yjjBRTqqjggWCU3pUEqIk3/Uwl3yRixYKT6WjQuGiwDv4NomL3wqRCj+CQ==
-
 tslib@2.6.2:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.6.2.tgz#703ac29425e7b37cd6fd456e92404d46d1f3e4ae"
@@ -11276,6 +11272,11 @@ tslib@^2.0.0, tslib@^2.0.3, tslib@^2.1.0, tslib@^2.3.1:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.4.0.tgz#7cecaa7f073ce680a05847aa77be941098f36dc3"
   integrity sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==
+
+tslib@^2.0.1, tslib@^2.6.3:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.7.0.tgz#d9b40c5c40ab59e8738f297df3087bf1a2690c01"
+  integrity sha512-gLXCKdN1/j47AiHiOkJN69hJmcbGTHI0ImLmbYLHykhgeN0jVGola9yVjFgzCUklsZQMW55o+dW7IXv3RCXDzA==
 
 tsutils@^3.21.0:
   version "3.21.0"

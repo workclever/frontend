@@ -22,7 +22,7 @@
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.4",
     "antd": "5.20.3",
-    "antd-img-crop": "^4.2.3",
+    "antd-img-crop": "4.23.0",
     "axios": "^0.27.2",
     "copy-to-clipboard": "^3.3.1",
     "date-fns": "^2.28.0",
