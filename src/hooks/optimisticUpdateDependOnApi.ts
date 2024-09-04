@@ -1,22 +1,27 @@
+import { BaseOutput } from "@app/types/BaseOutput";
 import { flatten } from "lodash";
+import { AnyAction } from "redux-saga";
+
+type HttpUpdateType = () => {
+  unwrap: () => Promise<BaseOutput<unknown>>;
+};
 
 export const optimisticUpdateDependOnApi = async (
-  httpUpdate: any,
-  ...stateUpdates: any[]
+  httpUpdate: HttpUpdateType,
+  ...stateUpdates: (() => AnyAction[])[]
 ) => {
-  // first optimisticly update state
   const patchCollections = flatten(stateUpdates.map((update) => update()));
   if (patchCollections.length === 0) {
     return;
   }
-  // then the DB via api
+
   try {
     const output = await httpUpdate().unwrap();
-    // if the request has error, revert the update
     if (!output.Succeed) {
-      patchCollections.map((patch) => patch.undo());
+      patchCollections.forEach((patch) => patch.undo());
     }
   } catch (e) {
-    patchCollections.map((patch) => patch.undo());
+    console.log("undoing patchCollections because of error", e);
+    patchCollections.forEach((patch) => patch.undo());
   }
 };
