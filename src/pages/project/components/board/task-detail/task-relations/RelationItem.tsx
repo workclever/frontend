@@ -1,5 +1,4 @@
 import { EditOutlined } from "@ant-design/icons";
-import { List } from "antd";
 import React from "react";
 import { useTask } from "@app/hooks/useTask";
 import { useTaskRelationTypeDefs } from "@app/hooks/useTaskRelationTypeDefs";
@@ -7,9 +6,9 @@ import { TaskType, TaskRelationType } from "@app/types/Project";
 import { HoverableListItem } from "@app/components/shared/HoverableListItem";
 import { TaskIdRenderer } from "@app/components/shared/TaskIdRenderer";
 import { NewRelationModal } from "./NewRelationModal";
-import { Button } from "@app/components/shared/primitives/Button";
 import { Space } from "@app/components/shared/primitives/Space";
 import { Tag } from "@app/components/shared/primitives/Tag";
+import { EnhancedDropdownMenu } from "@app/components/shared/EnhancedDropdownMenu";
 
 export const RelationItem: React.FC<{
   baseTask: TaskType;
@@ -41,32 +40,37 @@ export const RelationItem: React.FC<{
   };
 
   return (
-    <HoverableListItem>
-      <List.Item
-        style={{ padding: 0 }}
-        extra={
-          <Button
-            onClick={() => setEditing(true)}
-            icon={<EditOutlined style={{ fontSize: 14 }} />}
-            size="small"
-          />
-        }
-      >
-        <List.Item.Meta
-          title={
-            <div
-              style={{ display: "flex", alignItems: "center", padding: 5 }}
-              onClick={() => onTaskSelect(relatedTask)}
-            >
+    <>
+      <EnhancedDropdownMenu
+        triggers={["contextMenu"]}
+        items={[
+          {
+            key: "1",
+            label: "Edit relation",
+            icon: <EditOutlined />,
+            onClick: () => setEditing(true),
+          },
+        ]}
+        triggerElement={
+          <HoverableListItem onClick={() => onTaskSelect(relatedTask)}>
+            <div style={{ cursor: "pointer", flex: 1 }}>
               <Space>
-                <Tag>{operationName()}</Tag>
+                <Tag
+                  style={{
+                    whiteSpace: "nowrap",
+                    textOverflow: "ellipsis",
+                    overflow: "hidden",
+                  }}
+                >
+                  {operationName()}
+                </Tag>
                 <TaskIdRenderer task={relatedTask} />
                 <span>{relatedTask?.Title}</span>
               </Space>
             </div>
-          }
-        />
-      </List.Item>
+          </HoverableListItem>
+        }
+      />
       {editing && (
         <NewRelationModal
           task={baseTask}
@@ -76,6 +80,6 @@ export const RelationItem: React.FC<{
           taskRelation={taskRelation}
         />
       )}
-    </HoverableListItem>
+    </>
   );
 };

@@ -14,9 +14,7 @@ import { Space } from "@app/components/shared/primitives/Space";
 import { Text } from "@app/components/shared/primitives/Text";
 
 const Content = styled.div`
-  padding: 4px;
   margin-top: 4px;
-  border: 1px dotted #cccccc;
 `;
 
 export const TaskDetailBlock: React.FC<{

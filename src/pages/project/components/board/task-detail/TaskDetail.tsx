@@ -9,7 +9,7 @@ import { optimisticUpdateDependOnApi } from "@app/hooks/optimisticUpdateDependOn
 import { TaskComments } from "./TaskComments";
 import { TaskChangeLog } from "./TaskChangeLog";
 import { TaskRelations } from "./task-relations/TaskRelations";
-import { SubtasksList } from "./subtasks/SubtasksList";
+import { TaskSubtasks } from "./task-subtasks/TaskSubtasks";
 import { TaskCustomFieldsRenderer } from "./custom-fields/TaskCustomFieldsRenderer";
 import { TaskDelete } from "./TaskDelete";
 import { TaskAttachments } from "./TaskAttachments";
@@ -128,7 +128,7 @@ export const TaskDetail: React.FC<Props> = ({
           <TaskEditableDescription task={task} />
           <Divider style={{ margin: "8px 0" }} />
           <TaskRelations task={task} onTaskSelect={onTaskSelect} />
-          <SubtasksList
+          <TaskSubtasks
             task={task}
             onTaskSelect={onTaskSelect}
             findSubtasks={findSubtasks}
