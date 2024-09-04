@@ -42,6 +42,10 @@ export const BoardUserAvatars = () => {
     return (filteredUserIds || []).indexOf(userId) > -1;
   };
 
+  if (userIds.length === 0) {
+    return null;
+  }
+
   return (
     <div style={{ display: "flex", alignItems: "center" }}>
       <div style={{ marginRight: 4 }}>Filter by users:</div>
