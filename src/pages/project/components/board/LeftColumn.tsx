@@ -1,5 +1,6 @@
 import {
   ArrowLeftOutlined,
+  EllipsisOutlined,
   PlusOutlined,
   ProjectOutlined,
   QuestionCircleOutlined,
@@ -11,7 +12,6 @@ import { FlexBasicLayout } from "@app/components/shared/FlexBasicLayout";
 import { Permission } from "@app/components/shared/Permission";
 import { Button } from "@app/components/shared/primitives/Button";
 import { Modal } from "@app/components/shared/primitives/Modal";
-import { useCurrentProject } from "@app/hooks/useCurrentProject";
 import { EntityClasses, Permissions } from "@app/types/Roles";
 import { BoardList } from "../BoardList";
 import { ProjectSettings } from "../manage/ProjectSettings";
@@ -21,6 +21,7 @@ import { CreateBoardModal } from "./CreateBoardModal";
 import { useListUserProjectsQuery } from "@app/services/api";
 import { useDispatch } from "react-redux";
 import { setSelectedProjectId } from "@app/slices/project/projectSlice";
+import { EnhancedDropdownMenu } from "@app/components/shared/EnhancedDropdownMenu";
 
 const Wrapper = styled.div`
   padding: 12px;
@@ -49,7 +50,7 @@ const BottomWrapper = styled.div`
 `;
 
 const ProjectItemWrapper = styled.div`
-  &:hover .project-plus-icon {
+  &:hover .project-settings-icon {
     display: inline-block !important;
   }
 `;
@@ -63,7 +64,6 @@ const ProjectItem = styled.div`
 export const LeftColumn = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const currentProject = useCurrentProject();
   const [showProjectSettingsModal, setShowProjectSettingsModal] =
     React.useState(false);
   const [showCreateBoardModal, setShowCreateBoardModal] = React.useState(false);
@@ -106,22 +106,40 @@ export const LeftColumn = () => {
                   permission={Permissions.CanManageProject}
                   showWarning={false}
                 >
-                  <span
-                    onClick={() => {
-                      dispatch(setSelectedProjectId(project.Id));
-                      setShowCreateBoardModal(true);
-                    }}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <PlusOutlined
-                      style={{
-                        fontSize: "11px",
-                        color: "gray",
-                        display: "none",
-                      }}
-                      className="project-plus-icon"
-                    />
-                  </span>
+                  <EnhancedDropdownMenu
+                    items={[
+                      {
+                        key: "1",
+                        label: "Create new board",
+                        icon: <PlusOutlined />,
+                        onClick: () => {
+                          dispatch(setSelectedProjectId(project.Id));
+                          setShowCreateBoardModal(true);
+                        },
+                      },
+                      {
+                        key: "2",
+                        label: "Project settings",
+                        icon: <SettingOutlined />,
+                        onClick: () => {
+                          dispatch(setSelectedProjectId(project.Id));
+                          setShowProjectSettingsModal(true);
+                        },
+                      },
+                    ]}
+                    triggerElement={
+                      <span style={{ cursor: "pointer" }}>
+                        <EllipsisOutlined
+                          style={{
+                            fontSize: "14px",
+                            color: "black",
+                            display: "none",
+                          }}
+                          className="project-settings-icon"
+                        />
+                      </span>
+                    }
+                  />
                 </Permission>
               </ProjectItem>
               <BoardList projectId={project.Id} />
@@ -135,22 +153,6 @@ export const LeftColumn = () => {
             <Button size="small" type="text">
               <QuestionCircleOutlined />
             </Button>
-          }
-          right={
-            <Permission
-              entityClass={EntityClasses.Project}
-              entityId={Number(currentProject?.Id)}
-              permission={Permissions.CanManageProject}
-              showWarning={false}
-            >
-              <Button
-                size="small"
-                onClick={() => setShowProjectSettingsModal(true)}
-                type="text"
-              >
-                <SettingOutlined />
-              </Button>
-            </Permission>
           }
         />
       </BottomWrapper>

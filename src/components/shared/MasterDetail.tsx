@@ -56,7 +56,7 @@ export const MasterDetail: React.FC<Props> = ({
   }
 
   return (
-    <div style={{ padding: 8, minHeight: 280 }}>
+    <div style={{ padding: 0, minHeight: 280 }}>
       <Tabs
         defaultActiveKey={selectedKey?.toString()}
         onChange={setSelectedKey}

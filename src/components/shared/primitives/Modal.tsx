@@ -24,10 +24,12 @@ export const Modal: React.FC<Props> = ({
     width={width}
     footer={null}
     centered
-    bodyStyle={{
-      padding: 0,
-      overflow: "auto",
-      maxHeight,
+    styles={{
+      body: {
+        padding: 0,
+        overflow: "auto",
+        maxHeight,
+      },
     }}
   >
     {children}
