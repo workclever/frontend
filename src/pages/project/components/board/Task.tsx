@@ -102,8 +102,7 @@ const FieldTag: React.FC<{ color?: string; children?: React.ReactNode }> = ({
     <Tag
       style={{
         border: "none",
-        backgroundColor: color || gray[2],
-        color: "#efefef",
+        backgroundColor: color || "#eaeaea",
       }}
     >
       {children}

@@ -1,9 +1,9 @@
 import { InputRef } from "antd";
 import React from "react";
 import { CustomField } from "@app/types/CustomField";
-import Field from "@ant-design/pro-field";
+import { DatePicker } from "antd";
+import dayjs from "dayjs";
 
-// TODO: fix onBlur not working
 export const CustomFieldRowDate: React.FC<{
   loading: boolean;
   field: CustomField;
@@ -12,7 +12,6 @@ export const CustomFieldRowDate: React.FC<{
   onBlur: () => void;
 }> = ({ loading, fieldValue, onUpdateValue, onBlur }) => {
   fieldValue = fieldValue || "";
-  const [tempValue, setTempValue] = React.useState(fieldValue);
   const ref = React.useRef<InputRef>();
 
   React.useEffect(() => {
@@ -21,31 +20,42 @@ export const CustomFieldRowDate: React.FC<{
     }
   }, [ref]);
 
-  React.useEffect(() => {
-    if (tempValue !== fieldValue) {
-      onUpdateValue(tempValue);
-    }
-  }, [tempValue]);
-
   const computedFieldValue = () => {
     if (fieldValue) {
       if (fieldValue === "null" || fieldValue === "Invalid date") {
-        return new Date();
+        return dayjs();
       }
 
-      return new Date(fieldValue);
+      return dayjs(fieldValue);
     }
 
-    return new Date();
+    return dayjs();
   };
 
   return (
-    <Field
-      value={computedFieldValue()}
-      valueType="date"
-      mode={"edit"}
-      onChange={(e) => setTempValue(e)}
-      fieldProps={{ width: "100%", onBlur, disabled: loading, autoFocus: true }}
-    />
+    <>
+      <DatePicker
+        value={computedFieldValue()}
+        onChange={(_date, dateStr) => {
+          console.log({ dateStr });
+          onUpdateValue(String(dateStr));
+          onBlur();
+        }}
+        width={"100%"}
+        onBlur={() => {
+          // onBlur gets called incorrectly when user makes a date selection
+          // so we call onBlur when `onOpenChange` changes to false
+        }}
+        onOpenChange={(open) => {
+          if (!open) {
+            onBlur();
+          }
+        }}
+        disabled={loading}
+        autoFocus
+        needConfirm
+        getPopupContainer={() => document.body}
+      />
+    </>
   );
 };

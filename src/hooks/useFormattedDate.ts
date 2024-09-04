@@ -1,16 +1,16 @@
-import { format } from "date-fns";
 import { useGetSiteSettingsQuery } from "../services/api";
+import dayjs from "dayjs";
 
-const fallbackDefaultDateFormat = "MM/dd/yyyy";
+const fallbackDefaultDateFormat = "DD/MM/YYYY";
 
 export const useFormattedDate = (date: string) => {
   const { data: siteSettings } = useGetSiteSettingsQuery(null);
   const defaultDateFormat = siteSettings?.Data.DefaultDateFormat.trim();
+
+  console.log({ defaultDateFormat });
   try {
-    return format(
-      new Date(date),
-      defaultDateFormat || fallbackDefaultDateFormat
-    );
+    return dayjs(date).format(defaultDateFormat || fallbackDefaultDateFormat);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     console.error("Error when formatting date", date);
     return "invalid-date";

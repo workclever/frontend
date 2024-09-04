@@ -1,11 +1,9 @@
 import { useMe } from "./useMe";
-// @ts-ignore
-import { formatInTimeZone } from "date-fns-tz";
-import { parseJSON } from "date-fns";
+import dayjs from "dayjs";
 import { useGetSiteSettingsQuery } from "../services/api";
 
 const fallbackDefaultTimezone = "Europe/Amsterdam";
-const fallbackDefaultDateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+const fallbackDefaultDateTimeFormat = "DD/MM/YYYY HH:mm";
 
 export const useFormattedDateTime = (date: string) => {
   const { me } = useMe();
@@ -20,11 +18,8 @@ export const useFormattedDateTime = (date: string) => {
     defaultDateTimeFormat || fallbackDefaultDateTimeFormat;
 
   try {
-    return formatInTimeZone(
-      parseJSON(date),
-      finalTimezone,
-      finalDateTimeFormat
-    );
+    return dayjs.utc(date).tz(finalTimezone).format(finalDateTimeFormat);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     console.error("Error when formatting date:", {
       date,

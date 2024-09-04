@@ -23,15 +23,15 @@ export const CustomFieldRowBool: React.FC<{
   React.useEffect(() => {
     if (tempValue !== fieldValue) {
       onUpdateValue(tempValue);
+      onBlur();
     }
-  }, [tempValue]);
+  }, [tempValue, fieldValue, onUpdateValue, onBlur]);
 
   return (
     <Field
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-       
-      value={fieldValue == "true" || fieldValue === true}
+      value={fieldValue === "true" || fieldValue === true}
       valueType="switch"
       mode={"edit"}
       onChange={setTempValue}

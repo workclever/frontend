@@ -10,6 +10,13 @@ import { EuiProvider } from "@elastic/eui";
 // remove while getting rid of @elastic/eui
 import "./components/shared/editor/icon-fix";
 
+import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(timezone);
+dayjs.extend(utc);
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );

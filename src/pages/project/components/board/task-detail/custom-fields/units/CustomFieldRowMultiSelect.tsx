@@ -17,7 +17,7 @@ export const CustomFieldRowMultiSelect: React.FC<{
     if (tempValue !== fieldValue && tempValue) {
       onUpdateValue(tempValue.filter(Boolean));
     }
-  }, [tempValue]);
+  }, [tempValue, fieldValue, onUpdateValue, onBlur]);
 
   return (
     <Select

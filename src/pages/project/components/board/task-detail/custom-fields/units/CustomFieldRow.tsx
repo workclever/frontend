@@ -15,13 +15,11 @@ import { CustomFieldRowMultiSelect } from "./CustomFieldRowMultiSelect";
 import { CustomFieldRowSelect } from "./CustomFieldRowSelect";
 import { CustomFieldRowText } from "./CustomFieldRowText";
 import { RenderTaskCustomField } from "../../../Task";
+import { HoverableListItem } from "@app/components/shared/HoverableListItem";
 
-const CustomFieldValuePreview = styled.div`
+const CustomFieldValuePreview = styled(HoverableListItem)`
   padding: 4px;
-  &:hover {
-    background-color: #efefef;
-    cursor: pointer;
-  }
+  margin-bottom: 0px;
 `;
 
 export const CustomFieldRow: React.FC<{
@@ -43,7 +41,7 @@ export const CustomFieldRow: React.FC<{
     });
   };
 
-  const onUpdateValueDebounced = debounce(onUpdateValue, 200);
+  const onUpdateValueDebounced = debounce(onUpdateValue, 100);
 
   const onActivate = () => {
     setEditMode(true);

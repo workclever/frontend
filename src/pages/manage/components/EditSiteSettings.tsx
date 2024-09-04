@@ -8,13 +8,13 @@ import { Title } from "@app/components/shared/primitives/Title";
 import { SiteSettings } from "@app/types/SiteSettings";
 
 const dateFormats = {
-  "dd/MM/yyyy": "dd/MM/yyyy",
-  "MM/dd/yyyy": "MM/dd/yyyy",
+  "DD/MM/YYYY": "DD/MM/YYYY",
+  "MM/DD/YYYY": "MM/DD/YYYY",
 };
 
 const dateTimeFormats = {
-  "yyyy-MM-dd H:mm:ss": "24hr",
-  "yyyy-MM-dd h:mm:ss": "12hr",
+  "DD/MM/YYYY HH:mm": "24hr",
+  "DD/MM/YYYY hh:mm": "12hr",
 };
 
 export const EditSiteSettings = () => {

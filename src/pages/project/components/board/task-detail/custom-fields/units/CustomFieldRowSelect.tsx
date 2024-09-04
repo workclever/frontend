@@ -16,8 +16,9 @@ export const CustomFieldRowSelect: React.FC<{
   React.useEffect(() => {
     if (tempValue !== fieldValue) {
       onUpdateValue(tempValue);
+      onBlur();
     }
-  }, [tempValue]);
+  }, [tempValue, fieldValue, onUpdateValue, onBlur]);
 
   return (
     <Select

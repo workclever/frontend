@@ -13,6 +13,7 @@ export const CustomFieldRowText: React.FC<{
   fieldValue = fieldValue || "";
   const [tempValue, setTempValue] = React.useState(fieldValue);
   const ref = React.useRef<InputRef>();
+  const originalValue = React.useRef(fieldValue);
 
   React.useEffect(() => {
     if (ref.current) {
@@ -24,7 +25,7 @@ export const CustomFieldRowText: React.FC<{
     if (tempValue !== fieldValue) {
       onUpdateValue(tempValue);
     }
-  }, [tempValue]);
+  }, [tempValue, fieldValue, onUpdateValue]);
 
   return (
     <Input
@@ -38,6 +39,14 @@ export const CustomFieldRowText: React.FC<{
       style={{ width: "100%" }}
       onBlur={onBlur}
       onPressEnter={onBlur}
+      onKeyDown={(e) => {
+        if (e.key === "Escape") {
+          e.preventDefault();
+          e.stopPropagation();
+          onUpdateValue(originalValue.current);
+          onBlur();
+        }
+      }}
     />
   );
 };
