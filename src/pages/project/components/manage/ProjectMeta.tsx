@@ -9,16 +9,13 @@ import { FormItemProps, ProDescriptions } from "@ant-design/pro-components";
 import { omit } from "lodash";
 import { BaseOutput } from "@app/types/BaseOutput";
 import { Confirm } from "@app/components/shared/Confirm";
-import { useSelector } from "react-redux";
-import { selectSelectedProjectId } from "@app/slices/project/projectSlice";
 import { Button } from "@app/components/shared/primitives/Button";
 import { Space } from "@app/components/shared/primitives/Space";
 import { Divider } from "@app/components/shared/primitives/Divider";
 import { ProjectType } from "@app/types/Project";
 
 // TODO eliminate updatedProps since it's not working properly
-export const ProjectMeta: React.FC = () => {
-  const projectId = Number(useSelector(selectSelectedProjectId));
+export const ProjectMeta: React.FC<{ projectId: number }> = ({ projectId }) => {
   const { data, error } = useGetProjectQuery(projectId);
   const project = data?.Data;
   const [updateProject] = useUpdateProjectMutation();

@@ -31,6 +31,7 @@ const Reporter: React.FC<Pick<Props, "task">> = ({ task }) => {
       title="Reporter"
       disabled={true}
       selectedUserId={task.ReporterUserId}
+      selectedProjectId={task.ProjectId}
       loading={false}
       onChange={() => {
         /* */
@@ -44,11 +45,13 @@ const Assignee: React.FC<Pick<Props, "task">> = ({ task }) => {
   const { updateStateOnly } = useTaskUpdateProperty(task);
   const [updateAssignee, { isLoading: isAssigneeUpdating }] =
     useUpdateTaskAssigneeUserMutation();
+
   return (
     <>
       <UserSelector
         title="Assignee"
         selectedUserId={task.AssigneeUserId}
+        selectedProjectId={task.ProjectId}
         loading={isAssigneeUpdating}
         onChange={async (userId) =>
           optimisticUpdateDependOnApi(

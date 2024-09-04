@@ -1,19 +1,21 @@
 import { ProColumns } from "@ant-design/pro-components";
 import React from "react";
-import { useSelector } from "react-redux";
-import { useBoards } from "@app/hooks/useBoards";
 import {
   useUpdateBoardMutation,
   useCreateBoardMutation,
   useDeleteBoardMutation,
+  useListAllBoardsQuery,
 } from "@app/services/api";
-import { selectSelectedProjectId } from "@app/slices/project/projectSlice";
 import { BoardType } from "@app/types/Project";
 import { CrudEditor } from "@app/components/shared/CrudEditor";
 
-export const ProjectBoards: React.FC = () => {
-  const projectId = Number(useSelector(selectSelectedProjectId));
-  const data = useBoards();
+export const ProjectBoards: React.FC<{ projectId: number }> = ({
+  projectId,
+}) => {
+  const { data: allBoards } = useListAllBoardsQuery(null);
+  const projectBoards = (allBoards?.Data || []).filter(
+    (r) => r.ProjectId === projectId
+  );
   const columns: ProColumns<BoardType>[] = [
     {
       title: "Id",
@@ -36,7 +38,7 @@ export const ProjectBoards: React.FC = () => {
     <>
       <CrudEditor<BoardType>
         columns={columns}
-        dataSource={data}
+        dataSource={projectBoards}
         create={{
           triggerText: "Create new board",
           execute: (values) => {

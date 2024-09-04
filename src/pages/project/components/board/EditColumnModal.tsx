@@ -23,7 +23,7 @@ export const EditColumnModal: React.FC<{
 
   return (
     <ModalForm<ColumnType>
-      visible
+      open
       title="Edit column"
       autoFocusFirstInput
       modalProps={{

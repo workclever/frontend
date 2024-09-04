@@ -1,18 +1,16 @@
 import { ModalForm, ProForm, ProFormText } from "@ant-design/pro-components";
-import { useSelector } from "react-redux";
 import { HttpResult } from "@app/components/shared/HttpResult";
 import { useAppNavigate } from "@app/hooks/useAppNavigate";
 import { useCreateBoardMutation } from "@app/services/api";
-import { selectSelectedProjectId } from "@app/slices/project/projectSlice";
 
 type FormValuesType = {
   Name: string;
 };
 
-export const CreateBoardModal: React.FC<{ onCancel: () => void }> = ({
-  onCancel,
-}) => {
-  const selectedProjectId = useSelector(selectSelectedProjectId);
+export const CreateBoardModal: React.FC<{
+  onCancel: () => void;
+  projectId: number;
+}> = ({ onCancel, projectId }) => {
   const { goToBoard } = useAppNavigate();
   const [createBoard, { error: createError, data: createResult }] =
     useCreateBoardMutation();
@@ -20,7 +18,7 @@ export const CreateBoardModal: React.FC<{ onCancel: () => void }> = ({
   const onFinish = async (values: FormValuesType) => {
     const result = await createBoard({
       Name: values.Name,
-      ProjectId: Number(selectedProjectId),
+      ProjectId: projectId,
     }).unwrap();
     if (result.Succeed) {
       onCancel();

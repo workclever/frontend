@@ -7,13 +7,11 @@ import {
 } from "@ant-design/pro-components";
 import { Form, Input } from "antd";
 import React from "react";
-import { useSelector } from "react-redux";
 import {
   useCreateCustomFieldMutation,
   useUpdateCustomFieldMutation,
   useDeleteCustomFieldMutation,
 } from "@app/services/api";
-import { selectSelectedProjectId } from "@app/slices/project/projectSlice";
 import {
   CustomFieldSelectOption,
   CustomFieldType,
@@ -37,8 +35,8 @@ export const createCustomFieldValues = {
 export const CustomFieldEditorForm: React.FC<{
   initialValues: typeof createCustomFieldValues;
   onCloseModal: () => void;
-}> = ({ initialValues, onCloseModal }) => {
-  const projectId = Number(useSelector(selectSelectedProjectId));
+  projectId: number;
+}> = ({ initialValues, onCloseModal, projectId }) => {
   const [createCustomField, { error: createError, data: createResult }] =
     useCreateCustomFieldMutation();
   const [updateCustomField, { error: updateError, data: updateResult }] =

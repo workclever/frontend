@@ -1,6 +1,5 @@
 import { Table, Switch, Tooltip } from "antd";
 import React from "react";
-import { useSelector } from "react-redux";
 import { useMe } from "@app/hooks/useMe";
 import {
   useListProjectUsersQuery,
@@ -10,7 +9,6 @@ import {
   useDeleteManagerUserForProjectMutation,
   useListProjectUserAccessesQuery,
 } from "@app/services/api";
-import { selectSelectedProjectId } from "@app/slices/project/projectSlice";
 import { BasicUserOutput } from "@app/types/Project";
 import { EntityClasses, Permissions } from "@app/types/Roles";
 import { Confirm } from "@app/components/shared/Confirm";
@@ -20,8 +18,9 @@ import { Button } from "@app/components/shared/primitives/Button";
 import { Space } from "@app/components/shared/primitives/Space";
 import { Divider } from "@app/components/shared/primitives/Divider";
 
-export const ProjectUsers: React.FC = () => {
-  const projectId = Number(useSelector(selectSelectedProjectId));
+export const ProjectUsers: React.FC<{ projectId: number }> = ({
+  projectId,
+}) => {
   const { isAdmin, isMe } = useMe();
   const { data: projectUsers, refetch: refetchProjectUsers } =
     useListProjectUsersQuery(projectId);
@@ -150,6 +149,7 @@ export const ProjectUsers: React.FC = () => {
         <UserSelector
           title="Add a new user to the project"
           selectedUserId={newUserId}
+          selectedProjectId={projectId}
           onChange={setNewUserId}
           loading={false}
           withAllUsers

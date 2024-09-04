@@ -1,7 +1,9 @@
 import { Select } from "antd";
 import React from "react";
-import { useProjectUsers } from "@app/hooks/useProjectUsers";
-import { useListAllUsersQuery } from "@app/services/api";
+import {
+  useListAllUsersQuery,
+  useListProjectUsersQuery,
+} from "@app/services/api";
 import { UserAvatar } from "@app/components/shared/UserAvatar";
 import { Text } from "@app/components/shared/primitives/Text";
 import { DefaultOptionType } from "antd/lib/select";
@@ -9,6 +11,7 @@ import { DefaultOptionType } from "antd/lib/select";
 type Props = {
   title: string;
   selectedUserId: number;
+  selectedProjectId: number;
   loading: boolean;
   onChange: (userId: number) => void;
   disabled?: boolean;
@@ -19,15 +22,18 @@ type Props = {
 export const UserSelector: React.FC<Props> = ({
   title,
   selectedUserId,
+  selectedProjectId,
   loading,
   onChange,
   disabled,
   withAllUsers,
   unSelectedText,
 }) => {
-  const { users } = useProjectUsers();
+  const { data: users } = useListProjectUsersQuery(Number(selectedProjectId), {
+    skip: !selectedProjectId,
+  });
   const { data: allUsers } = useListAllUsersQuery(null);
-  const computedUsers = withAllUsers ? allUsers?.Data || [] : users;
+  const computedUsers = withAllUsers ? allUsers?.Data || [] : users?.Data || [];
 
   // Update when renderer changed
   const onFilter = (input: string, option: DefaultOptionType) => {

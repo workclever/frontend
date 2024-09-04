@@ -19,8 +19,6 @@ import { useNavigate } from "react-router-dom";
 import { blue, gray } from "@ant-design/colors";
 import { CreateBoardModal } from "./CreateBoardModal";
 import { useListUserProjectsQuery } from "@app/services/api";
-import { useDispatch } from "react-redux";
-import { setSelectedProjectId } from "@app/slices/project/projectSlice";
 import { EnhancedDropdownMenu } from "@app/components/shared/EnhancedDropdownMenu";
 
 const Wrapper = styled.div`
@@ -63,7 +61,7 @@ const ProjectItem = styled.div`
 
 export const LeftColumn = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const [editingProjectId, setEditingProjectId] = React.useState(0);
   const [showProjectSettingsModal, setShowProjectSettingsModal] =
     React.useState(false);
   const [showCreateBoardModal, setShowCreateBoardModal] = React.useState(false);
@@ -113,7 +111,7 @@ export const LeftColumn = () => {
                         label: "Create new board",
                         icon: <PlusOutlined />,
                         onClick: () => {
-                          dispatch(setSelectedProjectId(project.Id));
+                          setEditingProjectId(project.Id);
                           setShowCreateBoardModal(true);
                         },
                       },
@@ -122,8 +120,8 @@ export const LeftColumn = () => {
                         label: "Project settings",
                         icon: <SettingOutlined />,
                         onClick: () => {
-                          dispatch(setSelectedProjectId(project.Id));
                           setShowProjectSettingsModal(true);
+                          setEditingProjectId(project.Id);
                         },
                       },
                     ]}
@@ -163,11 +161,14 @@ export const LeftColumn = () => {
         width={800}
       >
         <div style={{ padding: 8 }}>
-          <ProjectSettings />
+          <ProjectSettings projectId={editingProjectId} />
         </div>
       </Modal>
       {showCreateBoardModal && (
-        <CreateBoardModal onCancel={() => setShowCreateBoardModal(false)} />
+        <CreateBoardModal
+          onCancel={() => setShowCreateBoardModal(false)}
+          projectId={editingProjectId}
+        />
       )}
     </Wrapper>
   );
