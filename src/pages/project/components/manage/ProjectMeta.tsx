@@ -42,8 +42,6 @@ export const ProjectMeta: React.FC<{ projectId: number }> = ({ projectId }) => {
     return {
       validateStatus: "error",
       help: obj.Result.Message,
-      // TODO placeholder doesn't exist on FormItemProps type
-      // placeholder: field,
     };
   };
 
