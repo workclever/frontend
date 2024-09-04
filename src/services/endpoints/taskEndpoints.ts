@@ -1,10 +1,11 @@
+import { UpdateTaskPropertyParams } from "@app/types/Task";
 import { BaseOutput } from "../../types/BaseOutput";
 import {
-  UpdateTaskPropertyInput,
   ListTaskChangeLogOutput,
   TaskType,
   TaskAttachmentType,
 } from "../../types/Project";
+import { taskUpdateLocalState } from "../optimistic/taskUpdateLocalState";
 import { Builder } from "../types";
 
 export const taskEndpoints = (builder: Builder) => ({
@@ -27,7 +28,7 @@ export const taskEndpoints = (builder: Builder) => ({
   moveTaskToColumn: builder.mutation<
     BaseOutput<string>,
     {
-      TaskId: number;
+      Task: TaskType;
       TargetBoardId: number;
       TargetColumnId: number;
     }
@@ -35,22 +36,61 @@ export const taskEndpoints = (builder: Builder) => ({
     query: (body) => ({
       url: "/Task/MoveTaskToColumn",
       method: "POST",
-      body,
+      body: {
+        TaskId: body.Task.Id,
+        TargetBoardId: body.TargetBoardId,
+        TargetColumnId: body.TargetColumnId,
+      },
     }),
+    async onQueryStarted(
+      { Task, TargetBoardId, TargetColumnId },
+      { dispatch, queryFulfilled }
+    ) {
+      const { patchResult1, patchResult2 } = taskUpdateLocalState(
+        Task,
+        [
+          { property: "BoardId", value: TargetBoardId },
+          { property: "ColumnId", value: TargetColumnId },
+        ],
+        dispatch
+      );
+      try {
+        await queryFulfilled;
+      } catch {
+        patchResult1.undo();
+        patchResult2.undo();
+      }
+    },
   }),
   updateTaskAssigneeUser: builder.mutation<
     BaseOutput<string>,
     {
-      TaskId: number;
+      Task: TaskType;
       UserId: number;
     }
   >({
     query: (body) => ({
       url: "/Task/UpdateTaskAssigneeUser",
       method: "POST",
-      body,
+      body: {
+        UserId: body.UserId,
+        TaskId: body.Task.Id,
+      },
     }),
     invalidatesTags: ["ChangeLog"],
+    async onQueryStarted({ Task, UserId }, { dispatch, queryFulfilled }) {
+      const { patchResult1, patchResult2 } = taskUpdateLocalState(
+        Task,
+        { property: "AssigneeUserId", value: UserId },
+        dispatch
+      );
+      try {
+        await queryFulfilled;
+      } catch {
+        patchResult1.undo();
+        patchResult2.undo();
+      }
+    },
   }),
   createTask: builder.mutation<
     BaseOutput<string>,
@@ -72,14 +112,35 @@ export const taskEndpoints = (builder: Builder) => ({
   }),
   updateTaskProperty: builder.mutation<
     BaseOutput<string>,
-    UpdateTaskPropertyInput
+    {
+      Task: TaskType;
+      Params: UpdateTaskPropertyParams;
+    }
   >({
     query: (body) => ({
       url: "/Task/UpdateTaskProperty",
       method: "POST",
-      body,
+      body: {
+        TaskId: body.Task.Id,
+        Property: body.Params.property,
+        Value:
+          typeof body.Params.value === "undefined" ? null : body.Params.value,
+      },
     }),
     invalidatesTags: ["ChangeLog"],
+    async onQueryStarted({ Task, Params }, { dispatch, queryFulfilled }) {
+      const { patchResult1, patchResult2 } = taskUpdateLocalState(
+        Task,
+        Params,
+        dispatch
+      );
+      try {
+        await queryFulfilled;
+      } catch {
+        patchResult1.undo();
+        patchResult2.undo();
+      }
+    },
   }),
   getTask: builder.query<BaseOutput<TaskType>, number>({
     query: (id) => ({ url: `/Task/GetTask?taskId=${id}` }),

@@ -1,21 +1,24 @@
 import { RollbackOutlined } from "@ant-design/icons";
-import { useTaskUpdateProperty } from "@app/hooks/useTaskUpdateProperty";
 import { TaskType } from "@app/types/Project";
 import { HoverableListItem } from "@app/components/shared/HoverableListItem";
 import { UserAvatar } from "@app/components/shared/UserAvatar";
 import { TaskIdRenderer } from "@app/components/shared/TaskIdRenderer";
 import { Space } from "@app/components/shared/primitives/Space";
 import { EnhancedDropdownMenu } from "@app/components/shared/EnhancedDropdownMenu";
+import { useUpdateTaskPropertyMutation } from "@app/services/api";
 
 export const SubtaskItem: React.FC<{
   task: TaskType;
   onTaskSelect: (task: TaskType) => void;
 }> = ({ task, onTaskSelect }) => {
-  const { updateTask } = useTaskUpdateProperty(task);
+  const [update] = useUpdateTaskPropertyMutation();
   const onRemoveParentClick = () => {
-    updateTask({
-      property: "ParentTaskItemId",
-      value: null,
+    update({
+      Task: task,
+      Params: {
+        property: "ParentTaskItemId",
+        value: null,
+      },
     });
   };
 

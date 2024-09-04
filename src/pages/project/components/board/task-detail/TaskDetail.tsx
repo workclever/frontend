@@ -2,10 +2,8 @@ import { TaskType } from "@app/types/Project";
 import { UserSelector } from "../../shared/UserSelector";
 import { TaskMover } from "../../shared/TaskMover";
 import React from "react";
-import { useTaskUpdateProperty } from "@app/hooks/useTaskUpdateProperty";
 import { useUpdateTaskAssigneeUserMutation } from "@app/services/api";
 import { TaskEditableDescription } from "./TaskEditableDescription";
-import { optimisticUpdateDependOnApi } from "@app/hooks/optimisticUpdateDependOnApi";
 import { TaskComments } from "./TaskComments";
 import { TaskChangeLog } from "./TaskChangeLog";
 import { TaskRelations } from "./task-relations/TaskRelations";
@@ -42,7 +40,6 @@ const Reporter: React.FC<Pick<Props, "task">> = ({ task }) => {
 };
 
 const Assignee: React.FC<Pick<Props, "task">> = ({ task }) => {
-  const { updateStateOnly } = useTaskUpdateProperty(task);
   const [updateAssignee, { isLoading: isAssigneeUpdating }] =
     useUpdateTaskAssigneeUserMutation();
 
@@ -54,18 +51,10 @@ const Assignee: React.FC<Pick<Props, "task">> = ({ task }) => {
         selectedProjectId={task.ProjectId}
         loading={isAssigneeUpdating}
         onChange={async (userId) =>
-          optimisticUpdateDependOnApi(
-            () =>
-              updateAssignee({
-                TaskId: task.Id,
-                UserId: userId,
-              }),
-            () =>
-              updateStateOnly({
-                property: "AssigneeUserId",
-                value: userId,
-              })
-          )
+          updateAssignee({
+            Task: task,
+            UserId: userId,
+          })
         }
         unSelectedText="Unassigned"
       />

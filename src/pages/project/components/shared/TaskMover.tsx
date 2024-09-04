@@ -5,8 +5,6 @@ import { TaskType } from "@app/types/Project";
 import styled from "styled-components";
 import { useColumns } from "@app/hooks/useColumns";
 import { useMoveTaskToColumnMutation } from "@app/services/api";
-import { useTaskUpdateProperty } from "@app/hooks/useTaskUpdateProperty";
-import { optimisticUpdateDependOnApi } from "@app/hooks/optimisticUpdateDependOnApi";
 import { HttpResult } from "@app/components/shared/HttpResult";
 import { Popover } from "@app/components/shared/primitives/Popover";
 import { Button } from "@app/components/shared/primitives/Button";
@@ -29,7 +27,6 @@ export const TaskMover: React.FC<Props> = ({ task }) => {
 
   const [moveTask, { isLoading: isMoving, error, data }] =
     useMoveTaskToColumnMutation();
-  const { updateStateOnly } = useTaskUpdateProperty(task);
   const hasNoColumns = columns.length === 0;
 
   React.useEffect(() => {
@@ -44,24 +41,11 @@ export const TaskMover: React.FC<Props> = ({ task }) => {
   }, [columns, task]);
 
   const onMoveButtonClick = async () => {
-    optimisticUpdateDependOnApi(
-      () =>
-        moveTask({
-          TargetBoardId: tempBoardId,
-          TargetColumnId: tempColumnId,
-          TaskId: task.Id,
-        }),
-      () =>
-        updateStateOnly({
-          property: "BoardId",
-          value: tempBoardId,
-        }),
-      () =>
-        updateStateOnly({
-          property: "ColumnId",
-          value: tempColumnId,
-        })
-    );
+    moveTask({
+      TargetBoardId: tempBoardId,
+      TargetColumnId: tempColumnId,
+      Task: task,
+    });
   };
 
   const content = (

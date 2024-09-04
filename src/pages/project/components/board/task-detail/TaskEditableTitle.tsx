@@ -2,13 +2,13 @@ import { Typography } from "antd";
 import { TaskType } from "@app/types/Project";
 import React from "react";
 import { debounce } from "lodash";
-import { useTaskUpdateProperty } from "@app/hooks/useTaskUpdateProperty";
 import { HttpResult } from "@app/components/shared/HttpResult";
 import { useTask } from "@app/hooks/useTask";
 import { TaskIdRenderer } from "@app/components/shared/TaskIdRenderer";
 import { Tooltip } from "@app/components/shared/primitives/Tooltip";
 import { useBoards } from "@app/hooks/useBoards";
 import { Text } from "@app/components/shared/primitives/Text";
+import { useUpdateTaskPropertyMutation } from "@app/services/api";
 
 type Props = {
   task: TaskType;
@@ -34,9 +34,9 @@ const ParentTaskInfo: React.FC<Props> = ({ task, onTaskSelect }) => {
 };
 
 export const TaskEditableTitle: React.FC<Props> = ({ task, onTaskSelect }) => {
-  const { updateTask, error } = useTaskUpdateProperty(task);
+  const [update, { error }] = useUpdateTaskPropertyMutation();
   const [, setTempTitle] = React.useState(task.Title);
-  const onUpdatePropertyDebounced = debounce(updateTask, 100);
+  const onUpdatePropertyDebounced = debounce(update, 100);
   const parentTask = useTask(task.ParentTaskItemId);
 
   return (
@@ -67,8 +67,11 @@ export const TaskEditableTitle: React.FC<Props> = ({ task, onTaskSelect }) => {
             onChange: (value) => {
               setTempTitle(value);
               onUpdatePropertyDebounced({
-                property: "Title",
-                value,
+                Task: task,
+                Params: {
+                  property: "Title",
+                  value,
+                },
               });
             },
             onCancel: () => {
