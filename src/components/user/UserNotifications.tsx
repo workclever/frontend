@@ -18,7 +18,7 @@ import { Space } from "../shared/primitives/Space";
 import { Text } from "../shared/primitives/Text";
 import { gray } from "@ant-design/colors";
 
-const TaskInfo: React.FC<{ taskId?: number }> = ({ taskId }) => {
+const TaskInfo: React.FC<{ taskId: number | null }> = ({ taskId }) => {
   const task = useTask(taskId);
   if (!task) {
     return null;

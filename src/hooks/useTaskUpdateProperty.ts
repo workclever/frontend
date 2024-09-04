@@ -62,7 +62,6 @@ export const useTaskUpdateProperty = (task: TaskType) => {
         return;
       }
 
-       
       if (internalTask[params.property] == params.value) {
         console.log("no need to go to api for task");
         return;
@@ -73,7 +72,10 @@ export const useTaskUpdateProperty = (task: TaskType) => {
           update({
             TaskId: task.Id,
             Property: params.property,
-            Value: String(params.value),
+            Value:
+              typeof params.value === "undefined" || params.value === null
+                ? null
+                : String(params.value),
           }),
         () => updateStateOnly(params)
       );

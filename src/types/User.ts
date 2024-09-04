@@ -20,5 +20,5 @@ export type UserNotificationType = {
   DateCreated: string;
   Content: string;
   Type: string;
-  TaskId?: number;
+  TaskId: number | null;
 };

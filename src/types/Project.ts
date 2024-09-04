@@ -35,7 +35,7 @@ export type TaskType = {
   Description: string;
   ReporterUserId: number;
   AssigneeUserId: number;
-  ParentTaskItemId?: number;
+  ParentTaskItemId  : number | null;
   Order: number;
   Slug: string;
 };
@@ -50,7 +50,7 @@ export type BasicUserOutput = {
 export type UpdateTaskPropertyInput = {
   TaskId: number;
   Property: keyof TaskType;
-  Value: string;
+  Value: string | null;
 };
 
 export type TaskCommentType = {

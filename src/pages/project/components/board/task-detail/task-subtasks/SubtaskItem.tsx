@@ -15,7 +15,7 @@ export const SubtaskItem: React.FC<{
   const onRemoveParentClick = () => {
     updateTask({
       property: "ParentTaskItemId",
-      value: undefined,
+      value: null,
     });
   };
 
