@@ -1,4 +1,4 @@
-import { EditOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import React from "react";
 import { useTask } from "@app/hooks/useTask";
 import { useTaskRelationTypeDefs } from "@app/hooks/useTaskRelationTypeDefs";
@@ -9,6 +9,10 @@ import { NewRelationModal } from "./NewRelationModal";
 import { Space } from "@app/components/shared/primitives/Space";
 import { Tag } from "@app/components/shared/primitives/Tag";
 import { EnhancedDropdownMenu } from "@app/components/shared/EnhancedDropdownMenu";
+import { Modal } from "@app/components/shared/primitives/Modal";
+import { Button } from "@app/components/shared/primitives/Button";
+import { Text } from "@app/components/shared/primitives/Text";
+import { useDeleteTaskRelationMutation } from "@app/services/api";
 
 export const RelationItem: React.FC<{
   baseTask: TaskType;
@@ -18,6 +22,10 @@ export const RelationItem: React.FC<{
 }> = ({ baseTask, taskRelation, onUpdate, onTaskSelect }) => {
   const relatedTask = useTask(taskRelation.TaskId);
   const [editing, setEditing] = React.useState(false);
+  const [deleting, setDeleting] = React.useState(false);
+
+  const [deleteRelationParent, { isLoading: isDeleting }] =
+    useDeleteTaskRelationMutation();
 
   const relationTypeDefs = useTaskRelationTypeDefs();
   if (!relatedTask) {
@@ -50,6 +58,13 @@ export const RelationItem: React.FC<{
             icon: <EditOutlined />,
             onClick: () => setEditing(true),
           },
+          {
+            key: "2",
+            label: "Delete relation",
+            icon: <DeleteOutlined />,
+            onClick: () => setDeleting(true),
+            danger: true,
+          },
         ]}
         triggerElement={
           <HoverableListItem onClick={() => onTaskSelect(relatedTask)}>
@@ -75,10 +90,36 @@ export const RelationItem: React.FC<{
         <NewRelationModal
           task={baseTask}
           onUpdate={onUpdate}
-          onExit={() => setEditing(false)}
+          onCancel={() => setEditing(false)}
           mode="update"
           taskRelation={taskRelation}
         />
+      )}
+      {deleting && (
+        <Modal
+          title={"Delete relation"}
+          visible
+          onCancel={() => {
+            setDeleting(false);
+          }}
+          width={450}
+        >
+          <Space direction="vertical">
+            <Text>Are you sure to delete this relation?</Text>
+            <Button
+              danger
+              loading={isDeleting}
+              onClick={async () => {
+                await deleteRelationParent(
+                  Number(taskRelation?.TaskParentRelationId)
+                );
+                onUpdate();
+              }}
+            >
+              Delete relation
+            </Button>
+          </Space>
+        </Modal>
       )}
     </>
   );

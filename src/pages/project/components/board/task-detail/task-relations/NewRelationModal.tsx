@@ -2,10 +2,8 @@ import React from "react";
 import {
   useCreateTaskRelationMutation,
   useUpdateTaskRelationMutation,
-  useDeleteTaskRelationMutation,
 } from "@app/services/api";
 import { TaskType, TaskRelationType } from "@app/types/Project";
-import { Confirm } from "@app/components/shared/Confirm";
 import { HttpResult } from "@app/components/shared/HttpResult";
 import { RelationTypeSelector } from "../RelationTypeSelector";
 import { Button } from "@app/components/shared/primitives/Button";
@@ -15,11 +13,11 @@ import { TaskSearchInput } from "../../../shared/TaskSearchInput";
 
 export const NewRelationModal: React.FC<{
   task: TaskType;
-  onExit: () => void;
+  onCancel: () => void;
   onUpdate: () => void;
   taskRelation?: TaskRelationType;
   mode: "create" | "update";
-}> = ({ task, onExit, onUpdate, taskRelation, mode }) => {
+}> = ({ task, onCancel, onUpdate, taskRelation, mode }) => {
   const [targetTask, setTargetTask] = React.useState<TaskType | undefined>({
     Id: taskRelation?.TaskId,
   } as TaskType);
@@ -34,8 +32,6 @@ export const NewRelationModal: React.FC<{
     update,
     { isLoading: isUpdating, error: updateError, data: updateResult },
   ] = useUpdateTaskRelationMutation();
-  const [deleteRelationParent, { isLoading: isDeleting }] =
-    useDeleteTaskRelationMutation();
 
   const isLoading = isCreating || isUpdating;
   const error = createError || updateError;
@@ -76,7 +72,7 @@ export const NewRelationModal: React.FC<{
   const button = mode === "create" ? "Create Relation" : "Update Relation";
 
   return (
-    <Modal title={title} visible={true} onCancel={onExit} width={600}>
+    <Modal title={title} visible={true} onCancel={onCancel} width={600}>
       <div style={{ padding: 16 }}>
         <Space direction="vertical">
           <Space>
@@ -106,21 +102,6 @@ export const NewRelationModal: React.FC<{
               >
                 {button}
               </Button>
-              {mode === "update" && (
-                <Confirm.Embed
-                  title="Are you sure to delete this relation?"
-                  onConfirm={async () => {
-                    await deleteRelationParent(
-                      Number(taskRelation?.TaskParentRelationId)
-                    );
-                    onUpdate();
-                  }}
-                >
-                  <Button loading={isDeleting} danger>
-                    Delete relation
-                  </Button>
-                </Confirm.Embed>
-              )}
             </Space>
           </div>
           <HttpResult error={error} result={result} />

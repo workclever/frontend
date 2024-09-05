@@ -43,7 +43,7 @@ export const TaskRelations: React.FC<{
       {showRelationSearchModal && (
         <NewRelationModal
           task={task}
-          onExit={() => setShowRelationSearchModal(false)}
+          onCancel={() => setShowRelationSearchModal(false)}
           onUpdate={refetch}
           mode="create"
         />

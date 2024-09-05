@@ -32,6 +32,7 @@ export const SubtaskItem: React.FC<{
             label: "Remove parent task",
             icon: <RollbackOutlined />,
             onClick: onRemoveParentClick,
+            danger: true,
           },
         ]}
         triggerElement={
