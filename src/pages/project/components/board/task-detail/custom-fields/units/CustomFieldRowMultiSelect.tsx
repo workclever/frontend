@@ -17,7 +17,9 @@ export const CustomFieldRowMultiSelect: React.FC<{
     if (tempValue !== fieldValue && tempValue) {
       onUpdateValue(tempValue.filter(Boolean));
     }
-  }, [tempValue, fieldValue, onUpdateValue, onBlur]);
+    // We intentionally trigger `onUpdateValue` only when `tempValue` changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tempValue]);
 
   return (
     <Select

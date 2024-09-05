@@ -25,7 +25,9 @@ export const CustomFieldRowText: React.FC<{
     if (tempValue !== fieldValue) {
       onUpdateValue(tempValue);
     }
-  }, [tempValue, fieldValue, onUpdateValue]);
+    // We intentionally trigger `onUpdateValue` only when `tempValue` changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tempValue]);
 
   return (
     <Input
