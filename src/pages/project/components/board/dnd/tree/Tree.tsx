@@ -17,15 +17,16 @@ import {
 import * as liveRegion from "@atlaskit/pragmatic-drag-and-drop-live-region";
 import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
 import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
-import { tree, treeStateReducer } from "./TreeStateReducer";
+import { treeStateReducer } from "./TreeStateReducer";
 import {
   DependencyContext,
   TreeContext,
   TreeContextValue,
 } from "./tree-context";
 import { TreeItem } from "./TreeItem";
-import { TreeState, TreeItem as TreeItemType, ItemId } from "./types";
+import { TreeItem as TreeItemType, ItemId } from "./types";
 import { ColumnType } from "@app/types/Project";
+import { treeUtils } from "./TreeUtils";
 
 const treeStyles: React.CSSProperties = {
   display: "flex",
@@ -77,15 +78,11 @@ export const Tree: React.FC<{
   onMoveItem,
   onReorderItem,
 }) => {
-  function getInitialTreeState(): TreeState {
-    return { data: items, lastAction: null };
-  }
+  const [state, updateState] = useReducer(treeStateReducer, null, () => ({
+    data: items,
+    lastAction: null,
+  }));
 
-  const [state, updateState] = useReducer(
-    treeStateReducer,
-    null,
-    getInitialTreeState
-  );
   const ref = useRef<HTMLDivElement>(null);
   const { extractInstruction } = useContext(DependencyContext);
 
@@ -170,7 +167,7 @@ export const Tree: React.FC<{
       return data;
     }
 
-    const item = tree.find(data, itemId);
+    const item = treeUtils.find(data, itemId);
     invariant(item);
     return item.children;
   }, []);
@@ -184,7 +181,10 @@ export const Tree: React.FC<{
       // to allow quick lookups of parents
       getPathToItem: memoizeOne(
         (targetId: string) =>
-          tree.getPathToItem({ current: lastStateRef.current, targetId }) ?? []
+          treeUtils.getPathToItem({
+            current: lastStateRef.current,
+            targetId,
+          }) ?? []
       ),
       getMoveTargets,
       getChildrenOfItem,
