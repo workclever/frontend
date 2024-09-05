@@ -22,7 +22,8 @@ const Wrapper = styled.div`
   margin-bottom: 0px;
   cursor: pointer;
   padding: 4px 8px;
-  border-bottom: 1px solid #eaeaea;
+  filter: drop-shadow(0px 1px 1px #eaeaea);
+  transition: all 100ms ease-in;
 
   &:hover {
     background-color: ${blue[0]};

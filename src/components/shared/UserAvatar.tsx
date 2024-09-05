@@ -16,11 +16,11 @@ export const UserAvatar: React.FC<{
 
   const style: React.CSSProperties = {
     cursor: onClick ? "pointer" : "inherit",
-    backgroundColor: magenta[3],
+    backgroundColor: magenta[2],
   };
 
   if (active) {
-    style.border = `2px solid ${blue[4]}`;
+    style.border = `2px solid ${blue[3]}`;
   }
 
   const avatarItself = (
