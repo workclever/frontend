@@ -13,6 +13,7 @@ import "./components/shared/editor/icon-fix";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
+import { ConfigProvider } from "antd";
 
 dayjs.extend(timezone);
 dayjs.extend(utc);
@@ -24,7 +25,22 @@ root.render(
   // <React.StrictMode>
   <EuiProvider colorMode="light">
     <Provider store={store}>
-      <App />
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: "#333333",
+            colorInfo: "#333333",
+            colorSuccess: "#90d66e",
+            colorWarning: "#d6930f",
+            colorError: "#d22225",
+            fontSize: 13,
+            sizeStep: 4,
+            borderRadius: 6,
+          },
+        }}
+      >
+        <App />
+      </ConfigProvider>
     </Provider>
   </EuiProvider>
   // </React.StrictMode>
