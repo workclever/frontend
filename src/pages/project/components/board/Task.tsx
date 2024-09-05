@@ -14,12 +14,13 @@ import {
   DeleteOutlined,
   DownCircleOutlined,
   EditOutlined,
+  EyeOutlined,
   ForkOutlined,
   MessageOutlined,
   UpCircleOutlined,
 } from "@ant-design/icons";
 import { CustomField, CustomFieldType } from "@app/types/CustomField";
-import React from "react";
+import React, { useState } from "react";
 import { EntityClasses, Permissions } from "@app/types/Roles";
 import { useMe } from "@app/hooks/useMe";
 import copy from "copy-to-clipboard";
@@ -35,6 +36,7 @@ import { Space } from "@app/components/shared/primitives/Space";
 import { Tag } from "@app/components/shared/primitives/Tag";
 import { gray } from "@ant-design/colors";
 import { MenuProps } from "antd/lib/menu";
+import { EditTaskTitleModal } from "./EditTaskTitleModal";
 
 export type Props = {
   task: TaskType;
@@ -235,6 +237,7 @@ export const Task: React.FC<Props> = ({
   const [deleteTask] = useDeleteTaskMutation();
   const [sendToLocation] = useSendTaskToTopOrBottomMutation();
   const boardViewType = useSelector(selectBoardViewType);
+  const [editingTitle, setEditingTitle] = useState(false);
 
   const hasProjectManagerPermission = hasAccess(
     Number(task.ProjectId),
@@ -243,14 +246,20 @@ export const Task: React.FC<Props> = ({
   );
   const menuItems: MenuProps["items"] = [
     {
-      label: "Edit",
+      label: "View",
       key: "1",
       onClick: onTaskClick,
+      icon: <EyeOutlined />,
+    },
+    {
+      label: "Edit title",
+      key: "2",
+      onClick: () => setEditingTitle(true),
       icon: <EditOutlined />,
     },
     {
       label: "Copy link",
-      key: "2",
+      key: "3",
       onClick: () => {
         copy(`/${task.ProjectId}/board/${task.BoardId}/task/${task.Id}`, {
           onCopy: () => {
@@ -262,7 +271,7 @@ export const Task: React.FC<Props> = ({
     },
     {
       label: "Send to top of column",
-      key: "3",
+      key: "4",
       onClick: () => {
         sendToLocation({ Location: 1, TaskId: task.Id });
       },
@@ -270,7 +279,7 @@ export const Task: React.FC<Props> = ({
     },
     {
       label: "Send to bottom of column",
-      key: "4",
+      key: "5",
       onClick: () => {
         sendToLocation({ Location: 0, TaskId: task.Id });
       },
@@ -296,19 +305,27 @@ export const Task: React.FC<Props> = ({
   const Component = boardViewType === "kanban" ? TaskCardKanban : TaskCardTree;
 
   return (
-    <EnhancedDropdownMenu
-      triggers={["contextMenu"]}
-      items={menuItems}
-      triggerElement={
-        <div style={{ width: "100%" }} onClick={onTaskClick}>
-          <Component
-            onTaskClick={onTaskClick}
-            customFields={customFields}
-            findSubtasks={findSubtasks}
-            task={task}
-          />
-        </div>
-      }
-    />
+    <>
+      <EnhancedDropdownMenu
+        triggers={["contextMenu"]}
+        items={menuItems}
+        triggerElement={
+          <div style={{ width: "100%" }} onClick={onTaskClick}>
+            <Component
+              onTaskClick={onTaskClick}
+              customFields={customFields}
+              findSubtasks={findSubtasks}
+              task={task}
+            />
+          </div>
+        }
+      />
+      {editingTitle && (
+        <EditTaskTitleModal
+          task={task}
+          onCancel={() => setEditingTitle(false)}
+        />
+      )}
+    </>
   );
 };
