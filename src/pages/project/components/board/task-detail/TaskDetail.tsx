@@ -2,7 +2,10 @@ import { TaskType } from "@app/types/Project";
 import { UserSelector } from "../../shared/UserSelector";
 import { TaskMover } from "../../shared/TaskMover";
 import React from "react";
-import { useUpdateTaskAssigneeUserMutation } from "@app/services/api";
+import {
+  useListCustomFieldsQuery,
+  useUpdateTaskAssigneeUserMutation,
+} from "@app/services/api";
 import { TaskEditableDescription } from "./TaskEditableDescription";
 import { TaskComments } from "./TaskComments";
 import { TaskChangeLog } from "./TaskChangeLog";
@@ -86,6 +89,7 @@ export const TaskDetail: React.FC<Props> = ({
   onTaskDelete,
 }) => {
   const { goToTask } = useAppNavigate();
+  const { data: customFields } = useListCustomFieldsQuery(task.ProjectId);
 
   const Pad: React.FC<{
     children: React.ReactNode;
@@ -136,9 +140,11 @@ export const TaskDetail: React.FC<Props> = ({
             </div>
           </div>
         </Space>
-        <div style={{ width: 400, padding: 16 }}>
-          <TaskCustomFieldsRenderer task={task} />
-        </div>
+        {customFields?.Data.length && (
+          <div style={{ width: 400, padding: 16 }}>
+            <TaskCustomFieldsRenderer task={task} />
+          </div>
+        )}
       </div>
     </>
   );
