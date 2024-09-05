@@ -111,7 +111,6 @@ const CommentList: React.FC<{
   <ConfigProvider renderEmpty={() => <>No comments found, add a comment</>}>
     <List
       dataSource={comments}
-      header=""
       itemLayout="horizontal"
       renderItem={(comment) => (
         <Comment key={comment.Id} task={task} comment={comment} />

@@ -24,6 +24,9 @@ const TableRow = styled.div`
 
 const TableKey = styled.div`
   width: 100px;
+  font-size: 13px;
+  color: #333333;
+  font-weight: 500;
 `;
 
 const TableValue = styled.div`
