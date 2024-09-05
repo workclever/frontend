@@ -12,9 +12,9 @@ const Wrapper = styled.div`
   padding-left: 8px;
 `;
 
-const BoardItem = styled.div<{ active: boolean }>`
+const BoardItem = styled.div<{ $active: boolean }>`
   padding: 4px;
-  background-color: ${(props) => (props.active ? "#ededed" : "inherit")};
+  background-color: ${(props) => (props.$active ? "#ededed" : "inherit")};
   border-radius: 4px;
 
   &:hover {
@@ -33,7 +33,7 @@ export const BoardList: React.FC<{ projectId: number }> = ({ projectId }) => {
         <BoardItem
           key={r.Id}
           onClick={() => goToBoard(r)}
-          active={selectedBoardId === r.Id}
+          $active={selectedBoardId === r.Id}
         >
           {r.Name}
         </BoardItem>

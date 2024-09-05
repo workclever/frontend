@@ -180,6 +180,7 @@ export const taskEndpoints = (builder: Builder) => ({
       method: "POST",
       body,
     }),
+    invalidatesTags: ["Task"],
   }),
   sendTaskToTopOrBottom: builder.mutation<
     BaseOutput<string>,

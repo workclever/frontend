@@ -12,6 +12,7 @@ import { useAppNavigate } from "./useAppNavigate";
 import { useBoards } from "./useBoards";
 import { useColumns } from "./useColumns";
 import { useProjectTasks } from "./useProjectTasks";
+import { ColumnMap } from "@app/pages/project/components/board/dnd/kanban/types";
 
 export const useBoardData = () => {
   const dispatch = useDispatch();
@@ -39,14 +40,18 @@ export const useBoardData = () => {
   };
   const vertical = verticality[boardViewType];
 
+  const tasksInBoard = Object.values(tasks).filter(
+    (r) => r.BoardId === selectedBoardId
+  );
+
   const subtasks = React.useMemo(
-    () => Object.values(tasks).filter((r) => r.ParentTaskItemId),
-    [tasks]
+    () => tasksInBoard.filter((r) => r.ParentTaskItemId),
+    [tasksInBoard]
   );
 
   const nonSubtasks = React.useMemo(
-    () => Object.values(tasks).filter((r) => !r.ParentTaskItemId),
-    [tasks]
+    () => tasksInBoard.filter((r) => !r.ParentTaskItemId),
+    [tasksInBoard]
   );
 
   const dndItems = React.useMemo(() => {
@@ -89,6 +94,47 @@ export const useBoardData = () => {
     return items;
   }, [columns, nonSubtasks, boardFilters]);
 
+  const dndData = React.useMemo(() => {
+    const items: ColumnMap = {};
+    const orderedColumnIds = columns
+      .slice()
+      .sort((a, b) => a.Order - b.Order)
+      .map((r) => r.Id);
+
+    let nonSubtasksFiltered = nonSubtasks;
+    if (boardFilters.filterText) {
+      const trimedFilter = boardFilters.filterText.trim();
+      nonSubtasksFiltered = nonSubtasksFiltered.filter(
+        (r) =>
+          r.Title.toLowerCase().indexOf(trimedFilter.toLowerCase()) > -1 ||
+          r.Slug.toLowerCase().indexOf(trimedFilter.toLowerCase()) > -1
+      );
+    }
+    const filteredUserIds = boardFilters.userIds || [];
+    if (filteredUserIds.length > 0) {
+      nonSubtasksFiltered = nonSubtasksFiltered.filter(
+        (r) => filteredUserIds.indexOf(r.AssigneeUserId) > -1
+      );
+    }
+
+    const columnTasks = nonSubtasksFiltered
+      .slice()
+      .sort((a, b) => a.Order - b.Order);
+
+    nonSubtasksFiltered.forEach((task) => {
+      if (columns.map((r) => r.Id).indexOf(task.ColumnId) > -1) {
+        for (const col of columns) {
+          items[col.Id] = {
+            ...col,
+            items: columnTasks.filter((r) => r.ColumnId === col.Id),
+          };
+        }
+      }
+    });
+
+    return { dndColumnMap: items, orderedColumnIds };
+  }, [columns, nonSubtasks, boardFilters]);
+
   const findColumn = React.useCallback(
     (id: number) => columns.find((r) => r.Id === id),
     [columns]
@@ -122,6 +168,7 @@ export const useBoardData = () => {
 
   return {
     dndItems,
+    dndData,
     onTaskSelect,
     onTaskDelete,
     findTask,

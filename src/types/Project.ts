@@ -82,4 +82,4 @@ export type TaskAttachmentType = {
   AttachmentUrl: string;
 };
 
-export type BoardViewType = "kanban" | "graph" | "list";
+export type BoardViewType = "kanban" | "graph" | "tree";

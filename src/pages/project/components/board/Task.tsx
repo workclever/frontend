@@ -1,4 +1,3 @@
-import { DraggableSyntheticListeners } from "@dnd-kit/core";
 import { message } from "antd";
 import { TaskType } from "@app/types/Project";
 import { UserAvatar } from "@app/components/shared/UserAvatar";
@@ -27,7 +26,7 @@ import copy from "copy-to-clipboard";
 import { useFormattedDate } from "@app/hooks/useFormattedDate";
 import { EnhancedDropdownMenu } from "@app/components/shared/EnhancedDropdownMenu";
 import { TaskCardKanban } from "./TaskCardKanban";
-import { TaskCardCompact } from "./TaskCardCompact";
+import { TaskCardTree } from "./TaskCardTree";
 import { useSelector } from "react-redux";
 import { selectBoardViewType } from "@app/slices/project/projectSlice";
 import { Confirm } from "@app/components/shared/Confirm";
@@ -38,7 +37,6 @@ import { gray } from "@ant-design/colors";
 import { MenuProps } from "antd/lib/menu";
 
 export type Props = {
-  listeners: DraggableSyntheticListeners;
   task: TaskType;
   onTaskClick: () => void;
   findSubtasks: (id: number) => TaskType[];
@@ -229,7 +227,6 @@ export const RenderTaskCustomFieldsUnit: React.FC<{
 
 export const Task: React.FC<Props> = ({
   onTaskClick,
-  listeners,
   task,
   findSubtasks,
   customFields,
@@ -296,8 +293,7 @@ export const Task: React.FC<Props> = ({
     menuItems.push(deleteMenuItem);
   }
 
-  const Component =
-    boardViewType === "kanban" ? TaskCardKanban : TaskCardCompact;
+  const Component = boardViewType === "kanban" ? TaskCardKanban : TaskCardTree;
 
   return (
     <EnhancedDropdownMenu
@@ -309,7 +305,6 @@ export const Task: React.FC<Props> = ({
             onTaskClick={onTaskClick}
             customFields={customFields}
             findSubtasks={findSubtasks}
-            listeners={listeners}
             task={task}
           />
         </div>

@@ -8,12 +8,11 @@ export const ColHeader = styled.div`
   padding: 4px;
 `;
 
-export const ColumnListHeader = () => {
+export const ColumnTreeHeader = () => {
   return (
     <div style={{ display: "flex", alignItems: "center" }}>
       <div style={{ flex: 1 }}></div>
       <ColHeader>Comments</ColHeader>
-      <ColHeader>Subtasks</ColHeader>
       <ColHeader>Assignee</ColHeader>
     </div>
   );

@@ -76,7 +76,6 @@ export const selectBoardFilters = (state: RootState) =>
   state.project.boardFilters;
 
 export const selectBoardViewType = (state: RootState) =>
-  state.project.boardViewType[Number(state.project.selectedBoardId)] ||
-  "kanban";
+  state.project.boardViewType[Number(state.project.selectedBoardId)] || "tree";
 
 export const projectReducer = projectSlice.reducer;

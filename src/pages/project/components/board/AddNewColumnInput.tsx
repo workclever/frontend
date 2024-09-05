@@ -8,10 +8,15 @@ import {
   selectSelectedBoardId,
 } from "@app/slices/project/projectSlice";
 import { ToggleOnClick } from "@app/components/shared/ToggleOnClick";
+import { gray } from "@ant-design/colors";
 
 const TextWrapper = styled.div`
   cursor: pointer;
   width: 280px;
+  color: ${gray[0]};
+  &:hover {
+    color: ${gray[5]};
+  }
 `;
 
 type FormValuesType = { Name: string };

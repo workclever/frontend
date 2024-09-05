@@ -1,4 +1,4 @@
-import { AppstoreOutlined, BarsOutlined } from "@ant-design/icons";
+import { AppstoreOutlined, BranchesOutlined } from "@ant-design/icons";
 import { Input, Segmented } from "antd";
 import { debounce } from "lodash";
 import React from "react";
@@ -79,10 +79,12 @@ export const BoardHeader: React.FC<{ showBoardActions: boolean }> = ({
           {
             value: "kanban",
             icon: <AppstoreOutlined />,
+            label: "Kanban",
           },
           {
-            value: "list",
-            icon: <BarsOutlined />,
+            value: "tree",
+            icon: <BranchesOutlined />,
+            label: "Tree",
           },
         ]}
       />

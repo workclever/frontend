@@ -20,14 +20,18 @@ const TextWrapper = styled.span`
   }
 `;
 
-export const AddNewCardInput: React.FC<{ column: ColumnType }> = ({
+type FormValuesType = {
+  Title: string;
+};
+
+export const AddNewTaskInput: React.FC<{ column: ColumnType }> = ({
   column,
 }) => {
   const [createTask, { isLoading }] = useCreateTaskMutation();
   const selectedProjectId = useSelector(selectSelectedProjectId);
   const selectedBoardId = useSelector(selectSelectedBoardId);
 
-  const onFinish = async (values: any) => {
+  const onFinish = async (values: FormValuesType) => {
     await createTask({
       ProjectId: Number(selectedProjectId),
       BoardId: Number(selectedBoardId),
@@ -45,7 +49,7 @@ export const AddNewCardInput: React.FC<{ column: ColumnType }> = ({
     </Tooltip>
   );
   const toggledComponent = (
-    <Form
+    <Form<FormValuesType>
       name="basic"
       initialValues={{
         Title: "",

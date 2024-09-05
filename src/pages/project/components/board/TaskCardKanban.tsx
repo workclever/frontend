@@ -32,12 +32,11 @@ const Wrapper = styled.div`
 
 export const TaskCardKanban: React.FC<Props> = ({
   task,
-  listeners,
   customFields,
   findSubtasks,
 }) => {
   return (
-    <Wrapper {...listeners}>
+    <Wrapper>
       <div>
         <Text>{task.Title}</Text>
       </div>

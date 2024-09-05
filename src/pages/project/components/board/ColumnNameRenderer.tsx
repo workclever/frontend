@@ -1,5 +1,4 @@
 import { DeleteColumnOutlined, EditOutlined } from "@ant-design/icons";
-import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 import { Badge } from "antd";
 import { ItemType } from "antd/es/menu/interface";
 import React from "react";
@@ -17,25 +16,27 @@ import { Confirm } from "@app/components/shared/Confirm";
 import { EnhancedDropdownMenu } from "@app/components/shared/EnhancedDropdownMenu";
 import { FlexBasicLayout } from "@app/components/shared/FlexBasicLayout";
 import { EditColumnModal } from "./EditColumnModal";
-import { ColumnListHeader } from "./ColumnListHeader";
+import { ColumnTreeHeader } from "./ColumnTreeHeader";
 import { Title } from "@app/components/shared/primitives/Title";
 
-const ColumnListWrapper = styled.div`
+const ColumnTreeWrapper = styled.div`
   padding: 4px;
   padding-left: 8px;
   cursor: pointer;
+  width: 100%;
+  border-bottom: 1px solid #eaeaea;
 `;
 
 const ColumnKanbanWrapper = styled.div`
   background-color: transparent;
   padding: 8px;
   cursor: pointer;
+  width: 100%;
 `;
 
 export const ColumnNameRenderer: React.FC<{
   column: ColumnType;
-  listeners?: SyntheticListenerMap;
-}> = ({ column, listeners }) => {
+}> = ({ column }) => {
   const { hasAccess } = useMe();
   const [deleteColumn] = useDeleteColumnMutation();
   const selectedProjectId = useSelector(selectSelectedProjectId);
@@ -78,19 +79,25 @@ export const ColumnNameRenderer: React.FC<{
   const titleRenderer = (
     <Title level={5} style={{ display: "flex", flex: 1, marginBottom: 0 }}>
       <Badge color={column.Color} style={{ marginRight: 8 }} />
-      <div style={{ flex: 1 }}>{column.Name}</div>
+      <div
+        style={{
+          ...(boardViewType === "tree" ? { marginRight: 8 } : { flex: 1 }),
+        }}
+      >
+        {column.Name}
+      </div>
       <span style={{ marginLeft: 4 }}> {manageColumnRenderer}</span>
     </Title>
   );
 
   const Wrapper =
-    boardViewType === "list" ? ColumnListWrapper : ColumnKanbanWrapper;
+    boardViewType === "tree" ? ColumnTreeWrapper : ColumnKanbanWrapper;
 
   return (
-    <Wrapper {...listeners}>
+    <Wrapper>
       <FlexBasicLayout
         left={titleRenderer}
-        right={boardViewType === "list" ? <ColumnListHeader /> : undefined}
+        right={boardViewType === "tree" ? <ColumnTreeHeader /> : undefined}
       />
       {editColumn && (
         <EditColumnModal
