@@ -27,7 +27,7 @@ export const CustomFieldRowBool: React.FC<{
     }
     // We intentionally trigger `onUpdateValue` only when `tempValue` changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tempValue, onBlur]);
+  }, [tempValue]);
 
   return (
     <Field
