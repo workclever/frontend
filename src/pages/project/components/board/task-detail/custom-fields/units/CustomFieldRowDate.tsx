@@ -37,7 +37,6 @@ export const CustomFieldRowDate: React.FC<{
       <DatePicker
         value={computedFieldValue()}
         onChange={(_date, dateStr) => {
-          console.log({ dateStr });
           onUpdateValue(String(dateStr));
           onBlur();
         }}

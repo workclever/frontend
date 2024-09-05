@@ -101,7 +101,6 @@ export const CrudEditor = <T,>({
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           onSave: (_, data, row) => {
-            console.log("values", data);
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             if (data["__entityType"] && data["__entityType"] === "NEW") {

@@ -179,8 +179,6 @@ const dataReducer = (data: TreeItem[], action: TreeAction) => {
       return result;
     }
 
-    console.warn("TODO: action not implemented", instruction);
-
     return data;
   }
 

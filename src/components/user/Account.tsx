@@ -27,7 +27,6 @@ export const Account = () => {
         editable={{
           type: "multiple",
           onSave: async (keypath, newInfo) => {
-            console.log({ keypath, newInfo });
             if (keypath === "FullName") {
               updateUser({
                 UserId: Number(me?.Id),

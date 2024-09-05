@@ -7,7 +7,6 @@ export const useFormattedDate = (date: string) => {
   const { data: siteSettings } = useGetSiteSettingsQuery(null);
   const defaultDateFormat = siteSettings?.Data.DefaultDateFormat.trim();
 
-  console.log({ defaultDateFormat });
   try {
     return dayjs(date).format(defaultDateFormat || fallbackDefaultDateFormat);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
