@@ -1,4 +1,3 @@
-import { Empty as AntdEmpty } from "antd";
 import React from "react";
 
 type Props = {
@@ -6,5 +5,14 @@ type Props = {
 };
 
 export const Empty: React.FC<Props> = ({ children }) => (
-  <AntdEmpty description={children} />
+  <div
+    style={{
+      textAlign: "center",
+      color: "#00000073",
+      padding: 12,
+      fontSize: 13,
+    }}
+  >
+    {children}
+  </div>
 );

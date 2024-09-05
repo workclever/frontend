@@ -5,17 +5,18 @@ import {
 } from "@ant-design/icons";
 import React from "react";
 import styled from "styled-components";
-import { FlexBasicLayout } from "@app/components/shared/FlexBasicLayout";
-import {
-  Button,
-  ButtonProps,
-} from "@app/components/shared/primitives/Button";
+import { Button, ButtonProps } from "@app/components/shared/primitives/Button";
 import { Space } from "@app/components/shared/primitives/Space";
 import { Text } from "@app/components/shared/primitives/Text";
 
 const Content = styled.div`
   margin-top: 4px;
 `;
+
+const IconedButton: React.FC<Pick<ButtonProps, "onClick" | "icon">> = ({
+  icon,
+  onClick,
+}) => <Button size="small" type="text" icon={icon} onClick={onClick} />;
 
 export const TaskDetailBlock: React.FC<{
   title: string;
@@ -33,10 +34,6 @@ export const TaskDetailBlock: React.FC<{
   const [expanded, setExpanded] = React.useState(defaultExpanded);
 
   const toggleExpand = () => setExpanded((e) => !e);
-  const IconedButton: React.FC<Pick<ButtonProps, "onClick" | "icon">> = ({
-    icon,
-    onClick,
-  }) => <Button size="small" type="text" icon={icon} onClick={onClick} />;
 
   const plusButton = showPlusIcon && (
     <IconedButton
@@ -59,17 +56,13 @@ export const TaskDetailBlock: React.FC<{
 
   return (
     <>
-      <Text strong>
-        <FlexBasicLayout
-          left={
-            <Space>
-              {title}
-              {plusButton}
-            </Space>
-          }
-          right={<>{collapseButton}</>}
-        />
-      </Text>
+      <div>
+        <Space>
+          {collapseButton}
+          <Text strong>{title}</Text>
+          {plusButton}
+        </Space>
+      </div>
       {expanded && <Content>{children}</Content>}
     </>
   );
