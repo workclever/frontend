@@ -37,7 +37,13 @@ export const CustomFieldRowBool: React.FC<{
       valueType="switch"
       mode={"edit"}
       onChange={setTempValue}
-      fieldProps={{ width: "100%", onBlur, disabled: loading, ref }}
+      fieldProps={{
+        width: "100%",
+        onBlur,
+        disabled: loading,
+        ref,
+        size: "small",
+      }}
     />
   );
 };

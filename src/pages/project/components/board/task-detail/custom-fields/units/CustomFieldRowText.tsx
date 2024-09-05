@@ -41,6 +41,7 @@ export const CustomFieldRowText: React.FC<{
       style={{ width: "100%" }}
       onBlur={onBlur}
       onPressEnter={onBlur}
+      size="small"
       onKeyDown={(e) => {
         if (e.key === "Escape") {
           e.preventDefault();

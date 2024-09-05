@@ -55,6 +55,7 @@ export const CustomFieldRowDate: React.FC<{
         autoFocus
         needConfirm
         getPopupContainer={() => document.body}
+        size="small"
       />
     </>
   );

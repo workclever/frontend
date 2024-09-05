@@ -3,8 +3,8 @@ import { colors, PresetColor } from "./colors";
 import { Popover } from "./primitives/Popover";
 
 const ColorPreview = styled.div`
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   cursor: pointer;
 `;
 
