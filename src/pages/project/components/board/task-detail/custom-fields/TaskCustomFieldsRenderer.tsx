@@ -19,12 +19,11 @@ const TableRow = styled.div`
   display: flex;
   min-height: 30px;
   align-items: center;
-  padding: 4px 0px;
+  padding: 2px 0px;
 `;
 
 const TableKey = styled.div`
   width: 100px;
-  font-weight: bold;
 `;
 
 const TableValue = styled.div`
@@ -62,7 +61,7 @@ export const TaskCustomFieldsRenderer: React.FC<{ task: TaskType }> = ({
         {customFieldsDataEnabled.map((r) => (
           <TableRow key={r.Id}>
             <TableKey>
-              <Text>{r.FieldName}:</Text>
+              <span>{r.FieldName}:</span>
             </TableKey>
             <TableValue>
               <CustomFieldRow

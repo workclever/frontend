@@ -35,9 +35,11 @@ export const BoardPage = () => {
     }
     return (
       <BoardLayout mode="board">
-        {(boardViewType === "kanban" || boardViewType === "list") && (
-          <Columns />
-        )}
+        <div style={{ padding: 16 }}>
+          {(boardViewType === "kanban" || boardViewType === "list") && (
+            <Columns />
+          )}
+        </div>
       </BoardLayout>
     );
   };

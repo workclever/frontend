@@ -15,15 +15,15 @@ import { sample } from "lodash";
 export type PresetColor = string;
 
 export const presetToHexMap: { [key: PresetColor]: string } = {
-  magenta: String(magenta.primary),
-  red: String(red.primary),
-  orange: String(orange.primary),
-  gold: String(gold.primary),
-  lime: String(lime.primary),
-  green: String(green.primary),
-  cyan: String(cyan.primary),
-  blue: String(blue.primary),
-  purple: String(purple.primary),
+  magenta: magenta[3],
+  red: red[3],
+  orange: orange[3],
+  gold: gold[3],
+  lime: lime[3],
+  green: green[3],
+  cyan: cyan[3],
+  blue: blue[3],
+  purple: purple[3],
 };
 
 export const colors: PresetColor[] = Object.values(presetToHexMap);

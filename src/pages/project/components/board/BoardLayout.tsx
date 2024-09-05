@@ -21,7 +21,7 @@ const RightWrapper = styled.div`
 
 const ContentWrapper = styled.div`
   margin-top: 40px;
-  padding: 8px;
+  padding: 0px;
   overflow-y: hidden;
   overflow-x: auto;
   width: 100%;

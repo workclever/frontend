@@ -87,8 +87,11 @@ export const TaskDetail: React.FC<Props> = ({
 }) => {
   const { goToTask } = useAppNavigate();
 
-  const Pad: React.FC<{ children: React.ReactNode }> = (props) => (
-    <div style={{ padding: 4 }}>{props.children}</div>
+  const Pad: React.FC<{
+    children: React.ReactNode;
+    style?: React.CSSProperties;
+  }> = (props) => (
+    <div style={{ padding: 4, ...props.style }}>{props.children}</div>
   );
 
   const onTaskSelect = (task: TaskType) => {
@@ -97,37 +100,46 @@ export const TaskDetail: React.FC<Props> = ({
 
   return (
     <>
-      <Space direction="vertical" style={{ width: "100%" }}>
-        <Pad>
-          <TaskEditableTitle task={task} onTaskSelect={onTaskSelect} />
-        </Pad>
-        <Divider style={{ margin: 0, padding: 0 }} />
-        <Pad>
-          <Space style={{ width: "100%" }}>
-            <Reporter task={task} />
-            <Assignee task={task} />
-          </Space>
-          <Space style={{ marginTop: 8 }}>
-            <TaskMover task={task} />
-            <TaskDelete task={task} onTaskDelete={onTaskDelete} />
-          </Space>
-        </Pad>
-        <Divider style={{ margin: 0, padding: 0 }} />
-        <Pad>
-          <TaskEditableDescription task={task} />
-          <Divider style={{ margin: "8px 0" }} />
-          <TaskRelations task={task} onTaskSelect={onTaskSelect} />
-          <TaskSubtasks
-            task={task}
-            onTaskSelect={onTaskSelect}
-            findSubtasks={findSubtasks}
-          />
-          <TaskAttachments task={task} />
-          <div style={{ margin: "8px 0" }} />
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        <Space
+          direction="vertical"
+          style={{
+            width: "100%",
+            borderRight: "1px solid #eaeaea",
+          }}
+        >
+          <Pad style={{ paddingLeft: 16, paddingTop: 16 }}>
+            <TaskEditableTitle task={task} onTaskSelect={onTaskSelect} />
+          </Pad>
+          <Pad style={{ paddingLeft: 16, paddingTop: 0 }}>
+            <Space style={{ width: "100%" }}>
+              <Reporter task={task} />
+              <Assignee task={task} />
+            </Space>
+            <Space style={{ marginTop: 8 }}>
+              <TaskMover task={task} />
+              <TaskDelete task={task} onTaskDelete={onTaskDelete} />
+            </Space>
+          </Pad>
+          <Divider style={{ margin: 0, padding: 0 }} />
+          <div style={{ padding: 16 }}>
+            <TaskEditableDescription task={task} />
+            <div style={{ marginTop: 8 }}>
+              <TaskRelations task={task} onTaskSelect={onTaskSelect} />
+              <TaskSubtasks
+                task={task}
+                onTaskSelect={onTaskSelect}
+                findSubtasks={findSubtasks}
+              />
+              <TaskAttachments task={task} />
+              <TaskTabs task={task} />
+            </div>
+          </div>
+        </Space>
+        <div style={{ width: 400, padding: 16 }}>
           <TaskCustomFieldsRenderer task={task} />
-          <TaskTabs task={task} />
-        </Pad>
-      </Space>
+        </div>
+      </div>
     </>
   );
 };

@@ -154,7 +154,9 @@ const Editor: React.FC<{
         Content: params.content,
         TaskId: task.Id,
       });
-      onEditDone && onEditDone();
+      if (onEditDone) {
+        onEditDone();
+      }
     }
     setInitialValues({ content: "" });
     form.resetFields();

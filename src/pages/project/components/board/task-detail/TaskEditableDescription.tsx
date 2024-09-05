@@ -29,7 +29,7 @@ export const TaskEditableDescription: React.FC<Props> = ({ task }) => {
   }, 1000);
 
   return (
-    <div style={{ marginTop: 4, minHeight: 200 }}>
+    <div style={{ minHeight: 200 }}>
       <HttpResult error={error} />
       <AppEditor
         value={task.Description}
