@@ -202,13 +202,14 @@ const Editor: React.FC<{
 };
 
 export const TaskComments: React.FC<Props> = ({ task }) => {
+  const { me } = useMe();
   const { data: comments } = useListTaskCommentsQuery(task.BoardId);
   const commentsData = comments?.Data || {};
   return (
     <>
       <CommentList task={task} comments={commentsData[task.Id] || []} />
       <AntdComment
-        avatar={<UserAvatar userId={0} />}
+        avatar={me && <UserAvatar userId={me?.Id} />}
         content={<Editor task={task} mode="create" />}
       />
     </>
