@@ -10,7 +10,6 @@ export type BoardFilters = {
 interface ProjectState {
   selectedProjectId?: number;
   selectedBoardId?: number;
-  selectedTaskId?: number;
   boardFilters: BoardFilters;
   boardViewType: {
     [boardId: number]: BoardViewType;
@@ -38,9 +37,6 @@ export const projectSlice = createSlice({
       state.selectedBoardId = action.payload;
       state.boardFilters = {};
     },
-    setSelectedTaskId: (state, action: PayloadAction<number | undefined>) => {
-      state.selectedTaskId = action.payload;
-    },
     setBoardFilter: <K extends keyof ProjectState["boardFilters"]>(
       state: ProjectState,
       action: PayloadAction<SetBoardFilterPayload<K>>
@@ -58,7 +54,6 @@ export const projectSlice = createSlice({
 export const {
   setSelectedProjectId,
   setSelectedBoardId,
-  setSelectedTaskId,
   setBoardFilter,
   setBoardViewType,
 } = projectSlice.actions;
@@ -68,9 +63,6 @@ export const selectSelectedProjectId = (state: RootState) =>
 
 export const selectSelectedBoardId = (state: RootState) =>
   state.project.selectedBoardId;
-
-export const selectSelectedTaskId = (state: RootState) =>
-  state.project.selectedTaskId;
 
 export const selectBoardFilters = (state: RootState) =>
   state.project.boardFilters;

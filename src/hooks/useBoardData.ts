@@ -1,11 +1,9 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   selectSelectedBoardId,
-  selectSelectedTaskId,
   selectBoardFilters,
   selectBoardViewType,
-  setSelectedTaskId as setSelectedTaskIdAction,
 } from "../slices/project/projectSlice";
 import { BoardType, TaskType } from "../types/Project";
 import { useAppNavigate } from "./useAppNavigate";
@@ -15,9 +13,7 @@ import { useProjectTasks } from "./useProjectTasks";
 import { ColumnMap } from "@app/pages/project/components/board/dnd/kanban/types";
 
 export const useBoardData = () => {
-  const dispatch = useDispatch();
   const selectedBoardId = useSelector(selectSelectedBoardId);
-  const selectedTaskId = useSelector(selectSelectedTaskId);
   const boardFilters = useSelector(selectBoardFilters);
   const { columns } = useColumns(Number(selectedBoardId));
   const tasks = useProjectTasks();
@@ -27,10 +23,6 @@ export const useBoardData = () => {
   ) as BoardType;
 
   const { goToTask, goToBoard } = useAppNavigate();
-
-  const setSelectedTaskId = (taskId?: number) => {
-    dispatch(setSelectedTaskIdAction(taskId));
-  };
 
   const boardViewType = useSelector(selectBoardViewType);
 
@@ -162,7 +154,6 @@ export const useBoardData = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onTaskDelete = React.useCallback((_task: TaskType) => {
-    setSelectedTaskId(undefined);
     goToBoard(currentBoard);
   }, []);
 
@@ -175,8 +166,6 @@ export const useBoardData = () => {
     findSubtasks,
     findColumn,
     vertical,
-    selectedTaskId,
-    setSelectedTaskId,
     boardViewType,
   };
 };

@@ -4,10 +4,7 @@ import { api } from "../../services/api";
 import { BoardType, ProjectType } from "../../types/Project";
 import { RtkQueryOutput } from "../types";
 import { goToBoard, goToProject, goToTask } from "./navigateSlice";
-import {
-  setSelectedProjectId,
-  setSelectedTaskId,
-} from "../project/projectSlice";
+import { setSelectedProjectId } from "../project/projectSlice";
 
 function* handleGoToProject({
   payload: projectId,
@@ -35,7 +32,6 @@ function* handleGoToProject({
 function* handleGoToBoard({ payload: board }: ReturnType<typeof goToBoard>) {
   try {
     yield put(setSelectedProjectId(board.ProjectId));
-    yield put(setSelectedTaskId(undefined));
     const url = `/project/${board.ProjectId}/board/${board.Id}`;
     yield call(history.push, url);
   } catch (e) {

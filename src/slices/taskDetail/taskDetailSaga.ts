@@ -9,7 +9,6 @@ import { TaskType } from "@app/types/Project";
 import {
   setSelectedBoardId,
   setSelectedProjectId,
-  setSelectedTaskId,
 } from "../project/projectSlice";
 
 const queryConfig = {
@@ -25,10 +24,6 @@ function* handleLoadTaskDetailStarted({
     const data: RtkQueryOutput<TaskType> = yield take(
       api.endpoints.getTask.matchFulfilled
     );
-
-    if (data.payload.Data.Id) {
-      yield put(setSelectedTaskId(data.payload.Data.Id));
-    }
 
     if (data.payload.Data.ProjectId) {
       yield put(setSelectedProjectId(data.payload.Data.ProjectId));

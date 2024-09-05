@@ -1,4 +1,4 @@
-import { message } from "antd";
+import { Drawer, message } from "antd";
 import { TaskType } from "@app/types/Project";
 import { UserAvatar } from "@app/components/shared/UserAvatar";
 import {
@@ -37,6 +37,7 @@ import { Tag } from "@app/components/shared/primitives/Tag";
 import { gray } from "@ant-design/colors";
 import { MenuProps } from "antd/lib/menu";
 import { EditTaskTitleModal } from "./EditTaskTitleModal";
+import { TaskDetail } from "./task-detail/TaskDetail";
 
 export type Props = {
   task: TaskType;
@@ -238,6 +239,7 @@ export const Task: React.FC<Props> = ({
   const [sendToLocation] = useSendTaskToTopOrBottomMutation();
   const boardViewType = useSelector(selectBoardViewType);
   const [editingTitle, setEditingTitle] = useState(false);
+  const [quickViewing, setQuickViewing] = useState(false);
 
   const hasProjectManagerPermission = hasAccess(
     Number(task.ProjectId),
@@ -252,14 +254,20 @@ export const Task: React.FC<Props> = ({
       icon: <EyeOutlined />,
     },
     {
-      label: "Edit title",
+      label: "Quick view",
       key: "2",
+      onClick: () => setQuickViewing(true),
+      icon: <EyeOutlined />,
+    },
+    {
+      label: "Edit title",
+      key: "3",
       onClick: () => setEditingTitle(true),
       icon: <EditOutlined />,
     },
     {
       label: "Copy link",
-      key: "3",
+      key: "4",
       onClick: () => {
         copy(`/${task.ProjectId}/board/${task.BoardId}/task/${task.Id}`, {
           onCopy: () => {
@@ -271,7 +279,7 @@ export const Task: React.FC<Props> = ({
     },
     {
       label: "Send to top of column",
-      key: "4",
+      key: "5",
       onClick: () => {
         sendToLocation({ Location: 1, TaskId: task.Id });
       },
@@ -279,7 +287,7 @@ export const Task: React.FC<Props> = ({
     },
     {
       label: "Send to bottom of column",
-      key: "5",
+      key: "6",
       onClick: () => {
         sendToLocation({ Location: 0, TaskId: task.Id });
       },
@@ -325,6 +333,22 @@ export const Task: React.FC<Props> = ({
           task={task}
           onCancel={() => setEditingTitle(false)}
         />
+      )}
+      {quickViewing && (
+        <Drawer
+          open
+          width="50%"
+          onClose={() => setQuickViewing(false)}
+          styles={{
+            body: { margin: 0, padding: 0 },
+          }}
+        >
+          <TaskDetail
+            task={task}
+            onTaskDelete={() => {}}
+            findSubtasks={findSubtasks}
+          />
+        </Drawer>
       )}
     </>
   );
