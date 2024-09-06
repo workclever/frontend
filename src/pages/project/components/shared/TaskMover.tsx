@@ -9,6 +9,7 @@ import { HttpResult } from "@app/components/shared/HttpResult";
 import { Popover } from "@app/components/shared/primitives/Popover";
 import { Button } from "@app/components/shared/primitives/Button";
 import { Space } from "@app/components/shared/primitives/Space";
+import { TabPane, Tabs } from "@app/components/shared/primitives/Tabs";
 
 const SelectTitle = styled.div`
   font-weight: bold;
@@ -19,7 +20,6 @@ type Props = {
 };
 
 export const TaskMover: React.FC<Props> = ({ task }) => {
-  // const selectedProjectId = useSelector(selectSelectedProjectId);
   const [tempBoardId, setTempBoardId] = React.useState<number>(task.BoardId);
   const [tempColumnId, setTempColumnId] = React.useState<number>(task.ColumnId);
   const boards = useBoards();
@@ -48,7 +48,38 @@ export const TaskMover: React.FC<Props> = ({ task }) => {
     });
   };
 
-  const content = (
+  const inThisBoard = (
+    <Space direction="vertical">
+      <div>
+        <SelectTitle>Column</SelectTitle>
+        <Select
+          style={{ width: 150 }}
+          placeholder="Column"
+          value={tempColumnId}
+          onChange={setTempColumnId}
+          allowClear={true}
+          disabled={hasNoColumns}
+        >
+          {columns.map((column) => (
+            <Select.Option key={column.Id} value={column.Id}>
+              {column.Name}
+            </Select.Option>
+          ))}
+        </Select>
+      </div>
+      <Button
+        disabled={hasNoColumns || isMoving}
+        style={{ marginTop: 4 }}
+        onClick={onMoveButtonClick}
+        loading={isMoving}
+      >
+        Move
+      </Button>
+      <HttpResult error={error} result={data} style={{ marginTop: 4 }} />
+    </Space>
+  );
+
+  const otherBoard = (
     <Space direction="vertical">
       <div>
         <SelectTitle>Board</SelectTitle>
@@ -96,7 +127,27 @@ export const TaskMover: React.FC<Props> = ({ task }) => {
   );
 
   return (
-    <Popover content={content}>
+    <Popover
+      placement="bottom"
+      content={
+        <Tabs
+          defaultActiveKey="1"
+          size="small"
+          onChange={(activeKey) => {
+            if (activeKey === "in-this-board") {
+              setTempBoardId(task.BoardId);
+            }
+          }}
+        >
+          <TabPane tab="In this board" key="in-this-board">
+            {inThisBoard}
+          </TabPane>
+          <TabPane tab="Other board" key="other-board">
+            {otherBoard}
+          </TabPane>
+        </Tabs>
+      }
+    >
       <Button size="small">Move Task</Button>
     </Popover>
   );
