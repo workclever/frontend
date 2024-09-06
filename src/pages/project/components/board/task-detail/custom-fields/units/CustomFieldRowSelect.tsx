@@ -33,6 +33,7 @@ export const CustomFieldRowSelect: React.FC<{
       autoFocus
       defaultOpen
       size="small"
+      allowClear
     >
       {field.SelectOptions.map((r) => (
         <Select.Option key={r.Id} value={r.Id}>
