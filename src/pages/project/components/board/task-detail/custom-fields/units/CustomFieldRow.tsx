@@ -14,8 +14,8 @@ import { CustomFieldRowDate } from "./CustomFieldRowDate";
 import { CustomFieldRowMultiSelect } from "./CustomFieldRowMultiSelect";
 import { CustomFieldRowSelect } from "./CustomFieldRowSelect";
 import { CustomFieldRowText } from "./CustomFieldRowText";
-import { RenderTaskCustomField } from "../../../Task";
 import { HoverableListItem } from "@app/components/shared/HoverableListItem";
+import { RenderTaskCustomField } from "../../../units/RenderTaskCustomField";
 
 const CustomFieldValuePreview = styled(HoverableListItem)`
   padding: 4px;

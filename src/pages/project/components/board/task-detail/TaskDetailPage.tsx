@@ -12,7 +12,9 @@ export const TaskDetailPage = () => {
   const { taskId: taskIdString } = useParams();
   const taskId = Number(taskIdString?.split("-")[1]);
   const { data: task } = useGetTaskQuery(taskId, { skip: !taskId });
-  const { findSubtasks, onTaskDelete } = useBoardData();
+  const { findSubtasks, onTaskDelete } = useBoardData(
+    Number(task?.Data.ProjectId)
+  );
 
   useEffect(() => {
     dispatch(loadTaskDetailStarted({ taskId }));

@@ -7,7 +7,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import invariant from "tiny-invariant";
 import FocusRing from "@atlaskit/focus-ring";
 import {
@@ -25,21 +25,9 @@ import { setCustomNativeDragPreview } from "@atlaskit/pragmatic-drag-and-drop/el
 import type { DragLocationHistory } from "@atlaskit/pragmatic-drag-and-drop/types";
 import { type TreeItem as TreeItemType } from "./types";
 import { DependencyContext, TreeContext } from "./tree-context";
-import { DownOutlined, RightOutlined } from "@ant-design/icons";
 import { blue } from "@ant-design/colors";
 
 const indentPerLevel = 8;
-
-function Icon({ item, onClick }: { item: TreeItemType; onClick: () => void }) {
-  if (!item.children.length) {
-    return <span style={{ marginRight: 12 }}>&nbsp;</span>;
-  }
-  return item.isOpen ? (
-    <DownOutlined onClick={onClick} style={{ fontSize: 11 }} />
-  ) : (
-    <RightOutlined onClick={onClick} style={{ fontSize: 11 }} />
-  );
-}
 
 const outerButtonStyles: React.CSSProperties = {
   /**
@@ -74,12 +62,15 @@ const innerButtonStyles: React.CSSProperties = {
 const previewStyles: React.CSSProperties = {
   background: blue[0],
   borderRadius: 3,
-  padding: 16,
+  padding: 4,
 };
 
-function Preview({ item }: { item: TreeItemType }) {
-  return <div style={previewStyles}>Item {item.id}</div>;
-}
+const Preview: React.FC<{ item: TreeItemType }> = ({ item }) => {
+  if ("ColumnId" in item.data) {
+    return <div style={previewStyles}>{item.data.Title}</div>;
+  }
+  return <div style={previewStyles}>{item.data.Name}</div>;
+};
 
 const parentOfInstructionStyles = {
   background: "transparent",
@@ -125,7 +116,7 @@ export const TreeItem = memo(function TreeItem({
   mode: ItemMode;
   level: number;
   index: number;
-  renderItem: (data: TreeItemType["data"]) => React.ReactNode;
+  renderItem: (data: TreeItemType, toggleOpen: () => void) => React.ReactNode;
 }) {
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -217,8 +208,9 @@ export const TreeItem = memo(function TreeItem({
           setCustomNativeDragPreview({
             getOffset: pointerOutsideOfPreview({ x: "16px", y: "8px" }),
             render: ({ container }) => {
-              ReactDOM.render(<Preview item={item} />, container);
-              return () => ReactDOM.unmountComponentAtNode(container);
+              const root = ReactDOM.createRoot(container);
+              root.render(<Preview item={item} />);
+              return () => root.unmount();
             },
             nativeSetDragImage,
           });
@@ -375,8 +367,8 @@ export const TreeItem = memo(function TreeItem({
                 ...getConditionalStyles(),
               }}
             >
-              <Icon item={item} onClick={toggleOpen} />
-              {renderItem(item.data)}
+              {/* <Icon item={item} onClick={toggleOpen} /> */}
+              {renderItem(item, toggleOpen)}
               {/* <span style={labelStyles}>Item {item.data.}</span>
               <small style={idStyles}>
                 <code style={debugStyles}>({mode})</code>

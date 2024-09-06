@@ -1,21 +1,12 @@
 import { useMemo } from "react";
 import { TreeItem } from "../dnd/tree/types";
-import { useColumns } from "@app/hooks/useColumns";
-import { useProjectTasks } from "@app/hooks/useProjectTasks";
-import { selectSelectedBoardId } from "@app/slices/project/projectSlice";
-import { useSelector } from "react-redux";
 import { TaskType } from "@app/types/Project";
+import { useBoardData } from "@app/hooks/useBoardData";
 
-export const useBoardTreeData = () => {
-  const tasks = useProjectTasks();
-  const selectedBoardId = useSelector(selectSelectedBoardId);
-  const { columns } = useColumns(Number(selectedBoardId));
+export const useBoardTreeData = (projectId: number) => {
+  const { columns, tasksInBoard } = useBoardData(projectId);
 
-  const tasksInBoard = Object.values(tasks).filter(
-    (r) => r.BoardId === selectedBoardId
-  );
-
-  const dndTreeItems: TreeItem[] = useMemo(() => {
+  const dndData: TreeItem[] = useMemo(() => {
     // Create a map to store tasks by their ParentTaskItemId
     const tasksByParent: { [key: number]: TaskType[] } = {};
     tasksInBoard.forEach((task) => {
@@ -53,5 +44,5 @@ export const useBoardTreeData = () => {
     }));
   }, [columns, tasksInBoard]);
 
-  return { dndTreeItems, tasksInBoard };
+  return { dndData, tasksInBoard };
 };

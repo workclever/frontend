@@ -1,7 +1,7 @@
 import { call, put, take, takeEvery } from "redux-saga/effects";
 import { history } from "../../history";
 import { api } from "../../services/api";
-import { BoardType, ProjectType } from "../../types/Project";
+import { BoardType } from "../../types/Project";
 import { RtkQueryOutput } from "../types";
 import { goToBoard, goToProject, goToTask } from "./navigateSlice";
 import { setSelectedProjectId } from "../project/projectSlice";
@@ -41,16 +41,7 @@ function* handleGoToBoard({ payload: board }: ReturnType<typeof goToBoard>) {
 
 function* handleGoToTask({ payload: task }: ReturnType<typeof goToTask>) {
   try {
-    yield put(
-      api.endpoints.getProject.initiate(task.ProjectId, {
-        forceRefetch: true,
-      })
-    );
-    const project: RtkQueryOutput<ProjectType> = yield take(
-      api.endpoints.getProject.matchFulfilled
-    );
-
-    const url = `/task/${project.payload.Data.Slug}-${task.Id}`;
+    const url = `/task/${task.Slug}`;
     yield call(history.push, url);
   } catch (e) {
     console.log({ e });

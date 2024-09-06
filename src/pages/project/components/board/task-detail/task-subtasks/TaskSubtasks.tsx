@@ -1,7 +1,6 @@
 import React from "react";
 import { TaskType } from "@app/types/Project";
 import { TaskDetailBlock } from "../TaskDetailBlock";
-import { isSubtask } from "../utils";
 import { SubtaskItem } from "./SubtaskItem";
 import { Empty } from "@app/components/shared/primitives/Empty";
 import { NewSubtaskModal } from "./NewSubtaskModal";
@@ -12,12 +11,6 @@ export const TaskSubtasks: React.FC<{
   findSubtasks: (id: number) => TaskType[];
 }> = ({ task, onTaskSelect, findSubtasks }) => {
   const [showAddSubtask, setShowAddSubtask] = React.useState(false);
-
-  // No need to show substasks, if selected task is already a subtask
-  if (isSubtask(task)) {
-    return null;
-  }
-
   const subtasks = findSubtasks(task.Id);
 
   return (

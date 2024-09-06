@@ -59,9 +59,9 @@ function createTreeItemRegistry() {
   return { registry, registerTreeItem };
 }
 
-export const Tree: React.FC<{
+export const DndTreeBoard: React.FC<{
   items: TreeItemType[];
-  renderItem: (data: TreeItemType["data"]) => React.ReactNode;
+  renderItem: (data: TreeItemType, toggleOpen: () => void) => React.ReactNode;
   renderNewColumnItem: () => React.ReactNode;
   renderNewCardItem: (column: ColumnType) => React.ReactNode;
   onMoveItem: (taskId: number, newColumnId: number) => void;

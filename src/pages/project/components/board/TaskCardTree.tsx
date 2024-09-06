@@ -1,16 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { TaskIdRenderer } from "@app/components/shared/TaskIdRenderer";
-import { Text } from "@app/components/shared/primitives/Text";
 import { ColHeader } from "./ColumnTreeHeader";
-import {
-  Props,
-  RenderTaskCustomFieldsUnit,
-  TaskAssigneeUnit,
-  TaskCommentsUnit,
-} from "./Task";
+import { Props } from "./Task";
 import { Space } from "@app/components/shared/primitives/Space";
-import { blue } from "@ant-design/colors";
+import { TaskAssigneeUnit } from "./units/TaskAssigneeUnit";
+import { TaskCommentsUnit } from "./units/TaskCommentsUnit";
+import { RenderTaskCustomFieldsUnit } from "./units/RenderTaskCustomFieldsUnit";
+import { TreeItem } from "./dnd/tree/types";
+import { DownOutlined, RightOutlined } from "@ant-design/icons";
 
 const Wrapper = styled.div`
   flex: 1;
@@ -21,22 +19,66 @@ const Wrapper = styled.div`
   cursor: pointer;
   padding: 4px 8px;
   transition: all 100ms ease-in;
-  border-bottom: 1px solid #eaeaea;
+  border-bottom: 1px solid #efefef;
 
   &:hover {
-    background-color: ${blue[0]};
+    background-color: #fafafa;
   }
 `;
 
-export const TaskCardTree: React.FC<Props> = ({ task, customFields }) => {
+const ArrowIcon = ({
+  item,
+  onClick,
+}: {
+  item: TreeItem;
+  onClick: React.MouseEventHandler<HTMLSpanElement>;
+}) => {
+  if (!item.children.length) {
+    return <div style={{ width: 10 }}>&nbsp;</div>;
+  }
+  return item.isOpen ? (
+    <DownOutlined onClick={onClick} style={{ width: 10, fontSize: 10 }} />
+  ) : (
+    <RightOutlined onClick={onClick} style={{ width: 10, fontSize: 10 }} />
+  );
+};
+
+interface TaskCardTreeProps extends Pick<Props, "task" | "customFields"> {
+  treeItem: TreeItem;
+  toggleOpen: () => void;
+}
+
+export const TaskCardTree: React.FC<TaskCardTreeProps> = ({
+  treeItem,
+  task,
+  customFields,
+  toggleOpen,
+}) => {
   return (
     <Wrapper>
       <div style={{ display: "flex", alignItems: "" }}>
         <Space style={{ flex: 1 }}>
+          <ArrowIcon
+            item={treeItem}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              toggleOpen();
+            }}
+          />
           <TaskIdRenderer task={task} />
-          <Text style={{ minWidth: 200, display: "block", textAlign: "left" }}>
+          <div
+            style={{
+              minWidth: 200,
+              display: "block",
+              textAlign: "left",
+              color: "#2a2a2a",
+              fontWeight: "500",
+              fontSize: 13,
+            }}
+          >
             {task.Title}
-          </Text>
+          </div>
         </Space>
         <div style={{ display: "flex", alignItems: "center" }}>
           <RenderTaskCustomFieldsUnit task={task} customFields={customFields} />

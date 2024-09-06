@@ -3,41 +3,19 @@ import { TaskType } from "@app/types/Project";
 import React from "react";
 import { debounce } from "lodash";
 import { HttpResult } from "@app/components/shared/HttpResult";
-import { useTask } from "@app/hooks/useTask";
 import { TaskIdRenderer } from "@app/components/shared/TaskIdRenderer";
-import { Tooltip } from "@app/components/shared/primitives/Tooltip";
-import { useBoards } from "@app/hooks/useBoards";
-import { Text } from "@app/components/shared/primitives/Text";
 import { useUpdateTaskPropertyMutation } from "@app/services/api";
+import { TaskParentsBreadCrumb } from "./TaskParentsBreadCrumb";
 
 type Props = {
   task: TaskType;
   onTaskSelect: (task: TaskType) => void;
 };
 
-const ParentTaskInfo: React.FC<Props> = ({ task, onTaskSelect }) => {
-  const boards = useBoards();
-  const taskBoard = boards.find((r) => r.Id === task.BoardId);
-
-  if (!taskBoard) {
-    return null;
-  }
-  return (
-    <Tooltip title={`Parent task: ${task.Title}`}>
-      <Text onClick={() => onTaskSelect(task)} style={{ cursor: "pointer" }}>
-        {taskBoard.Name}
-        {" / "}
-      </Text>
-      <TaskIdRenderer task={task} />
-    </Tooltip>
-  );
-};
-
 export const TaskEditableTitle: React.FC<Props> = ({ task, onTaskSelect }) => {
   const [update, { error }] = useUpdateTaskPropertyMutation();
   const [, setTempTitle] = React.useState(task.Title);
   const onUpdatePropertyDebounced = debounce(update, 100);
-  const parentTask = useTask(task.ParentTaskItemId);
 
   return (
     <>
@@ -49,12 +27,7 @@ export const TaskEditableTitle: React.FC<Props> = ({ task, onTaskSelect }) => {
           alignItems: "center",
         }}
       >
-        {task.ParentTaskItemId && parentTask && (
-          <div style={{ marginRight: 8 }}>
-            <ParentTaskInfo task={parentTask} onTaskSelect={onTaskSelect} />
-            {" /"}
-          </div>
-        )}
+        <TaskParentsBreadCrumb task={task} onTaskSelect={onTaskSelect} />
         <TaskIdRenderer task={task} />
         <Typography.Title
           style={{ flex: 1, padding: 0, margin: 0, paddingLeft: 8 }}

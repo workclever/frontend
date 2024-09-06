@@ -20,11 +20,11 @@ import { ColumnTreeHeader } from "./ColumnTreeHeader";
 import { Title } from "@app/components/shared/primitives/Title";
 
 const ColumnTreeWrapper = styled.div`
-  padding: 4px;
-  padding-left: 8px;
+  padding: 8px;
   cursor: pointer;
   width: 100%;
   border-bottom: 1px solid #eaeaea;
+  background-color: #f7f7f7;
 `;
 
 const ColumnKanbanWrapper = styled.div`
@@ -36,7 +36,8 @@ const ColumnKanbanWrapper = styled.div`
 
 export const ColumnNameRenderer: React.FC<{
   column: ColumnType;
-}> = ({ column }) => {
+  toggleOpen?: () => void;
+}> = ({ column, toggleOpen }) => {
   const { hasAccess } = useMe();
   const [deleteColumn] = useDeleteColumnMutation();
   const selectedProjectId = useSelector(selectSelectedProjectId);
@@ -94,7 +95,7 @@ export const ColumnNameRenderer: React.FC<{
     boardViewType === "tree" ? ColumnTreeWrapper : ColumnKanbanWrapper;
 
   return (
-    <Wrapper>
+    <Wrapper onClick={toggleOpen}>
       <FlexBasicLayout
         left={titleRenderer}
         right={boardViewType === "tree" ? <ColumnTreeHeader /> : undefined}

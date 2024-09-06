@@ -11,8 +11,9 @@ import { useBoards } from "./useBoards";
 import { useColumns } from "./useColumns";
 import { useProjectTasks } from "./useProjectTasks";
 import { ColumnMap } from "@app/pages/project/components/board/dnd/kanban/types";
+import { useListCustomFieldsQuery } from "@app/services/api";
 
-export const useBoardData = () => {
+export const useBoardData = (projectId: number) => {
   const selectedBoardId = useSelector(selectSelectedBoardId);
   const boardFilters = useSelector(selectBoardFilters);
   const { columns } = useColumns(Number(selectedBoardId));
@@ -22,15 +23,16 @@ export const useBoardData = () => {
     (r) => r.Id === selectedBoardId
   ) as BoardType;
 
+  const { data: customFields } = useListCustomFieldsQuery(projectId, {
+    skip: !projectId,
+  });
+  const customFieldsVisibleOnCard = (customFields?.Data || []).filter(
+    (r) => r.ShowInTaskCard && r.Enabled
+  );
+
   const { goToTask, goToBoard } = useAppNavigate();
 
   const boardViewType = useSelector(selectBoardViewType);
-
-  const verticality: { [key: string]: boolean } = {
-    list: true,
-    kanban: false,
-  };
-  const vertical = verticality[boardViewType];
 
   const tasksInBoard = Object.values(tasks).filter(
     (r) => r.BoardId === selectedBoardId
@@ -165,7 +167,13 @@ export const useBoardData = () => {
     findTask,
     findSubtasks,
     findColumn,
-    vertical,
+    columns,
     boardViewType,
+    subtasks,
+    nonSubtasks,
+    tasksInBoard,
+    boardFilters,
+    customFields,
+    customFieldsVisibleOnCard,
   };
 };

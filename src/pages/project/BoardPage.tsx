@@ -21,29 +21,30 @@ import { ColumnNameRenderer } from "./components/board/ColumnNameRenderer";
 import { Task } from "./components/board/Task";
 import { AddNewTaskInput } from "./components/board/AddNewTaskInput";
 import { AddNewColumnInput } from "./components/board/AddNewColumnInput";
-import { Tree } from "./components/board/dnd/tree/Tree";
+import { DndTreeBoard } from "./components/board/dnd/tree/DndTreeBoard";
 import { useBoardTreeData } from "./components/board/hooks/useBoardTreeData";
 import { type Instruction } from "@atlaskit/pragmatic-drag-and-drop-hitbox/tree-item";
+import { TaskCardKanban } from "./components/board/TaskCardKanban";
+import { TaskCardTree } from "./components/board/TaskCardTree";
+import { TaskType } from "@app/types/Project";
+import { useBoardKanbanData } from "./components/board/hooks/useBoardKanbanData";
+import { reorderArray } from "./components/board/utils/orderUtils";
 
 export const BoardPage = () => {
   const dispatch = useDispatch();
   const { projectId, boardId } = useParams();
   const boardViewType = useSelector(selectBoardViewType);
-  const {
-    dndData: { dndColumnMap, orderedColumnIds },
-    findSubtasks,
-    onTaskSelect,
-  } = useBoardData();
-
+  const { findSubtasks, onTaskSelect } = useBoardData(Number(projectId));
   const { data: customFields } = useListCustomFieldsQuery(Number(projectId), {
     skip: !projectId,
   });
-
   const customFieldsVisibleOnCard = (customFields?.Data || []).filter(
     (r) => r.ShowInTaskCard && r.Enabled
   );
-
-  const { dndTreeItems, tasksInBoard } = useBoardTreeData();
+  const { dndData: dndKanbanItems } = useBoardKanbanData(Number(projectId));
+  const { dndData: dndTreeItems, tasksInBoard } = useBoardTreeData(
+    Number(projectId)
+  );
   const [updateColumnOrders] = useUpdateColumnOrdersMutation();
   const [updateTaskOrders] = useUpdateTaskOrdersMutation();
 
@@ -92,26 +93,6 @@ export const BoardPage = () => {
       },
     });
   };
-
-  function reorderArray(
-    arr: number[],
-    moveId: number,
-    targetId: number,
-    position: Instruction["type"]
-  ) {
-    const result = arr.filter((id) => id !== moveId);
-    const targetIndex = result.indexOf(targetId);
-
-    if (targetIndex !== -1) {
-      if (position === "reorder-above") {
-        result.splice(targetIndex, 0, moveId);
-      } else if (position === "reorder-below") {
-        result.splice(targetIndex + 1, 0, moveId);
-      }
-    }
-
-    return result;
-  }
 
   const onReorderItem = (
     taskId: number,
@@ -175,13 +156,13 @@ export const BoardPage = () => {
     }
     return (
       <BoardLayout mode="board">
-        <div style={{ padding: 16 }}>
+        <div style={{ padding: 0 }}>
           {boardViewType === "kanban" && (
             <DndKanbanBoard
               // TODO workaround
-              key={JSON.stringify(dndColumnMap)}
-              dndColumnMap={dndColumnMap}
-              orderedColumnIds={orderedColumnIds}
+              key={JSON.stringify(dndKanbanItems.dndColumnMap)}
+              dndColumnMap={dndKanbanItems.dndColumnMap}
+              orderedColumnIds={dndKanbanItems.orderedColumnIds}
               onReorderColumn={onReorderColumn}
               onReorderTask={onReorderTask}
               onMoveCard={onMoveCard}
@@ -194,7 +175,13 @@ export const BoardPage = () => {
                   findSubtasks={findSubtasks}
                   customFields={customFieldsVisibleOnCard}
                   onTaskClick={() => onTaskSelect(task)}
-                />
+                >
+                  <TaskCardKanban
+                    task={task}
+                    findSubtasks={findSubtasks}
+                    customFields={customFieldsVisibleOnCard}
+                  />
+                </Task>
               )}
               renderNewColumnItem={() => <AddNewColumnInput />}
               renderNewCardItem={(column) => (
@@ -203,31 +190,50 @@ export const BoardPage = () => {
             />
           )}
           {boardViewType === "tree" && (
-            <Tree // TODO workaround
+            <DndTreeBoard
+              // TODO workaround
               key={JSON.stringify(dndTreeItems)}
               items={dndTreeItems}
-              renderItem={(data) => {
-                if ("ColumnId" in data) {
+              renderItem={(item, toggleOpen) => {
+                if ("ColumnId" in item.data) {
                   return (
                     <Task
-                      task={data}
+                      task={item.data}
                       findSubtasks={findSubtasks}
                       customFields={customFieldsVisibleOnCard}
-                      onTaskClick={() => onTaskSelect(data)}
-                    />
+                      onTaskClick={() => onTaskSelect(item.data as TaskType)}
+                    >
+                      <TaskCardTree
+                        treeItem={item}
+                        task={item.data}
+                        customFields={customFieldsVisibleOnCard}
+                        toggleOpen={toggleOpen}
+                      />
+                    </Task>
                   );
                 }
-                return <ColumnNameRenderer column={data} />;
+                return (
+                  <>
+                    <ColumnNameRenderer
+                      column={item.data}
+                      toggleOpen={toggleOpen}
+                    />
+                  </>
+                );
               }}
               onMoveItem={onMoveItem}
               onReorderItem={onReorderItem}
               renderNewColumnItem={() => (
-                <div style={{ paddingLeft: 16, paddingTop: 8 }}>
+                <div
+                  style={{ paddingLeft: 16, paddingTop: 8, paddingBottom: 8 }}
+                >
                   <AddNewColumnInput />
                 </div>
               )}
               renderNewCardItem={(column) => (
-                <div style={{ paddingLeft: 16, paddingTop: 8 }}>
+                <div
+                  style={{ paddingLeft: 16, paddingTop: 8, paddingBottom: 8 }}
+                >
                   <AddNewTaskInput column={column} />
                 </div>
               )}

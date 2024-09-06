@@ -1,16 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { TaskIdRenderer } from "@app/components/shared/TaskIdRenderer";
-import { Text } from "@app/components/shared/primitives/Text";
-import {
-  Props,
-  RenderTaskCustomFieldsUnit,
-  TaskAssigneeUnit,
-  TaskCommentsUnit,
-  TaskSubtasksUnit,
-} from "./Task";
+import { Props } from "./Task";
 import { Space } from "@app/components/shared/primitives/Space";
 import { blue } from "@ant-design/colors";
+import { TaskAssigneeUnit } from "./units/TaskAssigneeUnit";
+import { TaskSubtasksUnit } from "./units/TaskSubtasksUnit";
+import { TaskCommentsUnit } from "./units/TaskCommentsUnit";
+import { RenderTaskCustomFieldsUnit } from "./units/RenderTaskCustomFieldsUnit";
 
 const Wrapper = styled.div`
   flex: 1;
@@ -30,15 +27,24 @@ const Wrapper = styled.div`
   }
 `;
 
-export const TaskCardKanban: React.FC<Props> = ({
-  task,
-  customFields,
-  findSubtasks,
-}) => {
+export const TaskCardKanban: React.FC<
+  Pick<Props, "task" | "customFields" | "findSubtasks">
+> = ({ task, customFields, findSubtasks }) => {
   return (
     <Wrapper>
       <div>
-        <Text>{task.Title}</Text>
+        <div
+          style={{
+            minWidth: 200,
+            display: "block",
+            textAlign: "left",
+            color: "#2a2a2a",
+            fontWeight: "500",
+            fontSize: 13,
+          }}
+        >
+          {task.Title}
+        </div>
       </div>
       <Space style={{ paddingTop: 4 }}>
         <TaskIdRenderer task={task} />

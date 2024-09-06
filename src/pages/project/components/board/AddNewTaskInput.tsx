@@ -15,6 +15,8 @@ import { gray } from "@ant-design/colors";
 const TextWrapper = styled.span`
   color: ${gray[0]};
   cursor: pointer;
+  font-size: 13px;
+
   &:hover {
     color: ${gray[5]};
   }
