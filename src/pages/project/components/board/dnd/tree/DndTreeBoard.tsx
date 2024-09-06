@@ -70,6 +70,8 @@ export const DndTreeBoard: React.FC<{
     targetTaskId: number,
     position: Instruction["type"]
   ) => void;
+  onMakeChildInTask: (taskId: number, targetTaskId: number) => void;
+  onMakeChildInColumn: (taskId: number, columnIn: number) => void;
 }> = ({
   items,
   renderItem,
@@ -77,6 +79,8 @@ export const DndTreeBoard: React.FC<{
   renderNewCardItem,
   onMoveItem,
   onReorderItem,
+  onMakeChildInTask,
+  onMakeChildInColumn,
 }) => {
   const [state, updateState] = useReducer(treeStateReducer, null, () => ({
     data: items,
@@ -239,6 +243,21 @@ export const DndTreeBoard: React.FC<{
               }
             }
 
+            if (instruction?.type === "make-child") {
+              if (itemId.startsWith("task-") && targetId.startsWith("task-")) {
+                const taskId = Number(itemId.split("-")[1]);
+                const targetTaskId = Number(targetId.split("-")[1]);
+                onMakeChildInTask(taskId, targetTaskId);
+              } else if (
+                itemId.startsWith("task-") &&
+                targetId.startsWith("column-")
+              ) {
+                const taskId = Number(itemId.split("-")[1]);
+                const columnId = Number(targetId.split("-")[1]);
+                onMakeChildInColumn(taskId, columnId);
+              }
+            }
+
             if (instruction !== null) {
               updateState({
                 type: "instruction",
@@ -251,7 +270,14 @@ export const DndTreeBoard: React.FC<{
         },
       })
     );
-  }, [context, extractInstruction]);
+  }, [
+    context,
+    extractInstruction,
+    onMoveItem,
+    onReorderItem,
+    onMakeChildInTask,
+    onMakeChildInColumn,
+  ]);
 
   return (
     <TreeContext.Provider value={context}>

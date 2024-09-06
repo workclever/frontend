@@ -9,6 +9,7 @@ import { TaskCommentsUnit } from "./units/TaskCommentsUnit";
 import { RenderTaskCustomFieldsUnit } from "./units/RenderTaskCustomFieldsUnit";
 import { TreeItem } from "./dnd/tree/types";
 import { DownOutlined, RightOutlined } from "@ant-design/icons";
+import { gray } from "@ant-design/colors";
 
 const Wrapper = styled.div`
   flex: 1;
@@ -34,12 +35,18 @@ const ArrowIcon = ({
   onClick: React.MouseEventHandler<HTMLSpanElement>;
 }) => {
   if (!item.children.length) {
-    return <div style={{ width: 10 }}>&nbsp;</div>;
+    return <div style={{ width: 12, height: 12 }}>&nbsp;</div>;
   }
   return item.isOpen ? (
-    <DownOutlined onClick={onClick} style={{ width: 10, fontSize: 10 }} />
+    <DownOutlined
+      onClick={onClick}
+      style={{ width: 12, height: 12, fontSize: 10, color: gray[0] }}
+    />
   ) : (
-    <RightOutlined onClick={onClick} style={{ width: 10, fontSize: 10 }} />
+    <RightOutlined
+      onClick={onClick}
+      style={{ width: 12, height: 12, fontSize: 10, color: gray[0] }}
+    />
   );
 };
 

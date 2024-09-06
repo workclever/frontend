@@ -14,8 +14,10 @@ import { DndKanbanBoard } from "./components/board/dnd/kanban/DndKanbanBoard";
 import { useBoardData } from "@app/hooks/useBoardData";
 import {
   useListCustomFieldsQuery,
+  useMoveTaskToColumnMutation,
   useUpdateColumnOrdersMutation,
   useUpdateTaskOrdersMutation,
+  useUpdateTaskPropertyMutation,
 } from "@app/services/api";
 import { ColumnNameRenderer } from "./components/board/ColumnNameRenderer";
 import { Task } from "./components/board/Task";
@@ -47,6 +49,8 @@ export const BoardPage = () => {
   );
   const [updateColumnOrders] = useUpdateColumnOrdersMutation();
   const [updateTaskOrders] = useUpdateTaskOrdersMutation();
+  const [updateTaskProperty] = useUpdateTaskPropertyMutation();
+  const [moveTask] = useMoveTaskToColumnMutation();
 
   React.useEffect(() => {
     if (projectId) {
@@ -99,8 +103,10 @@ export const BoardPage = () => {
     targetTaskId: number,
     position: Instruction["type"]
   ) => {
+    if (taskId === targetTaskId) return;
     const task = tasksInBoard.find((r) => r.Id === taskId);
     const targetTask = tasksInBoard.find((r) => r.Id === targetTaskId);
+
     if (!task || !targetTask) {
       return;
     }
@@ -121,33 +127,145 @@ export const BoardPage = () => {
         position
       );
 
-      updateTaskOrders({
-        GroupedTasks: {
-          [task.ColumnId]: orderedColumnIds,
+      // If the task has same parent as the target, we only update order
+      if (
+        Number(task.ParentTaskItemId) === Number(targetTask.ParentTaskItemId)
+      ) {
+        updateTaskOrders({
+          GroupedTasks: {
+            [task.ColumnId]: orderedColumnIds,
+          },
+        });
+      } else {
+        // First set parent to new one or remove it
+        updateTaskProperty({
+          Task: task,
+          Params: {
+            property: "ParentTaskItemId",
+            value: targetTask.ParentTaskItemId?.toString() ?? null,
+          },
+        })
+          .unwrap()
+          .then(() => {
+            updateTaskOrders({
+              GroupedTasks: {
+                [task.ColumnId]: orderedColumnIds,
+              },
+            });
+          });
+      }
+    } else {
+      // if target has parent
+      if (targetTask.ParentTaskItemId) {
+        const parentSiblings = tasksInBoard
+          .filter((r) => r.ColumnId === targetTask.ColumnId)
+          .filter(
+            (r) =>
+              r.ParentTaskItemId &&
+              r.ParentTaskItemId === Number(targetTask.ParentTaskItemId)
+          )
+          .slice()
+          .sort((a, b) => a.Order - b.Order)
+          .map((r) => r.Id);
+
+        const orderedColumnIds = reorderArray(
+          parentSiblings,
+          task.Id,
+          targetTask.Id,
+          position
+        );
+        updateTaskProperty({
+          Task: task,
+          Params: {
+            property: "ParentTaskItemId",
+            value: targetTask.ParentTaskItemId.toString(),
+          },
+        })
+          .unwrap()
+          .then(() => {
+            updateTaskOrders({
+              GroupedTasks: {
+                [targetTask.ColumnId]: orderedColumnIds,
+              },
+            });
+          });
+      } else {
+        const columnSiblings = tasksInBoard
+          .filter((r) => r.ColumnId === targetTask.ColumnId)
+          .filter((r) => !r.ParentTaskItemId)
+          .slice()
+          .sort((a, b) => a.Order - b.Order)
+          .map((r) => r.Id);
+
+        const orderedColumnIds = reorderArray(
+          columnSiblings,
+          task.Id,
+          targetTask.Id,
+          position
+        );
+
+        updateTaskProperty({
+          Task: task,
+          Params: {
+            property: "ParentTaskItemId",
+            value: targetTask.ParentTaskItemId?.toString() ?? null,
+          },
+        })
+          .unwrap()
+          .then(() => {
+            updateTaskOrders({
+              GroupedTasks: {
+                [targetTask.ColumnId]: orderedColumnIds,
+              },
+            });
+          });
+      }
+    }
+  };
+
+  const onMakeChildInTask = (taskId: number, targetTaskId: number) => {
+    if (taskId === targetTaskId) return;
+
+    const task = tasksInBoard.find((r) => r.Id === taskId);
+    const targetTask = tasksInBoard.find((r) => r.Id === targetTaskId);
+
+    if (!task || !targetTask) {
+      return;
+    }
+
+    const isInSameColumn = task.ColumnId === targetTask.ColumnId;
+    // Order in same column
+    if (isInSameColumn) {
+      updateTaskProperty({
+        Task: task,
+        Params: {
+          property: "ParentTaskItemId",
+          value: targetTaskId.toString(),
         },
       });
     } else {
-      // Order to new column
-      const columnSiblings = tasksInBoard
-        .filter((r) => r.ColumnId === targetTask.ColumnId)
-        .filter((r) => !r.ParentTaskItemId)
-        .slice()
-        .sort((a, b) => a.Order - b.Order)
-        .map((r) => r.Id);
-
-      const orderedColumnIds = reorderArray(
-        columnSiblings,
-        task.Id,
-        targetTask.Id,
-        position
-      );
-
-      updateTaskOrders({
-        GroupedTasks: {
-          [targetTask.ColumnId]: orderedColumnIds,
-        },
-      });
+      // First move the task to column
+      moveTask({
+        TargetBoardId: targetTask.BoardId,
+        TargetColumnId: targetTask.ColumnId,
+        Task: task,
+      })
+        .unwrap()
+        .then(() => {
+          updateTaskProperty({
+            Task: task,
+            Params: {
+              property: "ParentTaskItemId",
+              value: targetTaskId.toString(),
+            },
+          });
+        });
     }
+  };
+
+  const onMakeChildInColumn = (taskId: number, columnIn: number) => {
+    // TODO check later
+    console.log("onMakeChildInColumn", { taskId, columnIn });
   };
 
   const renderBoard = () => {
@@ -223,6 +341,8 @@ export const BoardPage = () => {
               }}
               onMoveItem={onMoveItem}
               onReorderItem={onReorderItem}
+              onMakeChildInTask={onMakeChildInTask}
+              onMakeChildInColumn={onMakeChildInColumn}
               renderNewColumnItem={() => (
                 <div
                   style={{ paddingLeft: 16, paddingTop: 8, paddingBottom: 8 }}
