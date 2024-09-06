@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { loadTaskDetailStarted } from "@app/slices/taskDetail/taskDetailSlice";
 import { BoardLayout } from "../BoardLayout";
-import { useBoardData } from "@app/hooks/useBoardData";
+import { useBoardData } from "../hooks/useBoardData";
 
 export const TaskDetailPage = () => {
   const dispatch = useDispatch();

@@ -3,13 +3,12 @@ import React, {
   useContext,
   useEffect,
   useMemo,
-  useReducer,
   useRef,
   useState,
 } from "react";
 import memoizeOne from "memoize-one";
 import invariant from "tiny-invariant";
-import { triggerPostMoveFlash } from "@atlaskit/pragmatic-drag-and-drop-flourish/trigger-post-move-flash";
+// import { triggerPostMoveFlash } from "@atlaskit/pragmatic-drag-and-drop-flourish/trigger-post-move-flash";
 import {
   type Instruction,
   type ItemMode,
@@ -17,7 +16,6 @@ import {
 import * as liveRegion from "@atlaskit/pragmatic-drag-and-drop-live-region";
 import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
 import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
-import { treeStateReducer } from "./TreeStateReducer";
 import {
   DependencyContext,
   TreeContext,
@@ -61,7 +59,8 @@ function createTreeItemRegistry() {
 
 export const DndTreeBoard: React.FC<{
   items: TreeItemType[];
-  renderItem: (data: TreeItemType, toggleOpen: () => void) => React.ReactNode;
+  toggleOpen: (item: TreeItemType) => void;
+  renderItem: (item: TreeItemType) => React.ReactNode;
   renderNewColumnItem: () => React.ReactNode;
   renderNewCardItem: (column: ColumnType) => React.ReactNode;
   onMoveItem: (taskId: number, newColumnId: number) => void;
@@ -74,6 +73,7 @@ export const DndTreeBoard: React.FC<{
   onMakeChildInColumn: (taskId: number, columnIn: number) => void;
 }> = ({
   items,
+  toggleOpen,
   renderItem,
   renderNewColumnItem,
   renderNewCardItem,
@@ -82,17 +82,13 @@ export const DndTreeBoard: React.FC<{
   onMakeChildInTask,
   onMakeChildInColumn,
 }) => {
-  const [state, updateState] = useReducer(treeStateReducer, null, () => ({
-    data: items,
-    lastAction: null,
-  }));
-
   const ref = useRef<HTMLDivElement>(null);
   const { extractInstruction } = useContext(DependencyContext);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [{ registry, registerTreeItem }] = useState(createTreeItemRegistry);
 
-  const { data, lastAction } = state;
+  const data = items;
   const lastStateRef = useRef<TreeItemType[]>(data);
 
   useEffect(() => {
@@ -100,58 +96,9 @@ export const DndTreeBoard: React.FC<{
   }, [data]);
 
   useEffect(() => {
-    if (lastAction === null) {
-      return;
-    }
-
-    if (lastAction.type === "instruction") {
-      const { element } = registry.get(lastAction.itemId) ?? {};
-      if (element) {
-        triggerPostMoveFlash(element);
-      }
-
-      return;
-    }
-  }, [lastAction, registry]);
-
-  useEffect(() => {
     return () => {
       liveRegion.cleanup();
     };
-  }, []);
-
-  /**
-   * Returns the items that the item with `itemId` can be moved to.
-   *
-   * Uses a depth-first search (DFS) to compile a list of possible targets.
-   */
-  const getMoveTargets = useCallback(({ itemId }: { itemId: string }) => {
-    const data = lastStateRef.current;
-
-    const targets = [];
-
-    const searchStack = Array.from(data);
-    while (searchStack.length > 0) {
-      const node = searchStack.pop();
-
-      if (!node) {
-        continue;
-      }
-
-      /**
-       * If the current node is the item we want to move, then it is not a valid
-       * move target and neither are its children.
-       */
-      if (node.id === itemId) {
-        continue;
-      }
-
-      targets.push(node);
-
-      node.children.forEach((childNode) => searchStack.push(childNode));
-    }
-
-    return targets;
   }, []);
 
   const getChildrenOfItem = useCallback((itemId: string) => {
@@ -170,9 +117,8 @@ export const DndTreeBoard: React.FC<{
   }, []);
 
   const context = useMemo<TreeContextValue>(() => {
-    console.log({ items });
     return {
-      dispatch: updateState,
+      // dispatch: updateState,
       uniqueContextId: Symbol(JSON.stringify(items)),
       // memoizing this function as it is called by all tree items repeatedly
       // An ideal refactor would be to update our data shape
@@ -184,11 +130,10 @@ export const DndTreeBoard: React.FC<{
             targetId,
           }) ?? []
       ),
-      getMoveTargets,
       getChildrenOfItem,
       registerTreeItem,
     };
-  }, [items, getChildrenOfItem, getMoveTargets, registerTreeItem]);
+  }, [items, getChildrenOfItem, registerTreeItem]);
 
   useEffect(() => {
     invariant(ref.current);
@@ -220,7 +165,6 @@ export const DndTreeBoard: React.FC<{
               ) {
                 const taskId = Number(itemId.split("-")[1]);
                 const newColumnId = Number(targetId.split("-")[1]);
-                console.log({ taskId, newColumnId });
                 onMoveItem(taskId, newColumnId);
               }
             }
@@ -251,14 +195,14 @@ export const DndTreeBoard: React.FC<{
               }
             }
 
-            if (instruction !== null) {
-              updateState({
-                type: "instruction",
-                instruction,
-                itemId,
-                targetId,
-              });
-            }
+            // if (instruction !== null) {
+            //   updateState({
+            //     type: "instruction",
+            //     instruction,
+            //     itemId,
+            //     targetId,
+            //   });
+            // }
           }
         },
       })
@@ -290,18 +234,18 @@ export const DndTreeBoard: React.FC<{
             })();
 
             return (
-              <>
+              <React.Fragment key={item.id}>
                 <TreeItem
-                  key={item.id}
                   item={item}
                   level={0}
                   mode={type}
                   index={index}
                   renderItem={renderItem}
+                  toggleOpen={toggleOpen}
                 />
                 {/* Type narrowing */}
                 {"Color" in item.data && renderNewCardItem(item.data)}
-              </>
+              </React.Fragment>
             );
           })}
           {renderNewColumnItem()}

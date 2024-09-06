@@ -111,12 +111,14 @@ export const TreeItem = memo(function TreeItem({
   level,
   index,
   renderItem,
+  toggleOpen,
 }: {
   item: TreeItemType;
   mode: ItemMode;
   level: number;
   index: number;
-  renderItem: (data: TreeItemType, toggleOpen: () => void) => React.ReactNode;
+  renderItem: (data: TreeItemType) => React.ReactNode;
+  toggleOpen: (data: TreeItemType) => void;
 }) {
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -126,13 +128,10 @@ export const TreeItem = memo(function TreeItem({
   const [instruction, setInstruction] = useState<Instruction | null>(null);
   const cancelExpandRef = useRef<(() => void) | null>(null);
 
-  const { dispatch, uniqueContextId, getPathToItem, registerTreeItem } =
+  const { uniqueContextId, getPathToItem, registerTreeItem } =
     useContext(TreeContext);
   const { DropIndicator, attachInstruction, extractInstruction } =
     useContext(DependencyContext);
-  const toggleOpen = useCallback(() => {
-    dispatch({ type: "toggle", itemId: item.id });
-  }, [dispatch, item]);
 
   useEffect(() => {
     invariant(buttonRef.current);
@@ -215,18 +214,18 @@ export const TreeItem = memo(function TreeItem({
             nativeSetDragImage,
           });
         },
-        onDragStart: ({ source }) => {
+        onDragStart: () => {
           setState("dragging");
-          // collapse open items during a drag
-          if (source.data.isOpenOnDragStart) {
-            dispatch({ type: "collapse", itemId: item.id });
-          }
+          // // collapse open items during a drag
+          // if (source.data.isOpenOnDragStart) {
+          //   dispatch({ type: "collapse", itemId: item.id });
+          // }
         },
-        onDrop: ({ source }) => {
+        onDrop: () => {
           setState("idle");
-          if (source.data.isOpenOnDragStart) {
-            dispatch({ type: "expand", itemId: item.id });
-          }
+          // if (source.data.isOpenOnDragStart) {
+          //   dispatch({ type: "expand", itemId: item.id });
+          // }
         },
       }),
       dropTargetForElements({
@@ -261,7 +260,7 @@ export const TreeItem = memo(function TreeItem({
             ) {
               cancelExpandRef.current = delay({
                 waitMs: 500,
-                fn: () => dispatch({ type: "expand", itemId: item.id }),
+                fn: () => toggleOpen(item),
               });
             }
             if (instruction?.type !== "make-child" && cancelExpandRef.current) {
@@ -297,7 +296,6 @@ export const TreeItem = memo(function TreeItem({
       })
     );
   }, [
-    dispatch,
     item,
     mode,
     level,
@@ -367,12 +365,7 @@ export const TreeItem = memo(function TreeItem({
                 ...getConditionalStyles(),
               }}
             >
-              {/* <Icon item={item} onClick={toggleOpen} /> */}
-              {renderItem(item, toggleOpen)}
-              {/* <span style={labelStyles}>Item {item.data.}</span>
-              <small style={idStyles}>
-                <code style={debugStyles}>({mode})</code>
-              </small> */}
+              {renderItem(item)}
             </div>
             {instruction ? <DropIndicator instruction={instruction} /> : null}
           </button>
@@ -400,6 +393,7 @@ export const TreeItem = memo(function TreeItem({
                 mode={childType}
                 index={index}
                 renderItem={renderItem}
+                toggleOpen={toggleOpen}
               />
             );
           })}

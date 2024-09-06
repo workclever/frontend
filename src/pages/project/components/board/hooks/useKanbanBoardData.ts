@@ -1,9 +1,16 @@
-import { useBoardData } from "@app/hooks/useBoardData";
+import { useBoardData } from "./useBoardData";
 import React from "react";
 import { ColumnMap } from "../dnd/kanban/types";
 
-export const useBoardKanbanData = (projectId: number) => {
-  const { columns, boardFilters, nonSubtasks } = useBoardData(projectId);
+export const useKanbanBoardData = (projectId: number) => {
+  const {
+    columns,
+    boardFilters,
+    nonSubtasks,
+    findSubtasks,
+    onTaskSelect,
+    customFieldsVisibleOnCard,
+  } = useBoardData(projectId);
 
   const dndData = React.useMemo(() => {
     const items: ColumnMap = {};
@@ -46,5 +53,5 @@ export const useBoardKanbanData = (projectId: number) => {
     return { dndColumnMap: items, orderedColumnIds };
   }, [columns, nonSubtasks, boardFilters]);
 
-  return { dndData };
+  return { dndData, findSubtasks, onTaskSelect, customFieldsVisibleOnCard };
 };
