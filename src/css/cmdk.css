@@ -1,0 +1,41 @@
+.command-menu [cmdk-input] {
+  width: 100%;
+  padding: 12px;
+  font-size: 13px;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #eaeaea;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+.command-menu [cmdk-input]:focus {
+  outline: none;
+}
+
+.command-menu [cmdk-list] {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-top: 8px;
+}
+
+.command-menu [cmdk-empty] {
+  padding-left: 16px;
+  padding-bottom: 16px;
+}
+
+.command-menu [cmdk-item] {
+  padding: 8px 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.command-menu [cmdk-item][aria-selected="true"] {
+  background-color: #eaeaea;
+}
+
+.command-menu [cmdk-group-heading] {
+  font-weight: 600;
+  padding-left: 16px;
+  padding-top: 8px;
+}

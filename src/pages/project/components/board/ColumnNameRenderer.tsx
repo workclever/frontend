@@ -3,7 +3,6 @@ import {
   EditOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
-import { Badge } from "antd";
 import { ItemType } from "antd/es/menu/interface";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -27,6 +26,7 @@ import { EditColumnModal } from "./EditColumnModal";
 import { ColumnTreeHeader } from "./ColumnTreeHeader";
 import { Title } from "@app/components/shared/primitives/Title";
 import { ModalForm, ProFormText } from "@ant-design/pro-components";
+import { ColumnColor } from "@app/components/shared/ColumnColor";
 
 const ColumnTreeWrapper = styled.div`
   padding: 8px;
@@ -99,7 +99,11 @@ export const ColumnNameRenderer: React.FC<{
 
   const titleRenderer = (
     <Title level={5} style={{ display: "flex", flex: 1, marginBottom: 0 }}>
-      <Badge color={column.Color} style={{ marginRight: 8 }} />
+      <ColumnColor
+        columnId={column.Id}
+        boardId={column.BoardId}
+        style={{ marginRight: 8 }}
+      />
       <div
         style={{
           ...(boardViewType === "tree" ? { marginRight: 8 } : { flex: 1 }),
