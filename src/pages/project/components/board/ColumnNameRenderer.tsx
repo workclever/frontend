@@ -1,13 +1,21 @@
-import { DeleteColumnOutlined, EditOutlined } from "@ant-design/icons";
+import {
+  DeleteColumnOutlined,
+  EditOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
 import { Badge } from "antd";
 import { ItemType } from "antd/es/menu/interface";
 import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useMe } from "@app/hooks/useMe";
-import { useDeleteColumnMutation } from "@app/services/api";
+import {
+  useCreateTaskMutation,
+  useDeleteColumnMutation,
+} from "@app/services/api";
 import {
   selectBoardViewType,
+  selectSelectedBoardId,
   selectSelectedProjectId,
 } from "@app/slices/project/projectSlice";
 import { ColumnType } from "@app/types/Project";
@@ -18,6 +26,7 @@ import { FlexBasicLayout } from "@app/components/shared/FlexBasicLayout";
 import { EditColumnModal } from "./EditColumnModal";
 import { ColumnTreeHeader } from "./ColumnTreeHeader";
 import { Title } from "@app/components/shared/primitives/Title";
+import { ModalForm, ProFormText } from "@ant-design/pro-components";
 
 const ColumnTreeWrapper = styled.div`
   padding: 8px;
@@ -34,6 +43,10 @@ const ColumnKanbanWrapper = styled.div`
   width: 100%;
 `;
 
+type FormValuesType = {
+  Title: string;
+};
+
 export const ColumnNameRenderer: React.FC<{
   column: ColumnType;
   toggleOpen?: () => void;
@@ -41,6 +54,7 @@ export const ColumnNameRenderer: React.FC<{
   const { hasAccess } = useMe();
   const [deleteColumn] = useDeleteColumnMutation();
   const selectedProjectId = useSelector(selectSelectedProjectId);
+  const [creatingTask, setCreatingTask] = React.useState(false);
   const [editColumn, showEditColumn] = React.useState(false);
   const hasProjectManagerPermission = hasAccess(
     Number(selectedProjectId),
@@ -52,13 +66,19 @@ export const ColumnNameRenderer: React.FC<{
 
   const menuItems: ItemType[] = [
     {
-      key: "1",
+      key: "new-task",
+      label: "New task",
+      icon: <PlusOutlined />,
+      onClick: () => setCreatingTask(true),
+    },
+    {
+      key: "edit-col",
       label: "Edit column",
       icon: <EditOutlined />,
       onClick: () => showEditColumn(true),
     },
     {
-      key: "2",
+      key: "delete-col",
       label: "Delete column",
       icon: <DeleteColumnOutlined />,
       onClick: () => {
@@ -94,6 +114,19 @@ export const ColumnNameRenderer: React.FC<{
   const Wrapper =
     boardViewType === "tree" ? ColumnTreeWrapper : ColumnKanbanWrapper;
 
+  const [createTask] = useCreateTaskMutation();
+  const selectedBoardId = useSelector(selectSelectedBoardId);
+
+  const onFinish = async (values: FormValuesType) => {
+    await createTask({
+      ProjectId: Number(selectedProjectId),
+      BoardId: Number(selectedBoardId),
+      ColumnId: column.Id,
+      Title: values.Title,
+      Description: "",
+    });
+  };
+
   return (
     <Wrapper onClick={toggleOpen}>
       <FlexBasicLayout
@@ -105,6 +138,31 @@ export const ColumnNameRenderer: React.FC<{
           column={column as ColumnType}
           onCancel={() => showEditColumn(false)}
         />
+      )}
+      {creatingTask && (
+        <ModalForm<FormValuesType>
+          name="basic"
+          initialValues={{
+            Title: "",
+          }}
+          open
+          onFinish={onFinish}
+          autoComplete="off"
+          modalProps={{
+            title: "Create a new task",
+            width: 300,
+            cancelText: "Cancel",
+            okText: "Save",
+            onCancel: () => setCreatingTask(false),
+          }}
+        >
+          <ProFormText
+            name="Title"
+            label="Title"
+            placeholder="Create a new task..."
+            rules={[{ required: true, message: "Title of the task" }]}
+          />
+        </ModalForm>
       )}
     </Wrapper>
   );
