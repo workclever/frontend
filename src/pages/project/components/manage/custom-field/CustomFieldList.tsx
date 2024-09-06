@@ -30,6 +30,29 @@ export const CustomFieldList: React.FC<{ projectId: number }> = ({
       key: "FieldName",
     },
     {
+      title: "Field type",
+      dataIndex: "FieldType",
+      key: "FieldType",
+    },
+    {
+      title: "Enabled?",
+      dataIndex: "Enabled",
+      key: "Enabled",
+      render: (enabled: CustomField["Enabled"]) => {
+        if (enabled) return "Enabled";
+        return "Disabled";
+      },
+    },
+    {
+      title: "Show in task card?",
+      dataIndex: "ShowInTaskCard",
+      key: "ShowInTaskCard",
+      render: (enabled: CustomField["ShowInTaskCard"]) => {
+        if (enabled) return "Yes";
+        return "No";
+      },
+    },
+    {
       title: "Action",
       dataIndex: "",
       key: "Action",
