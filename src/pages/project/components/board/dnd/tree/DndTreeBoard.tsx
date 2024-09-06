@@ -146,13 +146,6 @@ export const DndTreeBoard: React.FC<{
         continue;
       }
 
-      /**
-       * Draft items cannot have children.
-       */
-      //   if (node.isDraft) {
-      //     continue;
-      //   }
-
       targets.push(node);
 
       node.children.forEach((childNode) => searchStack.push(childNode));
@@ -176,10 +169,11 @@ export const DndTreeBoard: React.FC<{
     return item.children;
   }, []);
 
-  const context = useMemo<TreeContextValue>(
-    () => ({
+  const context = useMemo<TreeContextValue>(() => {
+    console.log({ items });
+    return {
       dispatch: updateState,
-      uniqueContextId: Symbol("unique-id"),
+      uniqueContextId: Symbol(JSON.stringify(items)),
       // memoizing this function as it is called by all tree items repeatedly
       // An ideal refactor would be to update our data shape
       // to allow quick lookups of parents
@@ -193,9 +187,8 @@ export const DndTreeBoard: React.FC<{
       getMoveTargets,
       getChildrenOfItem,
       registerTreeItem,
-    }),
-    [getChildrenOfItem, getMoveTargets, registerTreeItem]
-  );
+    };
+  }, [items, getChildrenOfItem, getMoveTargets, registerTreeItem]);
 
   useEffect(() => {
     invariant(ref.current);
@@ -299,9 +292,9 @@ export const DndTreeBoard: React.FC<{
             return (
               <>
                 <TreeItem
+                  key={item.id}
                   item={item}
                   level={0}
-                  key={item.id}
                   mode={type}
                   index={index}
                   renderItem={renderItem}
