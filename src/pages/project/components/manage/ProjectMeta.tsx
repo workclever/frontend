@@ -13,12 +13,13 @@ import { Button } from "@app/components/shared/primitives/Button";
 import { Space } from "@app/components/shared/primitives/Space";
 import { Divider } from "@app/components/shared/primitives/Divider";
 import { ProjectType } from "@app/types/Project";
+import { Alert } from "@app/components/shared/primitives/Alert";
 
 // TODO eliminate updatedProps since it's not working properly
 export const ProjectMeta: React.FC<{ projectId: number }> = ({ projectId }) => {
   const { data, error } = useGetProjectQuery(projectId);
   const project = data?.Data;
-  const [updateProject] = useUpdateProjectMutation();
+  const [updateProject, { data: updateResult }] = useUpdateProjectMutation();
   const [deleteProject] = useDeleteProjectMutation();
   const [updatedProps, setUpdatedProps] = React.useState<{
     [prop: string]: {
@@ -46,8 +47,8 @@ export const ProjectMeta: React.FC<{ projectId: number }> = ({ projectId }) => {
   };
 
   return (
-    <Space direction="vertical" style={{ width: "100%" }}>
-      <HttpResult error={error} />
+    <Space direction="vertical" fullWidth>
+      <Alert type="info" message="Update your projects meta configuration." />
       <ProDescriptions<ProjectType>
         column={1}
         bordered
@@ -112,6 +113,7 @@ export const ProjectMeta: React.FC<{ projectId: number }> = ({ projectId }) => {
           {project?.Slug}
         </ProDescriptions.Item>
       </ProDescriptions>
+      <HttpResult result={updateResult} error={error} />
       <Divider />
       <Confirm.Embed
         title="Delete operation is not recoverable, are you sure?"

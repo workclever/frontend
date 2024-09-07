@@ -8,6 +8,8 @@ import {
 } from "@app/services/api";
 import { BoardType } from "@app/types/Project";
 import { CrudEditor } from "@app/components/shared/CrudEditor";
+import { Space } from "@app/components/shared/primitives/Space";
+import { Alert } from "@app/components/shared/primitives/Alert";
 
 export const ProjectBoards: React.FC<{ projectId: number }> = ({
   projectId,
@@ -38,7 +40,11 @@ export const ProjectBoards: React.FC<{ projectId: number }> = ({
   const [deleteBoard] = useDeleteBoardMutation();
 
   return (
-    <>
+    <Space direction="vertical" fullWidth>
+      <Alert
+        type="info"
+        message="Users under a project has access to all the boards."
+      />
       <CrudEditor<BoardType>
         columns={columns}
         dataSource={projectBoards}
@@ -67,6 +73,6 @@ export const ProjectBoards: React.FC<{ projectId: number }> = ({
           },
         }}
       ></CrudEditor>
-    </>
+    </Space>
   );
 };

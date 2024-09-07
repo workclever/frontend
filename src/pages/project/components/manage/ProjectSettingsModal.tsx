@@ -24,14 +24,14 @@ export const ProjectSettingsModal: React.FC<{
           element: <ProjectMeta projectId={projectId} />,
         },
         {
-          name: "Users",
-          icon: <UsersIcon size={15} />,
-          element: <ProjectUsers projectId={projectId} />,
-        },
-        {
           name: "Boards",
           icon: <SquareDashedKanbanIcon size={15} />,
           element: <ProjectBoards projectId={projectId} />,
+        },
+        {
+          name: "Users",
+          icon: <UsersIcon size={15} />,
+          element: <ProjectUsers projectId={projectId} />,
         },
         {
           name: "Custom fields",

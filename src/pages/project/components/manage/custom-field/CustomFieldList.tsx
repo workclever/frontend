@@ -9,6 +9,8 @@ import {
   CustomFieldEditorForm,
 } from "./CustomFieldEditorForm";
 import { PencilIcon } from "lucide-react";
+import { Space } from "@app/components/shared/primitives/Space";
+import { Alert } from "@app/components/shared/primitives/Alert";
 
 export const CustomFieldList: React.FC<{ projectId: number }> = ({
   projectId,
@@ -73,7 +75,7 @@ export const CustomFieldList: React.FC<{ projectId: number }> = ({
                 setShowFormModalVisible(true);
               }}
             >
-              <PencilIcon /> Click to modify
+              <PencilIcon size={12} /> Click to modify
             </span>
           </>
         );
@@ -82,7 +84,11 @@ export const CustomFieldList: React.FC<{ projectId: number }> = ({
   ];
 
   return (
-    <>
+    <Space direction="vertical" fullWidth>
+      <Alert
+        type="info"
+        message="Create custom fields for tasks. For example you can create your own 'Sprint points' field or version etc."
+      />
       <Table
         columns={columns}
         dataSource={customFieldsData}
@@ -117,6 +123,6 @@ export const CustomFieldList: React.FC<{ projectId: number }> = ({
           />
         </Modal>
       )}
-    </>
+    </Space>
   );
 };
