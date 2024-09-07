@@ -79,7 +79,7 @@ dotnet run
 - [Ant Design Pro Components](https://procomponents.ant.design) for crud and forms
 - [Elastic UI](https://elastic.github.io/eui/#/) for editor
 - [@ant-design/colors](https://npmjs.com/package/@ant-design/colors) for colors
-- [Dnd Kit](https://github.com/clauderic/dnd-kit) for Drag drop
+- [Pragmatic Drag and Drop](https://github.com/atlassian/pragmatic-drag-and-drop) for Drag drop
 
 ### TODO
 
