@@ -74,7 +74,9 @@ export const BoardHeader: React.FC<{ mode: "board" | "task" }> = ({ mode }) => {
 
   const taskComponents = task ? (
     <>
-      <TaskEditableTitle task={task} onTaskSelect={() => {}} />
+      <div style={{ marginLeft: 16 }}>
+        <TaskEditableTitle task={task} onTaskSelect={() => {}} />
+      </div>
       <div style={{ flex: 1 }} />
     </>
   ) : (
