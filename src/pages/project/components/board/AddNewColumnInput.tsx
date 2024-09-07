@@ -25,6 +25,7 @@ export const AddNewColumnInput: React.FC = () => {
   const selectedBoardId = useSelector(selectSelectedBoardId);
   const [createBoardColumn, { isLoading }] = useCreateBoardColumnMutation();
   const selectedProjectId = useSelector(selectSelectedProjectId);
+  const [form] = Form.useForm();
 
   const onFinish = async (values: FormValuesType) => {
     await createBoardColumn({
@@ -33,6 +34,7 @@ export const AddNewColumnInput: React.FC = () => {
       Name: values.Name,
       Hidden: false,
     });
+    form.resetFields();
   };
 
   const defaultComponent = (
@@ -43,7 +45,7 @@ export const AddNewColumnInput: React.FC = () => {
 
   const toggledComponent = (
     <Form<FormValuesType>
-      name="basic"
+      form={form}
       initialValues={{
         Name: "",
       }}

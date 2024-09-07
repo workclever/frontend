@@ -164,7 +164,6 @@ const Editor: React.FC<{
   return (
     <>
       <Form<FormValuesType>
-        name="basic"
         initialValues={initialValues}
         onFinish={onFinish}
         autoComplete="off"

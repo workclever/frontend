@@ -85,7 +85,6 @@ export const NewSubtaskModal: React.FC<{
           </TabPane>
           <TabPane tab="Manual task creation" key="2">
             <Form<NewSubtaskModalFormValuesType>
-              name="basic"
               initialValues={{
                 Title: "",
               }}

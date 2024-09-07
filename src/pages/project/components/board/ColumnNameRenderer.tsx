@@ -145,7 +145,6 @@ export const ColumnNameRenderer: React.FC<{
       )}
       {creatingTask && (
         <ModalForm<FormValuesType>
-          name="basic"
           initialValues={{
             Title: "",
           }}

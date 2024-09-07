@@ -32,6 +32,7 @@ export const AddNewTaskInput: React.FC<{ column: ColumnType }> = ({
   const [createTask, { isLoading }] = useCreateTaskMutation();
   const selectedProjectId = useSelector(selectSelectedProjectId);
   const selectedBoardId = useSelector(selectSelectedBoardId);
+  const [form] = Form.useForm();
 
   const onFinish = async (values: FormValuesType) => {
     await createTask({
@@ -41,6 +42,7 @@ export const AddNewTaskInput: React.FC<{ column: ColumnType }> = ({
       Title: values.Title,
       Description: "",
     });
+    form.resetFields();
   };
 
   const defaultComponent = (
@@ -52,7 +54,7 @@ export const AddNewTaskInput: React.FC<{ column: ColumnType }> = ({
   );
   const toggledComponent = (
     <Form<FormValuesType>
-      name="basic"
+      form={form}
       initialValues={{
         Title: "",
       }}
