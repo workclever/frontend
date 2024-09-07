@@ -289,7 +289,6 @@ export const DndKanbanBoard: React.FC<{
 
         const destinationItems = Array.from(destinationColumn.items);
         // Going into the first position if no index is provided
-        // TODO last
         const newIndexInDestination = itemIndexInFinishColumn ?? 0;
         destinationItems.splice(newIndexInDestination, 0, item);
 
@@ -379,7 +378,6 @@ export const DndKanbanBoard: React.FC<{
           if (source.data.type === "card") {
             const itemId = source.data.itemId;
             invariant(typeof itemId === "number");
-            // TODO: these lines not needed if item has columnId on it
             const [, startColumnRecord] = location.initial.dropTargets;
             const sourceId = startColumnRecord.data.columnId;
             invariant(typeof sourceId === "number");

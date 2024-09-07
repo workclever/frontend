@@ -48,8 +48,6 @@ export const KanbanBoardWrapper: React.FC<{
 
   return (
     <DndKanbanBoard
-      // TODO workaround
-      key={JSON.stringify(dndKanbanItems.dndColumnMap)}
       dndColumnMap={dndKanbanItems.dndColumnMap}
       orderedColumnIds={dndKanbanItems.orderedColumnIds}
       onReorderColumn={onReorderColumn}

@@ -4,11 +4,7 @@ import { api, useLoginMutation } from "../../services/api";
 import { setToken } from "../../slices/auth/authSlice";
 import { useDispatch } from "react-redux";
 import { HttpResult } from "../../components/shared/HttpResult";
-import {
-  ProFormText,
-  ProFormCheckbox,
-  LoginFormPage,
-} from "@ant-design/pro-components";
+import { ProFormText, LoginFormPage } from "@ant-design/pro-components";
 import { Space } from "../../components/shared/primitives/Space";
 import { Button } from "../../components/shared/primitives/Button";
 import { ChevronRightCircleIcon, LockIcon, MailIcon } from "lucide-react";
@@ -114,10 +110,6 @@ export const LoginPage: React.FC = () => {
             marginBottom: 24,
           }}
         >
-          {/* TODO: remember me functionality is not working */}
-          <ProFormCheckbox noStyle name="rememberMe">
-            Remember me
-          </ProFormCheckbox>
           {/* <a
             style={{
               float: "right",

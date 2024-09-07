@@ -23,6 +23,7 @@ import {
   ScanEyeIcon,
   TrashIcon,
 } from "lucide-react";
+import { TaskEditableTitle } from "./task-detail/TaskEditableTitle";
 
 export type Props = {
   task: TaskType;
@@ -142,6 +143,7 @@ export const Task: React.FC<Props> = ({
           styles={{
             body: { margin: 0, padding: 0 },
           }}
+          title={<TaskEditableTitle task={task} onTaskSelect={onTaskClick} />}
         >
           <TaskDetail
             task={task}

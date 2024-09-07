@@ -46,7 +46,7 @@ export const taskEndpoints = (builder: Builder) => ({
       { Task, TargetBoardId, TargetColumnId },
       { dispatch, queryFulfilled }
     ) {
-      const { patchResult1, patchResult2 } = taskUpdateLocalState(
+      const { undoLocal } = taskUpdateLocalState(
         Task,
         [
           { property: "BoardId", value: TargetBoardId },
@@ -57,8 +57,7 @@ export const taskEndpoints = (builder: Builder) => ({
       try {
         await queryFulfilled;
       } catch {
-        patchResult1.undo();
-        patchResult2.undo();
+        undoLocal();
       }
     },
   }),
@@ -79,7 +78,7 @@ export const taskEndpoints = (builder: Builder) => ({
     }),
     invalidatesTags: ["ChangeLog"],
     async onQueryStarted({ Task, UserIds }, { dispatch, queryFulfilled }) {
-      const { patchResult1, patchResult2 } = taskUpdateLocalState(
+      const { undoLocal } = taskUpdateLocalState(
         Task,
         { property: "AssigneeUserIds", value: UserIds },
         dispatch
@@ -87,8 +86,7 @@ export const taskEndpoints = (builder: Builder) => ({
       try {
         await queryFulfilled;
       } catch {
-        patchResult1.undo();
-        patchResult2.undo();
+        undoLocal();
       }
     },
   }),
@@ -129,16 +127,11 @@ export const taskEndpoints = (builder: Builder) => ({
     }),
     invalidatesTags: ["ChangeLog"],
     async onQueryStarted({ Task, Params }, { dispatch, queryFulfilled }) {
-      const { patchResult1, patchResult2 } = taskUpdateLocalState(
-        Task,
-        Params,
-        dispatch
-      );
+      const { undoLocal } = taskUpdateLocalState(Task, Params, dispatch);
       try {
         await queryFulfilled;
       } catch {
-        patchResult1.undo();
-        patchResult2.undo();
+        undoLocal();
       }
     },
   }),

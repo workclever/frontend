@@ -6,8 +6,6 @@ import { TaskType } from "@app/types/Project";
 import { UpdateTaskPropertyParams } from "@app/types/Task";
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 
-// TODO fix ts-ignore
-// undo return
 export const taskUpdateLocalState = (
   task: TaskType,
   params: UpdateTaskPropertyParams | UpdateTaskPropertyParams[],
@@ -58,7 +56,9 @@ export const taskUpdateLocalState = (
   );
 
   return {
-    patchResult1,
-    patchResult2,
+    undoLocal: () => {
+      patchResult1.undo();
+      patchResult2.undo();
+    },
   };
 };

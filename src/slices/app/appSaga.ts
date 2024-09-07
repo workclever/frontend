@@ -31,7 +31,6 @@ function* handleLoadAppStarted() {
   }
 }
 
-// TODO: implement storing recent browsing projectId
 function* handleLoadRecentProject() {
   try {
     yield put(api.endpoints.listUserProjects.initiate(null, queryConfig));

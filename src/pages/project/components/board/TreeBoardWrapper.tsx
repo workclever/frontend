@@ -213,7 +213,7 @@ export const TreeBoardWrapper: React.FC<{ projectId: number }> = ({
   };
 
   const onMakeChildInColumn = (taskId: number, columnIn: number) => {
-    // TODO check later
+    // TODO implement
     console.log("onMakeChildInColumn", { taskId, columnIn });
   };
 

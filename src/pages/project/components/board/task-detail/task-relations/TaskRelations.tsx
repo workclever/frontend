@@ -25,7 +25,9 @@ export const TaskRelations: React.FC<{
         defaultExpanded={relations.length > 0}
       >
         {relations.length === 0 ? (
-          <Empty>There is no related tasks found for this task</Empty>
+          <Empty textAlign="left">
+            There is no related tasks found for this task
+          </Empty>
         ) : (
           relations.map((taskRelation) => {
             return (

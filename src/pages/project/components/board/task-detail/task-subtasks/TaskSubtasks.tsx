@@ -23,7 +23,9 @@ export const TaskSubtasks: React.FC<{
         defaultExpanded={subtasks.length > 0}
       >
         {subtasks.length === 0 ? (
-          <Empty>There is no subtasks found for this task</Empty>
+          <Empty textAlign="left">
+            There is no subtasks found for this task
+          </Empty>
         ) : (
           subtasks.map((task) => {
             return (

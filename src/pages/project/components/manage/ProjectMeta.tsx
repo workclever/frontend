@@ -15,7 +15,6 @@ import { Divider } from "@app/components/shared/primitives/Divider";
 import { ProjectType } from "@app/types/Project";
 import { Alert } from "@app/components/shared/primitives/Alert";
 
-// TODO eliminate updatedProps since it's not working properly
 export const ProjectMeta: React.FC<{ projectId: number }> = ({ projectId }) => {
   const { data, error } = useGetProjectQuery(projectId);
   const project = data?.Data;

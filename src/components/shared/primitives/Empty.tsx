@@ -2,12 +2,13 @@ import React from "react";
 
 type Props = {
   children: React.ReactNode;
+  textAlign?: "center" | "left";
 };
 
-export const Empty: React.FC<Props> = ({ children }) => (
+export const Empty: React.FC<Props> = ({ children, textAlign = "center" }) => (
   <div
     style={{
-      textAlign: "center",
+      textAlign,
       color: "#00000073",
       padding: 12,
       fontSize: 13,
