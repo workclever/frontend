@@ -155,6 +155,7 @@ export const ProjectUsers: React.FC<{ projectId: number }> = ({
               setNewUserId(Number(userIds) || 0);
             }}
             loading={false}
+            // TODO Remove this property and pass the excluded dataset
             withAllUsers
           />
         </div>
