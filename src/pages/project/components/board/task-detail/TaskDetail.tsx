@@ -2,10 +2,7 @@ import { TaskType } from "@app/types/Project";
 import { UserSelector } from "../../shared/UserSelector";
 import { TaskMover } from "../../shared/TaskMover";
 import React from "react";
-import {
-  useListCustomFieldsQuery,
-  useUpdateTaskAssigneeUserMutation,
-} from "@app/services/api";
+import { useUpdateTaskAssigneeUserMutation } from "@app/services/api";
 import { TaskEditableDescription } from "./TaskEditableDescription";
 import { TaskComments } from "./TaskComments";
 import { TaskChangeLog } from "./TaskChangeLog";
@@ -28,18 +25,16 @@ type Props = {
 
 const Reporter: React.FC<Pick<Props, "task">> = ({ task }) => {
   return (
-    <div style={{ width: 150 }}>
-      <UserSelector
-        title="Reporter"
-        disabled={true}
-        selectedUserIds={[task.ReporterUserId]}
-        selectedProjectId={task.ProjectId}
-        loading={false}
-        onChange={() => {
-          /* */
-        }}
-      />
-    </div>
+    <UserSelector
+      title="Reporter"
+      disabled={true}
+      selectedUserIds={[task.ReporterUserId]}
+      selectedProjectId={task.ProjectId}
+      loading={false}
+      onChange={() => {
+        /* */
+      }}
+    />
   );
 };
 
@@ -48,26 +43,19 @@ const Assignee: React.FC<Pick<Props, "task">> = ({ task }) => {
     useUpdateTaskAssigneeUserMutation();
 
   return (
-    <div style={{ width: 200 }}>
-      <UserSelector
-        title="Assignee"
-        selectedUserIds={task.AssigneeUserIds}
-        selectedProjectId={task.ProjectId}
-        loading={isAssigneeUpdating}
-        onChange={async (userIds) =>
-          updateAssignee({
-            Task: task,
-            UserIds: userIds,
-          })
-        }
-        mode="multiple"
-      />
-      {/* <HttpResult
-        error={updateAssigneeError}
-        result={updateAssigneeResult}
-        style={{ marginTop: 4 }}
-      /> */}
-    </div>
+    <UserSelector
+      title="Assignee"
+      selectedUserIds={task.AssigneeUserIds}
+      selectedProjectId={task.ProjectId}
+      loading={isAssigneeUpdating}
+      onChange={async (userIds) =>
+        updateAssignee({
+          Task: task,
+          UserIds: userIds,
+        })
+      }
+      mode="multiple"
+    />
   );
 };
 
@@ -90,7 +78,6 @@ export const TaskDetail: React.FC<Props> = ({
   onTaskDelete,
 }) => {
   const { goToTask } = useAppNavigate();
-  const { data: customFields } = useListCustomFieldsQuery(task.ProjectId);
 
   const Pad: React.FC<{
     children: React.ReactNode;
@@ -116,16 +103,7 @@ export const TaskDetail: React.FC<Props> = ({
           <Pad style={{ paddingLeft: 16, paddingTop: 16 }}>
             <TaskEditableTitle task={task} onTaskSelect={onTaskSelect} />
           </Pad>
-          <Pad style={{ paddingLeft: 16, paddingTop: 0 }}>
-            <Space style={{ width: "100%" }}>
-              <Reporter task={task} />
-              <Assignee task={task} />
-            </Space>
-            <Space style={{ marginTop: 8 }}>
-              <TaskMover task={task} />
-              <TaskDelete task={task} onTaskDelete={onTaskDelete} />
-            </Space>
-          </Pad>
+
           <Divider style={{ margin: 0, padding: 0 }} />
           <div style={{ padding: 16 }}>
             <TaskEditableDescription task={task} />
@@ -141,11 +119,22 @@ export const TaskDetail: React.FC<Props> = ({
             </div>
           </div>
         </Space>
-        {customFields?.Data.length && (
-          <div style={{ width: 400, padding: 16 }}>
+        <div style={{ width: 400 }}>
+          <div style={{ padding: 16, paddingBottom: 0 }}>
+            <Space style={{ width: "100%" }} direction="vertical">
+              <Reporter task={task} />
+              <Assignee task={task} />
+            </Space>
+            <Space style={{ marginTop: 8 }}>
+              <TaskMover task={task} />
+              <TaskDelete task={task} onTaskDelete={onTaskDelete} />
+            </Space>
+          </div>
+          <Divider />
+          <div style={{ padding: 16, paddingTop: 0 }}>
             <TaskCustomFieldsRenderer task={task} />
           </div>
-        )}
+        </div>
       </div>
     </>
   );
