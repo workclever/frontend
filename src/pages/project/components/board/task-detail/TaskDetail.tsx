@@ -4,17 +4,15 @@ import { TaskMover } from "../../shared/TaskMover";
 import React from "react";
 import { useUpdateTaskAssigneeUserMutation } from "@app/services/api";
 import { TaskEditableDescription } from "./TaskEditableDescription";
-import { TaskComments } from "./TaskComments";
-import { TaskChangeLog } from "./TaskChangeLog";
 import { TaskRelations } from "./task-relations/TaskRelations";
 import { TaskSubtasks } from "./task-subtasks/TaskSubtasks";
 import { TaskCustomFieldsRenderer } from "./custom-fields/TaskCustomFieldsRenderer";
 import { TaskDelete } from "./TaskDelete";
 import { TaskAttachments } from "./TaskAttachments";
-import { Tabs, TabPane } from "@app/components/shared/primitives/Tabs";
 import { Space } from "@app/components/shared/primitives/Space";
 import { Divider } from "@app/components/shared/primitives/Divider";
 import { useAppNavigate } from "@app/hooks/useAppNavigate";
+import { TaskTimeline } from "./timeline/TaskTimeline";
 
 type Props = {
   task: TaskType;
@@ -58,19 +56,6 @@ const Assignee: React.FC<Pick<Props, "task">> = ({ task }) => {
   );
 };
 
-const TaskTabs: React.FC<Pick<Props, "task">> = ({ task }) => {
-  return (
-    <Tabs defaultActiveKey="1">
-      <TabPane tab="Comments" key="1">
-        <TaskComments task={task} />
-      </TabPane>
-      <TabPane tab="Change log" key="2">
-        <TaskChangeLog task={task} />
-      </TabPane>
-    </Tabs>
-  );
-};
-
 export const TaskDetail: React.FC<Props> = ({
   task,
   findSubtasks,
@@ -95,6 +80,7 @@ export const TaskDetail: React.FC<Props> = ({
           <div style={{ padding: 16 }}>
             <TaskEditableDescription task={task} />
             <div style={{ marginTop: 8 }}>
+              <Divider />
               <TaskRelations task={task} onTaskSelect={onTaskSelect} />
               <TaskSubtasks
                 task={task}
@@ -102,7 +88,8 @@ export const TaskDetail: React.FC<Props> = ({
                 findSubtasks={findSubtasks}
               />
               <TaskAttachments task={task} />
-              <TaskTabs task={task} />
+              <Divider />
+              <TaskTimeline task={task} />
             </div>
           </div>
         </Space>

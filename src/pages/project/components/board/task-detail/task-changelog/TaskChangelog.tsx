@@ -1,19 +1,11 @@
-import { Timeline } from "antd";
-import React from "react";
-import { useSelector } from "react-redux";
 import { useBoards } from "@app/hooks/useBoards";
 import { useColumns } from "@app/hooks/useColumns";
 import { useFormattedDateTime } from "@app/hooks/useFormattedDateTime";
+import { useTask } from "@app/hooks/useTask";
 import { useUser } from "@app/hooks/useUser";
-import { useListTaskChangeLogQuery } from "@app/services/api";
 import { selectSelectedBoardId } from "@app/slices/project/projectSlice";
-import { TaskChangeLogType, TaskType } from "@app/types/Project";
-import { UserAvatar } from "@app/components/shared/UserAvatar";
-import { LoadingSpin } from "@app/components/shared/primitives/LoadingSpin";
-
-type Props = {
-  task: TaskType;
-};
+import { TaskChangeLogType } from "@app/types/Project";
+import { useSelector } from "react-redux";
 
 const ChangeLogUserId: React.FC<{
   item: TaskChangeLogType;
@@ -23,7 +15,7 @@ const ChangeLogUserId: React.FC<{
   const { user: newUser } = useUser(Number(item.NewValue));
   return (
     <>
-      <strong>{type}</strong> from{" "}
+      <span style={{ color: "#444444", fontWeight: "500" }}>{type}</span> from{" "}
       <i>{item.OldValue === "0" ? "Unassigned" : oldUser?.FullName}</i> to{" "}
       <i>{item.NewValue === "0" ? "Unassigned" : newUser?.FullName}</i>
     </>
@@ -39,8 +31,8 @@ const ChangeLogColumnId: React.FC<{
   const newColumn = columns.find((r) => r.Id === Number(item.NewValue));
   return (
     <>
-      <strong>board column</strong> from <i>{oldColumn?.Name}</i> to{" "}
-      <i>{newColumn?.Name}</i>
+      <span style={{ color: "#444444", fontWeight: "500" }}>board column</span>{" "}
+      from <i>{oldColumn?.Name}</i> to <i>{newColumn?.Name}</i>
     </>
   );
 };
@@ -53,8 +45,20 @@ const ChangeLogBoardId: React.FC<{
   const newBoard = boards.find((r) => r.Id === Number(item.NewValue));
   return (
     <>
-      <strong>board</strong> from <i>{oldBboard?.Name}</i> to{" "}
-      <i>{newBoard?.Name}</i>
+      <span style={{ color: "#444444", fontWeight: "500" }}>board</span> from{" "}
+      <i>{oldBboard?.Name}</i> to <i>{newBoard?.Name}</i>
+    </>
+  );
+};
+
+const ChangeLogParentTaskItemId: React.FC<{
+  item: TaskChangeLogType;
+}> = ({ item }) => {
+  const { task } = useTask(Number(item.NewValue));
+  return (
+    <>
+      <span style={{ color: "#444444", fontWeight: "500" }}>parent task</span>{" "}
+      to <i>{task?.Slug || item.NewValue}</i>
     </>
   );
 };
@@ -63,6 +67,9 @@ const ChangeLogValues: React.FC<{ item: TaskChangeLogType }> = ({ item }) => {
   const { Property } = item;
   if (Property === "ReporterUserId") {
     return <ChangeLogUserId type="Reporter" item={item} />;
+  }
+  if (Property === "ParentTaskItemId") {
+    return <ChangeLogParentTaskItemId item={item} />;
   }
   // TODO changelog
   // if (Property === "AssigneeUserId") {
@@ -75,42 +82,38 @@ const ChangeLogValues: React.FC<{ item: TaskChangeLogType }> = ({ item }) => {
     return <ChangeLogBoardId item={item} />;
   }
 
+  if (Property === "Title") {
+    return <>title to {item.NewValue}</>;
+  }
+
+  if (Property === "Description") {
+    return <>description</>;
+  }
+
   return (
     <>
-      <strong>{item.Property}</strong> from <i>{item.OldValue}</i> to{" "}
-      <i>{item.NewValue}</i>
+      <span style={{ color: "#444444", fontWeight: "500" }}>
+        {item.Property}
+      </span>{" "}
+      from <i>{item.OldValue}</i> to <i>{item.NewValue}</i>
     </>
   );
 };
 
-const ChangeLogItem: React.FC<{ item: TaskChangeLogType }> = ({ item }) => {
+export const TaskChangeLog: React.FC<{ item: TaskChangeLogType }> = ({
+  item,
+}) => {
   const { user } = useUser(item.UserId);
   const formattedDateTime = useFormattedDateTime(item.DateCreated);
   return (
-    <Timeline.Item>
+    <div>
       <div>
-        {user && <UserAvatar userId={user?.Id} />}
-        <strong>{user?.FullName}</strong> updated{" "}
-        <ChangeLogValues item={item} />
+        <span style={{ color: "#444444", fontWeight: "500" }}>
+          {user?.FullName}
+        </span>{" "}
+        updated <ChangeLogValues item={item} />
       </div>
       <i>{formattedDateTime} </i>
-    </Timeline.Item>
-  );
-};
-
-export const TaskChangeLog: React.FC<Props> = ({ task }) => {
-  const { data: changeLogs, isLoading } = useListTaskChangeLogQuery(task.Id);
-  const changeLogsData = changeLogs?.Data || [];
-
-  if (isLoading) {
-    return <LoadingSpin />;
-  }
-
-  return (
-    <Timeline>
-      {changeLogsData.map((item) => (
-        <ChangeLogItem key={item.Id} item={item} />
-      ))}
-    </Timeline>
+    </div>
   );
 };
