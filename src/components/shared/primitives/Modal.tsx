@@ -7,6 +7,7 @@ type Props = {
   width?: number;
   children: React.ReactNode;
   maxHeight?: number;
+  noPaddingMode?: boolean;
 };
 
 export const Modal: React.FC<Props> = ({
@@ -16,6 +17,7 @@ export const Modal: React.FC<Props> = ({
   width,
   children,
   maxHeight,
+  noPaddingMode = false,
 }) => (
   <AntdModal
     open={visible}
@@ -27,9 +29,13 @@ export const Modal: React.FC<Props> = ({
     styles={{
       body: {
         padding: 0,
+        margin: 0,
         overflow: "auto",
         maxHeight,
       },
+      content: noPaddingMode
+        ? { padding: 0, margin: 0, overflow: "auto", maxHeight }
+        : {},
     }}
   >
     {children}

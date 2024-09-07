@@ -29,7 +29,6 @@ export const ChangePassword = () => {
         onFinish={onFinish}
         labelCol={{ span: 8 }}
         autoComplete="off"
-        style={{ width: 550 }}
         labelAlign="left"
       >
         <Form.Item

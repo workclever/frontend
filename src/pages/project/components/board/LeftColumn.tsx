@@ -11,7 +11,6 @@ import styled from "styled-components";
 import { FlexBasicLayout } from "@app/components/shared/FlexBasicLayout";
 import { Permission } from "@app/components/shared/Permission";
 import { Button } from "@app/components/shared/primitives/Button";
-import { Modal } from "@app/components/shared/primitives/Modal";
 import { EntityClasses, Permissions } from "@app/types/Roles";
 import { BoardList } from "../BoardList";
 import { ProjectSettings } from "../manage/ProjectSettings";
@@ -154,16 +153,12 @@ export const LeftColumn = () => {
           }
         />
       </BottomWrapper>
-      <Modal
-        title="Project settings"
-        onCancel={() => setShowProjectSettingsModal(false)}
-        visible={showProjectSettingsModal}
-        width={800}
-      >
-        <div style={{ padding: 8 }}>
-          <ProjectSettings projectId={editingProjectId} />
-        </div>
-      </Modal>
+      {editingProjectId && showProjectSettingsModal ? (
+        <ProjectSettings
+          projectId={editingProjectId}
+          onCancel={() => setShowProjectSettingsModal(false)}
+        />
+      ) : null}
       {showCreateBoardModal && (
         <CreateBoardModal
           onCancel={() => setShowCreateBoardModal(false)}

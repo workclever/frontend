@@ -75,7 +75,9 @@ export const TaskMover: React.FC<Props> = ({ task }) => {
       >
         Move
       </Button>
-      <HttpResult error={error} result={data} style={{ marginTop: 4 }} />
+      <div style={{ marginTop: 4 }}>
+        <HttpResult error={error} result={data} />
+      </div>
     </Space>
   );
 
@@ -122,7 +124,9 @@ export const TaskMover: React.FC<Props> = ({ task }) => {
       >
         Move
       </Button>
-      <HttpResult error={error} result={data} style={{ marginTop: 4 }} />
+      <div style={{ marginTop: 4 }}>
+        <HttpResult error={error} result={data} />
+      </div>
     </Space>
   );
 

@@ -1,45 +1,44 @@
-import { UserOutlined, LaptopOutlined } from "@ant-design/icons";
 import { ProjectBoards } from "./ProjectBoards";
 import { ProjectMeta } from "./ProjectMeta";
 import { ProjectUsers } from "./ProjectUsers";
-import { MasterDetail } from "@app/components/shared/MasterDetail";
 import { CustomFieldList } from "./custom-field/CustomFieldList";
-import { MenuProps } from "antd/lib/menu";
+import { SettingsModal } from "@app/components/shared/SettingsModal";
+import {
+  SettingsIcon,
+  UsersIcon,
+  SquareDashedKanbanIcon,
+  TablePropertiesIcon,
+} from "lucide-react";
 
-export const ProjectSettings: React.FC<{ projectId: number }> = ({
-  projectId,
-}) => {
-  const menuItems: MenuProps["items"] = [
-    {
-      label: "Meta",
-      key: "meta",
-      icon: <LaptopOutlined />,
-    },
-    {
-      label: "Boards",
-      key: "boards",
-      icon: <UserOutlined />,
-    },
-    {
-      label: "Users",
-      key: "users",
-      icon: <UserOutlined />,
-    },
-    {
-      label: "Custom fields",
-      key: "fields",
-      icon: <UserOutlined />,
-    },
-  ];
-
-  const components = {
-    meta: () => <ProjectMeta projectId={projectId} />,
-    users: () => <ProjectUsers projectId={projectId} />,
-    boards: () => <ProjectBoards projectId={projectId} />,
-    fields: () => <CustomFieldList projectId={projectId} />,
-  };
-
+export const ProjectSettings: React.FC<{
+  projectId: number;
+  onCancel: () => void;
+}> = ({ projectId, onCancel }) => {
   return (
-    <MasterDetail menuItems={menuItems} components={components} mode="tab" />
+    <SettingsModal
+      onCancel={onCancel}
+      items={[
+        {
+          name: "Meta",
+          icon: <SettingsIcon size={15} />,
+          element: <ProjectMeta projectId={projectId} />,
+        },
+        {
+          name: "Users",
+          icon: <UsersIcon size={15} />,
+          element: <ProjectUsers projectId={projectId} />,
+        },
+        {
+          name: "Boards",
+          icon: <SquareDashedKanbanIcon size={15} />,
+          element: <ProjectBoards projectId={projectId} />,
+        },
+        {
+          name: "Custom fields",
+          icon: <TablePropertiesIcon size={15} />,
+          element: <CustomFieldList projectId={projectId} />,
+        },
+      ]}
+    />
   );
 };

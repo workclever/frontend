@@ -191,10 +191,9 @@ const Editor: React.FC<{
             {mode === "create" ? "Comment" : "Update"}
           </Button>
         </Form.Item>
-        <HttpResult
-          error={createError || updateError}
-          style={{ marginTop: 4 }}
-        />
+        <div style={{ marginTop: 4 }}>
+          <HttpResult error={createError || updateError} />
+        </div>
       </Form>
     </>
   );

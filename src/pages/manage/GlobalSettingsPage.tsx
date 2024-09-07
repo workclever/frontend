@@ -1,5 +1,3 @@
-import { LaptopOutlined, UsergroupAddOutlined } from "@ant-design/icons";
-import { MasterDetail } from "../../components/shared/MasterDetail";
 import { Role } from "../../components/shared/Role";
 import { LayoutWithHeader } from "../../layout/LayoutWithHeader";
 import { LoggedInLayout } from "../../layout/LoggedInLayout";
@@ -7,41 +5,32 @@ import { Roles } from "../../types/Roles";
 import { EditSiteSettings } from "./components/EditSiteSettings";
 import { RelationshipTypeDefinitions } from "./components/RelationshipTypeDefinitions";
 import { Users } from "./components/Users";
-import { MenuProps } from "antd/lib/menu";
+import { Settings } from "@app/components/shared/Settings";
+import { IterationCcwIcon, SettingsIcon, UsersIcon } from "lucide-react";
 
 export const GlobalSettingsPage = () => {
-  const menuItems: MenuProps["items"] = [
-    {
-      label: "Site Settings",
-      key: "site-settings",
-      icon: <LaptopOutlined />,
-    },
-    {
-      label: "Relationship Definitions",
-      key: "relationship-defs",
-      icon: <LaptopOutlined />,
-    },
-    {
-      label: "Users",
-      key: "users",
-      icon: <UsergroupAddOutlined />,
-    },
-  ];
-
-  const components = {
-    "site-settings": () => <EditSiteSettings />,
-    "relationship-defs": () => <RelationshipTypeDefinitions />,
-    users: () => <Users />,
-  };
-
   return (
     <LoggedInLayout>
       <Role role={Roles.Admin} showWarning={true}>
         <LayoutWithHeader title="Management" subTitle="Site management">
-          <MasterDetail
-            menuItems={menuItems}
-            components={components}
-            mode="menu"
+          <Settings
+            items={[
+              {
+                name: "Site settings",
+                element: <EditSiteSettings />,
+                icon: <SettingsIcon size={15} />,
+              },
+              {
+                name: "Relationship Definitions",
+                element: <RelationshipTypeDefinitions />,
+                icon: <IterationCcwIcon size={15} />,
+              },
+              {
+                name: "Users",
+                element: <Users />,
+                icon: <UsersIcon size={15} />,
+              },
+            ]}
           />
         </LayoutWithHeader>
       </Role>

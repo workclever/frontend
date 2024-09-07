@@ -6,9 +6,7 @@ import {
 import { EditableProTable, ProColumns } from "@ant-design/pro-components";
 import { TableProps } from "antd";
 import React from "react";
-import { BaseOutput } from "../../types/BaseOutput";
 import { Button } from "./primitives/Button";
-import { Title } from "./primitives/Title";
 import { Tooltip } from "./primitives/Tooltip";
 
 type Props<T> = {
@@ -17,21 +15,19 @@ type Props<T> = {
   dataSource: TableProps<T>["dataSource"];
   create?: {
     triggerText: string;
-    execute: (params: any) => void;
+    execute: (params: T) => void;
   };
   edit?: {
-    modalTitle: string;
-    execute: (item: T, params: any) => void;
+    triggerText: string;
+    execute: (item: T, params: T) => void;
   };
   delete?: {
-    modalTitle: string;
+    triggerText: string;
     execute: (item: T) => void;
   };
-  result?: BaseOutput<any>;
 };
 
 export const CrudEditor = <T,>({
-  title,
   columns,
   dataSource,
   create,
@@ -59,7 +55,7 @@ export const CrudEditor = <T,>({
           }}
           style={{ cursor: "pointer" }}
         >
-          <EditOutlined /> {edit?.modalTitle}
+          <EditOutlined /> {edit?.triggerText}
         </span>,
       ],
     });
@@ -83,13 +79,13 @@ export const CrudEditor = <T,>({
   };
 
   return (
-    <>
-      {title && <Title level={5}>{title}</Title>}
+    <div className="crud-editor">
       <EditableProTable
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         columns={computedColumns}
         tableStyle={{ padding: 0 }}
+        style={{ padding: 0 }}
         rowKey="Id"
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -105,17 +101,22 @@ export const CrudEditor = <T,>({
             // @ts-ignore
             if (data["__entityType"] && data["__entityType"] === "NEW") {
               if (create?.execute) {
-                create.execute(data);
+                create.execute(data as T);
               }
             } else {
               if (edit?.execute) {
-                edit.execute(row as T, data);
+                edit.execute(row as T, data as T);
               }
             }
           },
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           onDelete: (_, row) => {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            if (row["__entityType"] && row["__entityType"] === "NEW") {
+              return;
+            }
             if (_delete?.execute) {
               _delete.execute(row as T);
             }
@@ -132,7 +133,7 @@ export const CrudEditor = <T,>({
           ),
           deleteText: (
             <Tooltip
-              title={_delete?.modalTitle || "Delete row?"}
+              title={_delete?.triggerText || "Delete row?"}
               placement="bottom"
             >
               <Button danger ghost size="small">
@@ -164,6 +165,6 @@ export const CrudEditor = <T,>({
             : undefined
         }
       />
-    </>
+    </div>
   );
 };

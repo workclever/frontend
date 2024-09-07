@@ -6,14 +6,13 @@ import { Link } from "react-router-dom";
 import { EnhancedDropdownMenu } from "../components/shared/EnhancedDropdownMenu";
 import { Button } from "../components/shared/primitives/Button";
 import { Dropdown } from "../components/shared/primitives/Dropdown";
-import { Modal } from "../components/shared/primitives/Modal";
 import { Space } from "../components/shared/primitives/Space";
 import { UserAvatar } from "../components/shared/UserAvatar";
 import { UserNotifications } from "../components/user/UserNotifications";
 import { useMe } from "../hooks/useMe";
-import { Me } from "../components/user/Me";
 import { useGetUnreadNotificationsCountQuery } from "../services/api";
 import { logout } from "../slices/auth/authSlice";
+import { MyAccountSettingsModal } from "@app/components/user/MyAccountSettingsModal";
 
 export const LayoutRightContent = () => {
   const { me, isAdmin } = useMe();
@@ -76,15 +75,11 @@ export const LayoutRightContent = () => {
           />
         </Space>
       </Space>
-      <Modal
-        visible={userSettingsModalVisible}
-        onCancel={() => setUserSettingsModalVisible(false)}
-        title="Account"
-      >
-        <div style={{ padding: 8 }}>
-          <Me />
-        </div>
-      </Modal>
+      {userSettingsModalVisible && (
+        <MyAccountSettingsModal
+          onCancel={() => setUserSettingsModalVisible(false)}
+        />
+      )}
     </>
   );
 };

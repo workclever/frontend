@@ -20,7 +20,13 @@ export const LayoutWithHeader: React.FC<{
   };
 
   return (
-    <div className="inside-content">
+    <div
+      style={{
+        overflowX: "auto",
+        overflowY: "auto",
+        height: "calc(100vh - 20px)",
+      }}
+    >
       <PageHeader
         ghost={false}
         onBack={goBack}
@@ -29,7 +35,7 @@ export const LayoutWithHeader: React.FC<{
         subTitle={subTitle}
         extra={[<LayoutRightContent key="1" />]}
       ></PageHeader>
-      <div style={{ padding: 16 }}>{children}</div>
+      <div>{children}</div>
     </div>
   );
 };

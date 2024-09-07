@@ -27,6 +27,9 @@ export const ProjectBoards: React.FC<{ projectId: number }> = ({
       title: "Name",
       dataIndex: "Name",
       key: "name",
+      fieldProps: {
+        placeholder: "Board name",
+      },
     },
   ];
 
@@ -44,12 +47,12 @@ export const ProjectBoards: React.FC<{ projectId: number }> = ({
           execute: (values) => {
             createBoard({
               ProjectId: projectId,
-              ...values,
+              Name: values.Name,
             });
           },
         }}
         edit={{
-          modalTitle: "Update board",
+          triggerText: "Update board",
           execute: (item, values) => {
             updateBoard({
               BoardId: item.Id,
@@ -58,7 +61,7 @@ export const ProjectBoards: React.FC<{ projectId: number }> = ({
           },
         }}
         delete={{
-          modalTitle: "Delete board?",
+          triggerText: "Delete board?",
           execute: (item) => {
             deleteBoard(item.Id);
           },

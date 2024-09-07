@@ -9,6 +9,7 @@ type Props = {
   split?: React.ReactNode;
   wrap?: boolean;
   children: React.ReactNode;
+  fullWidth?: boolean;
 };
 
 export const Space: React.FC<Props> = ({
@@ -18,9 +19,10 @@ export const Space: React.FC<Props> = ({
   size,
   wrap,
   align,
+  fullWidth,
 }) => (
   <AntdSpace
-    style={style}
+    style={{ ...(fullWidth ? { width: "100%" } : {}), ...style }}
     direction={direction}
     size={size}
     wrap={wrap}

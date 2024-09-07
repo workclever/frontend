@@ -4,7 +4,6 @@ import {
   useUpdateSiteSettingMutation,
 } from "@app/services/api";
 import { ProDescriptions } from "@ant-design/pro-components";
-import { Title } from "@app/components/shared/primitives/Title";
 import { SiteSettings } from "@app/types/SiteSettings";
 
 const dateFormats = {
@@ -33,7 +32,6 @@ export const EditSiteSettings = () => {
 
   return (
     <>
-      <Title level={5}>Site settings</Title>
       <ProDescriptions<SiteSettings>
         column={1}
         bordered
