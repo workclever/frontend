@@ -9,7 +9,7 @@ import { TaskCommentsUnit } from "./units/TaskCommentsUnit";
 import { RenderTaskCustomFieldsUnit } from "./units/RenderTaskCustomFieldsUnit";
 import { TreeItem } from "./dnd/tree/types";
 import { gray } from "@ant-design/colors";
-import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
+import { ChevronDownIcon, ChevronRightIcon } from "lucide-react";
 
 const Wrapper = styled.div`
   flex: 1;
@@ -40,7 +40,7 @@ const ArrowIcon = ({
   return item.isOpen ? (
     <ChevronDownIcon onClick={onClick} size={12} style={{ color: gray[0] }} />
   ) : (
-    <ChevronUpIcon onClick={onClick} size={12} style={{ color: gray[0] }} />
+    <ChevronRightIcon onClick={onClick} size={12} style={{ color: gray[0] }} />
   );
 };
 
