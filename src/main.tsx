@@ -34,7 +34,16 @@ root.render(
             colorError: "#d22225",
             fontSize: 13,
             sizeStep: 4,
-            borderRadius: 6,
+            borderRadius: 0,
+          },
+          components: {
+            Select: {
+              colorBorder: "#eaeaea",
+            },
+            Descriptions: {
+              labelBg: "#f6f6f6",
+              colorTextLabel: "#444444",
+            },
           },
         }}
       >
