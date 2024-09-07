@@ -42,6 +42,7 @@ export const TaskAttachments: React.FC<{ task: TaskType }> = ({ task }) => {
 
   return (
     <TaskDetailBlock
+      key={defaultFileList.length}
       title="Attachments"
       showPlusIcon={false}
       defaultExpanded={defaultFileList.length > 0}
