@@ -6,6 +6,7 @@ import { HttpResult } from "@app/components/shared/HttpResult";
 import { TaskIdRenderer } from "@app/components/shared/TaskIdRenderer";
 import { useUpdateTaskPropertyMutation } from "@app/services/api";
 import { TaskParentsBreadCrumb } from "./TaskParentsBreadCrumb";
+import { PencilIcon } from "lucide-react";
 
 type Props = {
   task: TaskType;
@@ -33,6 +34,7 @@ export const TaskEditableTitle: React.FC<Props> = ({ task, onTaskSelect }) => {
           style={{ flex: 1, padding: 0, margin: 0, paddingLeft: 8 }}
           level={5}
           editable={{
+            icon: <PencilIcon size={12} />,
             triggerType: ["icon", "text"],
             autoSize: {
               maxRows: 4,

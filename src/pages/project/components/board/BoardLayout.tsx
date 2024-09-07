@@ -51,7 +51,7 @@ export const BoardLayout: React.FC<{
         <LeftColumn />
       </LeftWrapper>
       <RightWrapper>
-        <BoardHeader showBoardActions={mode === "board"} />
+        <BoardHeader mode={mode} />
         <ContentWrapper
           style={{
             height: getHeight(),

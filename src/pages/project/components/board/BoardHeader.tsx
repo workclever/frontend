@@ -1,12 +1,10 @@
 import { AppstoreOutlined, BranchesOutlined } from "@ant-design/icons";
-import { Input, Segmented } from "antd";
-import { debounce } from "lodash";
+import { Segmented } from "antd";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import {
   selectBoardViewType,
-  setBoardFilter,
   setBoardViewType,
 } from "@app/slices/project/projectSlice";
 import { BoardViewType } from "@app/types/Project";
@@ -14,6 +12,10 @@ import { BoardUserAvatars } from "./BoardUserAvatars";
 import { LayoutRightContent } from "@app/layout/LayoutRightContent";
 import { Space } from "@app/components/shared/primitives/Space";
 import { Divider } from "@app/components/shared/primitives/Divider";
+import { FilterTaskInput } from "./FilterTaskInput";
+import { TaskEditableTitle } from "./task-detail/TaskEditableTitle";
+import { selectSelectedTaskId } from "@app/slices/taskDetail/taskDetailSlice";
+import { useTask } from "@app/hooks/useTask";
 
 const Wrapper = styled.div`
   height: 45px;
@@ -29,30 +31,7 @@ const Wrapper = styled.div`
   background-color: white;
 `;
 
-const FilterInput = () => {
-  const dispatch = useDispatch();
-  const onChange = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(
-      setBoardFilter({
-        key: "filterText",
-        value: e.target.value,
-      })
-    );
-  }, 200);
-  return (
-    <Input
-      allowClear
-      onChange={onChange}
-      style={{ width: 120 }}
-      placeholder="Filter tasks..."
-      variant="borderless"
-    />
-  );
-};
-
-export const BoardHeader: React.FC<{ showBoardActions: boolean }> = ({
-  showBoardActions,
-}) => {
+export const BoardHeader: React.FC<{ mode: "board" | "task" }> = ({ mode }) => {
   const dispatch = useDispatch();
   const boardViewType = useSelector(selectBoardViewType);
 
@@ -62,14 +41,12 @@ export const BoardHeader: React.FC<{ showBoardActions: boolean }> = ({
     }, 300);
   };
 
-  return (
-    <Wrapper>
-      {showBoardActions && (
-        <Space>
-          <FilterInput />
-          <BoardUserAvatars />
-        </Space>
-      )}
+  const boardComponents = (
+    <>
+      <Space>
+        <FilterTaskInput />
+        <BoardUserAvatars />
+      </Space>
       <div style={{ flex: 1 }} />
       <Segmented
         size="small"
@@ -88,6 +65,23 @@ export const BoardHeader: React.FC<{ showBoardActions: boolean }> = ({
           },
         ]}
       />
+    </>
+  );
+
+  const selectedTaskId = useSelector(selectSelectedTaskId);
+  const task = useTask(selectedTaskId);
+
+  const taskComponents = task && (
+    <>
+      <TaskEditableTitle task={task} onTaskSelect={() => {}} />
+      <div style={{ flex: 1 }} />
+    </>
+  );
+
+  return (
+    <Wrapper>
+      {mode === "board" && boardComponents}
+      {mode === "task" && taskComponents}
       <Divider type="vertical" style={{ height: "100%" }} />
       <LayoutRightContent />
     </Wrapper>

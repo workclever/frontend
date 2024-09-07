@@ -11,7 +11,6 @@ import { TaskSubtasks } from "./task-subtasks/TaskSubtasks";
 import { TaskCustomFieldsRenderer } from "./custom-fields/TaskCustomFieldsRenderer";
 import { TaskDelete } from "./TaskDelete";
 import { TaskAttachments } from "./TaskAttachments";
-import { TaskEditableTitle } from "./TaskEditableTitle";
 import { Tabs, TabPane } from "@app/components/shared/primitives/Tabs";
 import { Space } from "@app/components/shared/primitives/Space";
 import { Divider } from "@app/components/shared/primitives/Divider";
@@ -79,13 +78,6 @@ export const TaskDetail: React.FC<Props> = ({
 }) => {
   const { goToTask } = useAppNavigate();
 
-  const Pad: React.FC<{
-    children: React.ReactNode;
-    style?: React.CSSProperties;
-  }> = (props) => (
-    <div style={{ padding: 4, ...props.style }}>{props.children}</div>
-  );
-
   const onTaskSelect = (task: TaskType) => {
     goToTask(task);
   };
@@ -100,11 +92,6 @@ export const TaskDetail: React.FC<Props> = ({
             borderRight: "1px solid #eaeaea",
           }}
         >
-          <Pad style={{ paddingLeft: 16, paddingTop: 16 }}>
-            <TaskEditableTitle task={task} onTaskSelect={onTaskSelect} />
-          </Pad>
-
-          <Divider style={{ margin: 0, padding: 0 }} />
           <div style={{ padding: 16 }}>
             <TaskEditableDescription task={task} />
             <div style={{ marginTop: 8 }}>

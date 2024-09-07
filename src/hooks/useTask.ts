@@ -1,7 +1,7 @@
 import { useGetTaskQuery } from "../services/api";
 import { useProjectTasks } from "./useProjectTasks";
 
-export const useTask = (taskId: number | null) => {
+export const useTask = (taskId?: number | null) => {
   const tasks = useProjectTasks();
   const foundInTasks = tasks[taskId as number];
 

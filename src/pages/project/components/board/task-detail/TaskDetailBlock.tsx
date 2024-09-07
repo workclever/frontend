@@ -1,13 +1,13 @@
-import {
-  DownCircleOutlined,
-  PlusOutlined,
-  UpCircleOutlined,
-} from "@ant-design/icons";
 import React from "react";
 import styled from "styled-components";
 import { Button, ButtonProps } from "@app/components/shared/primitives/Button";
 import { Space } from "@app/components/shared/primitives/Space";
 import { Text } from "@app/components/shared/primitives/Text";
+import {
+  ChevronDownCircleIcon,
+  ChevronUpCircleIcon,
+  PlusIcon,
+} from "lucide-react";
 
 const Content = styled.div`
   margin-top: 4px;
@@ -37,19 +37,19 @@ export const TaskDetailBlock: React.FC<{
 
   const plusButton = showPlusIcon && (
     <IconedButton
-      icon={<PlusOutlined style={{ fontSize: 12 }} />}
+      icon={<PlusIcon size={12} />}
       onClick={() => onClickPlusIcon && onClickPlusIcon()}
     />
   );
 
   const collapseButton = !expanded ? (
     <IconedButton
-      icon={<DownCircleOutlined style={{ fontSize: 12 }} />}
+      icon={<ChevronDownCircleIcon size={12} />}
       onClick={toggleExpand}
     />
   ) : (
     <IconedButton
-      icon={<UpCircleOutlined style={{ fontSize: 12 }} />}
+      icon={<ChevronUpCircleIcon size={12} />}
       onClick={toggleExpand}
     />
   );

@@ -2,6 +2,7 @@ import { put, take, takeEvery } from "redux-saga/effects";
 import {
   loadTaskDetailFinished,
   loadTaskDetailStarted,
+  setSelectedTaskId,
 } from "./taskDetailSlice";
 import { api } from "../../services/api";
 import { RtkQueryOutput } from "../types";
@@ -31,6 +32,10 @@ function* handleLoadTaskDetailStarted({
 
     if (data.payload.Data.BoardId) {
       yield put(setSelectedBoardId(data.payload.Data.BoardId));
+    }
+
+    if (data.payload.Data.Id) {
+      yield put(setSelectedTaskId(data.payload.Data.Id));
     }
 
     yield put(loadTaskDetailFinished());
