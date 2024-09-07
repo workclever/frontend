@@ -30,8 +30,8 @@ export const useKanbanBoardData = (projectId: number) => {
     }
     const filteredUserIds = boardFilters.userIds || [];
     if (filteredUserIds.length > 0) {
-      nonSubtasksFiltered = nonSubtasksFiltered.filter(
-        (r) => filteredUserIds.indexOf(r.AssigneeUserId) > -1
+      nonSubtasksFiltered = nonSubtasksFiltered.filter((r) =>
+        filteredUserIds.filter((f) => r.AssigneeUserIds.includes(f))
       );
     }
 

@@ -7,6 +7,7 @@ import { UpdateTaskPropertyParams } from "@app/types/Task";
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit";
 
 // TODO fix ts-ignore
+// undo return
 export const taskUpdateLocalState = (
   task: TaskType,
   params: UpdateTaskPropertyParams | UpdateTaskPropertyParams[],

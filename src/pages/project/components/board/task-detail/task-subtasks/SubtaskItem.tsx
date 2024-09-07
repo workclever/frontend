@@ -43,9 +43,9 @@ export const SubtaskItem: React.FC<{
               </Space>
             </div>
             <Space>
-              {task.AssigneeUserId ? (
-                <UserAvatar userId={task.AssigneeUserId} />
-              ) : null}
+              {task.AssigneeUserIds.map((r) => {
+                return <UserAvatar key={r} userId={r} />;
+              })}
             </Space>
           </HoverableListItem>
         }

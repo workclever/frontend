@@ -64,9 +64,10 @@ const ChangeLogValues: React.FC<{ item: TaskChangeLogType }> = ({ item }) => {
   if (Property === "ReporterUserId") {
     return <ChangeLogUserId type="Reporter" item={item} />;
   }
-  if (Property === "AssigneeUserId") {
-    return <ChangeLogUserId type="Assignee" item={item} />;
-  }
+  // TODO changelog
+  // if (Property === "AssigneeUserId") {
+  //   return <ChangeLogUserId type="Assignee" item={item} />;
+  // }
   if (Property === "ColumnId") {
     return <ChangeLogColumnId item={item} />;
   }

@@ -19,7 +19,7 @@ export const BoardUserAvatars = () => {
     (r) => r.BoardId === selectedBoardId
   );
   const reporterIds = tasksInBoard.map((r) => r.ReporterUserId);
-  const assignedIds = tasksInBoard.map((r) => r.AssigneeUserId);
+  const assignedIds = tasksInBoard.map((r) => r.AssigneeUserIds).flat();
   const userIds = uniq([...reporterIds, ...assignedIds]).filter((r) => !!r);
 
   const onUserClick = (userId: number) => {

@@ -1,4 +1,4 @@
-import { Select } from "antd";
+import { Select, SelectProps } from "antd";
 import React from "react";
 import {
   useListAllUsersQuery,
@@ -10,24 +10,24 @@ import { DefaultOptionType } from "antd/lib/select";
 
 type Props = {
   title: string;
-  selectedUserId: number;
+  selectedUserIds: number[];
   selectedProjectId: number;
   loading: boolean;
-  onChange: (userId: number) => void;
+  onChange: (userId: number[]) => void;
   disabled?: boolean;
   withAllUsers?: boolean;
-  unSelectedText: string;
+  mode?: SelectProps["mode"];
 };
 
 export const UserSelector: React.FC<Props> = ({
   title,
-  selectedUserId,
+  selectedUserIds,
   selectedProjectId,
   loading,
   onChange,
   disabled,
   withAllUsers,
-  unSelectedText,
+  mode,
 }) => {
   const { data: users } = useListProjectUsersQuery(Number(selectedProjectId), {
     skip: !selectedProjectId,
@@ -42,6 +42,20 @@ export const UserSelector: React.FC<Props> = ({
     return spanPath.toLowerCase().indexOf(input.toLowerCase()) >= 0;
   };
 
+  const onChangeLocal = (value: number[]) => {
+    onChange(value);
+  };
+
+  const getValue = () => {
+    return !selectedUserIds ||
+      selectedUserIds.length === 0 ||
+      (selectedUserIds.length === 1 && selectedUserIds[0] === 0)
+      ? undefined
+      : selectedUserIds;
+  };
+
+  const withOnlyAvatar = selectedUserIds?.length > 1;
+
   return (
     <div>
       <Text>{title}</Text>
@@ -49,18 +63,25 @@ export const UserSelector: React.FC<Props> = ({
         showSearch
         style={{ width: "100%" }}
         placeholder="User select"
-        value={selectedUserId}
-        onChange={(value) => onChange(value || 0)}
-        allowClear={selectedUserId !== 0}
-        onClear={() => onChange && onChange(0)}
+        value={getValue()}
+        onChange={onChangeLocal}
+        allowClear={selectedUserIds?.length > 0}
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         filterOption={onFilter}
         loading={loading}
         disabled={loading || disabled}
         showArrow={!disabled}
+        mode={mode}
+        tagRender={
+          withOnlyAvatar
+            ? (value) => {
+                return <UserAvatar userId={value.value} />;
+              }
+            : undefined
+        }
       >
-        {[{ Id: 0, FullName: unSelectedText }, ...computedUsers].map((user) => (
+        {[...computedUsers].map((user) => (
           // Update onFilter when renderer changed
           <Select.Option key={user.Id} value={user.Id}>
             <UserAvatar userId={user.Id} />

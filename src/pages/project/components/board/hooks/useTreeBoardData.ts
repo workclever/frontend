@@ -41,8 +41,8 @@ export const useTreeBoardData = (projectId: number) => {
 
     const filteredUserIds = boardFilters.userIds || [];
     if (filteredUserIds.length > 0) {
-      tasksInBoardFiltered = tasksInBoardFiltered.filter(
-        (r) => filteredUserIds.indexOf(r.AssigneeUserId) > -1
+      tasksInBoardFiltered = tasksInBoardFiltered.filter((r) =>
+        filteredUserIds.filter((f) => r.AssigneeUserIds.includes(f))
       );
     }
 

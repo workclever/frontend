@@ -28,17 +28,18 @@ type Props = {
 
 const Reporter: React.FC<Pick<Props, "task">> = ({ task }) => {
   return (
-    <UserSelector
-      title="Reporter"
-      disabled={true}
-      selectedUserId={task.ReporterUserId}
-      selectedProjectId={task.ProjectId}
-      loading={false}
-      onChange={() => {
-        /* */
-      }}
-      unSelectedText="Unassigned"
-    />
+    <div style={{ width: 150 }}>
+      <UserSelector
+        title="Reporter"
+        disabled={true}
+        selectedUserIds={[task.ReporterUserId]}
+        selectedProjectId={task.ProjectId}
+        loading={false}
+        onChange={() => {
+          /* */
+        }}
+      />
+    </div>
   );
 };
 
@@ -47,26 +48,26 @@ const Assignee: React.FC<Pick<Props, "task">> = ({ task }) => {
     useUpdateTaskAssigneeUserMutation();
 
   return (
-    <>
+    <div style={{ width: 200 }}>
       <UserSelector
         title="Assignee"
-        selectedUserId={task.AssigneeUserId}
+        selectedUserIds={task.AssigneeUserIds}
         selectedProjectId={task.ProjectId}
         loading={isAssigneeUpdating}
-        onChange={async (userId) =>
+        onChange={async (userIds) =>
           updateAssignee({
             Task: task,
-            UserId: userId,
+            UserIds: userIds,
           })
         }
-        unSelectedText="Unassigned"
+        mode="multiple"
       />
       {/* <HttpResult
         error={updateAssigneeError}
         result={updateAssigneeResult}
         style={{ marginTop: 4 }}
       /> */}
-    </>
+    </div>
   );
 };
 

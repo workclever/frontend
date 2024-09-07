@@ -34,7 +34,7 @@ export type TaskType = {
   Title: string;
   Description: string;
   ReporterUserId: number;
-  AssigneeUserId: number;
+  AssigneeUserIds: number[];
   ParentTaskItemId: number | null;
   Order: number;
   Slug: string;

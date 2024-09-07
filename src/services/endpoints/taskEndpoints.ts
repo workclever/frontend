@@ -66,22 +66,22 @@ export const taskEndpoints = (builder: Builder) => ({
     BaseOutput<string>,
     {
       Task: TaskType;
-      UserId: number;
+      UserIds: number[];
     }
   >({
     query: (body) => ({
       url: "/Task/UpdateTaskAssigneeUser",
       method: "POST",
       body: {
-        UserId: body.UserId,
+        UserIds: body.UserIds,
         TaskId: body.Task.Id,
       },
     }),
     invalidatesTags: ["ChangeLog"],
-    async onQueryStarted({ Task, UserId }, { dispatch, queryFulfilled }) {
+    async onQueryStarted({ Task, UserIds }, { dispatch, queryFulfilled }) {
       const { patchResult1, patchResult2 } = taskUpdateLocalState(
         Task,
-        { property: "AssigneeUserId", value: UserId },
+        { property: "AssigneeUserIds", value: UserIds },
         dispatch
       );
       try {

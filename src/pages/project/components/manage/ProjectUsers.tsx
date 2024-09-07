@@ -146,15 +146,18 @@ export const ProjectUsers: React.FC<{ projectId: number }> = ({
   return (
     <>
       <Space direction="vertical">
-        <UserSelector
-          title="Add a new user to the project"
-          selectedUserId={newUserId}
-          selectedProjectId={projectId}
-          onChange={setNewUserId}
-          loading={false}
-          withAllUsers
-          unSelectedText="Unselected"
-        />
+        <div style={{ width: 180 }}>
+          <UserSelector
+            title="Add a new user to the project"
+            selectedUserIds={[newUserId]}
+            selectedProjectId={projectId}
+            onChange={(userIds) => {
+              setNewUserId(Number(userIds) || 0);
+            }}
+            loading={false}
+            withAllUsers
+          />
+        </div>
         <Button
           disabled={!newUserId}
           type="primary"
