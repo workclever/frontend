@@ -1,7 +1,7 @@
 import { PageHeader } from "@ant-design/pro-components";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { LayoutRightContent } from "./LayoutRightContent";
+import { BoardHeaderRightContent } from "./BoardHeaderRightContent";
 
 export const LayoutWithHeader: React.FC<{
   children: React.ReactElement;
@@ -33,7 +33,7 @@ export const LayoutWithHeader: React.FC<{
         backIcon={hideBackButton}
         title={title}
         subTitle={subTitle}
-        extra={[<LayoutRightContent key="1" />]}
+        extra={[<BoardHeaderRightContent key="1" />]}
       ></PageHeader>
       <div>{children}</div>
     </div>

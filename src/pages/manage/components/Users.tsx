@@ -19,6 +19,7 @@ import { EditRolesModal } from "./users/EditRolesModal";
 import { EditUserModal } from "./users/EditUserModal";
 import { Text } from "@app/components/shared/primitives/Text";
 import { Space } from "@app/components/shared/primitives/Space";
+import { Alert } from "@app/components/shared/primitives/Alert";
 
 const TableUserDetail: React.FC<{ user: BasicUserOutput }> = ({ user }) => {
   const { data: userAssignedProjectIds } = useGetUserAssignedProjectIdsQuery(
@@ -147,7 +148,11 @@ export const Users = () => {
   };
 
   return (
-    <>
+    <Space direction="vertical" fullWidth>
+      <Alert
+        type="info"
+        message="Manage the users in your site. This list contains all of your users."
+      />
       <ProTable
         columns={columns}
         dataSource={getDataSource()}
@@ -182,6 +187,6 @@ export const Users = () => {
           onExit={() => setEditingRolesUser(undefined)}
         />
       )}
-    </>
+    </Space>
   );
 };

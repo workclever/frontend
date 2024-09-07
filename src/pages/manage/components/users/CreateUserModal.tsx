@@ -1,6 +1,8 @@
 import { ModalForm, ProForm, ProFormText } from "@ant-design/pro-components";
 import { useCreateUserMutation } from "@app/services/api";
 import { HttpResult } from "@app/components/shared/HttpResult";
+import { Space } from "@app/components/shared/primitives/Space";
+import { UserIcon } from "lucide-react";
 
 type FormValuesType = {
   Email: string;
@@ -24,7 +26,12 @@ export const CreateUserModal: React.FC<{
 
   return (
     <ModalForm<FormValuesType>
-      title={"Create user"}
+      title={
+        <Space>
+          <UserIcon size={15} />
+          <span>Create user</span>
+        </Space>
+      }
       open
       autoFocusFirstInput
       modalProps={{

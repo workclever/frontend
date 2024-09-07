@@ -12,9 +12,9 @@ import { useMe } from "../hooks/useMe";
 import { useGetUnreadNotificationsCountQuery } from "../services/api";
 import { logout } from "../slices/auth/authSlice";
 import { MyAccountSettingsModal } from "@app/components/user/MyAccountSettingsModal";
-import { BellIcon } from "lucide-react";
+import { BellIcon, ShieldPlusIcon } from "lucide-react";
 
-export const LayoutRightContent = () => {
+export const BoardHeaderRightContent = () => {
   const { me, isAdmin } = useMe();
   const userId = me?.Id as number;
   const dispatch = useDispatch();
@@ -34,7 +34,10 @@ export const LayoutRightContent = () => {
       <Space>
         {isAdmin && (
           <Link to="/manage">
-            <Button type="text">Admin</Button>
+            <Button type="text">
+              <ShieldPlusIcon size={15} />
+              Manage site
+            </Button>
           </Link>
         )}
         <Space size="large">

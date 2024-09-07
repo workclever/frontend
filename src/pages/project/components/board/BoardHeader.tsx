@@ -8,7 +8,7 @@ import {
 } from "@app/slices/project/projectSlice";
 import { BoardViewType } from "@app/types/Project";
 import { BoardUserAvatars } from "./BoardUserAvatars";
-import { LayoutRightContent } from "@app/layout/LayoutRightContent";
+import { BoardHeaderRightContent } from "@app/layout/BoardHeaderRightContent";
 import { Space } from "@app/components/shared/primitives/Space";
 import { Divider } from "@app/components/shared/primitives/Divider";
 import { FilterTaskInput } from "./FilterTaskInput";
@@ -89,7 +89,7 @@ export const BoardHeader: React.FC<{ mode: "board" | "task" }> = ({ mode }) => {
       {mode === "board" && boardComponents}
       {mode === "task" && taskComponents}
       <Divider type="vertical" style={{ height: "100%" }} />
-      <LayoutRightContent />
+      <BoardHeaderRightContent />
     </Wrapper>
   );
 };

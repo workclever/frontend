@@ -50,45 +50,43 @@ export const RelationshipTypeDefinitions = () => {
   const [deleteDef] = useDeleteTaskRelationTypeDefMutation();
 
   return (
-    <>
-      <Space direction="vertical" fullWidth>
-        <Alert
-          type="info"
-          message={`
+    <Space direction="vertical" fullWidth>
+      <Alert
+        type="info"
+        message={`
             If you want to be able to connect your tasks with relations, you can create them here.
             For example you can create 2 relationship definition called "Blocks" and "Blocked by" and use them to connect your tasks.
             `}
-        />
-        <CrudEditor<TaskRelationTypeDef>
-          columns={columns}
-          dataSource={data || []}
-          create={{
-            triggerText: "Create new task relation type definition",
-            execute: (values) => {
-              createDef({
-                ...values,
-              });
-            },
-          }}
-          edit={{
-            triggerText: "Update relation type",
-            execute: (item, values) => {
-              updateDef({
-                Id: item.Id,
-                InwardOperationName: values.InwardOperationName,
-                OutwardOperationName: values.OutwardOperationName,
-                Type: values.Type,
-              });
-            },
-          }}
-          delete={{
-            triggerText: "Delete this relation type definition?",
-            execute: (item) => {
-              deleteDef(item.Id);
-            },
-          }}
-        />
-      </Space>
-    </>
+      />
+      <CrudEditor<TaskRelationTypeDef>
+        columns={columns}
+        dataSource={data || []}
+        create={{
+          triggerText: "Create new task relation type definition",
+          execute: (values) => {
+            createDef({
+              ...values,
+            });
+          },
+        }}
+        edit={{
+          triggerText: "Update relation type",
+          execute: (item, values) => {
+            updateDef({
+              Id: item.Id,
+              InwardOperationName: values.InwardOperationName,
+              OutwardOperationName: values.OutwardOperationName,
+              Type: values.Type,
+            });
+          },
+        }}
+        delete={{
+          triggerText: "Delete this relation type definition?",
+          execute: (item) => {
+            deleteDef(item.Id);
+          },
+        }}
+      />
+    </Space>
   );
 };

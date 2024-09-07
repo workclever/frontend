@@ -5,6 +5,8 @@ import {
 } from "@app/services/api";
 import { ProDescriptions } from "@ant-design/pro-components";
 import { SiteSettings } from "@app/types/SiteSettings";
+import { Alert } from "@app/components/shared/primitives/Alert";
+import { Space } from "@app/components/shared/primitives/Space";
 
 const dateFormats = {
   "DD/MM/YYYY": "DD/MM/YYYY",
@@ -31,7 +33,11 @@ export const EditSiteSettings = () => {
   }
 
   return (
-    <>
+    <Space direction="vertical" fullWidth>
+      <Alert
+        type="info"
+        message="Update settings for your website. Timezone can be overriden individually by user accounts."
+      />
       <ProDescriptions<SiteSettings>
         column={1}
         bordered
@@ -88,6 +94,6 @@ export const EditSiteSettings = () => {
           {siteSettings.Data.DefaultDateTimeFormat}
         </ProDescriptions.Item>
       </ProDescriptions>
-    </>
+    </Space>
   );
 };
