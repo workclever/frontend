@@ -12,7 +12,7 @@ import { CreateBoardModal } from "./CreateBoardModal";
 import { useListUserProjectsQuery } from "@app/services/api";
 import { EnhancedDropdownMenu } from "@app/components/shared/EnhancedDropdownMenu";
 import {
-  ArrowLeftIcon,
+  ChevronLeftIcon,
   HelpCircleIcon,
   PlusIcon,
   SettingsIcon,
@@ -33,6 +33,9 @@ const Header = styled.div`
   padding: 14px;
   width: 250px;
   cursor: pointer;
+  height: 45px;
+  display: flex;
+  align-items: center;
 `;
 
 const BottomWrapper = styled.div`
@@ -74,7 +77,7 @@ export const LeftColumn = () => {
               onClick={() => navigate(-1)}
               style={{ display: "flex", alignItems: "center" }}
             >
-              <ArrowLeftIcon size={25} style={{ paddingRight: 8 }} />
+              <ChevronLeftIcon size={24} style={{ paddingRight: 8 }} />
               Back
             </div>
           }

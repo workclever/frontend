@@ -24,7 +24,7 @@ export const TaskSearchInput: React.FC<{
     });
   };
 
-  const existingTask = useTask(Number(value));
+  const { task: existingTask } = useTask(Number(value));
   const debouncedSearch = debounce(onSearch, 150);
   const foundTasks = data?.Data || [];
   const allTasks = [...foundTasks, existingTask].filter(Boolean) as TaskType[];

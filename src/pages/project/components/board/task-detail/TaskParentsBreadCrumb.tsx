@@ -12,7 +12,7 @@ type Props = {
 };
 
 const ParentTaskItem: React.FC<Props> = ({ task, onTaskSelect }) => {
-  const parentTask = useTask(task.ParentTaskItemId);
+  const { task: parentTask } = useTask(task.ParentTaskItemId);
 
   if (!task.ParentTaskItemId || !parentTask) {
     return null;

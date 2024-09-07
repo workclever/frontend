@@ -20,7 +20,7 @@ export const RelationItem: React.FC<{
   onUpdate: () => void;
   onTaskSelect: (task: TaskType) => void;
 }> = ({ baseTask, taskRelation, onUpdate, onTaskSelect }) => {
-  const relatedTask = useTask(taskRelation.TaskId);
+  const { task: relatedTask } = useTask(taskRelation.TaskId);
   const [editing, setEditing] = React.useState(false);
   const [deleting, setDeleting] = React.useState(false);
 

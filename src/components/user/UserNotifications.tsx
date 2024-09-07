@@ -19,7 +19,7 @@ import { Text } from "../shared/primitives/Text";
 import { gray } from "@ant-design/colors";
 
 const TaskInfo: React.FC<{ taskId: number | null }> = ({ taskId }) => {
-  const task = useTask(taskId);
+  const { task } = useTask(taskId);
   if (!task) {
     return null;
   }
@@ -61,7 +61,7 @@ export const UserNotifications: React.FC<{ showAll: boolean }> = ({
 
   const navigate = useNavigate();
   const { goToTask } = useAppNavigate();
-  const tasks = useProjectTasks();
+  const { tasks } = useProjectTasks();
 
   // TODO: check no data chinese text
   return (
@@ -96,7 +96,7 @@ export const UserNotifications: React.FC<{ showAll: boolean }> = ({
       onRow={(record: UserNotificationType) => ({
         onClick: () => {
           if (record.TaskId) {
-            const task = tasks[record.TaskId];
+            const task = tasks?.find((r) => r.Id === record.TaskId);
             if (task) {
               goToTask(task);
             }

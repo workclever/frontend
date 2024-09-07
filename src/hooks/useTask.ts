@@ -2,14 +2,17 @@ import { useGetTaskQuery } from "../services/api";
 import { useProjectTasks } from "./useProjectTasks";
 
 export const useTask = (taskId?: number | null) => {
-  const tasks = useProjectTasks();
-  const foundInTasks = tasks[taskId as number];
+  const { tasks, isTasksLoading } = useProjectTasks();
+  const foundInTasks = tasks?.find((r) => r.Id === taskId);
 
-  const { data } = useGetTaskQuery(Number(taskId), {
+  const { data, isLoading } = useGetTaskQuery(Number(taskId), {
     skip: !taskId || !!foundInTasks,
   });
 
   const foundTask = data?.Data;
 
-  return foundInTasks || foundTask;
+  return {
+    task: foundInTasks || foundTask,
+    isLoading: isTasksLoading || isLoading,
+  };
 };

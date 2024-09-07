@@ -16,6 +16,7 @@ import { TaskEditableTitle } from "./task-detail/TaskEditableTitle";
 import { selectSelectedTaskId } from "@app/slices/taskDetail/taskDetailSlice";
 import { useTask } from "@app/hooks/useTask";
 import { NetworkIcon, SquareDashedKanbanIcon } from "lucide-react";
+import { LoadingSpin } from "@app/components/shared/primitives/LoadingSpin";
 
 const Wrapper = styled.div`
   height: 45px;
@@ -69,11 +70,16 @@ export const BoardHeader: React.FC<{ mode: "board" | "task" }> = ({ mode }) => {
   );
 
   const selectedTaskId = useSelector(selectSelectedTaskId);
-  const task = useTask(selectedTaskId);
+  const { task } = useTask(selectedTaskId);
 
-  const taskComponents = task && (
+  const taskComponents = task ? (
     <>
       <TaskEditableTitle task={task} onTaskSelect={() => {}} />
+      <div style={{ flex: 1 }} />
+    </>
+  ) : (
+    <>
+      <LoadingSpin size="small" />
       <div style={{ flex: 1 }} />
     </>
   );
