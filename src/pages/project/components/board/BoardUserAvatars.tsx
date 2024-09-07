@@ -12,10 +12,10 @@ import { UserAvatar } from "@app/components/shared/UserAvatar";
 export const BoardUserAvatars = () => {
   const dispatch = useDispatch();
   const selectedBoardId = useSelector(selectSelectedBoardId);
-  const tasks = useProjectTasks();
+  const { tasks } = useProjectTasks();
   const filteredUserIds = useSelector(selectBoardFilters).userIds || [];
 
-  const tasksInBoard = Object.values(tasks).filter(
+  const tasksInBoard = (tasks || []).filter(
     (r) => r.BoardId === selectedBoardId
   );
   const reporterIds = tasksInBoard.map((r) => r.ReporterUserId);
