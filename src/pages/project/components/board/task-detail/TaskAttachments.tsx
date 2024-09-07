@@ -1,6 +1,5 @@
 import { TaskType } from "@app/types/Project";
 import { Upload, message, UploadProps } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
 import { UploadChangeParam } from "antd/lib/upload";
 import { API_URL, BACKEND_URL } from "@app/constants";
 import { selectAuthToken } from "@app/slices/auth/authSlice";
@@ -9,6 +8,7 @@ import { useListTaskAttachmentsQuery } from "@app/services/api";
 import { UploadFile } from "antd/lib/upload/interface";
 import { TaskDetailBlock } from "./TaskDetailBlock";
 import { Button } from "@app/components/shared/primitives/Button";
+import { UploadIcon } from "lucide-react";
 
 export const TaskAttachments: React.FC<{ task: TaskType }> = ({ task }) => {
   const token = useSelector(selectAuthToken);
@@ -51,7 +51,7 @@ export const TaskAttachments: React.FC<{ task: TaskType }> = ({ task }) => {
         {...props}
         defaultFileList={defaultFileList}
       >
-        <Button icon={<UploadOutlined />}>Click to Upload</Button>
+        <Button icon={<UploadIcon size={12} />}>Click to Upload</Button>
       </Upload>
     </TaskDetailBlock>
   );

@@ -1,7 +1,7 @@
-import { LayoutOutlined } from "@ant-design/icons";
 import { useAppNavigate } from "@app/hooks/useAppNavigate";
 import { useListAllBoardsQuery } from "@app/services/api";
 import { Command } from "cmdk";
+import { SquareDashedKanbanIcon } from "lucide-react";
 
 export const CommandMenuBoards: React.FC<{
   search: string;
@@ -27,7 +27,10 @@ export const CommandMenuBoards: React.FC<{
             onClose();
           }}
         >
-          <LayoutOutlined style={{ marginRight: 8, color: "gray" }} />
+          <SquareDashedKanbanIcon
+            size={12}
+            style={{ marginRight: 8, color: "gray" }}
+          />
           {board.Name}
         </Command.Item>
       ))}

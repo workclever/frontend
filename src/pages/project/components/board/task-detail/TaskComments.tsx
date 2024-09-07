@@ -1,4 +1,3 @@
-import { CloseOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { List, Form, ConfigProvider } from "antd";
 import { Comment as AntdComment } from "@ant-design/compatible";
 import React from "react";
@@ -21,6 +20,7 @@ import { Button } from "@app/components/shared/primitives/Button";
 import { Tooltip } from "@app/components/shared/primitives/Tooltip";
 import { LoadingSpin } from "@app/components/shared/primitives/LoadingSpin";
 import { Text } from "@app/components/shared/primitives/Text";
+import { XIcon, PencilIcon, TrashIcon } from "lucide-react";
 
 type Props = {
   task: TaskType;
@@ -42,7 +42,7 @@ const Comment: React.FC<{
         size="small"
         type="text"
         onClick={() => setEditing(!editing)}
-        icon={editing ? <CloseOutlined /> : <EditOutlined />}
+        icon={editing ? <XIcon size={12} /> : <PencilIcon size={12} />}
       />
     </Tooltip>
   );
@@ -65,7 +65,7 @@ const Comment: React.FC<{
         <LoadingSpin />
       ) : (
         <Tooltip title="Delete comment">
-          <Button size="small" type="text" icon={<DeleteOutlined />} />
+          <Button size="small" type="text" icon={<TrashIcon size={12} />} />
         </Tooltip>
       )}
     </Confirm.Embed>

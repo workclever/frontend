@@ -5,17 +5,13 @@ import { setToken } from "../../slices/auth/authSlice";
 import { useDispatch } from "react-redux";
 import { HttpResult } from "../../components/shared/HttpResult";
 import {
-  MailOutlined,
-  LockOutlined,
-  RightCircleOutlined,
-} from "@ant-design/icons";
-import {
   ProFormText,
   ProFormCheckbox,
   LoginFormPage,
 } from "@ant-design/pro-components";
 import { Space } from "../../components/shared/primitives/Space";
 import { Button } from "../../components/shared/primitives/Button";
+import { ChevronRightCircleIcon, LockIcon, MailIcon } from "lucide-react";
 
 type FormValuesType = { Email: string; Password: string };
 
@@ -74,7 +70,7 @@ export const LoginPage: React.FC = () => {
           <Link to="/register">
             <Space>
               Register
-              <RightCircleOutlined />
+              <ChevronRightCircleIcon />
             </Space>
           </Link>
         }
@@ -88,7 +84,7 @@ export const LoginPage: React.FC = () => {
             name="Email"
             fieldProps={{
               size: "large",
-              prefix: <MailOutlined />,
+              prefix: <MailIcon />,
             }}
             placeholder="Email"
             rules={[
@@ -102,7 +98,7 @@ export const LoginPage: React.FC = () => {
             name="Password"
             fieldProps={{
               size: "large",
-              prefix: <LockOutlined />,
+              prefix: <LockIcon />,
             }}
             placeholder={"Password"}
             rules={[

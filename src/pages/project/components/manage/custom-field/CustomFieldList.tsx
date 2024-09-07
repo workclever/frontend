@@ -1,4 +1,3 @@
-import { EditOutlined } from "@ant-design/icons";
 import { Table } from "antd";
 import React from "react";
 import { Button } from "@app/components/shared/primitives/Button";
@@ -9,6 +8,7 @@ import {
   createCustomFieldValues,
   CustomFieldEditorForm,
 } from "./CustomFieldEditorForm";
+import { PencilIcon } from "lucide-react";
 
 export const CustomFieldList: React.FC<{ projectId: number }> = ({
   projectId,
@@ -73,7 +73,7 @@ export const CustomFieldList: React.FC<{ projectId: number }> = ({
                 setShowFormModalVisible(true);
               }}
             >
-              <EditOutlined /> Click to modify
+              <PencilIcon /> Click to modify
             </span>
           </>
         );

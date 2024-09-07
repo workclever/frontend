@@ -3,8 +3,8 @@ import { Tooltip } from "@app/components/shared/primitives/Tooltip";
 import { TaskIdRenderer } from "@app/components/shared/TaskIdRenderer";
 import { TaskType } from "@app/types/Project";
 import { useTask } from "@app/hooks/useTask";
-import { RightOutlined } from "@ant-design/icons";
 import { gray } from "@ant-design/colors";
+import { ChevronRightIcon } from "lucide-react";
 
 type Props = {
   task: TaskType;
@@ -24,10 +24,10 @@ const ParentTaskItem: React.FC<Props> = ({ task, onTaskSelect }) => {
       <Tooltip title={parentTask.Title}>
         <div style={{ display: "flex", alignItems: "center" }}>
           <TaskIdRenderer task={parentTask} />
-          <RightOutlined
+          <ChevronRightIcon
+            size={30}
             onClick={() => onTaskSelect(parentTask)}
             style={{
-              fontSize: 8,
               paddingLeft: 8,
               paddingRight: 8,
               color: gray[0],

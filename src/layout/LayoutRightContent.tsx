@@ -1,4 +1,3 @@
-import { NotificationOutlined } from "@ant-design/icons";
 import { Badge } from "antd";
 import React from "react";
 import { useDispatch } from "react-redux";
@@ -13,6 +12,7 @@ import { useMe } from "../hooks/useMe";
 import { useGetUnreadNotificationsCountQuery } from "../services/api";
 import { logout } from "../slices/auth/authSlice";
 import { MyAccountSettingsModal } from "@app/components/user/MyAccountSettingsModal";
+import { BellIcon } from "lucide-react";
 
 export const LayoutRightContent = () => {
   const { me, isAdmin } = useMe();
@@ -49,7 +49,7 @@ export const LayoutRightContent = () => {
           >
             <span style={{ cursor: "pointer" }}>
               <Badge count={unreadNotificationsCount?.Data}>
-                <NotificationOutlined />
+                <BellIcon size={15} />
               </Badge>
             </span>
           </Dropdown>

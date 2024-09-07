@@ -1,13 +1,9 @@
-import {
-  CloseCircleOutlined,
-  DeleteFilled,
-  EditOutlined,
-} from "@ant-design/icons";
 import { EditableProTable, ProColumns } from "@ant-design/pro-components";
 import { TableProps } from "antd";
 import React from "react";
 import { Button } from "./primitives/Button";
 import { Tooltip } from "./primitives/Tooltip";
+import { PencilIcon, TrashIcon, XIcon } from "lucide-react";
 
 type Props<T> = {
   title?: string;
@@ -55,7 +51,7 @@ export const CrudEditor = <T,>({
           }}
           style={{ cursor: "pointer" }}
         >
-          <EditOutlined /> {edit?.triggerText}
+          <PencilIcon size={12} /> {edit?.triggerText}
         </span>,
       ],
     });
@@ -137,14 +133,14 @@ export const CrudEditor = <T,>({
               placement="bottom"
             >
               <Button danger ghost size="small">
-                <DeleteFilled />
+                <TrashIcon size={12} />
               </Button>
             </Tooltip>
           ),
           cancelText: (
             <Tooltip title={"Cancel operation"} placement="bottom">
               <Button size="small">
-                <CloseCircleOutlined />
+                <XIcon size={12} />
               </Button>
             </Tooltip>
           ),

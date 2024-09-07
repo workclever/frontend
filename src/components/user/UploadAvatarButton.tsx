@@ -1,4 +1,3 @@
-import { EditOutlined, LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { message, UploadProps, Upload } from "antd";
 import { RcFile, UploadChangeParam } from "antd/lib/upload";
 import { UploadFile } from "antd/lib/upload/interface";
@@ -10,6 +9,8 @@ import { BACKEND_URL, API_URL } from "../../constants";
 import { useMe } from "../../hooks/useMe";
 import { selectAuthToken } from "../../slices/auth/authSlice";
 import { gray } from "@ant-design/colors";
+import { LoadingSpin } from "../shared/primitives/LoadingSpin";
+import { PencilIcon, PlusIcon } from "lucide-react";
 
 const computeAvatarUrl = (url?: string) => {
   if (!url) {
@@ -67,7 +68,7 @@ export const UploadAvatarButton = () => {
 
   const uploadButton = (
     <div>
-      {loading ? <LoadingOutlined /> : <PlusOutlined />}
+      {loading ? <LoadingSpin /> : <PlusIcon />}
       <div style={{ marginTop: 8 }}>Upload</div>
     </div>
   );
@@ -85,7 +86,7 @@ export const UploadAvatarButton = () => {
 
   const existingAvatar = () => {
     if (loading) {
-      return <LoadingOutlined></LoadingOutlined>;
+      return <LoadingSpin />;
     }
     return (
       <ExistingAvatarWrapper>
@@ -102,7 +103,7 @@ export const UploadAvatarButton = () => {
         />
         {showEditAvatarIcon && (
           <EditIconWrapper>
-            <EditOutlined style={{ fontSize: 25 }} />
+            <PencilIcon size={12} color="white" />
           </EditIconWrapper>
         )}
       </ExistingAvatarWrapper>

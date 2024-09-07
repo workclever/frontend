@@ -1,8 +1,3 @@
-import {
-  DeleteColumnOutlined,
-  EditOutlined,
-  PlusOutlined,
-} from "@ant-design/icons";
 import { ItemType } from "antd/es/menu/interface";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -27,6 +22,7 @@ import { ColumnTreeHeader } from "./ColumnTreeHeader";
 import { Title } from "@app/components/shared/primitives/Title";
 import { ModalForm, ProFormText } from "@ant-design/pro-components";
 import { ColumnColor } from "@app/components/shared/ColumnColor";
+import { PencilIcon, PlusIcon, TrashIcon } from "lucide-react";
 
 const ColumnTreeWrapper = styled.div`
   padding: 8px;
@@ -68,19 +64,19 @@ export const ColumnNameRenderer: React.FC<{
     {
       key: "new-task",
       label: "New task",
-      icon: <PlusOutlined />,
+      icon: <PlusIcon size={12} />,
       onClick: () => setCreatingTask(true),
     },
     {
       key: "edit-col",
       label: "Edit column",
-      icon: <EditOutlined />,
+      icon: <PencilIcon size={12} />,
       onClick: () => showEditColumn(true),
     },
     {
       key: "delete-col",
       label: "Delete column",
-      icon: <DeleteColumnOutlined />,
+      icon: <TrashIcon size={12} />,
       onClick: () => {
         Confirm.Show({
           title: "Are you sure to delete this column?",

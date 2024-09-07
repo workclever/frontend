@@ -4,14 +4,6 @@ import {
   useDeleteTaskMutation,
   useSendTaskToTopOrBottomMutation,
 } from "@app/services/api";
-import {
-  CopyOutlined,
-  DeleteOutlined,
-  DownCircleOutlined,
-  EditOutlined,
-  EyeOutlined,
-  UpCircleOutlined,
-} from "@ant-design/icons";
 import { CustomField } from "@app/types/CustomField";
 import React, { useState } from "react";
 import { EntityClasses, Permissions } from "@app/types/Roles";
@@ -22,6 +14,15 @@ import { Confirm } from "@app/components/shared/Confirm";
 import { MenuProps } from "antd/lib/menu";
 import { EditTaskTitleModal } from "./EditTaskTitleModal";
 import { TaskDetail } from "./task-detail/TaskDetail";
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  CopyIcon,
+  EyeIcon,
+  PencilIcon,
+  ScanEyeIcon,
+  TrashIcon,
+} from "lucide-react";
 
 export type Props = {
   task: TaskType;
@@ -53,19 +54,19 @@ export const Task: React.FC<Props> = ({
       label: "View",
       key: "view",
       onClick: onTaskClick,
-      icon: <EyeOutlined />,
+      icon: <EyeIcon size={12} />,
     },
     {
       label: "Quick view",
       key: "quick-view",
       onClick: () => setQuickViewing(true),
-      icon: <EyeOutlined />,
+      icon: <ScanEyeIcon size={12} />,
     },
     {
       label: "Edit title",
       key: "edit-title",
       onClick: () => setEditingTitle(true),
-      icon: <EditOutlined />,
+      icon: <PencilIcon size={12} />,
     },
     {
       label: "Copy link",
@@ -77,7 +78,7 @@ export const Task: React.FC<Props> = ({
           },
         });
       },
-      icon: <CopyOutlined />,
+      icon: <CopyIcon size={12} />,
     },
   ];
 
@@ -88,7 +89,7 @@ export const Task: React.FC<Props> = ({
       onClick: () => {
         sendToLocation({ Location: 1, TaskId: task.Id });
       },
-      icon: <UpCircleOutlined />,
+      icon: <ArrowUpIcon size={12} />,
     });
     menuItems.push({
       label: "Send to bottom of column",
@@ -96,7 +97,7 @@ export const Task: React.FC<Props> = ({
       onClick: () => {
         sendToLocation({ Location: 0, TaskId: task.Id });
       },
-      icon: <DownCircleOutlined />,
+      icon: <ArrowDownIcon size={12} />,
     });
   }
 
@@ -110,7 +111,7 @@ export const Task: React.FC<Props> = ({
           onConfirm: () => deleteTask(task.Id),
         });
       },
-      icon: <DeleteOutlined />,
+      icon: <TrashIcon size={12} />,
       danger: true,
     };
     menuItems.push(deleteMenuItem);

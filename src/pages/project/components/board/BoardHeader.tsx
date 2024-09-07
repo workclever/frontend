@@ -1,4 +1,3 @@
-import { AppstoreOutlined, BranchesOutlined } from "@ant-design/icons";
 import { Segmented } from "antd";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +15,7 @@ import { FilterTaskInput } from "./FilterTaskInput";
 import { TaskEditableTitle } from "./task-detail/TaskEditableTitle";
 import { selectSelectedTaskId } from "@app/slices/taskDetail/taskDetailSlice";
 import { useTask } from "@app/hooks/useTask";
+import { NetworkIcon, SquareDashedKanbanIcon } from "lucide-react";
 
 const Wrapper = styled.div`
   height: 45px;
@@ -55,12 +55,12 @@ export const BoardHeader: React.FC<{ mode: "board" | "task" }> = ({ mode }) => {
         options={[
           {
             value: "kanban",
-            icon: <AppstoreOutlined />,
+            icon: <SquareDashedKanbanIcon size={12} />,
             label: "Kanban",
           },
           {
             value: "tree",
-            icon: <BranchesOutlined />,
+            icon: <NetworkIcon size={12} />,
             label: "Tree",
           },
         ]}

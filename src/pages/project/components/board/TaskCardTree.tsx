@@ -8,8 +8,8 @@ import { TaskAssigneeUnit } from "./units/TaskAssigneeUnit";
 import { TaskCommentsUnit } from "./units/TaskCommentsUnit";
 import { RenderTaskCustomFieldsUnit } from "./units/RenderTaskCustomFieldsUnit";
 import { TreeItem } from "./dnd/tree/types";
-import { DownOutlined, RightOutlined } from "@ant-design/icons";
 import { gray } from "@ant-design/colors";
+import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 
 const Wrapper = styled.div`
   flex: 1;
@@ -32,21 +32,15 @@ const ArrowIcon = ({
   onClick,
 }: {
   item: TreeItem;
-  onClick: React.MouseEventHandler<HTMLSpanElement>;
+  onClick: React.MouseEventHandler;
 }) => {
   if (!item.children.length) {
     return <div style={{ width: 12, height: 12 }}>&nbsp;</div>;
   }
   return item.isOpen ? (
-    <DownOutlined
-      onClick={onClick}
-      style={{ width: 12, height: 12, fontSize: 10, color: gray[0] }}
-    />
+    <ChevronDownIcon onClick={onClick} size={12} style={{ color: gray[0] }} />
   ) : (
-    <RightOutlined
-      onClick={onClick}
-      style={{ width: 12, height: 12, fontSize: 10, color: gray[0] }}
-    />
+    <ChevronUpIcon onClick={onClick} size={12} style={{ color: gray[0] }} />
   );
 };
 

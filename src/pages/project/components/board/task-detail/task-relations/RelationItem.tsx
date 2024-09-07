@@ -1,4 +1,3 @@
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import React from "react";
 import { useTask } from "@app/hooks/useTask";
 import { useTaskRelationTypeDefs } from "@app/hooks/useTaskRelationTypeDefs";
@@ -13,6 +12,7 @@ import { Modal } from "@app/components/shared/primitives/Modal";
 import { Button } from "@app/components/shared/primitives/Button";
 import { Text } from "@app/components/shared/primitives/Text";
 import { useDeleteTaskRelationMutation } from "@app/services/api";
+import { PencilIcon, TrashIcon } from "lucide-react";
 
 export const RelationItem: React.FC<{
   baseTask: TaskType;
@@ -55,13 +55,13 @@ export const RelationItem: React.FC<{
           {
             key: "1",
             label: "Edit relation",
-            icon: <EditOutlined />,
+            icon: <PencilIcon size={12} />,
             onClick: () => setEditing(true),
           },
           {
             key: "2",
             label: "Delete relation",
-            icon: <DeleteOutlined />,
+            icon: <TrashIcon size={12} />,
             onClick: () => setDeleting(true),
             danger: true,
           },

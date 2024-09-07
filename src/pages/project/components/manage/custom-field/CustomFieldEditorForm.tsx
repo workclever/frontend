@@ -1,4 +1,3 @@
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import {
   ProForm,
   ProFormText,
@@ -22,6 +21,7 @@ import { HttpResult } from "@app/components/shared/HttpResult";
 import { randomColor } from "@app/components/shared/colors";
 import { Button } from "@app/components/shared/primitives/Button";
 import { Space } from "@app/components/shared/primitives/Space";
+import { MinusCircleIcon, PlusIcon } from "lucide-react";
 
 export const createCustomFieldValues = {
   CustomFieldId: 0,
@@ -168,7 +168,10 @@ export const CustomFieldEditorForm: React.FC<{
                   >
                     <Input />
                   </Form.Item>
-                  <MinusCircleOutlined onClick={() => remove(field.name)} />
+                  <MinusCircleIcon
+                    size={12}
+                    onClick={() => remove(field.name)}
+                  />
                 </Space>
               ))}
               <Form.Item>
@@ -181,7 +184,7 @@ export const CustomFieldEditorForm: React.FC<{
                     })
                   }
                   block
-                  icon={<PlusOutlined />}
+                  icon={<PlusIcon size={12} />}
                 >
                   Add select option
                 </Button>

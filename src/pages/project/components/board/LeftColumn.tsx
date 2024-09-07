@@ -1,11 +1,3 @@
-import {
-  ArrowLeftOutlined,
-  EllipsisOutlined,
-  PlusOutlined,
-  ProjectOutlined,
-  QuestionCircleOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
 import React from "react";
 import styled from "styled-components";
 import { FlexBasicLayout } from "@app/components/shared/FlexBasicLayout";
@@ -19,7 +11,13 @@ import { blue, gray } from "@ant-design/colors";
 import { CreateBoardModal } from "./CreateBoardModal";
 import { useListUserProjectsQuery } from "@app/services/api";
 import { EnhancedDropdownMenu } from "@app/components/shared/EnhancedDropdownMenu";
-import { SettingsIcon } from "lucide-react";
+import {
+  ArrowLeftIcon,
+  HelpCircleIcon,
+  PlusIcon,
+  SettingsIcon,
+  TargetIcon,
+} from "lucide-react";
 
 const Wrapper = styled.div`
   padding: 12px;
@@ -72,8 +70,11 @@ export const LeftColumn = () => {
       <Header>
         <FlexBasicLayout
           left={
-            <div onClick={() => navigate(-1)}>
-              <ArrowLeftOutlined style={{ paddingRight: 8 }} />
+            <div
+              onClick={() => navigate(-1)}
+              style={{ display: "flex", alignItems: "center" }}
+            >
+              <ArrowLeftIcon size={25} style={{ paddingRight: 8 }} />
               Back
             </div>
           }
@@ -93,9 +94,7 @@ export const LeftColumn = () => {
                     alignItems: "center",
                   }}
                 >
-                  <ProjectOutlined
-                    style={{ fontSize: "11px", color: "gray" }}
-                  />
+                  <TargetIcon size={12} style={{ color: "gray" }} />
                   <span style={{ marginLeft: 8 }}>{project?.Name}</span>
                 </div>
                 <Permission
@@ -109,7 +108,7 @@ export const LeftColumn = () => {
                       {
                         key: "1",
                         label: "Create new board",
-                        icon: <PlusOutlined />,
+                        icon: <PlusIcon size={12} />,
                         onClick: () => {
                           setEditingProjectId(project.Id);
                           setShowCreateBoardModal(true);
@@ -118,7 +117,7 @@ export const LeftColumn = () => {
                       {
                         key: "2",
                         label: "Project settings",
-                        icon: <SettingOutlined />,
+                        icon: <SettingsIcon size={12} />,
                         onClick: () => {
                           setShowProjectSettingsModal(true);
                           setEditingProjectId(project.Id);
@@ -127,9 +126,9 @@ export const LeftColumn = () => {
                     ]}
                     triggerElement={
                       <span style={{ cursor: "pointer" }}>
-                        <EllipsisOutlined
+                        <SettingsIcon
+                          size={12}
                           style={{
-                            fontSize: "14px",
                             color: "black",
                             display: "none",
                           }}
@@ -149,12 +148,7 @@ export const LeftColumn = () => {
         <FlexBasicLayout
           left={
             <Button size="small" type="text">
-              <QuestionCircleOutlined />
-            </Button>
-          }
-          right={
-            <Button size="small" type="text">
-              <SettingsIcon size={15} />
+              <HelpCircleIcon size={15} />
             </Button>
           }
         />

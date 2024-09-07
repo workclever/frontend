@@ -5,13 +5,14 @@ import { api, useRegisterMutation } from "../../services/api";
 import { setToken } from "../../slices/auth/authSlice";
 import { useDispatch } from "react-redux";
 import { HttpResult } from "../../components/shared/HttpResult";
-import {
-  RightCircleOutlined,
-  UserOutlined,
-  LockOutlined,
-  MailOutlined,
-} from "@ant-design/icons";
+
 import { LoginFormPage, ProFormText } from "@ant-design/pro-components";
+import {
+  ChevronRightCircleIcon,
+  LockIcon,
+  MailIcon,
+  UserIcon,
+} from "lucide-react";
 
 type FormValuesType = {
   FullName: string;
@@ -56,7 +57,7 @@ export const RegisterPage: React.FC = () => {
           <Link to="/login">
             <Space>
               Login
-              <RightCircleOutlined />
+              <ChevronRightCircleIcon />
             </Space>
           </Link>
         }
@@ -69,7 +70,7 @@ export const RegisterPage: React.FC = () => {
             name="FullName"
             fieldProps={{
               size: "large",
-              prefix: <UserOutlined />,
+              prefix: <UserIcon />,
             }}
             placeholder="Full name"
             rules={[
@@ -83,7 +84,7 @@ export const RegisterPage: React.FC = () => {
             name="Email"
             fieldProps={{
               size: "large",
-              prefix: <MailOutlined />,
+              prefix: <MailIcon />,
             }}
             placeholder="Email"
             rules={[
@@ -97,7 +98,7 @@ export const RegisterPage: React.FC = () => {
             name="Password"
             fieldProps={{
               size: "large",
-              prefix: <LockOutlined />,
+              prefix: <LockIcon />,
             }}
             placeholder={"Password"}
             rules={[

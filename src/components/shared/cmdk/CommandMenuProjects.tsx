@@ -1,7 +1,7 @@
-import { ProjectOutlined } from "@ant-design/icons";
 import { useAppNavigate } from "@app/hooks/useAppNavigate";
 import { useListUserProjectsQuery } from "@app/services/api";
 import { Command } from "cmdk";
+import { TargetIcon } from "lucide-react";
 
 export const CommandMenuProjects: React.FC<{
   search: string;
@@ -27,7 +27,7 @@ export const CommandMenuProjects: React.FC<{
             onClose();
           }}
         >
-          <ProjectOutlined style={{ marginRight: 8, color: "gray" }} />
+          <TargetIcon size={12} style={{ marginRight: 8, color: "gray" }} />
           {project.Name}
         </Command.Item>
       ))}

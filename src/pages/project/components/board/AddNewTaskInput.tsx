@@ -1,4 +1,3 @@
-import { PlusOutlined } from "@ant-design/icons";
 import { Form, Input } from "antd";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
@@ -11,6 +10,7 @@ import { ColumnType } from "@app/types/Project";
 import { ToggleOnClick } from "@app/components/shared/ToggleOnClick";
 import { Tooltip } from "@app/components/shared/primitives/Tooltip";
 import { gray } from "@ant-design/colors";
+import { PlusIcon } from "lucide-react";
 
 const TextWrapper = styled.span`
   color: ${gray[0]};
@@ -48,7 +48,7 @@ export const AddNewTaskInput: React.FC<{ column: ColumnType }> = ({
   const defaultComponent = (
     <Tooltip title={`Add a new task to ${column.Name} column`}>
       <TextWrapper>
-        <PlusOutlined /> New task
+        <PlusIcon size={12} /> New task
       </TextWrapper>
     </Tooltip>
   );

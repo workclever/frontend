@@ -1,4 +1,3 @@
-import { RollbackOutlined } from "@ant-design/icons";
 import { TaskType } from "@app/types/Project";
 import { HoverableListItem } from "@app/components/shared/HoverableListItem";
 import { UserAvatar } from "@app/components/shared/UserAvatar";
@@ -6,6 +5,7 @@ import { TaskIdRenderer } from "@app/components/shared/TaskIdRenderer";
 import { Space } from "@app/components/shared/primitives/Space";
 import { EnhancedDropdownMenu } from "@app/components/shared/EnhancedDropdownMenu";
 import { useUpdateTaskPropertyMutation } from "@app/services/api";
+import { Undo2Icon } from "lucide-react";
 
 export const SubtaskItem: React.FC<{
   task: TaskType;
@@ -30,7 +30,7 @@ export const SubtaskItem: React.FC<{
           {
             key: "1",
             label: "Remove parent task",
-            icon: <RollbackOutlined />,
+            icon: <Undo2Icon size={12} />,
             onClick: onRemoveParentClick,
             danger: true,
           },

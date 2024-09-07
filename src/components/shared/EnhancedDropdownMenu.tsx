@@ -1,8 +1,8 @@
-import { EllipsisOutlined } from "@ant-design/icons";
 import { Dropdown, Menu } from "antd";
 import { ItemType } from "antd/es/menu/interface";
 import React from "react";
 import { DropdownProps } from "./primitives/Dropdown";
+import { EllipsisIcon } from "lucide-react";
 
 export const EnhancedDropdownMenu: React.FC<{
   items: ItemType[];
@@ -17,7 +17,7 @@ export const EnhancedDropdownMenu: React.FC<{
       placement="bottomRight"
       destroyPopupOnHide
     >
-      {triggerElement ? triggerElement : <EllipsisOutlined />}
+      {triggerElement ? triggerElement : <EllipsisIcon size={12} />}
     </Dropdown>
   );
 };

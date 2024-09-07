@@ -1,4 +1,3 @@
-import { PlusOutlined } from "@ant-design/icons";
 import { Form, Input } from "antd";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
@@ -9,6 +8,7 @@ import {
 } from "@app/slices/project/projectSlice";
 import { ToggleOnClick } from "@app/components/shared/ToggleOnClick";
 import { gray } from "@ant-design/colors";
+import { PlusIcon } from "lucide-react";
 
 const TextWrapper = styled.div`
   cursor: pointer;
@@ -39,7 +39,7 @@ export const AddNewColumnInput: React.FC = () => {
 
   const defaultComponent = (
     <TextWrapper>
-      <PlusOutlined /> New column
+      <PlusIcon size={12} /> New task New column
     </TextWrapper>
   );
 
