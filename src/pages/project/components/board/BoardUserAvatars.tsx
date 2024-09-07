@@ -48,7 +48,7 @@ export const BoardUserAvatars = () => {
 
   return (
     <div style={{ display: "flex", alignItems: "center" }}>
-      <div style={{ marginRight: 4 }}>Filter by users:</div>
+      <div style={{ marginRight: 4, fontSize: 12 }}>Filter by users:</div>
       <Avatar.Group max={{ popover: { trigger: "click" } }}>
         {userIds.map((userId) => (
           <UserAvatar

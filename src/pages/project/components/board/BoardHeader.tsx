@@ -43,7 +43,7 @@ const FilterInput = () => {
     <Input
       allowClear
       onChange={onChange}
-      style={{ width: 180 }}
+      style={{ width: 120 }}
       placeholder="Filter tasks..."
       variant="borderless"
     />
