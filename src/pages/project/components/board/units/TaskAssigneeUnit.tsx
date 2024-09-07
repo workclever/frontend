@@ -1,3 +1,4 @@
+import { Avatar } from "antd";
 import { Props } from "../Task";
 import { UserAvatar } from "@app/components/shared/UserAvatar";
 
@@ -7,9 +8,11 @@ export const TaskAssigneeUnit: React.FC<Pick<Props, "task">> = ({ task }) => {
   }
   return (
     <>
-      {task.AssigneeUserIds.map((r) => (
-        <UserAvatar key={r} userId={r} />
-      ))}
+      <Avatar.Group max={{ popover: { trigger: "click" } }}>
+        {task.AssigneeUserIds.map((userId) => (
+          <UserAvatar key={userId} userId={userId} />
+        ))}
+      </Avatar.Group>
     </>
   );
 };
