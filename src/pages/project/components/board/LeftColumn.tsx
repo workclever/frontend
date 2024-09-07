@@ -13,12 +13,13 @@ import { Permission } from "@app/components/shared/Permission";
 import { Button } from "@app/components/shared/primitives/Button";
 import { EntityClasses, Permissions } from "@app/types/Roles";
 import { BoardList } from "../BoardList";
-import { ProjectSettings } from "../manage/ProjectSettings";
+import { ProjectSettingsModal } from "../manage/ProjectSettingsModal";
 import { useNavigate } from "react-router-dom";
 import { blue, gray } from "@ant-design/colors";
 import { CreateBoardModal } from "./CreateBoardModal";
 import { useListUserProjectsQuery } from "@app/services/api";
 import { EnhancedDropdownMenu } from "@app/components/shared/EnhancedDropdownMenu";
+import { SettingsIcon } from "lucide-react";
 
 const Wrapper = styled.div`
   padding: 12px;
@@ -151,10 +152,15 @@ export const LeftColumn = () => {
               <QuestionCircleOutlined />
             </Button>
           }
+          right={
+            <Button size="small" type="text">
+              <SettingsIcon size={15} />
+            </Button>
+          }
         />
       </BottomWrapper>
       {editingProjectId && showProjectSettingsModal ? (
-        <ProjectSettings
+        <ProjectSettingsModal
           projectId={editingProjectId}
           onCancel={() => setShowProjectSettingsModal(false)}
         />

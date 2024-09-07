@@ -10,7 +10,7 @@ import {
   TablePropertiesIcon,
 } from "lucide-react";
 
-export const ProjectSettings: React.FC<{
+export const ProjectSettingsModal: React.FC<{
   projectId: number;
   onCancel: () => void;
 }> = ({ projectId, onCancel }) => {
