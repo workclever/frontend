@@ -39,7 +39,7 @@ export const AddNewColumnInput: React.FC = () => {
 
   const defaultComponent = (
     <TextWrapper>
-      <PlusIcon size={12} /> New task New column
+      <PlusIcon size={12} /> New column
     </TextWrapper>
   );
 
