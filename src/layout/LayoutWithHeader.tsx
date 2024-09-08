@@ -57,7 +57,7 @@ export const LayoutWithHeader: React.FC<{
       style={{
         overflowX: "auto",
         overflowY: "auto",
-        height: "calc(100vh - 20px)",
+        height: "100%",
       }}
     >
       <Header>
@@ -72,7 +72,6 @@ export const LayoutWithHeader: React.FC<{
         </TitleWrapper>
         <HeaderRightContent key="1" />
       </Header>
-      <div></div>
       <div>{children}</div>
     </div>
   );

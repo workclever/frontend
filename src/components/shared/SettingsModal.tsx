@@ -9,7 +9,7 @@ type Props = SettingsProps & {
 export const SettingsModal: React.FC<Props> = ({ onCancel, ...restProps }) => {
   return (
     <Modal visible noPaddingMode width={800} onCancel={onCancel}>
-      <Settings {...restProps} />
+      <Settings {...restProps} containerType="modal" />
     </Modal>
   );
 };

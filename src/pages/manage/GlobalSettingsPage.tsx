@@ -14,6 +14,7 @@ export const GlobalSettingsPage = () => {
       <Role role={Roles.Admin} showWarning={true}>
         <LayoutWithHeader title="Management" subTitle="Site management">
           <Settings
+            containerType="page"
             items={[
               {
                 name: "Site settings",

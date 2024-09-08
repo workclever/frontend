@@ -8,6 +8,7 @@ export const MyAccountSettingsModal: React.FC<{ onCancel: () => void }> = ({
 }) => {
   return (
     <SettingsModal
+      containerType="page"
       onCancel={onCancel}
       items={[
         {

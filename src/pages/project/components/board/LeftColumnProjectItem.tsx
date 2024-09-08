@@ -40,7 +40,7 @@ export const LeftColumnProjectItem: React.FC<{ project: ProjectType }> = ({
   return (
     <>
       <Wrapper key={project.Id}>
-        <Item onClick={() => setExpanded(!expanded)}>
+        <Item>
           <div
             style={{
               flex: 1,
@@ -48,6 +48,7 @@ export const LeftColumnProjectItem: React.FC<{ project: ProjectType }> = ({
               display: "flex",
               alignItems: "center",
             }}
+            onClick={() => setExpanded(!expanded)}
           >
             {expanded ? (
               <ChevronDownIcon size={12} style={{ color: "gray" }} />
@@ -63,6 +64,7 @@ export const LeftColumnProjectItem: React.FC<{ project: ProjectType }> = ({
             showWarning={false}
           >
             <EnhancedDropdownMenu
+              triggers={["hover"]}
               items={[
                 {
                   key: "1",

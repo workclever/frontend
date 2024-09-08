@@ -17,6 +17,7 @@ export const ProjectSettingsModal: React.FC<{
   return (
     <SettingsModal
       onCancel={onCancel}
+      containerType="modal"
       items={[
         {
           name: "Meta",

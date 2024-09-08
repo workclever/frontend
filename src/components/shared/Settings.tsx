@@ -45,15 +45,21 @@ export const RightTitle = styled.div`
 `;
 
 export type SettingsProps = {
+  containerType: "modal" | "page";
   items: { name: string; icon: React.ReactNode; element: React.ReactNode }[];
 };
 
-export const Settings: React.FC<SettingsProps> = ({ items }) => {
+export const Settings: React.FC<SettingsProps> = ({ items, containerType }) => {
   const [activeItemIndex, setActiveItemIndex] = useState(0);
 
   return (
     <Wrapper>
-      <Left>
+      <Left
+        style={{
+          height: containerType === "modal" ? "700px" : "calc(100vh - 45px)",
+          overflowY: containerType === "modal" ? "auto" : "hidden",
+        }}
+      >
         {items.map((item, i) => (
           <LeftMenuItem
             key={item.name}
