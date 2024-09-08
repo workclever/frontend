@@ -20,7 +20,6 @@ function* handleLoadTaskDetailStarted({
 
     const data: RtkQueryOutput<TaskType> = yield take([
       api.endpoints.getTask.matchFulfilled,
-      api.endpoints.getTask.matchRejected,
     ]);
 
     if (data.payload.Data.ProjectId) {

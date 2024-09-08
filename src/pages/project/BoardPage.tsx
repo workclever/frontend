@@ -5,7 +5,6 @@ import { Space } from "../../components/shared/primitives/Space";
 import { setSelectedProjectId } from "../../slices/project/projectSlice";
 import { Outlet, useParams } from "react-router-dom";
 import React from "react";
-import { BoardLayout } from "./components/board/BoardLayout";
 import { TreeBoardWrapper } from "./components/board/TreeBoardWrapper";
 import { KanbanBoardWrapper } from "./components/board/KanbanBoardWrapper";
 import {
@@ -15,10 +14,11 @@ import {
   setSelectedBoardId,
 } from "@app/slices/board/boardSlice";
 import { LoadingSpin } from "@app/components/shared/primitives/LoadingSpin";
+import { BoardHeader } from "./components/board/BoardHeader";
 
 export const BoardPage = () => {
   const dispatch = useDispatch();
-  const { projectId, boardId } = useParams();
+  const { projectId, boardId, taskId } = useParams();
   const boardViewType = useSelector(selectBoardViewType);
   const loading = useSelector(selectBoardLoading);
 
@@ -85,9 +85,21 @@ export const BoardPage = () => {
   };
 
   return (
-    <BoardLayout>
-      <Outlet />
-      {renderContent()}
-    </BoardLayout>
+    <>
+      <BoardHeader />
+      <div
+        style={{
+          marginTop: "45px",
+          padding: "0px",
+          overflowY: "hidden",
+          overflowX: "auto",
+          width: "100%",
+          backgroundColor: "white",
+          height: "100%",
+        }}
+      >
+        {taskId ? <Outlet /> : renderContent()}
+      </div>
+    </>
   );
 };

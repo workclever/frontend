@@ -22,7 +22,6 @@ export const TaskDetailPage = () => {
     }
 
     return () => {
-      console.log("clel");
       dispatch(setSelectedTaskId(0));
     };
   }, [dispatch, task]);

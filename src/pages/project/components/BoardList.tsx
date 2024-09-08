@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { useListAllBoardsQuery } from "@app/services/api";
 import { gray } from "@ant-design/colors";
 
-const Wrapper = styled.div`
+const Wrapper2 = styled.div`
   border-left: 1px solid #ededed;
   margin-left: 14px;
   margin-top: 8px;
@@ -37,14 +37,14 @@ export const BoardList: React.FC<{
 
   if (boards?.length === 0) {
     return (
-      <Wrapper style={{ color: gray[0], fontSize: 13, marginBottom: 8 }}>
+      <Wrapper2 style={{ color: gray[0], fontSize: 13, marginBottom: 8 }}>
         There is no board in this project
-      </Wrapper>
+      </Wrapper2>
     );
   }
 
   return (
-    <Wrapper>
+    <Wrapper2>
       {boards?.map((r) => (
         <BoardItem
           key={r.Id}
@@ -54,6 +54,6 @@ export const BoardList: React.FC<{
           {r.Name}
         </BoardItem>
       ))}
-    </Wrapper>
+    </Wrapper2>
   );
 };
