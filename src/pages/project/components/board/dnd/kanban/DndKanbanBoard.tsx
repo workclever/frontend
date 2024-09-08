@@ -53,7 +53,11 @@ export const DndKanbanBoard: React.FC<{
   orderedColumnIds: number[];
   onReorderColumn: (orderedColumnIds: number[]) => void;
   onReorderTask: (columnId: number, orderedTaskIds: number[]) => void;
-  onMoveCard: (grouped: { [columnId: number]: number[] }) => void;
+  onMoveCard: (
+    task: TaskType,
+    finishColumnId: number,
+    grouped: { [columnId: number]: number[] }
+  ) => void;
   renderColumnHeader: (column: ColumnType) => React.ReactNode;
   renderCard: (task: TaskType) => React.ReactNode;
   renderNewColumnItem: () => React.ReactNode;
@@ -308,7 +312,7 @@ export const DndKanbanBoard: React.FC<{
           },
         };
 
-        onMoveCard({
+        onMoveCard(item, finishColumnId, {
           [startColumnId]: sourceColumnNewOrderedItems.map((r) => r.Id),
           [finishColumnId]: destinationItems.map((r) => r.Id),
         });

@@ -9,7 +9,9 @@ import { useKanbanBoardData } from "./hooks/useKanbanBoardData";
 import {
   useUpdateColumnOrdersMutation,
   useUpdateTaskOrdersMutation,
+  useUpdateTaskPropertyMutation,
 } from "@app/services/api";
+import { TaskType } from "@app/types/Project";
 
 export const KanbanBoardWrapper: React.FC<{
   projectId: number;
@@ -24,6 +26,7 @@ export const KanbanBoardWrapper: React.FC<{
 
   const [updateColumnOrders] = useUpdateColumnOrdersMutation();
   const [updateTaskOrders] = useUpdateTaskOrdersMutation();
+  const [updateTaskProperty] = useUpdateTaskPropertyMutation();
 
   const onReorderColumn = (orderedColumnIds: number[]) => {
     updateColumnOrders({
@@ -40,14 +43,30 @@ export const KanbanBoardWrapper: React.FC<{
     });
   };
 
-  const onMoveCard = (grouped: { [columnId: number]: number[] }) => {
-    updateTaskOrders({
-      GroupedTasks: grouped,
-    });
+  const onMoveCard = (
+    task: TaskType,
+    finishColumnId: number,
+    grouped: { [columnId: number]: number[] }
+  ) => {
+    updateTaskProperty({
+      Task: task,
+      Params: {
+        property: "ColumnId",
+        value: finishColumnId.toString(),
+      },
+    })
+      .unwrap()
+      .then(() => {
+        updateTaskOrders({
+          GroupedTasks: grouped,
+        });
+      });
   };
 
   return (
     <DndKanbanBoard
+      // TODO workaround
+      key={JSON.stringify(dndKanbanItems.dndColumnMap)}
       dndColumnMap={dndKanbanItems.dndColumnMap}
       orderedColumnIds={dndKanbanItems.orderedColumnIds}
       onReorderColumn={onReorderColumn}
