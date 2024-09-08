@@ -6,15 +6,14 @@ import {
   useSetNotificationsReadMutation,
 } from "../../services/api";
 import { UserAvatar } from "../shared/UserAvatar";
-import { ProList } from "@ant-design/pro-components";
-import { useNavigate } from "react-router-dom";
-import { UserNotificationType } from "../../types/User";
 import { useAppNavigate } from "../../hooks/useAppNavigate";
 import { TaskIdRenderer } from "../shared/TaskIdRenderer";
 import { useProjectTasks } from "../../hooks/useProjectTasks";
-import { Button } from "../shared/primitives/Button";
 import { Tooltip } from "../shared/primitives/Tooltip";
 import { Space } from "../shared/primitives/Space";
+import { UserNotificationType } from "@app/types/User";
+import { useFormattedDateTime } from "@app/hooks/useFormattedDateTime";
+import { Empty } from "../shared/primitives/Empty";
 
 const TaskInfo: React.FC<{ taskId: number | null }> = ({ taskId }) => {
   const { task } = useTask(taskId);
@@ -31,15 +30,24 @@ const TaskInfo: React.FC<{ taskId: number | null }> = ({ taskId }) => {
   );
 };
 
-const NOTIFICATIONS_DROPDOWN_LIMIT = 5;
-const NOTIFICATIONS_ALL_LIMIT = 50;
-
-export const UserNotifications: React.FC<{ showAll: boolean }> = ({
-  showAll,
+const NotificationRow: React.FC<{ item: UserNotificationType }> = ({
+  item,
 }) => {
-  const { data: notifications, isLoading } = useListUserNotificationsQuery(
-    showAll ? NOTIFICATIONS_ALL_LIMIT : NOTIFICATIONS_DROPDOWN_LIMIT
+  const formattedDateTime = useFormattedDateTime(item.DateCreated);
+  return (
+    <>
+      <div style={{ display: "flex", gap: 8 }}>
+        <UserAvatar userId={item.ByUserId} />
+        <TaskInfo taskId={item.TaskId} />
+        {item.Content}
+      </div>
+      <span style={{ color: "gray", fontSize: 12 }}>{formattedDateTime}</span>
+    </>
   );
+};
+
+export const UserNotifications = () => {
+  const { data: notifications } = useListUserNotificationsQuery(1000);
   const [setNotificationsRead] = useSetNotificationsReadMutation();
   const { data: unreadNotificationsCount } =
     useGetUnreadNotificationsCountQuery(null);
@@ -51,64 +59,43 @@ export const UserNotifications: React.FC<{ showAll: boolean }> = ({
       setNotificationsRead(null);
     }
   }, [setNotificationsRead, unreadNotificationsCount]);
-  const [expandedRowKeys, setExpandedRowKeys] = React.useState<
-    readonly React.Key[]
-  >([]);
 
-  const navigate = useNavigate();
   const { goToTask } = useAppNavigate();
   const { tasks } = useProjectTasks();
 
-  // TODO: check no data chinese text
+  const onClickRow = (taskId: number | null) => {
+    const task = tasks?.find((r) => r.Id === taskId);
+    if (task) {
+      goToTask(task);
+    }
+  };
+
+  if (!notifications?.Data.length) {
+    return <Empty>You don't have any notifications yet</Empty>;
+  }
+
   return (
-    <ProList
+    <div
       style={{
-        width: showAll ? "100%" : 450,
+        width: 450,
+        maxHeight: 600,
+        overflowY: "auto",
       }}
-      rowKey="Id"
-      headerTitle={showAll ? undefined : "Notifications"}
-      toolBarRender={() => [
-        !showAll ? (
-          <Button
-            key="show-all"
-            type="primary"
-            onClick={() => navigate("/me/notifications")}
+    >
+      <div style={{ width: "100%", fontWeight: "bold", marginBottom: 16 }}>
+        Notifications
+      </div>
+      {notifications?.Data.map((r) => {
+        return (
+          <div
+            key={r.Id}
+            onClick={() => onClickRow(r.TaskId)}
+            style={{ marginBottom: 16 }}
           >
-            Show All
-          </Button>
-        ) : null,
-      ]}
-      dataSource={notifications?.Data || []}
-      loading={isLoading}
-      expandable={
-        showAll
-          ? {}
-          : { expandedRowKeys, onExpandedRowsChange: setExpandedRowKeys }
-      }
-      onRow={(record: UserNotificationType) => ({
-        onClick: () => {
-          if (record.TaskId) {
-            const task = tasks?.find((r) => r.Id === record.TaskId);
-            if (task) {
-              goToTask(task);
-            }
-          }
-        },
+            <NotificationRow item={r} />
+          </div>
+        );
       })}
-      metas={{
-        title: {
-          // dataIndex: "Type",
-        },
-        avatar: {
-          render: (_, item) => <UserAvatar userId={item.ByUserId} />,
-        },
-        subTitle: {
-          render: (_, item) => <TaskInfo taskId={item.TaskId} />,
-        },
-        description: {
-          dataIndex: "Content",
-        },
-      }}
-    />
+    </div>
   );
 };

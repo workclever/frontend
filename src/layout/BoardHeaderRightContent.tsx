@@ -41,10 +41,7 @@ export const BoardHeaderRightContent = () => {
           </Link>
         )}
         <Space size="large">
-          <Popover
-            content={<UserNotifications showAll={false} />}
-            placement="bottomRight"
-          >
+          <Popover content={<UserNotifications />} placement="bottomRight">
             <span style={{ cursor: "pointer" }}>
               <Badge count={unreadNotificationsCount?.Data}>
                 <BellIcon size={15} />

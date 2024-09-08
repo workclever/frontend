@@ -12,7 +12,6 @@ import { HomePage } from "./pages/HomePage";
 import { LoginPage } from "./pages/auth/LoginPage";
 import { RegisterPage } from "./pages/auth/RegisterPage";
 import { GlobalSettingsPage } from "./pages/manage/GlobalSettingsPage";
-import { NotificationsPage } from "./pages/user/NotificationsPage";
 import { BoardPage } from "./pages/project/BoardPage";
 import { LoadingSpin } from "./components/shared/primitives/LoadingSpin";
 import { history } from "./history";
@@ -50,10 +49,6 @@ export default function App() {
             <Route path="board/:boardId" element={<BoardPage />} />
           </Route>
           <Route path="task/:taskId" element={<TaskDetailPage />} />
-          <Route
-            path="/me/notifications"
-            element={auth(<NotificationsPage />)}
-          />
           <Route path="/login" element={anon(<LoginPage />)} />
           <Route path="/register" element={anon(<RegisterPage />)} />
           <Route path="/manage" element={auth(<GlobalSettingsPage />)} />
