@@ -71,7 +71,6 @@ export const UserSelector: React.FC<Props> = ({
         filterOption={onFilter}
         loading={loading}
         disabled={loading || disabled}
-        showArrow={!disabled}
         mode={mode}
         tagRender={
           withOnlyAvatar
