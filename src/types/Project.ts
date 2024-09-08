@@ -57,7 +57,14 @@ export type TaskCommentType = {
 
 export type TaskChangeLogType = {
   Id: number;
-  Property: keyof TaskType;
+  Property:
+    | "BoardId"
+    | "ColumnId"
+    | "Title"
+    | "Description"
+    | "ParentTaskItemId"
+    | "TASK_ASSIGNED"
+    | "TASK_UNASSIGNED";
   OldValue: string;
   NewValue: string;
   DateCreated: string;

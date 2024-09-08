@@ -13,6 +13,7 @@ import { TaskCommentEditor } from "../../task-comments/TaskCommentEditor";
 import { TaskChangeLog } from "../task-changelog/TaskChangelog";
 import { UserAvatar } from "@app/components/shared/UserAvatar";
 import { TaskComment } from "../../task-comments/TaskComment";
+import { CircleDashedIcon } from "lucide-react";
 
 type TimelineCommentItem = { type: "comment"; data: TaskCommentType };
 type TimelineChangelogItem = { type: "changeLog"; data: TaskChangeLogType };
@@ -50,7 +51,7 @@ export const TaskTimeline: React.FC<{ task: TaskType }> = ({ task }) => {
             if (r.type === "changeLog") {
               return {
                 children: <TaskChangeLog item={r.data} />,
-                dot: <UserAvatar userId={r.data.UserId} />,
+                dot: <CircleDashedIcon size={12} color="#888888" />,
               };
             }
             return { children: "" };
