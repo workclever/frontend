@@ -1,4 +1,4 @@
-import { Avatar } from "antd";
+import { Avatar } from "./primitives/Avatar";
 import { BACKEND_URL } from "../../constants";
 import { useUser } from "../../hooks/useUser";
 import { Tooltip } from "./primitives/Tooltip";
@@ -25,9 +25,12 @@ export const UserAvatar: React.FC<{
 
   const avatarItself = (
     <span onClick={onClick}>
-      <Avatar src={computedUrl} style={style} size={22} alt={user?.FullName}>
-        {user?.FullName?.charAt(0)}
-      </Avatar>
+      <Avatar
+        src={computedUrl}
+        style={style}
+        alt={user?.FullName}
+        initials={user?.FullName?.charAt(0)}
+      />
     </span>
   );
 

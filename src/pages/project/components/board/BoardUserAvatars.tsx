@@ -1,4 +1,3 @@
-import { Avatar } from "antd";
 import { uniq } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import { useProjectTasks } from "@app/hooks/useProjectTasks";
@@ -8,6 +7,7 @@ import {
   setBoardFilter,
 } from "@app/slices/project/projectSlice";
 import { UserAvatar } from "@app/components/shared/UserAvatar";
+import { AvatarGroup } from "@app/components/shared/primitives/Avatar";
 
 export const BoardUserAvatars = () => {
   const dispatch = useDispatch();
@@ -49,7 +49,7 @@ export const BoardUserAvatars = () => {
   return (
     <div style={{ display: "flex", alignItems: "center" }}>
       <div style={{ marginRight: 4, fontSize: 12 }}>Filter by users:</div>
-      <Avatar.Group max={{ popover: { trigger: "click" } }}>
+      <AvatarGroup maxVisible={15}>
         {userIds.map((userId) => (
           <UserAvatar
             key={userId}
@@ -58,7 +58,7 @@ export const BoardUserAvatars = () => {
             onClick={() => onUserClick(userId)}
           />
         ))}
-      </Avatar.Group>
+      </AvatarGroup>
     </div>
   );
 };
