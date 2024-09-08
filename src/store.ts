@@ -9,6 +9,7 @@ import { rootSaga } from "./slices/rootSaga";
 import { appReducer } from "./slices/app/appSlice";
 import { navigateReducer } from "./slices/navigate/navigateSlice";
 import { taskDetailReducer } from "./slices/taskDetail/taskDetailSlice";
+import { boardReducer } from "./slices/board/boardSlice";
 
 export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
   if (isRejectedWithValue(action)) {
@@ -35,6 +36,7 @@ export const store = configureStore({
     [api.reducerPath]: api.reducer,
     auth: authReducer,
     project: projectReducer,
+    board: boardReducer,
     app: appReducer,
     taskDetail: taskDetailReducer,
     navigate: navigateReducer,

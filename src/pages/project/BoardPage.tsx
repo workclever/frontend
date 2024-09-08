@@ -12,23 +12,25 @@ import React from "react";
 import { BoardLayout } from "./components/board/BoardLayout";
 import { TreeBoardWrapper } from "./components/board/TreeBoardWrapper";
 import { KanbanBoardWrapper } from "./components/board/KanbanBoardWrapper";
+import {
+  loadBoardStarted,
+  selectBoardLoading,
+} from "@app/slices/board/boardSlice";
+import { LoadingSpin } from "@app/components/shared/primitives/LoadingSpin";
 
 export const BoardPage = () => {
   const dispatch = useDispatch();
   const { projectId, boardId } = useParams();
   const boardViewType = useSelector(selectBoardViewType);
+  const loading = useSelector(selectBoardLoading);
 
   React.useEffect(() => {
-    if (projectId) {
+    if (projectId && boardId) {
       dispatch(setSelectedProjectId(Number(projectId)));
-    }
-  }, [dispatch, projectId]);
-
-  React.useEffect(() => {
-    if (boardId) {
       dispatch(setSelectedBoardId(Number(boardId)));
+      dispatch(loadBoardStarted());
     }
-  }, [dispatch, boardId]);
+  }, [dispatch, projectId, boardId]);
 
   const renderBoard = () => {
     if (!boardId) {
@@ -70,6 +72,10 @@ export const BoardPage = () => {
   };
 
   const renderContent = () => {
+    if (loading) {
+      return <LoadingSpin />;
+    }
+
     if (boardId) {
       return renderBoard();
     }

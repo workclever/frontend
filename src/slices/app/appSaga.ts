@@ -11,7 +11,10 @@ const queryConfig = {
 
 function* handleLoadAppStarted() {
   try {
+    yield put(api.endpoints.getSiteSettings.initiate(null, queryConfig));
     yield put(api.endpoints.getUser.initiate(null, queryConfig));
+    yield put(api.endpoints.listAllBoards.initiate(null, queryConfig));
+    yield put(api.endpoints.listAllUsers.initiate(null, queryConfig));
     yield put(
       api.endpoints.listMyAccessedEntities.initiate(null, {
         forceRefetch: true,
@@ -20,7 +23,10 @@ function* handleLoadAppStarted() {
     yield put(api.endpoints.getSiteSettings.initiate(null, queryConfig));
     yield put(api.endpoints.listUserProjects.initiate(null, queryConfig));
     yield take([
+      api.endpoints.getSiteSettings.matchFulfilled,
       api.endpoints.getUser.matchFulfilled,
+      api.endpoints.listAllBoards.matchFulfilled,
+      api.endpoints.listAllUsers.matchFulfilled,
       api.endpoints.listMyAccessedEntities.matchFulfilled,
       api.endpoints.getSiteSettings.matchFulfilled,
       api.endpoints.listUserProjects.matchFulfilled,

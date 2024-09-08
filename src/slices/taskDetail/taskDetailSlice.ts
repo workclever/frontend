@@ -11,7 +11,7 @@ const initialState: TaskDetailState = {
 };
 
 export const taskDetailSlice = createSlice({
-  name: "project",
+  name: "taskDetail",
   initialState,
   reducers: {
     loadTaskDetailStarted: (

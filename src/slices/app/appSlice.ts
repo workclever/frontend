@@ -10,7 +10,7 @@ const initialState: AppState = {
 };
 
 export const appSlice = createSlice({
-  name: "project",
+  name: "app",
   initialState,
   reducers: {
     loadAppStarted: (state) => {

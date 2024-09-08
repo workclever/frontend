@@ -7,7 +7,7 @@ interface NavigateState {}
 const initialState: NavigateState = {};
 
 export const navigateSlice = createSlice({
-  name: "project",
+  name: "navigate",
   initialState,
   reducers: {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
