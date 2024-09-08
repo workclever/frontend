@@ -3,7 +3,6 @@ import { AddNewColumnInput } from "./AddNewColumnInput";
 import { AddNewTaskInput } from "./AddNewTaskInput";
 import { ColumnNameRenderer } from "./ColumnNameRenderer";
 import { DndKanbanBoard } from "./dnd/kanban/DndKanbanBoard";
-import { Task } from "./Task";
 import { TaskCardKanban } from "./TaskCardKanban";
 import { useKanbanBoardData } from "./hooks/useKanbanBoardData";
 import {
@@ -12,6 +11,7 @@ import {
   useUpdateTaskPropertyMutation,
 } from "@app/services/api";
 import { TaskType } from "@app/types/Project";
+import { TaskMenu } from "./TaskMenu";
 
 export const KanbanBoardWrapper: React.FC<{
   projectId: number;
@@ -74,18 +74,28 @@ export const KanbanBoardWrapper: React.FC<{
       onMoveCard={onMoveCard}
       renderColumnHeader={(column) => <ColumnNameRenderer column={column} />}
       renderCard={(task) => (
-        <Task
+        <TaskMenu
           task={task}
-          findSubtasks={findSubtasks}
-          customFields={customFieldsVisibleOnCard}
-          onTaskClick={() => onTaskSelect(task)}
+          triggers={["contextMenu"]}
+          menuKeys={[
+            "view",
+            "quick-view",
+            "edit-title",
+            "copy-link",
+            "send-to-top",
+            "send-to-bottom",
+            "delete",
+          ]}
         >
-          <TaskCardKanban
-            task={task}
-            findSubtasks={findSubtasks}
-            customFields={customFieldsVisibleOnCard}
-          />
-        </Task>
+          {/* <div> needed to pass mouse events from dropdown */}
+          <div onClick={() => onTaskSelect(task)}>
+            <TaskCardKanban
+              task={task}
+              findSubtasks={findSubtasks}
+              customFields={customFieldsVisibleOnCard}
+            />
+          </div>
+        </TaskMenu>
       )}
       renderNewColumnItem={() => (
         <div style={{ marginTop: 8 }}>

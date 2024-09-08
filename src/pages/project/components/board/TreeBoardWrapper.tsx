@@ -1,9 +1,7 @@
-import { TaskType } from "@app/types/Project";
 import { AddNewColumnInput } from "./AddNewColumnInput";
 import { AddNewTaskInput } from "./AddNewTaskInput";
 import { ColumnNameRenderer } from "./ColumnNameRenderer";
 import { DndTreeBoard } from "./dnd/tree/DndTreeBoard";
-import { Task } from "./Task";
 import { TaskCardTree } from "./TaskCardTree";
 import { useTreeBoardData } from "./hooks/useTreeBoardData";
 import {
@@ -16,6 +14,7 @@ import { type Instruction } from "@atlaskit/pragmatic-drag-and-drop-hitbox/tree-
 import { LoadingSpin } from "@app/components/shared/primitives/LoadingSpin";
 import { useDispatch } from "react-redux";
 import { toggleExpandedTreeItem } from "@app/slices/project/projectSlice";
+import { TaskMenu } from "./TaskMenu";
 
 export const TreeBoardWrapper: React.FC<{ projectId: number }> = ({
   projectId,
@@ -26,7 +25,6 @@ export const TreeBoardWrapper: React.FC<{ projectId: number }> = ({
     tasksInBoard,
     customFieldsVisibleOnCard,
     isTasksLoading,
-    findSubtasks,
     onTaskSelect,
   } = useTreeBoardData(Number(projectId));
 
@@ -228,19 +226,36 @@ export const TreeBoardWrapper: React.FC<{ projectId: number }> = ({
       renderItem={(item) => {
         if ("ColumnId" in item.data) {
           return (
-            <Task
+            <TaskMenu
               task={item.data}
-              findSubtasks={findSubtasks}
-              customFields={customFieldsVisibleOnCard}
-              onTaskClick={() => onTaskSelect(item.data as TaskType)}
+              triggers={["contextMenu"]}
+              menuKeys={[
+                "view",
+                "quick-view",
+                "edit-title",
+                "copy-link",
+                "send-to-top",
+                "send-to-bottom",
+                "delete",
+              ]}
             >
-              <TaskCardTree
-                treeItem={item}
-                task={item.data}
-                customFields={customFieldsVisibleOnCard}
-                toggleOpen={() => dispatch(toggleExpandedTreeItem(item.id))}
-              />
-            </Task>
+              {/* <div> needed to pass mouse events from dropdown */}
+              <div
+                style={{ width: "100%" }}
+                onClick={() => {
+                  if ("ColumnId" in item.data) {
+                    onTaskSelect(item.data);
+                  }
+                }}
+              >
+                <TaskCardTree
+                  treeItem={item}
+                  task={item.data}
+                  customFields={customFieldsVisibleOnCard}
+                  toggleOpen={() => dispatch(toggleExpandedTreeItem(item.id))}
+                />
+              </div>
+            </TaskMenu>
           );
         }
         return (

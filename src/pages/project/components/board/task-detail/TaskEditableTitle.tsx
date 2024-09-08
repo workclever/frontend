@@ -2,12 +2,12 @@ import { Typography } from "antd";
 import { TaskType } from "@app/types/Project";
 import React from "react";
 import { debounce } from "lodash";
-import { HttpResult } from "@app/components/shared/HttpResult";
 import { TaskIdRenderer } from "@app/components/shared/TaskIdRenderer";
 import { useUpdateTaskPropertyMutation } from "@app/services/api";
 import { TaskParentsBreadCrumb } from "./TaskParentsBreadCrumb";
-import { PencilIcon } from "lucide-react";
+import { EllipsisVerticalIcon, PencilIcon } from "lucide-react";
 import { TaskParentColumnBreadCrumb } from "./TaskParentColumnBreadCrumb";
+import { TaskMenu } from "../TaskMenu";
 
 type Props = {
   task: TaskType;
@@ -15,7 +15,7 @@ type Props = {
 };
 
 export const TaskEditableTitle: React.FC<Props> = ({ task, onTaskSelect }) => {
-  const [update, { error }] = useUpdateTaskPropertyMutation();
+  const [update] = useUpdateTaskPropertyMutation();
   const [, setTempTitle] = React.useState(task.Title);
   const onUpdatePropertyDebounced = debounce(update, 100);
 
@@ -24,8 +24,8 @@ export const TaskEditableTitle: React.FC<Props> = ({ task, onTaskSelect }) => {
       <div
         style={{
           display: "flex",
-          width: "100%",
           flexDirection: "row",
+          width: "100%",
           alignItems: "center",
         }}
       >
@@ -35,8 +35,23 @@ export const TaskEditableTitle: React.FC<Props> = ({ task, onTaskSelect }) => {
           <TaskParentColumnBreadCrumb task={task} />
         )}
         <TaskIdRenderer task={task} />
+        <TaskMenu
+          task={task}
+          triggers={["click", "hover"]}
+          menuKeys={["copy-link", "delete"]}
+        >
+          <span style={{ marginLeft: 8 }}>
+            <EllipsisVerticalIcon size={15} />
+          </span>
+        </TaskMenu>
         <Typography.Title
-          style={{ flex: 1, padding: 0, margin: 0, paddingLeft: 8 }}
+          style={{
+            flex: 1,
+            width: "100%",
+            padding: 0,
+            margin: 0,
+            paddingLeft: 8,
+          }}
           level={5}
           editable={{
             icon: <PencilIcon size={12} />,
@@ -62,7 +77,6 @@ export const TaskEditableTitle: React.FC<Props> = ({ task, onTaskSelect }) => {
           {task.Title}
         </Typography.Title>
       </div>
-      <HttpResult error={error} />
     </>
   );
 };

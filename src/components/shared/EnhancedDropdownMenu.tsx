@@ -4,12 +4,19 @@ import React from "react";
 import { DropdownProps } from "./primitives/Dropdown";
 import { EllipsisIcon } from "lucide-react";
 
-export const EnhancedDropdownMenu: React.FC<{
+export type EnhancedDropdownMenuProps = {
   items: ItemType[];
   defaultSelectedKeys?: string[];
-  triggerElement?: React.ReactElement;
+  triggerElement?: React.ReactNode;
   triggers?: DropdownProps["trigger"];
-}> = ({ items, triggerElement, triggers, defaultSelectedKeys }) => {
+};
+
+export const EnhancedDropdownMenu: React.FC<EnhancedDropdownMenuProps> = ({
+  items,
+  triggerElement,
+  triggers,
+  defaultSelectedKeys,
+}) => {
   return (
     <Dropdown
       trigger={triggers ? triggers : ["hover"]}
