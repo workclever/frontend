@@ -57,7 +57,9 @@ export const UserSelector: React.FC<Props> = ({
 
   return (
     <div>
-      <div style={{ fontWeight: "bold" }}>{title}</div>
+      <div style={{ fontWeight: "bold", fontSize: 12, marginBottom: 4 }}>
+        {title}
+      </div>
       <Select
         showSearch
         style={{ width: "100%" }}
