@@ -22,6 +22,7 @@ export const CreateProjectModal: React.FC<{ onCancel: () => void }> = ({
     }).unwrap();
     if (result.Succeed) {
       goToProject(result.Data.Id);
+      onCancel();
     }
   };
 

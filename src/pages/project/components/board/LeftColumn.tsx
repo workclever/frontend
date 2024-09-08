@@ -1,23 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 import { FlexBasicLayout } from "@app/components/shared/FlexBasicLayout";
-import { Permission } from "@app/components/shared/Permission";
 import { Button } from "@app/components/shared/primitives/Button";
-import { EntityClasses, Permissions } from "@app/types/Roles";
-import { BoardList } from "../BoardList";
-import { ProjectSettingsModal } from "../manage/ProjectSettingsModal";
 import { useNavigate } from "react-router-dom";
-import { blue, gray } from "@ant-design/colors";
-import { CreateBoardModal } from "./CreateBoardModal";
+import { blue } from "@ant-design/colors";
 import { useListUserProjectsQuery } from "@app/services/api";
 import { EnhancedDropdownMenu } from "@app/components/shared/EnhancedDropdownMenu";
 import {
   ChevronLeftIcon,
+  EllipsisVerticalIcon,
   HelpCircleIcon,
   PlusIcon,
-  SettingsIcon,
-  TargetIcon,
 } from "lucide-react";
+import { CreateProjectModal } from "../CreateProjectModal";
+import { LeftColumnProjectItem } from "./LeftColumnProjectItem";
 
 const Wrapper = styled.div`
   padding: 12px;
@@ -46,26 +42,61 @@ const BottomWrapper = styled.div`
   border-top: 1px solid ${blue[1]};
   border-right: 1px solid #eaeaea;
   padding: 8px;
+  height: 45px;
+  background-color: white;
 `;
 
-const ProjectItemWrapper = styled.div`
-  &:hover .project-settings-icon {
-    display: inline-block !important;
-  }
-`;
-
-const ProjectItem = styled.div`
+const MyProjectsWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 8px;
+  height: 25px;
+  align-items: center;
 `;
+
+const AllProjects = styled.div`
+  border-left: 1px solid #ededed;
+  overflow-y: auto;
+  /* header - MyProjectsWrapper height - bottom */
+  height: calc(100vh - 45px - 25px - 45px);
+`;
+
+const MyProjectsItem = () => {
+  const [showCreateProjectModal, setShowCreateProjectModal] =
+    React.useState<boolean>(false);
+  return (
+    <>
+      <MyProjectsWrapper>
+        <span style={{ width: "100%" }}>My projects</span>
+        <EnhancedDropdownMenu
+          items={[
+            {
+              label: "New project",
+              key: "new-project",
+              icon: <PlusIcon size={15} />,
+              onClick: () => setShowCreateProjectModal(true),
+            },
+          ]}
+          triggerElement={
+            <EllipsisVerticalIcon
+              size={12}
+              style={{
+                color: "black",
+              }}
+            />
+          }
+        />
+        {showCreateProjectModal && (
+          <CreateProjectModal
+            onCancel={() => setShowCreateProjectModal(false)}
+          />
+        )}
+      </MyProjectsWrapper>
+    </>
+  );
+};
 
 export const LeftColumn = () => {
   const navigate = useNavigate();
-  const [editingProjectId, setEditingProjectId] = React.useState(0);
-  const [showProjectSettingsModal, setShowProjectSettingsModal] =
-    React.useState(false);
-  const [showCreateBoardModal, setShowCreateBoardModal] = React.useState(false);
   const { data: userProjects } = useListUserProjectsQuery(null);
 
   return (
@@ -84,68 +115,12 @@ export const LeftColumn = () => {
         />
       </Header>
       <div style={{ marginTop: 45 }}>
-        {/* <div style={{ marginBottom: 8 }}>Your projects</div> */}
-        {userProjects?.Data.map((project) => {
-          return (
-            <ProjectItemWrapper key={project.Id}>
-              <ProjectItem>
-                <div
-                  style={{
-                    flex: 1,
-                    color: gray[4],
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
-                  <TargetIcon size={12} style={{ color: "gray" }} />
-                  <span style={{ marginLeft: 8 }}>{project?.Name}</span>
-                </div>
-                <Permission
-                  entityClass={EntityClasses.Project}
-                  entityId={project.Id}
-                  permission={Permissions.CanManageProject}
-                  showWarning={false}
-                >
-                  <EnhancedDropdownMenu
-                    items={[
-                      {
-                        key: "1",
-                        label: "Create new board",
-                        icon: <PlusIcon size={12} />,
-                        onClick: () => {
-                          setEditingProjectId(project.Id);
-                          setShowCreateBoardModal(true);
-                        },
-                      },
-                      {
-                        key: "2",
-                        label: "Project settings",
-                        icon: <SettingsIcon size={12} />,
-                        onClick: () => {
-                          setShowProjectSettingsModal(true);
-                          setEditingProjectId(project.Id);
-                        },
-                      },
-                    ]}
-                    triggerElement={
-                      <span style={{ cursor: "pointer" }}>
-                        <SettingsIcon
-                          size={12}
-                          style={{
-                            color: "black",
-                            display: "none",
-                          }}
-                          className="project-settings-icon"
-                        />
-                      </span>
-                    }
-                  />
-                </Permission>
-              </ProjectItem>
-              <BoardList projectId={project.Id} />
-            </ProjectItemWrapper>
-          );
-        })}
+        <MyProjectsItem />
+        <AllProjects>
+          {userProjects?.Data.map((project) => {
+            return <LeftColumnProjectItem key={project.Id} project={project} />;
+          })}
+        </AllProjects>
       </div>
       <BottomWrapper>
         <FlexBasicLayout
@@ -156,18 +131,6 @@ export const LeftColumn = () => {
           }
         />
       </BottomWrapper>
-      {editingProjectId && showProjectSettingsModal ? (
-        <ProjectSettingsModal
-          projectId={editingProjectId}
-          onCancel={() => setShowProjectSettingsModal(false)}
-        />
-      ) : null}
-      {showCreateBoardModal && (
-        <CreateBoardModal
-          onCancel={() => setShowCreateBoardModal(false)}
-          projectId={editingProjectId}
-        />
-      )}
     </Wrapper>
   );
 };
