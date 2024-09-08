@@ -1,4 +1,4 @@
-import { Dropdown, Menu } from "antd";
+import { Dropdown } from "antd";
 import { ItemType } from "antd/es/menu/interface";
 import React from "react";
 import { DropdownProps } from "./primitives/Dropdown";
@@ -20,7 +20,10 @@ export const EnhancedDropdownMenu: React.FC<EnhancedDropdownMenuProps> = ({
   return (
     <Dropdown
       trigger={triggers ? triggers : ["hover"]}
-      overlay={<Menu items={items} defaultSelectedKeys={defaultSelectedKeys} />}
+      menu={{
+        items,
+        defaultSelectedKeys,
+      }}
       placement="bottomRight"
       destroyPopupOnHide
     >
