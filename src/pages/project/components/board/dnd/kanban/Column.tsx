@@ -24,7 +24,7 @@ import {
 } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
 import { centerUnderPointer } from "@atlaskit/pragmatic-drag-and-drop/element/center-under-pointer";
 import { setCustomNativeDragPreview } from "@atlaskit/pragmatic-drag-and-drop/element/set-custom-native-drag-preview";
-import { ColumnType, TaskType } from "@app/types/Project";
+import { ColumnType } from "@app/types/Project";
 import { useBoardContext } from "./board-context";
 import { type ColumnContextProps, ColumnContext } from "./column-context";
 import { DndColumnType } from "./types";
@@ -129,7 +129,7 @@ export const Column = memo(function Column({
 }: {
   column: DndColumnType;
   renderColumnHeader: (column: ColumnType) => React.ReactNode;
-  renderCardItem: (item: TaskType) => React.ReactNode;
+  renderCardItem: (cardId: number) => React.ReactNode;
   renderNewCardItem: () => React.ReactNode;
 }) {
   const columnId = column.Id;
@@ -264,7 +264,7 @@ export const Column = memo(function Column({
 
   const getCardIndex = useCallback(
     (id: number) => {
-      return column.items.findIndex((item) => item.Id === id);
+      return column.items.findIndex((item) => item === id);
     },
     [column]
   );
@@ -304,11 +304,11 @@ export const Column = memo(function Column({
             </div>
             <div style={scrollContainerStyles} ref={scrollableRef}>
               <div style={cardListStyles}>
-                {column.items.map((item) => (
+                {column.items.map((cardId) => (
                   <Card
-                    key={item.Id}
-                    item={item}
-                    renderItem={() => renderCardItem(item)}
+                    key={cardId}
+                    cardId={cardId}
+                    renderItem={() => renderCardItem(cardId)}
                   />
                 ))}
                 {renderNewCardItem()}

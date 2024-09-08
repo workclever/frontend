@@ -8,8 +8,8 @@ import * as liveRegion from "@atlaskit/pragmatic-drag-and-drop-live-region";
 import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
 import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
 import { reorder } from "@atlaskit/pragmatic-drag-and-drop/reorder";
-import { ColumnMap, DndColumnType } from "./types";
-import { ColumnType, TaskType } from "@app/types/Project";
+import { ColumnMap } from "./types";
+import { ColumnType } from "@app/types/Project";
 import { createRegistry } from "./registry";
 import { BoardContext, BoardContextValue } from "./board-context";
 import Board from "./Board";
@@ -43,8 +43,6 @@ type Operation = {
 };
 
 type BoardState = {
-  columnMap: ColumnMap;
-  orderedColumnIds: number[];
   lastOperation: Operation | null;
 };
 
@@ -54,12 +52,12 @@ export const DndKanbanBoard: React.FC<{
   onReorderColumn: (orderedColumnIds: number[]) => void;
   onReorderTask: (columnId: number, orderedTaskIds: number[]) => void;
   onMoveCard: (
-    task: TaskType,
+    taskId: number,
     finishColumnId: number,
     grouped: { [columnId: number]: number[] }
   ) => void;
   renderColumnHeader: (column: ColumnType) => React.ReactNode;
-  renderCard: (task: TaskType) => React.ReactNode;
+  renderCard: (cardId: number) => React.ReactNode;
   renderNewColumnItem: () => React.ReactNode;
   renderNewCardItem: (column: ColumnType) => React.ReactNode;
 }> = ({
@@ -74,8 +72,6 @@ export const DndKanbanBoard: React.FC<{
   renderNewCardItem,
 }) => {
   const [data, setData] = useState<BoardState>({
-    columnMap: dndColumnMap,
-    orderedColumnIds,
     lastOperation: null,
   });
 
@@ -91,8 +87,7 @@ export const DndKanbanBoard: React.FC<{
     if (outcome.type === "column-reorder") {
       const { startIndex, finishIndex } = outcome;
 
-      const { columnMap, orderedColumnIds } = data;
-      const sourceColumn = columnMap[orderedColumnIds[finishIndex]];
+      const sourceColumn = dndColumnMap[orderedColumnIds[finishIndex]];
 
       const entry = registry.getColumn(sourceColumn.Id);
       triggerPostMoveFlash(entry.element);
@@ -109,11 +104,13 @@ export const DndKanbanBoard: React.FC<{
     if (outcome.type === "card-reorder") {
       const { columnId, startIndex, finishIndex } = outcome;
 
-      const { columnMap } = data;
-      const column = columnMap[columnId];
+      const column = dndColumnMap[columnId];
       const item = column.items[finishIndex];
 
-      const entry = registry.getCard(item.Id);
+      const entry = registry.getCard(item);
+      if (!entry) {
+        return;
+      }
       triggerPostMoveFlash(entry.element);
 
       if (trigger !== "keyboard") {
@@ -121,11 +118,9 @@ export const DndKanbanBoard: React.FC<{
       }
 
       liveRegion.announce(
-        `You've moved ${item.Title} from position ${
-          startIndex + 1
-        } to position ${finishIndex + 1} of ${column.items.length} in the ${
-          column.Name
-        } column.`
+        `You've moved ${item} from position ${startIndex + 1} to position ${
+          finishIndex + 1
+        } of ${column.items.length} in the ${column.Name} column.`
       );
 
       return;
@@ -139,7 +134,7 @@ export const DndKanbanBoard: React.FC<{
       } = outcome;
 
       //   const data = data;
-      const destinationColumn = data.columnMap[finishColumnId];
+      const destinationColumn = dndColumnMap[finishColumnId];
       const item = destinationColumn.items[itemIndexInFinishColumn];
 
       const finishPosition =
@@ -147,7 +142,10 @@ export const DndKanbanBoard: React.FC<{
           ? itemIndexInFinishColumn + 1
           : destinationColumn.items.length;
 
-      const entry = registry.getCard(item.Id);
+      const entry = registry.getCard(item);
+      if (!entry) {
+        return;
+      }
       triggerPostMoveFlash(entry.element);
 
       if (trigger !== "keyboard") {
@@ -155,7 +153,7 @@ export const DndKanbanBoard: React.FC<{
       }
 
       liveRegion.announce(
-        `You've moved ${item.Title} from position ${
+        `You've moved ${item} from position ${
           itemIndexInStartColumn + 1
         } to position ${finishPosition} in the ${
           destinationColumn.Name
@@ -164,16 +162,15 @@ export const DndKanbanBoard: React.FC<{
 
       return;
     }
-  }, [lastOperation, registry, data]);
+  }, [lastOperation, registry, dndColumnMap, orderedColumnIds]);
 
   useEffect(() => {
     return liveRegion.cleanup();
   }, []);
 
   const getColumns = useCallback(() => {
-    const { columnMap, orderedColumnIds } = data;
-    return orderedColumnIds.map((columnId) => columnMap[columnId]);
-  }, [data]);
+    return orderedColumnIds.map((columnId) => dndColumnMap[columnId]);
+  }, [dndColumnMap, orderedColumnIds]);
 
   const reorderColumn = useCallback(
     ({
@@ -188,18 +185,18 @@ export const DndKanbanBoard: React.FC<{
       setData((data) => {
         const outcome: Outcome = {
           type: "column-reorder",
-          columnId: data.orderedColumnIds[startIndex],
+          columnId: orderedColumnIds[startIndex],
           startIndex,
           finishIndex,
         };
 
-        const orderedColumnIds = reorder({
-          list: data.orderedColumnIds,
+        const newOrderedColumnIds = reorder({
+          list: orderedColumnIds,
           startIndex,
           finishIndex,
         });
 
-        onReorderColumn(orderedColumnIds);
+        onReorderColumn(newOrderedColumnIds);
 
         return {
           ...data,
@@ -211,7 +208,7 @@ export const DndKanbanBoard: React.FC<{
         };
       });
     },
-    [onReorderColumn]
+    [onReorderColumn, orderedColumnIds]
   );
 
   const reorderCard = useCallback(
@@ -227,25 +224,14 @@ export const DndKanbanBoard: React.FC<{
       trigger?: Trigger;
     }) => {
       setData((data) => {
-        const sourceColumn = data.columnMap[columnId];
+        const sourceColumn = dndColumnMap[columnId];
         const updatedItems = reorder({
           list: sourceColumn.items,
           startIndex,
           finishIndex,
         });
 
-        const updatedSourceColumn: DndColumnType = {
-          ...sourceColumn,
-          items: updatedItems,
-        };
-
-        const orderedTaskIds = updatedItems.map((r) => r.Id);
-
-        const updatedMap: ColumnMap = {
-          ...data.columnMap,
-          [columnId]: updatedSourceColumn,
-        };
-
+        const orderedTaskIds = updatedItems;
         onReorderTask(columnId, orderedTaskIds);
 
         const outcome: Outcome | null = {
@@ -257,7 +243,7 @@ export const DndKanbanBoard: React.FC<{
 
         return {
           ...data,
-          columnMap: updatedMap,
+          // columnMap: updatedMap,
           lastOperation: {
             trigger: trigger,
             outcome,
@@ -265,7 +251,7 @@ export const DndKanbanBoard: React.FC<{
         };
       });
     },
-    [setData]
+    [setData, dndColumnMap, onReorderTask]
   );
 
   const moveCard = useCallback(
@@ -287,21 +273,21 @@ export const DndKanbanBoard: React.FC<{
         return;
       }
       setData((data) => {
-        const sourceColumn = data.columnMap[startColumnId];
-        const destinationColumn = data.columnMap[finishColumnId];
-        const item: TaskType = sourceColumn.items[itemIndexInStartColumn];
+        const sourceColumn = dndColumnMap[startColumnId];
+        const destinationColumn = dndColumnMap[finishColumnId];
+        const itemId = sourceColumn.items[itemIndexInStartColumn];
 
         const destinationItems = Array.from(destinationColumn.items);
         // Going into the first position if no index is provided
         const newIndexInDestination = itemIndexInFinishColumn ?? 0;
-        destinationItems.splice(newIndexInDestination, 0, item);
+        destinationItems.splice(newIndexInDestination, 0, itemId);
 
         const sourceColumnNewOrderedItems = sourceColumn.items.filter(
-          (i) => i.Id !== item.Id
+          (i) => i !== itemId
         );
 
         const updatedMap = {
-          ...data.columnMap,
+          ...dndColumnMap,
           [startColumnId]: {
             ...sourceColumn,
             items: sourceColumnNewOrderedItems,
@@ -312,9 +298,9 @@ export const DndKanbanBoard: React.FC<{
           },
         };
 
-        onMoveCard(item, finishColumnId, {
-          [startColumnId]: sourceColumnNewOrderedItems.map((r) => r.Id),
-          [finishColumnId]: destinationItems.map((r) => r.Id),
+        onMoveCard(itemId, finishColumnId, {
+          [startColumnId]: sourceColumnNewOrderedItems,
+          [finishColumnId]: destinationItems,
         });
 
         const outcome: Outcome | null = {
@@ -334,7 +320,7 @@ export const DndKanbanBoard: React.FC<{
         };
       });
     },
-    [setData, onMoveCard]
+    [setData, onMoveCard, dndColumnMap]
   );
 
   const [instanceId] = useState(() => Symbol("instance-id"));
@@ -357,12 +343,12 @@ export const DndKanbanBoard: React.FC<{
           // 2. move to new position
 
           if (source.data.type === "column") {
-            const startIndex: number = data.orderedColumnIds.findIndex(
+            const startIndex: number = orderedColumnIds.findIndex(
               (columnId) => columnId === source.data.columnId
             );
 
             const target = location.current.dropTargets[0];
-            const indexOfTarget: number = data.orderedColumnIds.findIndex(
+            const indexOfTarget: number = orderedColumnIds.findIndex(
               (id) => id === target.data.columnId
             );
             const closestEdgeOfTarget: Edge | null = extractClosestEdge(
@@ -385,16 +371,16 @@ export const DndKanbanBoard: React.FC<{
             const [, startColumnRecord] = location.initial.dropTargets;
             const sourceId = startColumnRecord.data.columnId;
             invariant(typeof sourceId === "number");
-            const sourceColumn = data.columnMap[Number(sourceId)];
+            const sourceColumn = dndColumnMap[Number(sourceId)];
             const itemIndex = sourceColumn.items.findIndex(
-              (item) => item.Id === Number(itemId)
+              (item) => item === itemId
             );
 
             if (location.current.dropTargets.length === 1) {
               const [destinationColumnRecord] = location.current.dropTargets;
               const destinationId = destinationColumnRecord.data.columnId;
               invariant(typeof destinationId === "number");
-              const destinationColumn = data.columnMap[Number(destinationId)];
+              const destinationColumn = dndColumnMap[Number(destinationId)];
               invariant(destinationColumn);
 
               // reordering in same column
@@ -431,10 +417,10 @@ export const DndKanbanBoard: React.FC<{
               const destinationColumnId = destinationColumnRecord.data.columnId;
               invariant(typeof destinationColumnId === "number");
               const destinationColumn =
-                data.columnMap[Number(destinationColumnId)];
+                dndColumnMap[Number(destinationColumnId)];
 
               const indexOfTarget = destinationColumn.items.findIndex(
-                (item) => item.Id === destinationCardRecord.data.itemId
+                (item) => item === destinationCardRecord.data.itemId
               );
               const closestEdgeOfTarget: Edge | null = extractClosestEdge(
                 destinationCardRecord.data
@@ -476,7 +462,14 @@ export const DndKanbanBoard: React.FC<{
         },
       })
     );
-  }, [data, instanceId, moveCard, reorderCard, reorderColumn]);
+  }, [
+    instanceId,
+    moveCard,
+    reorderCard,
+    reorderColumn,
+    dndColumnMap,
+    orderedColumnIds,
+  ]);
 
   const contextValue: BoardContextValue = useMemo(() => {
     return {
@@ -493,17 +486,17 @@ export const DndKanbanBoard: React.FC<{
   return (
     <BoardContext.Provider value={contextValue}>
       <Board>
-        {data.orderedColumnIds
-          .filter((columnId) => data.columnMap[columnId])
+        {orderedColumnIds
+          .filter((columnId) => dndColumnMap[columnId])
           .map((columnId) => {
             return (
               <Column
-                column={data.columnMap[columnId]}
+                column={dndColumnMap[columnId]}
                 key={columnId}
                 renderColumnHeader={renderColumnHeader}
                 renderCardItem={renderCard}
                 renderNewCardItem={() =>
-                  renderNewCardItem(data.columnMap[columnId])
+                  renderNewCardItem(dndColumnMap[columnId])
                 }
               />
             );

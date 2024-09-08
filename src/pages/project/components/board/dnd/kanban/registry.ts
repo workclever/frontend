@@ -43,9 +43,9 @@ export function createRegistry() {
     };
   }
 
-  function getCard(cardId: number): CardEntry {
+  function getCard(cardId: number): CardEntry | undefined {
     const entry = cards.get(cardId);
-    invariant(entry);
+    // invariant(entry);
     return entry;
   }
 

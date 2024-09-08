@@ -1,7 +1,7 @@
-import { ColumnType, TaskType } from "@app/types/Project";
+import { ColumnType } from "@app/types/Project";
 
 export type DndColumnType = ColumnType & {
-  items: TaskType[];
+  items: number[];
 };
 
 export type ColumnMap = { [columnId: number]: DndColumnType };

@@ -9,6 +9,7 @@ export const useKanbanBoardData = (projectId: number) => {
     nonSubtasks,
     findSubtasks,
     onTaskSelect,
+    findTask,
     customFieldsVisibleOnCard,
   } = useBoardData(projectId);
 
@@ -48,7 +49,9 @@ export const useKanbanBoardData = (projectId: number) => {
         for (const col of columns) {
           items[col.Id] = {
             ...col,
-            items: columnTasks.filter((r) => r.ColumnId === col.Id),
+            items: columnTasks
+              .filter((r) => r.ColumnId === col.Id)
+              .map((r) => r.Id),
           };
         }
       }
@@ -57,5 +60,11 @@ export const useKanbanBoardData = (projectId: number) => {
     return { dndColumnMap: items, orderedColumnIds };
   }, [columns, nonSubtasks, boardFilters]);
 
-  return { dndData, findSubtasks, onTaskSelect, customFieldsVisibleOnCard };
+  return {
+    dndData,
+    findSubtasks,
+    onTaskSelect,
+    findTask,
+    customFieldsVisibleOnCard,
+  };
 };

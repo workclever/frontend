@@ -23,7 +23,6 @@ import { preserveOffsetOnSource } from "@atlaskit/pragmatic-drag-and-drop/elemen
 import { setCustomNativeDragPreview } from "@atlaskit/pragmatic-drag-and-drop/element/set-custom-native-drag-preview";
 import { dropTargetForExternal } from "@atlaskit/pragmatic-drag-and-drop/external/adapter";
 import { useBoardContext } from "./board-context";
-import { TaskType } from "@app/types/Project";
 
 type State =
   | { type: "idle" }
@@ -50,12 +49,11 @@ const stateStyles: {
 
 type CardPrimitiveProps = {
   closestEdge: Edge | null;
-  item: TaskType;
   state: State;
 };
 
 const CardPrimitive = forwardRef<HTMLDivElement, CardPrimitiveProps>(
-  function CardPrimitive({ closestEdge, item, state }, ref) {
+  function CardPrimitive({ closestEdge, state }, ref) {
     return (
       <div
         ref={ref}
@@ -65,7 +63,7 @@ const CardPrimitive = forwardRef<HTMLDivElement, CardPrimitiveProps>(
           ...stateStyles[state.type],
         }}
       >
-        {item.Title}
+        Moving
         {closestEdge && <DropIndicator edge={closestEdge} gap={"10px"} />}
       </div>
     );
@@ -73,14 +71,13 @@ const CardPrimitive = forwardRef<HTMLDivElement, CardPrimitiveProps>(
 );
 
 export const Card = memo(function Card({
-  item,
+  cardId,
   renderItem,
 }: {
-  item: TaskType;
+  cardId: number;
   renderItem: () => React.ReactNode;
 }) {
   const ref = useRef<HTMLDivElement | null>(null);
-  const { Id } = item;
   const [closestEdge, setClosestEdge] = useState<Edge | null>(null);
   const [state, setState] = useState<State>(idleState);
 
@@ -88,12 +85,12 @@ export const Card = memo(function Card({
   useEffect(() => {
     invariant(ref.current);
     return registerCard({
-      cardId: Id,
+      cardId,
       entry: {
         element: ref.current,
       },
     });
-  }, [registerCard, Id]);
+  }, [registerCard, cardId]);
 
   useEffect(() => {
     const element = ref.current;
@@ -101,7 +98,7 @@ export const Card = memo(function Card({
     return combine(
       draggable({
         element: element,
-        getInitialData: () => ({ type: "card", itemId: Id, instanceId }),
+        getInitialData: () => ({ type: "card", itemId: cardId, instanceId }),
         onGenerateDragPreview: ({ location, source, nativeSetDragImage }) => {
           const rect = source.element.getBoundingClientRect();
 
@@ -133,7 +130,7 @@ export const Card = memo(function Card({
         },
         getIsSticky: () => true,
         getData: ({ input, element }) => {
-          const data = { type: "card", itemId: Id };
+          const data = { type: "card", itemId: cardId };
 
           return attachClosestEdge(data, {
             input,
@@ -142,12 +139,12 @@ export const Card = memo(function Card({
           });
         },
         onDragEnter: (args) => {
-          if (args.source.data.itemId !== Id) {
+          if (args.source.data.itemId !== cardId) {
             setClosestEdge(extractClosestEdge(args.self.data));
           }
         },
         onDrag: (args) => {
-          if (args.source.data.itemId !== Id) {
+          if (args.source.data.itemId !== cardId) {
             setClosestEdge(extractClosestEdge(args.self.data));
           }
         },
@@ -159,7 +156,7 @@ export const Card = memo(function Card({
         },
       })
     );
-  }, [instanceId, item, Id]);
+  }, [instanceId, cardId]);
 
   return (
     <Fragment>
@@ -190,7 +187,7 @@ export const Card = memo(function Card({
               height: state.rect.height,
             }}
           >
-            <CardPrimitive item={item} state={state} closestEdge={null} />
+            <CardPrimitive state={state} closestEdge={null} />
           </div>,
           state.container
         )}

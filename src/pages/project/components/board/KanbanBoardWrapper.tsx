@@ -10,7 +10,6 @@ import {
   useUpdateTaskOrdersMutation,
   useUpdateTaskPropertyMutation,
 } from "@app/services/api";
-import { TaskType } from "@app/types/Project";
 import { TaskMenu } from "./TaskMenu";
 
 export const KanbanBoardWrapper: React.FC<{
@@ -19,9 +18,10 @@ export const KanbanBoardWrapper: React.FC<{
 }> = ({ projectId, boardId }) => {
   const {
     dndData: dndKanbanItems,
+    customFieldsVisibleOnCard,
     findSubtasks,
     onTaskSelect,
-    customFieldsVisibleOnCard,
+    findTask,
   } = useKanbanBoardData(projectId);
 
   const [updateColumnOrders] = useUpdateColumnOrdersMutation();
@@ -44,12 +44,12 @@ export const KanbanBoardWrapper: React.FC<{
   };
 
   const onMoveCard = (
-    task: TaskType,
+    taskId: number,
     finishColumnId: number,
     grouped: { [columnId: number]: number[] }
   ) => {
     updateTaskProperty({
-      Task: task,
+      Task: findTask(taskId),
       Params: {
         property: "ColumnId",
         value: finishColumnId.toString(),
@@ -65,38 +65,40 @@ export const KanbanBoardWrapper: React.FC<{
 
   return (
     <DndKanbanBoard
-      // TODO workaround
-      key={JSON.stringify(dndKanbanItems.dndColumnMap)}
       dndColumnMap={dndKanbanItems.dndColumnMap}
       orderedColumnIds={dndKanbanItems.orderedColumnIds}
       onReorderColumn={onReorderColumn}
       onReorderTask={onReorderTask}
       onMoveCard={onMoveCard}
       renderColumnHeader={(column) => <ColumnNameRenderer column={column} />}
-      renderCard={(task) => (
-        <TaskMenu
-          task={task}
-          triggers={["contextMenu"]}
-          menuKeys={[
-            "view",
-            "quick-view",
-            "edit-title",
-            "copy-link",
-            "send-to-top",
-            "send-to-bottom",
-            "delete",
-          ]}
-        >
-          {/* <div> needed to pass mouse events from dropdown */}
-          <div onClick={() => onTaskSelect(task)}>
-            <TaskCardKanban
-              task={task}
-              findSubtasks={findSubtasks}
-              customFields={customFieldsVisibleOnCard}
-            />
-          </div>
-        </TaskMenu>
-      )}
+      renderCard={(cardId) => {
+        const task = findTask(cardId);
+        if (!task) return null;
+        return (
+          <TaskMenu
+            task={task}
+            triggers={["contextMenu"]}
+            menuKeys={[
+              "view",
+              "quick-view",
+              "edit-title",
+              "copy-link",
+              "send-to-top",
+              "send-to-bottom",
+              "delete",
+            ]}
+          >
+            {/* <div> needed to pass mouse events from dropdown */}
+            <div onClick={() => onTaskSelect(task)}>
+              <TaskCardKanban
+                task={task}
+                findSubtasks={findSubtasks}
+                customFields={customFieldsVisibleOnCard}
+              />
+            </div>
+          </TaskMenu>
+        );
+      }}
       renderNewColumnItem={() => (
         <div style={{ marginTop: 8 }}>
           <AddNewColumnInput />
