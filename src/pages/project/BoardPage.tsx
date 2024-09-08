@@ -45,10 +45,12 @@ export const BoardPage = () => {
     return (
       <>
         {boardViewType === "kanban" && (
-          <KanbanBoardWrapper
-            projectId={Number(projectId)}
-            boardId={Number(boardId)}
-          />
+          <div style={{ padding: 8 }}>
+            <KanbanBoardWrapper
+              projectId={Number(projectId)}
+              boardId={Number(boardId)}
+            />
+          </div>
         )}
         {boardViewType === "tree" && (
           <TreeBoardWrapper projectId={Number(projectId)} />
