@@ -8,13 +8,13 @@ import {
 import { useAppNavigate } from "@app/hooks/useAppNavigate";
 import { useBoards } from "@app/hooks/useBoards";
 import { useColumns } from "@app/hooks/useColumns";
+import { selectSelectedProjectId } from "@app/slices/project/projectSlice";
+import { BoardType, TaskType } from "@app/types/Project";
 import {
   selectSelectedBoardId,
   selectBoardFilters,
-  selectSelectedProjectId,
   selectBoardViewType,
-} from "@app/slices/project/projectSlice";
-import { BoardType, TaskType } from "@app/types/Project";
+} from "@app/slices/board/boardSlice";
 
 export const useBoardData = (projectId: number) => {
   const selectedBoardId = useSelector(selectSelectedBoardId);

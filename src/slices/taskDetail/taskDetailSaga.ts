@@ -7,10 +7,8 @@ import {
 import { api } from "../../services/api";
 import { RtkQueryOutput } from "../types";
 import { TaskType } from "@app/types/Project";
-import {
-  setSelectedBoardId,
-  setSelectedProjectId,
-} from "../project/projectSlice";
+import { setSelectedProjectId } from "../project/projectSlice";
+import { setSelectedBoardId } from "../board/boardSlice";
 
 const queryConfig = {
   forceRefetch: true,

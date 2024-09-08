@@ -1,6 +1,6 @@
 import { gray } from "@ant-design/colors";
 import { useListTaskCommentsQuery } from "@app/services/api";
-import { selectBoardViewType } from "@app/slices/project/projectSlice";
+import { selectBoardViewType } from "@app/slices/board/boardSlice";
 import { useSelector } from "react-redux";
 import { Props } from "../Task";
 import { MessageCircleIcon } from "lucide-react";

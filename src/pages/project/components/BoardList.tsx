@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { selectSelectedBoardId } from "@app/slices/project/projectSlice";
+import { selectSelectedBoardId } from "@app/slices/board/boardSlice";
 import { useAppNavigate } from "@app/hooks/useAppNavigate";
 import React from "react";
 import styled from "styled-components";

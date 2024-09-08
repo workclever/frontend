@@ -1,30 +1,26 @@
 import { put, select, take, takeEvery } from "redux-saga/effects";
-import { loadBoardStarted, loadBoardFinished } from "./boardSlice";
-import { api } from "../../services/api";
 import {
+  loadBoardStarted,
+  loadBoardFinished,
   selectSelectedBoardId,
-  selectSelectedProjectId,
-} from "../project/projectSlice";
+} from "./boardSlice";
+import { api } from "../../services/api";
 
 const queryConfig = {
   forceRefetch: true,
 };
 
-function* handleLoadBoardStarted() {
+function* handleLoadBoardStarted({
+  payload,
+}: ReturnType<typeof loadBoardStarted>) {
   try {
-    const selectedProjectId: ReturnType<typeof selectSelectedProjectId> =
-      yield select(selectSelectedProjectId);
-    const selectedBoardId: ReturnType<typeof selectSelectedProjectId> =
-      yield select(selectSelectedBoardId);
+    yield select(selectSelectedBoardId);
     yield put(
-      api.endpoints.listCustomFields.initiate(
-        Number(selectedProjectId),
-        queryConfig
-      )
+      api.endpoints.listCustomFields.initiate(payload.projectId, queryConfig)
     );
     yield put(
       api.endpoints.listTaskCustomFieldValuesByBoard.initiate(
-        Number(selectedBoardId),
+        payload.boardId,
         queryConfig
       )
     );

@@ -5,7 +5,7 @@ import { useBoardData } from "./useBoardData";
 import {
   expandedTreeItemBulk,
   selectTreeExpandedKeys,
-} from "@app/slices/project/projectSlice";
+} from "@app/slices/board/boardSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 export const useTreeBoardData = (projectId: number) => {

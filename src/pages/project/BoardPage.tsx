@@ -2,11 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button } from "../../components/shared/primitives/Button";
 import { Empty } from "../../components/shared/primitives/Empty";
 import { Space } from "../../components/shared/primitives/Space";
-import {
-  selectBoardViewType,
-  setSelectedProjectId,
-  setSelectedBoardId,
-} from "../../slices/project/projectSlice";
+import { setSelectedProjectId } from "../../slices/project/projectSlice";
 import { useParams } from "react-router-dom";
 import React from "react";
 import { BoardLayout } from "./components/board/BoardLayout";
@@ -15,6 +11,8 @@ import { KanbanBoardWrapper } from "./components/board/KanbanBoardWrapper";
 import {
   loadBoardStarted,
   selectBoardLoading,
+  selectBoardViewType,
+  setSelectedBoardId,
 } from "@app/slices/board/boardSlice";
 import { LoadingSpin } from "@app/components/shared/primitives/LoadingSpin";
 
@@ -28,7 +26,12 @@ export const BoardPage = () => {
     if (projectId && boardId) {
       dispatch(setSelectedProjectId(Number(projectId)));
       dispatch(setSelectedBoardId(Number(boardId)));
-      dispatch(loadBoardStarted());
+      dispatch(
+        loadBoardStarted({
+          boardId: Number(boardId),
+          projectId: Number(projectId),
+        })
+      );
     }
   }, [dispatch, projectId, boardId]);
 

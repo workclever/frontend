@@ -5,10 +5,7 @@ import {
   useCreateSubtaskRelationMutation,
   useCreateTaskMutation,
 } from "@app/services/api";
-import {
-  selectSelectedBoardId,
-  selectSelectedProjectId,
-} from "@app/slices/project/projectSlice";
+import { selectSelectedProjectId } from "@app/slices/project/projectSlice";
 import { TaskType } from "@app/types/Project";
 import { HttpResult } from "@app/components/shared/HttpResult";
 import { Button } from "@app/components/shared/primitives/Button";
@@ -16,6 +13,7 @@ import { Tabs, TabPane } from "@app/components/shared/primitives/Tabs";
 import { Space } from "@app/components/shared/primitives/Space";
 import { Modal } from "@app/components/shared/primitives/Modal";
 import { TaskSearchInput } from "../../../shared/TaskSearchInput";
+import { selectSelectedBoardId } from "@app/slices/board/boardSlice";
 
 type NewSubtaskModalFormValuesType = {
   Title: string;

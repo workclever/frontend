@@ -1,4 +1,4 @@
-import { setBoardFilter } from "@app/slices/project/projectSlice";
+import { setBoardFilter } from "@app/slices/board/boardSlice";
 import { Input } from "antd";
 import { debounce } from "lodash";
 import { useDispatch } from "react-redux";

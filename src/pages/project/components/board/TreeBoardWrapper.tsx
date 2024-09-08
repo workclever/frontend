@@ -13,7 +13,7 @@ import { reorderArray } from "./utils/orderUtils";
 import { type Instruction } from "@atlaskit/pragmatic-drag-and-drop-hitbox/tree-item";
 import { LoadingSpin } from "@app/components/shared/primitives/LoadingSpin";
 import { useDispatch } from "react-redux";
-import { toggleExpandedTreeItem } from "@app/slices/project/projectSlice";
+import { toggleExpandedTreeItem } from "@app/slices/board/boardSlice";
 import { TaskMenu } from "./TaskMenu";
 
 export const TreeBoardWrapper: React.FC<{ projectId: number }> = ({

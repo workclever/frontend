@@ -5,7 +5,7 @@ import {
   selectBoardFilters,
   selectSelectedBoardId,
   setBoardFilter,
-} from "@app/slices/project/projectSlice";
+} from "@app/slices/board/boardSlice";
 import { UserAvatar } from "@app/components/shared/UserAvatar";
 import { AvatarGroup } from "@app/components/shared/primitives/Avatar";
 

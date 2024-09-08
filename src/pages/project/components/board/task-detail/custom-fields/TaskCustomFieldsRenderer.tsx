@@ -4,10 +4,7 @@ import {
   useListCustomFieldsQuery,
   useListTaskCustomFieldValuesByBoardQuery,
 } from "@app/services/api";
-import {
-  selectSelectedBoardId,
-  selectSelectedProjectId,
-} from "@app/slices/project/projectSlice";
+import { selectSelectedProjectId } from "@app/slices/project/projectSlice";
 import { TaskType } from "@app/types/Project";
 import { CustomFieldRow } from "./units/CustomFieldRow";
 import {
@@ -16,6 +13,7 @@ import {
   TableKey,
   TableValue,
 } from "../../fields/FieldContainers";
+import { selectSelectedBoardId } from "@app/slices/board/boardSlice";
 
 export const TaskCustomFieldsRenderer: React.FC<{ task: TaskType }> = ({
   task,

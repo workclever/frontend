@@ -6,11 +6,7 @@ import {
   useCreateTaskMutation,
   useDeleteColumnMutation,
 } from "@app/services/api";
-import {
-  selectBoardViewType,
-  selectSelectedBoardId,
-  selectSelectedProjectId,
-} from "@app/slices/project/projectSlice";
+import { selectSelectedProjectId } from "@app/slices/project/projectSlice";
 import { ColumnType } from "@app/types/Project";
 import { EntityClasses, Permissions } from "@app/types/Roles";
 import { Confirm } from "@app/components/shared/Confirm";
@@ -24,6 +20,10 @@ import { ColumnTreeHeader } from "./ColumnTreeHeader";
 import { ModalForm, ProFormText } from "@ant-design/pro-components";
 import { ColumnColor } from "@app/components/shared/ColumnColor";
 import { PencilIcon, PlusIcon, TrashIcon } from "lucide-react";
+import {
+  selectBoardViewType,
+  selectSelectedBoardId,
+} from "@app/slices/board/boardSlice";
 
 const ColumnTreeWrapper = styled.div`
   padding: 8px;

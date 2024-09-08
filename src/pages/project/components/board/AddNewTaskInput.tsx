@@ -2,15 +2,13 @@ import { Form, Input } from "antd";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useCreateTaskMutation } from "@app/services/api";
-import {
-  selectSelectedProjectId,
-  selectSelectedBoardId,
-} from "@app/slices/project/projectSlice";
+import { selectSelectedProjectId } from "@app/slices/project/projectSlice";
 import { ColumnType } from "@app/types/Project";
 import { ToggleOnClick } from "@app/components/shared/ToggleOnClick";
 import { Tooltip } from "@app/components/shared/primitives/Tooltip";
 import { gray } from "@ant-design/colors";
 import { PlusIcon } from "lucide-react";
+import { selectSelectedBoardId } from "@app/slices/board/boardSlice";
 
 const TextWrapper = styled.span`
   color: ${gray[0]};

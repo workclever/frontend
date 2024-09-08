@@ -5,7 +5,7 @@ import { useColumns } from "@app/hooks/useColumns";
 import { useFormattedDateTime } from "@app/hooks/useFormattedDateTime";
 import { useTask } from "@app/hooks/useTask";
 import { useUser } from "@app/hooks/useUser";
-import { selectSelectedBoardId } from "@app/slices/project/projectSlice";
+import { selectSelectedBoardId } from "@app/slices/board/boardSlice";
 import { TaskChangeLogType } from "@app/types/Project";
 import { useSelector } from "react-redux";
 import styled from "styled-components";

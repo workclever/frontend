@@ -5,7 +5,7 @@ import styled from "styled-components";
 import {
   selectBoardViewType,
   setBoardViewType,
-} from "@app/slices/project/projectSlice";
+} from "@app/slices/board/boardSlice";
 import { BoardViewType } from "@app/types/Project";
 import { BoardUserAvatars } from "./BoardUserAvatars";
 import { BoardHeaderRightContent } from "@app/layout/BoardHeaderRightContent";

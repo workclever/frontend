@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import { BoardHeader } from "./BoardHeader";
 import { LeftColumn } from "./LeftColumn";
 import { useSelector } from "react-redux";
-import { selectBoardViewType } from "@app/slices/project/projectSlice";
+import { selectBoardViewType } from "@app/slices/board/boardSlice";
 
 const LeftWrapper = styled.div`
   width: 250px;
