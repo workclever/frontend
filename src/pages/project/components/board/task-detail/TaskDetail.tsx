@@ -15,7 +15,6 @@ import { TaskBoardColumn } from "./TaskBoardColumn";
 
 type Props = {
   task: TaskType;
-  onTaskDelete: (task: TaskType) => void;
   findSubtasks: (id: number) => TaskType[];
 };
 

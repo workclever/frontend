@@ -1,5 +1,5 @@
 import { Drawer, message } from "antd";
-import { TaskType } from "@app/types/Project";
+import { BoardType, TaskType } from "@app/types/Project";
 import {
   useDeleteTaskMutation,
   useSendTaskToTopOrBottomMutation,
@@ -27,6 +27,8 @@ import {
 } from "lucide-react";
 import { TaskEditableTitle } from "./task-detail/TaskEditableTitle";
 import { useBoardData } from "./hooks/useBoardData";
+import { useAppNavigate } from "@app/hooks/useAppNavigate";
+import { useBoards } from "@app/hooks/useBoards";
 
 type TaskMenuKeys =
   | "view"
@@ -43,12 +45,14 @@ export const TaskMenu: React.FC<{
   triggers: EnhancedDropdownMenuProps["triggers"];
   children?: React.ReactNode;
 }> = ({ task, menuKeys, triggers, children }) => {
+  const { goToBoard } = useAppNavigate();
   const { hasAccess } = useMe();
   const [deleteTask] = useDeleteTaskMutation();
   const [sendToLocation] = useSendTaskToTopOrBottomMutation();
   const [editingTitle, setEditingTitle] = useState(false);
   const [quickViewing, setQuickViewing] = useState(false);
   const { findSubtasks, onTaskSelect } = useBoardData(task.ProjectId);
+  const boards = useBoards();
 
   const hasProjectManagerPermission = hasAccess(
     Number(task.ProjectId),
@@ -114,7 +118,10 @@ export const TaskMenu: React.FC<{
       onClick: () => {
         Confirm.Show({
           title: "Delete task permanently?",
-          onConfirm: () => deleteTask(task.Id),
+          onConfirm: () => {
+            deleteTask(task.Id);
+            goToBoard(boards.find((r) => r.Id === task.BoardId) as BoardType);
+          },
         });
       },
       icon: <TrashIcon size={12} />,
@@ -148,12 +155,7 @@ export const TaskMenu: React.FC<{
           }}
           title={<TaskEditableTitle task={task} onTaskSelect={onTaskSelect} />}
         >
-          <TaskDetail
-            task={task}
-            // TODO
-            onTaskDelete={() => {}}
-            findSubtasks={findSubtasks}
-          />
+          <TaskDetail task={task} findSubtasks={findSubtasks} />
         </Drawer>
       )}
     </>

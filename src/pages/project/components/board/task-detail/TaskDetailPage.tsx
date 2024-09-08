@@ -12,9 +12,7 @@ export const TaskDetailPage = () => {
   const { taskId: taskIdString } = useParams();
   const taskId = Number(taskIdString?.split("-")[1]);
   const { data: task } = useGetTaskQuery(taskId, { skip: !taskId });
-  const { findSubtasks, onTaskDelete } = useBoardData(
-    Number(task?.Data.ProjectId)
-  );
+  const { findSubtasks } = useBoardData(Number(task?.Data.ProjectId));
 
   useEffect(() => {
     if (task?.Data) {
@@ -29,11 +27,7 @@ export const TaskDetailPage = () => {
       boardId={task?.Data.BoardId}
     >
       {task?.Data && (
-        <TaskDetail
-          task={task.Data}
-          onTaskDelete={onTaskDelete}
-          findSubtasks={findSubtasks}
-        />
+        <TaskDetail task={task.Data} findSubtasks={findSubtasks} />
       )}
     </BoardLayout>
   );
