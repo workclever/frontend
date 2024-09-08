@@ -1,14 +1,20 @@
 import { Dropdown } from "antd";
-import { ItemType } from "antd/es/menu/interface";
 import React from "react";
-import { DropdownProps } from "./primitives/Dropdown";
 import { EllipsisIcon } from "lucide-react";
 
+export type EnhancedDropdownMenuItem = {
+  key: string;
+  label: string;
+  icon?: React.ReactNode;
+  onClick: () => void;
+  danger?: boolean;
+};
+
 export type EnhancedDropdownMenuProps = {
-  items: ItemType[];
+  items: EnhancedDropdownMenuItem[];
   defaultSelectedKeys?: string[];
   triggerElement?: React.ReactNode;
-  triggers?: DropdownProps["trigger"];
+  triggers?: ("click" | "hover" | "contextMenu")[];
 };
 
 export const EnhancedDropdownMenu: React.FC<EnhancedDropdownMenuProps> = ({

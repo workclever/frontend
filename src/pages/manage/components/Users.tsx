@@ -17,7 +17,6 @@ import { BasicUserOutput } from "@app/types/Project";
 import { CreateUserModal } from "./users/CreateUserModal";
 import { EditRolesModal } from "./users/EditRolesModal";
 import { EditUserModal } from "./users/EditUserModal";
-import { Text } from "@app/components/shared/primitives/Text";
 import { Space } from "@app/components/shared/primitives/Space";
 import { Alert } from "@app/components/shared/primitives/Alert";
 
@@ -39,17 +38,10 @@ const TableUserDetail: React.FC<{ user: BasicUserOutput }> = ({ user }) => {
     <>
       <div>
         Assigned projects:{" "}
-        <Text strong>
-          {computedProjects.length
-            ? computedProjects
-            : "No project assigned yet"}
-        </Text>
+        {computedProjects.length ? computedProjects : "No project assigned yet"}
       </div>
       <div>
-        Roles:{" "}
-        <Text strong>
-          {userRolesData.length ? userRolesData : "No roles assigned"}
-        </Text>
+        Roles: {userRolesData.length ? userRolesData : "No roles assigned"}
       </div>
     </>
   );

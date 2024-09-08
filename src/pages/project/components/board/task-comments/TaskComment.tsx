@@ -6,12 +6,12 @@ import { useMe } from "@app/hooks/useMe";
 import { useUser } from "@app/hooks/useUser";
 import { useDeleteTaskCommentMutation } from "@app/services/api";
 import { TaskType, TaskCommentType } from "@app/types/Project";
-import { Tooltip, Button } from "antd";
 import { XIcon, PencilIcon, TrashIcon } from "lucide-react";
 import React from "react";
 import { TaskCommentEditor } from "./TaskCommentEditor";
-import { Text } from "@app/components/shared/primitives/Text";
 import { Comment as AntdComment } from "@ant-design/compatible";
+import { Tooltip } from "@app/components/shared/primitives/Tooltip";
+import { Button } from "@app/components/shared/primitives/Button";
 
 export const TaskComment: React.FC<{
   task: TaskType;
@@ -79,7 +79,7 @@ export const TaskComment: React.FC<{
           <EditorToRenderer value={comment.Content} />
         )
       }
-      author={<Text strong>{fullName}</Text>}
+      author={<span style={{ fontWeight: "bold" }}>{fullName}</span>}
       datetime={
         <Tooltip title={formattedDateTime}>{formattedDateTime}</Tooltip>
       }

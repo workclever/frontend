@@ -1,8 +1,9 @@
 import { useListTaskCustomFieldValuesByBoardQuery } from "@app/services/api";
 import { CustomField } from "@app/types/CustomField";
 import { TaskType } from "@app/types/Project";
-import { Space, Tooltip } from "antd";
 import { RenderTaskCustomField } from "./RenderTaskCustomField";
+import { Space } from "@app/components/shared/primitives/Space";
+import { Tooltip } from "@app/components/shared/primitives/Tooltip";
 
 export const RenderTaskCustomFieldsUnit: React.FC<{
   task: TaskType;

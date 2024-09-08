@@ -64,7 +64,6 @@ const columnHeaderStyles: React.CSSProperties = {
   paddingInlineStart: "4px",
   paddingInlineEnd: "4px",
   paddingBlockStart: "2px",
-  color: "green",
   userSelect: "none",
 };
 

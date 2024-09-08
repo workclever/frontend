@@ -1,9 +1,9 @@
+import { Space } from "@app/components/shared/primitives/Space";
 import { Tag } from "@app/components/shared/primitives/Tag";
 import { useFormattedDate } from "@app/hooks/useFormattedDate";
 import { useListTaskCustomFieldValuesByBoardQuery } from "@app/services/api";
 import { CustomField, CustomFieldType } from "@app/types/CustomField";
 import { TaskType } from "@app/types/Project";
-import { Space } from "antd";
 import { CheckIcon, XIcon } from "lucide-react";
 
 const FieldTag: React.FC<{ color?: string; children?: React.ReactNode }> = ({

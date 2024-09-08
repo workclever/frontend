@@ -10,8 +10,8 @@ import {
   FieldValuePreview,
 } from "../fields/FieldContainers";
 import { ColumnColor } from "@app/components/shared/ColumnColor";
-import { Space } from "antd";
 import { TaskMover } from "../../shared/TaskMover";
+import { Space } from "@app/components/shared/primitives/Space";
 
 export const TaskBoardColumn: React.FC<{ task: TaskType }> = ({ task }) => {
   const boards = useBoards();

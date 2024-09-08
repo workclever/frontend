@@ -1,6 +1,5 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Space } from "antd";
 import { api, useRegisterMutation } from "../../services/api";
 import { setToken } from "../../slices/auth/authSlice";
 import { useDispatch } from "react-redux";
@@ -13,6 +12,7 @@ import {
   MailIcon,
   UserIcon,
 } from "lucide-react";
+import { Space } from "@app/components/shared/primitives/Space";
 
 type FormValuesType = {
   FullName: string;

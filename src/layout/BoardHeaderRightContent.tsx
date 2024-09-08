@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { EnhancedDropdownMenu } from "../components/shared/EnhancedDropdownMenu";
 import { Button } from "../components/shared/primitives/Button";
-import { Dropdown } from "../components/shared/primitives/Dropdown";
 import { Space } from "../components/shared/primitives/Space";
 import { UserAvatar } from "../components/shared/UserAvatar";
 import { UserNotifications } from "../components/user/UserNotifications";
@@ -13,6 +12,7 @@ import { useGetUnreadNotificationsCountQuery } from "../services/api";
 import { logout } from "../slices/auth/authSlice";
 import { MyAccountSettingsModal } from "@app/components/user/MyAccountSettingsModal";
 import { BellIcon, ShieldPlusIcon } from "lucide-react";
+import { Popover } from "@app/components/shared/primitives/Popover";
 
 export const BoardHeaderRightContent = () => {
   const { me, isAdmin } = useMe();
@@ -41,13 +41,8 @@ export const BoardHeaderRightContent = () => {
           </Link>
         )}
         <Space size="large">
-          <Dropdown
-            overlay={
-              <div style={{ padding: 8 }}>
-                <UserNotifications showAll={false} />
-              </div>
-            }
-            trigger={["hover"]}
+          <Popover
+            content={<UserNotifications showAll={false} />}
             placement="bottomRight"
           >
             <span style={{ cursor: "pointer" }}>
@@ -55,7 +50,7 @@ export const BoardHeaderRightContent = () => {
                 <BellIcon size={15} />
               </Badge>
             </span>
-          </Dropdown>
+          </Popover>
           <EnhancedDropdownMenu
             triggerElement={
               <span style={{ cursor: "pointer" }}>

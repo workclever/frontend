@@ -15,8 +15,6 @@ import { useProjectTasks } from "../../hooks/useProjectTasks";
 import { Button } from "../shared/primitives/Button";
 import { Tooltip } from "../shared/primitives/Tooltip";
 import { Space } from "../shared/primitives/Space";
-import { Text } from "../shared/primitives/Text";
-import { gray } from "@ant-design/colors";
 
 const TaskInfo: React.FC<{ taskId: number | null }> = ({ taskId }) => {
   const { task } = useTask(taskId);
@@ -25,12 +23,10 @@ const TaskInfo: React.FC<{ taskId: number | null }> = ({ taskId }) => {
   }
   return (
     <Tooltip title="Go to task">
-      <Text>
-        <Space>
-          <TaskIdRenderer task={task} />
-          {task?.Title}
-        </Space>
-      </Text>
+      <Space>
+        <TaskIdRenderer task={task} />
+        {task?.Title}
+      </Space>
     </Tooltip>
   );
 };
@@ -67,11 +63,7 @@ export const UserNotifications: React.FC<{ showAll: boolean }> = ({
   return (
     <ProList
       style={{
-        backgroundColor: gray[0],
         width: showAll ? "100%" : 450,
-        boxShadow: showAll
-          ? "inherit"
-          : "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
       }}
       rowKey="Id"
       headerTitle={showAll ? undefined : "Notifications"}

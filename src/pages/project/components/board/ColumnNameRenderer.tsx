@@ -1,4 +1,3 @@
-import { ItemType } from "antd/es/menu/interface";
 import React from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
@@ -15,11 +14,13 @@ import {
 import { ColumnType } from "@app/types/Project";
 import { EntityClasses, Permissions } from "@app/types/Roles";
 import { Confirm } from "@app/components/shared/Confirm";
-import { EnhancedDropdownMenu } from "@app/components/shared/EnhancedDropdownMenu";
+import {
+  EnhancedDropdownMenu,
+  EnhancedDropdownMenuItem,
+} from "@app/components/shared/EnhancedDropdownMenu";
 import { FlexBasicLayout } from "@app/components/shared/FlexBasicLayout";
 import { EditColumnModal } from "./EditColumnModal";
 import { ColumnTreeHeader } from "./ColumnTreeHeader";
-import { Title } from "@app/components/shared/primitives/Title";
 import { ModalForm, ProFormText } from "@ant-design/pro-components";
 import { ColumnColor } from "@app/components/shared/ColumnColor";
 import { PencilIcon, PlusIcon, TrashIcon } from "lucide-react";
@@ -60,7 +61,7 @@ export const ColumnNameRenderer: React.FC<{
 
   const boardViewType = useSelector(selectBoardViewType);
 
-  const menuItems: ItemType[] = [
+  const menuItems: EnhancedDropdownMenuItem[] = [
     {
       key: "new-task",
       label: "New task",
@@ -94,7 +95,7 @@ export const ColumnNameRenderer: React.FC<{
   ) : undefined;
 
   const titleRenderer = (
-    <Title level={5} style={{ display: "flex", flex: 1, marginBottom: 0 }}>
+    <div style={{ display: "flex", flex: 1, marginBottom: 0, color: "black" }}>
       <ColumnColor
         columnId={column.Id}
         boardId={column.BoardId}
@@ -108,7 +109,7 @@ export const ColumnNameRenderer: React.FC<{
         {column.Name}
       </div>
       <span style={{ marginLeft: 4 }}> {manageColumnRenderer}</span>
-    </Title>
+    </div>
   );
 
   const Wrapper =

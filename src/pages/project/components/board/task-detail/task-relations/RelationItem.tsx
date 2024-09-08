@@ -10,7 +10,6 @@ import { Tag } from "@app/components/shared/primitives/Tag";
 import { EnhancedDropdownMenu } from "@app/components/shared/EnhancedDropdownMenu";
 import { Modal } from "@app/components/shared/primitives/Modal";
 import { Button } from "@app/components/shared/primitives/Button";
-import { Text } from "@app/components/shared/primitives/Text";
 import { useDeleteTaskRelationMutation } from "@app/services/api";
 import { PencilIcon, TrashIcon } from "lucide-react";
 
@@ -105,7 +104,7 @@ export const RelationItem: React.FC<{
           width={450}
         >
           <Space direction="vertical">
-            <Text>Are you sure to delete this relation?</Text>
+            <div>Are you sure to delete this relation?</div>
             <Button
               danger
               loading={isDeleting}

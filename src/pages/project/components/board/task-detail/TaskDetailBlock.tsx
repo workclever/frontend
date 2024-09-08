@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { Button, ButtonProps } from "@app/components/shared/primitives/Button";
 import { Space } from "@app/components/shared/primitives/Space";
-import { Text } from "@app/components/shared/primitives/Text";
 import {
   ChevronDownCircleIcon,
   ChevronUpCircleIcon,
@@ -59,7 +58,7 @@ export const TaskDetailBlock: React.FC<{
       <div>
         <Space>
           {collapseButton}
-          <Text strong>{title}</Text>
+          <span style={{ fontWeight: "bold" }}>{title}</span>
           {plusButton}
         </Space>
       </div>

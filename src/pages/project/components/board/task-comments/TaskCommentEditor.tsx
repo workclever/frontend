@@ -1,11 +1,12 @@
 import { AppEditor } from "@app/components/shared/editor/AppEditor";
 import { HttpResult } from "@app/components/shared/HttpResult";
+import { Button } from "@app/components/shared/primitives/Button";
 import {
   useCreateTaskCommentMutation,
   useUpdateTaskCommentMutation,
 } from "@app/services/api";
 import { TaskType, TaskCommentType } from "@app/types/Project";
-import { Form, Button } from "antd";
+import { Form } from "antd";
 import React from "react";
 
 type FormValuesType = {

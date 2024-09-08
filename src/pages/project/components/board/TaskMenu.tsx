@@ -10,10 +10,10 @@ import { useMe } from "@app/hooks/useMe";
 import copy from "copy-to-clipboard";
 import {
   EnhancedDropdownMenu,
+  EnhancedDropdownMenuItem,
   EnhancedDropdownMenuProps,
 } from "@app/components/shared/EnhancedDropdownMenu";
 import { Confirm } from "@app/components/shared/Confirm";
-import { MenuProps } from "antd/lib/menu";
 import { EditTaskTitleModal } from "./EditTaskTitleModal";
 import { TaskDetail } from "./task-detail/TaskDetail";
 import {
@@ -55,7 +55,7 @@ export const TaskMenu: React.FC<{
     Permissions.CanManageProject,
     EntityClasses.Project
   );
-  const menuItems: MenuProps["items"] = [
+  const menuItems: EnhancedDropdownMenuItem[] = [
     {
       label: "View",
       key: "view",

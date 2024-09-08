@@ -5,7 +5,6 @@ import {
   useListProjectUsersQuery,
 } from "@app/services/api";
 import { UserAvatar } from "@app/components/shared/UserAvatar";
-import { Text } from "@app/components/shared/primitives/Text";
 import { DefaultOptionType } from "antd/lib/select";
 
 type Props = {
@@ -58,7 +57,7 @@ export const UserSelector: React.FC<Props> = ({
 
   return (
     <div>
-      <Text>{title}</Text>
+      <div style={{ fontWeight: "bold" }}>{title}</div>
       <Select
         showSearch
         style={{ width: "100%" }}

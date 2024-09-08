@@ -1,8 +1,8 @@
 import { selectBoardViewType } from "@app/slices/project/projectSlice";
-import { Tooltip } from "antd";
 import { useSelector } from "react-redux";
 import { Props } from "../Task";
 import { NetworkIcon } from "lucide-react";
+import { Tooltip } from "@app/components/shared/primitives/Tooltip";
 
 export const TaskSubtasksUnit: React.FC<
   Pick<Props, "task" | "findSubtasks">

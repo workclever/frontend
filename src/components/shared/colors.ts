@@ -14,7 +14,7 @@ import { sample } from "lodash";
 // see below
 export type PresetColor = string;
 
-export const presetToHexMap: { [key: PresetColor]: string } = {
+export const ColorMap = {
   magenta: magenta[3],
   red: red[3],
   orange: orange[3],
@@ -26,5 +26,5 @@ export const presetToHexMap: { [key: PresetColor]: string } = {
   purple: purple[3],
 };
 
-export const colors: PresetColor[] = Object.values(presetToHexMap);
+export const colors: PresetColor[] = Object.values(ColorMap);
 export const randomColor = () => sample(colors);
