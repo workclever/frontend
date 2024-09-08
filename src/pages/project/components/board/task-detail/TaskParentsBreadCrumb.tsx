@@ -11,6 +11,17 @@ type Props = {
   onTaskSelect: (task: TaskType) => void;
 };
 
+const Arrow = () => (
+  <ChevronRightIcon
+    size={30}
+    style={{
+      paddingLeft: 8,
+      paddingRight: 8,
+      color: gray[0],
+    }}
+  />
+);
+
 const ParentTaskItem: React.FC<Props> = ({ task, onTaskSelect }) => {
   const { task: parentTask } = useTask(task.ParentTaskItemId);
 
@@ -24,15 +35,7 @@ const ParentTaskItem: React.FC<Props> = ({ task, onTaskSelect }) => {
       <Tooltip title={parentTask.Title}>
         <div style={{ display: "flex", alignItems: "center" }}>
           <TaskIdRenderer task={parentTask} />
-          <ChevronRightIcon
-            size={30}
-            onClick={() => onTaskSelect(parentTask)}
-            style={{
-              paddingLeft: 8,
-              paddingRight: 8,
-              color: gray[0],
-            }}
-          />
+          <Arrow />
         </div>
       </Tooltip>
     </>

@@ -7,6 +7,7 @@ import { TaskIdRenderer } from "@app/components/shared/TaskIdRenderer";
 import { useUpdateTaskPropertyMutation } from "@app/services/api";
 import { TaskParentsBreadCrumb } from "./TaskParentsBreadCrumb";
 import { PencilIcon } from "lucide-react";
+import { TaskParentColumnBreadCrumb } from "./TaskParentColumnBreadCrumb";
 
 type Props = {
   task: TaskType;
@@ -28,7 +29,11 @@ export const TaskEditableTitle: React.FC<Props> = ({ task, onTaskSelect }) => {
           alignItems: "center",
         }}
       >
-        <TaskParentsBreadCrumb task={task} onTaskSelect={onTaskSelect} />
+        {task.ParentTaskItemId ? (
+          <TaskParentsBreadCrumb task={task} onTaskSelect={onTaskSelect} />
+        ) : (
+          <TaskParentColumnBreadCrumb task={task} />
+        )}
         <TaskIdRenderer task={task} />
         <Typography.Title
           style={{ flex: 1, padding: 0, margin: 0, paddingLeft: 8 }}
