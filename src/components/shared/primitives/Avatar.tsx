@@ -10,7 +10,7 @@ type Props = {
 
 export const Avatar: React.FC<Props> = ({ src, style, alt, initials }) => {
   return (
-    <AntdAvatar src={src} style={style} size={22} alt={alt}>
+    <AntdAvatar src={src} style={style} size={20} alt={alt}>
       {initials}
     </AntdAvatar>
   );
@@ -23,7 +23,7 @@ export const AvatarGroup: React.FC<{
   return (
     <AntdAvatar.Group
       max={{ count: maxVisible, popover: { trigger: "click" } }}
-      size={22}
+      size={20}
     >
       {children}
     </AntdAvatar.Group>
