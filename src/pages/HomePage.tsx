@@ -21,13 +21,12 @@ export const HomePage = () => {
     return (
       <Empty>
         <Space direction="vertical">
-          <div>
+          <div style={{ marginTop: 16 }}>
             You don't have any project! To get started, create a project first
           </div>
           <Button
             type="primary"
             onClick={() => setShowCreateProjectModal(true)}
-            size="large"
           >
             Create Now
           </Button>

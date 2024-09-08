@@ -1,7 +1,40 @@
-import { PageHeader } from "@ant-design/pro-components";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { BoardHeaderRightContent } from "./BoardHeaderRightContent";
+import { HeaderRightContent } from "./HeaderRightContent";
+import styled from "styled-components";
+import { ArrowLeftIcon } from "lucide-react";
+
+const Header = styled.div`
+  height: 45px;
+  width: 100%;
+  display: flex;
+  padding: 0px 16px;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid #eaeaea;
+`;
+
+const TitleWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+`;
+
+const Title = styled.div`
+  font-size: 16px;
+  font-weight: bold;
+`;
+
+const Subtitle = styled.div`
+  font-size: 14px;
+  color: gray;
+`;
+
+const BackIcon = styled.span`
+  width: 30px;
+  cursor: pointer;
+`;
 
 export const LayoutWithHeader: React.FC<{
   children: React.ReactElement;
@@ -27,14 +60,19 @@ export const LayoutWithHeader: React.FC<{
         height: "calc(100vh - 20px)",
       }}
     >
-      <PageHeader
-        ghost={false}
-        onBack={goBack}
-        backIcon={hideBackButton}
-        title={title}
-        subTitle={subTitle}
-        extra={[<BoardHeaderRightContent key="1" />]}
-      ></PageHeader>
+      <Header>
+        {hideBackButton !== true && (
+          <BackIcon onClick={goBack}>
+            <ArrowLeftIcon size={20} />
+          </BackIcon>
+        )}
+        <TitleWrapper>
+          <Title>{title}</Title>
+          <Subtitle>{subTitle}</Subtitle>
+        </TitleWrapper>
+        <HeaderRightContent key="1" />
+      </Header>
+      <div></div>
       <div>{children}</div>
     </div>
   );

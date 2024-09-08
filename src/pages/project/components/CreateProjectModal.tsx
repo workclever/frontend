@@ -45,15 +45,19 @@ export const CreateProjectModal: React.FC<{ onCancel: () => void }> = ({
         label="Name"
         placeholder="Project name"
         rules={[{ required: true, message: "Name of the project" }]}
+        tooltip="Example: 'My project' or 'Payment operations' etc. It's up to you"
+        width={200}
       />
       <ProFormText
         name="Slug"
-        label="Slug"
-        placeholder="Project Slug"
+        label="Project identifier"
+        placeholder="Project identifier"
+        tooltip="Example: MY or TEST. It's a unique identifier among your projects"
+        width={200}
         rules={[
           {
             required: true,
-            message: "Max length is 4, min length is 1 character",
+            message: "Maximum length is 4, minimum length is 1 character",
             max: 4,
             min: 1,
           },
