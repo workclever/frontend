@@ -1,8 +1,14 @@
 import { styled } from "styled-components";
 import { BoardHeader } from "./BoardHeader";
 import { LeftColumn } from "./LeftColumn";
-import { useSelector } from "react-redux";
-import { selectBoardViewType } from "@app/slices/board/boardSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  loadBoardStarted,
+  selectBoardLoading,
+  selectBoardViewType,
+} from "@app/slices/board/boardSlice";
+import React from "react";
+import { LoadingSpin } from "@app/components/shared/primitives/LoadingSpin";
 
 const LeftWrapper = styled.div`
   width: 250px;
@@ -20,7 +26,7 @@ const RightWrapper = styled.div`
 `;
 
 const ContentWrapper = styled.div`
-  margin-top: 40px;
+  margin-top: 45px;
   padding: 0px;
   overflow-y: hidden;
   overflow-x: auto;
@@ -31,8 +37,23 @@ const ContentWrapper = styled.div`
 export const BoardLayout: React.FC<{
   children: React.ReactNode;
   mode: "board" | "task";
-}> = ({ children, mode }) => {
+  projectId?: number;
+  boardId?: number;
+}> = ({ children, mode, projectId, boardId }) => {
+  const dispatch = useDispatch();
   const boardViewType = useSelector(selectBoardViewType);
+  const loading = useSelector(selectBoardLoading);
+
+  React.useEffect(() => {
+    if (projectId && boardId) {
+      dispatch(
+        loadBoardStarted({
+          boardId: Number(boardId),
+          projectId: Number(projectId),
+        })
+      );
+    }
+  }, [dispatch, projectId, boardId]);
 
   const getHeight = () => {
     if (mode === "task") {
@@ -57,7 +78,7 @@ export const BoardLayout: React.FC<{
             height: getHeight(),
           }}
         >
-          {children}
+          {loading ? <LoadingSpin /> : children}
         </ContentWrapper>
       </RightWrapper>
     </div>

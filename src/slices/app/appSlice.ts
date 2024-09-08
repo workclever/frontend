@@ -26,6 +26,8 @@ export const appSlice = createSlice({
 export const { loadAppStarted, loadAppFinished, loadRecentProject } =
   appSlice.actions;
 
+export const selectRootState = (state: RootState) => state;
+
 export const selectAppLoading = (state: RootState) => state.app.loading;
 
 export const appReducer = appSlice.reducer;

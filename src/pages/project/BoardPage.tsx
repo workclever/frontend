@@ -9,29 +9,25 @@ import { BoardLayout } from "./components/board/BoardLayout";
 import { TreeBoardWrapper } from "./components/board/TreeBoardWrapper";
 import { KanbanBoardWrapper } from "./components/board/KanbanBoardWrapper";
 import {
-  loadBoardStarted,
-  selectBoardLoading,
   selectBoardViewType,
   setSelectedBoardId,
 } from "@app/slices/board/boardSlice";
-import { LoadingSpin } from "@app/components/shared/primitives/LoadingSpin";
 
 export const BoardPage = () => {
   const dispatch = useDispatch();
   const { projectId, boardId } = useParams();
   const boardViewType = useSelector(selectBoardViewType);
-  const loading = useSelector(selectBoardLoading);
 
   React.useEffect(() => {
     if (projectId && boardId) {
       dispatch(setSelectedProjectId(Number(projectId)));
       dispatch(setSelectedBoardId(Number(boardId)));
-      dispatch(
-        loadBoardStarted({
-          boardId: Number(boardId),
-          projectId: Number(projectId),
-        })
-      );
+      // dispatch(
+      //   loadBoardStarted({
+      //     boardId: Number(boardId),
+      //     projectId: Number(projectId),
+      //   })
+      // );
     }
   }, [dispatch, projectId, boardId]);
 
@@ -40,19 +36,17 @@ export const BoardPage = () => {
       return null;
     }
     return (
-      <BoardLayout mode="board">
-        <div style={{ paddingTop: 4 }}>
-          {boardViewType === "kanban" && (
-            <KanbanBoardWrapper
-              projectId={Number(projectId)}
-              boardId={Number(boardId)}
-            />
-          )}
-          {boardViewType === "tree" && (
-            <TreeBoardWrapper projectId={Number(projectId)} />
-          )}
-        </div>
-      </BoardLayout>
+      <>
+        {boardViewType === "kanban" && (
+          <KanbanBoardWrapper
+            projectId={Number(projectId)}
+            boardId={Number(boardId)}
+          />
+        )}
+        {boardViewType === "tree" && (
+          <TreeBoardWrapper projectId={Number(projectId)} />
+        )}
+      </>
     );
   };
 
@@ -75,15 +69,19 @@ export const BoardPage = () => {
   };
 
   const renderContent = () => {
-    if (loading) {
-      return <LoadingSpin />;
-    }
-
     if (boardId) {
       return renderBoard();
     }
     return newBoardTrigger();
   };
 
-  return <>{renderContent()}</>;
+  return (
+    <BoardLayout
+      mode="board"
+      projectId={Number(projectId)}
+      boardId={Number(boardId)}
+    >
+      {renderContent()}
+    </BoardLayout>
+  );
 };

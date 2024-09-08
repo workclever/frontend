@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import invariant from "tiny-invariant";
-import { triggerPostMoveFlash } from "@atlaskit/pragmatic-drag-and-drop-flourish/trigger-post-move-flash";
+// import { triggerPostMoveFlash } from "@atlaskit/pragmatic-drag-and-drop-flourish/trigger-post-move-flash";
 import { extractClosestEdge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge";
 import type { Edge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/types";
 import { getReorderDestinationIndex } from "@atlaskit/pragmatic-drag-and-drop-hitbox/util/get-reorder-destination-index";
@@ -15,36 +15,36 @@ import { BoardContext, BoardContextValue } from "./board-context";
 import Board from "./Board";
 import { Column } from "./Column";
 
-type Outcome =
-  | {
-      type: "column-reorder";
-      columnId: number;
-      startIndex: number;
-      finishIndex: number;
-    }
-  | {
-      type: "card-reorder";
-      columnId: number;
-      startIndex: number;
-      finishIndex: number;
-    }
-  | {
-      type: "card-move";
-      finishColumnId: number;
-      itemIndexInStartColumn: number;
-      itemIndexInFinishColumn: number;
-    };
+// type Outcome =
+//   | {
+//       type: "column-reorder";
+//       columnId: number;
+//       startIndex: number;
+//       finishIndex: number;
+//     }
+//   | {
+//       type: "card-reorder";
+//       columnId: number;
+//       startIndex: number;
+//       finishIndex: number;
+//     }
+//   | {
+//       type: "card-move";
+//       finishColumnId: number;
+//       itemIndexInStartColumn: number;
+//       itemIndexInFinishColumn: number;
+//     };
 
 type Trigger = "pointer" | "keyboard";
 
-type Operation = {
-  trigger: Trigger;
-  outcome: Outcome;
-};
+// type Operation = {
+//   trigger: Trigger;
+//   outcome: Outcome;
+// };
 
-type BoardState = {
-  lastOperation: Operation | null;
-};
+// type BoardState = {
+//   lastOperation: Operation | null;
+// };
 
 export const DndKanbanBoard: React.FC<{
   dndColumnMap: ColumnMap;
@@ -71,98 +71,98 @@ export const DndKanbanBoard: React.FC<{
   renderNewColumnItem,
   renderNewCardItem,
 }) => {
-  const [data, setData] = useState<BoardState>({
-    lastOperation: null,
-  });
+  // const [data, setData] = useState<BoardState>({
+  //   lastOperation: null,
+  // });
 
   const [registry] = useState(createRegistry);
-  const { lastOperation } = data;
+  // const { lastOperation } = data;
 
-  useEffect(() => {
-    if (lastOperation === null) {
-      return;
-    }
-    const { outcome, trigger } = lastOperation;
+  // useEffect(() => {
+  //   if (lastOperation === null) {
+  //     return;
+  //   }
+  //   const { outcome, trigger } = lastOperation;
 
-    if (outcome.type === "column-reorder") {
-      const { startIndex, finishIndex } = outcome;
+  //   if (outcome.type === "column-reorder") {
+  //     const { startIndex, finishIndex } = outcome;
 
-      const sourceColumn = dndColumnMap[orderedColumnIds[finishIndex]];
+  //     const sourceColumn = dndColumnMap[orderedColumnIds[finishIndex]];
 
-      const entry = registry.getColumn(sourceColumn.Id);
-      triggerPostMoveFlash(entry.element);
+  //     const entry = registry.getColumn(sourceColumn.Id);
+  //     triggerPostMoveFlash(entry.element);
 
-      liveRegion.announce(
-        `You've moved ${sourceColumn.Name} from position ${
-          startIndex + 1
-        } to position ${finishIndex + 1} of ${orderedColumnIds.length}.`
-      );
+  //     liveRegion.announce(
+  //       `You've moved ${sourceColumn.Name} from position ${
+  //         startIndex + 1
+  //       } to position ${finishIndex + 1} of ${orderedColumnIds.length}.`
+  //     );
 
-      return;
-    }
+  //     return;
+  //   }
 
-    if (outcome.type === "card-reorder") {
-      const { columnId, startIndex, finishIndex } = outcome;
+  //   if (outcome.type === "card-reorder") {
+  //     const { columnId, startIndex, finishIndex } = outcome;
 
-      const column = dndColumnMap[columnId];
-      const item = column.items[finishIndex];
+  //     const column = dndColumnMap[columnId];
+  //     const item = column.items[finishIndex];
 
-      const entry = registry.getCard(item);
-      if (!entry) {
-        return;
-      }
-      triggerPostMoveFlash(entry.element);
+  //     const entry = registry.getCard(item);
+  //     if (!entry) {
+  //       return;
+  //     }
+  //     triggerPostMoveFlash(entry.element);
 
-      if (trigger !== "keyboard") {
-        return;
-      }
+  //     if (trigger !== "keyboard") {
+  //       return;
+  //     }
 
-      liveRegion.announce(
-        `You've moved ${item} from position ${startIndex + 1} to position ${
-          finishIndex + 1
-        } of ${column.items.length} in the ${column.Name} column.`
-      );
+  //     liveRegion.announce(
+  //       `You've moved ${item} from position ${startIndex + 1} to position ${
+  //         finishIndex + 1
+  //       } of ${column.items.length} in the ${column.Name} column.`
+  //     );
 
-      return;
-    }
+  //     return;
+  //   }
 
-    if (outcome.type === "card-move") {
-      const {
-        finishColumnId,
-        itemIndexInStartColumn,
-        itemIndexInFinishColumn,
-      } = outcome;
+  //   if (outcome.type === "card-move") {
+  //     const {
+  //       finishColumnId,
+  //       itemIndexInStartColumn,
+  //       itemIndexInFinishColumn,
+  //     } = outcome;
 
-      //   const data = data;
-      const destinationColumn = dndColumnMap[finishColumnId];
-      const item = destinationColumn.items[itemIndexInFinishColumn];
+  //     //   const data = data;
+  //     const destinationColumn = dndColumnMap[finishColumnId];
+  //     const item = destinationColumn.items[itemIndexInFinishColumn];
 
-      const finishPosition =
-        typeof itemIndexInFinishColumn === "number"
-          ? itemIndexInFinishColumn + 1
-          : destinationColumn.items.length;
+  //     const finishPosition =
+  //       typeof itemIndexInFinishColumn === "number"
+  //         ? itemIndexInFinishColumn + 1
+  //         : destinationColumn.items.length;
 
-      const entry = registry.getCard(item);
-      if (!entry) {
-        return;
-      }
-      triggerPostMoveFlash(entry.element);
+  //     const entry = registry.getCard(item);
+  //     if (!entry) {
+  //       return;
+  //     }
+  //     triggerPostMoveFlash(entry.element);
 
-      if (trigger !== "keyboard") {
-        return;
-      }
+  //     if (trigger !== "keyboard") {
+  //       return;
+  //     }
 
-      liveRegion.announce(
-        `You've moved ${item} from position ${
-          itemIndexInStartColumn + 1
-        } to position ${finishPosition} in the ${
-          destinationColumn.Name
-        } column.`
-      );
+  //     liveRegion.announce(
+  //       `You've moved ${item} from position ${
+  //         itemIndexInStartColumn + 1
+  //       } to position ${finishPosition} in the ${
+  //         destinationColumn.Name
+  //       } column.`
+  //     );
 
-      return;
-    }
-  }, [lastOperation, registry, dndColumnMap, orderedColumnIds]);
+  //     return;
+  //   }
+  // }, [lastOperation, registry, dndColumnMap, orderedColumnIds]);
 
   useEffect(() => {
     return liveRegion.cleanup();
@@ -176,37 +176,26 @@ export const DndKanbanBoard: React.FC<{
     ({
       startIndex,
       finishIndex,
-      trigger = "keyboard",
-    }: {
+    }: // trigger = "keyboard",
+    {
       startIndex: number;
       finishIndex: number;
       trigger?: Trigger;
     }) => {
-      setData((data) => {
-        const outcome: Outcome = {
-          type: "column-reorder",
-          columnId: orderedColumnIds[startIndex],
-          startIndex,
-          finishIndex,
-        };
+      // const outcome: Outcome = {
+      //   type: "column-reorder",
+      //   columnId: orderedColumnIds[startIndex],
+      //   startIndex,
+      //   finishIndex,
+      // };
 
-        const newOrderedColumnIds = reorder({
-          list: orderedColumnIds,
-          startIndex,
-          finishIndex,
-        });
-
-        onReorderColumn(newOrderedColumnIds);
-
-        return {
-          ...data,
-          orderedColumnIds,
-          lastOperation: {
-            outcome,
-            trigger: trigger,
-          },
-        };
+      const newOrderedColumnIds = reorder({
+        list: orderedColumnIds,
+        startIndex,
+        finishIndex,
       });
+
+      onReorderColumn(newOrderedColumnIds);
     },
     [onReorderColumn, orderedColumnIds]
   );
@@ -216,42 +205,31 @@ export const DndKanbanBoard: React.FC<{
       columnId,
       startIndex,
       finishIndex,
-      trigger = "keyboard",
-    }: {
+    }: // trigger = "keyboard",
+    {
       columnId: number;
       startIndex: number;
       finishIndex: number;
       trigger?: Trigger;
     }) => {
-      setData((data) => {
-        const sourceColumn = dndColumnMap[columnId];
-        const updatedItems = reorder({
-          list: sourceColumn.items,
-          startIndex,
-          finishIndex,
-        });
-
-        const orderedTaskIds = updatedItems;
-        onReorderTask(columnId, orderedTaskIds);
-
-        const outcome: Outcome | null = {
-          type: "card-reorder",
-          columnId,
-          startIndex,
-          finishIndex,
-        };
-
-        return {
-          ...data,
-          // columnMap: updatedMap,
-          lastOperation: {
-            trigger: trigger,
-            outcome,
-          },
-        };
+      const sourceColumn = dndColumnMap[columnId];
+      const updatedItems = reorder({
+        list: sourceColumn.items,
+        startIndex,
+        finishIndex,
       });
+
+      const orderedTaskIds = updatedItems;
+      onReorderTask(columnId, orderedTaskIds);
+
+      // const outcome: Outcome | null = {
+      //   type: "card-reorder",
+      //   columnId,
+      //   startIndex,
+      //   finishIndex,
+      // };
     },
-    [setData, dndColumnMap, onReorderTask]
+    [dndColumnMap, onReorderTask]
   );
 
   const moveCard = useCallback(
@@ -260,8 +238,8 @@ export const DndKanbanBoard: React.FC<{
       finishColumnId,
       itemIndexInStartColumn,
       itemIndexInFinishColumn,
-      trigger = "keyboard",
-    }: {
+    }: // trigger = "keyboard",
+    {
       startColumnId: number;
       finishColumnId: number;
       itemIndexInStartColumn: number;
@@ -272,55 +250,32 @@ export const DndKanbanBoard: React.FC<{
       if (startColumnId === finishColumnId) {
         return;
       }
-      setData((data) => {
-        const sourceColumn = dndColumnMap[startColumnId];
-        const destinationColumn = dndColumnMap[finishColumnId];
-        const itemId = sourceColumn.items[itemIndexInStartColumn];
+      const sourceColumn = dndColumnMap[startColumnId];
+      const destinationColumn = dndColumnMap[finishColumnId];
+      const itemId = sourceColumn.items[itemIndexInStartColumn];
 
-        const destinationItems = Array.from(destinationColumn.items);
-        // Going into the first position if no index is provided
-        const newIndexInDestination = itemIndexInFinishColumn ?? 0;
-        destinationItems.splice(newIndexInDestination, 0, itemId);
+      const destinationItems = Array.from(destinationColumn.items);
+      // Going into the first position if no index is provided
+      const newIndexInDestination = itemIndexInFinishColumn ?? 0;
+      destinationItems.splice(newIndexInDestination, 0, itemId);
 
-        const sourceColumnNewOrderedItems = sourceColumn.items.filter(
-          (i) => i !== itemId
-        );
+      const sourceColumnNewOrderedItems = sourceColumn.items.filter(
+        (i) => i !== itemId
+      );
 
-        const updatedMap = {
-          ...dndColumnMap,
-          [startColumnId]: {
-            ...sourceColumn,
-            items: sourceColumnNewOrderedItems,
-          },
-          [finishColumnId]: {
-            ...destinationColumn,
-            items: destinationItems,
-          },
-        };
-
-        onMoveCard(itemId, finishColumnId, {
-          [startColumnId]: sourceColumnNewOrderedItems,
-          [finishColumnId]: destinationItems,
-        });
-
-        const outcome: Outcome | null = {
-          type: "card-move",
-          finishColumnId,
-          itemIndexInStartColumn,
-          itemIndexInFinishColumn: newIndexInDestination,
-        };
-
-        return {
-          ...data,
-          columnMap: updatedMap,
-          lastOperation: {
-            outcome,
-            trigger: trigger,
-          },
-        };
+      onMoveCard(itemId, finishColumnId, {
+        [startColumnId]: sourceColumnNewOrderedItems,
+        [finishColumnId]: destinationItems,
       });
+
+      // const outcome: Outcome | null = {
+      //   type: "card-move",
+      //   finishColumnId,
+      //   itemIndexInStartColumn,
+      //   itemIndexInFinishColumn: newIndexInDestination,
+      // };
     },
-    [setData, onMoveCard, dndColumnMap]
+    [onMoveCard, dndColumnMap]
   );
 
   const [instanceId] = useState(() => Symbol("instance-id"));

@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
+import { TaskType } from "@app/types/Project";
 
 interface TaskDetailState {
   loading: boolean;
@@ -17,7 +18,7 @@ export const taskDetailSlice = createSlice({
     loadTaskDetailStarted: (
       state: TaskDetailState,
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      _action: PayloadAction<{ taskId: number }>
+      _action: PayloadAction<{ task: TaskType }>
     ) => {
       state.loading = true;
     },

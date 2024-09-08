@@ -10,7 +10,7 @@ export const RenderTaskCustomFieldsUnit: React.FC<{
   customFields: CustomField[];
 }> = ({ task, customFields }) => {
   const { data: taskCustomFieldValues } =
-    useListTaskCustomFieldValuesByBoardQuery(Number(task.BoardId));
+    useListTaskCustomFieldValuesByBoardQuery(task.BoardId);
   const taskCustomFieldValuesData = taskCustomFieldValues?.Data[task.Id];
   if (!taskCustomFieldValuesData) {
     return null;

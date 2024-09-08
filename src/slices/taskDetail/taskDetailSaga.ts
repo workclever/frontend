@@ -10,15 +10,13 @@ import { TaskType } from "@app/types/Project";
 import { setSelectedProjectId } from "../project/projectSlice";
 import { setSelectedBoardId } from "../board/boardSlice";
 
-const queryConfig = {
-  forceRefetch: true,
-};
-
 function* handleLoadTaskDetailStarted({
   payload,
 }: ReturnType<typeof loadTaskDetailStarted>) {
   try {
-    yield put(api.endpoints.getTask.initiate(payload.taskId, queryConfig));
+    yield put(
+      api.endpoints.getTask.initiate(payload.task.Id, { forceRefetch: true })
+    );
 
     const data: RtkQueryOutput<TaskType> = yield take(
       api.endpoints.getTask.matchFulfilled
