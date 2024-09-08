@@ -87,7 +87,11 @@ export const KanbanBoardWrapper: React.FC<{
           />
         </Task>
       )}
-      renderNewColumnItem={() => <AddNewColumnInput />}
+      renderNewColumnItem={() => (
+        <div style={{ marginTop: 8 }}>
+          <AddNewColumnInput />
+        </div>
+      )}
       renderNewCardItem={(column) => <AddNewTaskInput column={column} />}
     />
   );

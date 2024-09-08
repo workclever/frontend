@@ -36,7 +36,7 @@ export const BoardPage = () => {
     }
     return (
       <BoardLayout mode="board">
-        <div style={{ padding: 0 }}>
+        <div style={{ paddingTop: 4 }}>
           {boardViewType === "kanban" && (
             <KanbanBoardWrapper
               projectId={Number(projectId)}
