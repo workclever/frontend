@@ -9,29 +9,13 @@ import {
   selectSelectedProjectId,
 } from "@app/slices/project/projectSlice";
 import { TaskType } from "@app/types/Project";
-import styled from "styled-components";
 import { CustomFieldRow } from "./units/CustomFieldRow";
-import { Text } from "@app/components/shared/primitives/Text";
-
-const TableContainer = styled.div``;
-
-const TableRow = styled.div`
-  display: flex;
-  min-height: 30px;
-  align-items: center;
-  padding: 2px 0px;
-`;
-
-const TableKey = styled.div`
-  width: 100px;
-  font-size: 13px;
-  color: #333333;
-  font-weight: 500;
-`;
-
-const TableValue = styled.div`
-  flex: 1;
-`;
+import {
+  TableContainer,
+  TableRow,
+  TableKey,
+  TableValue,
+} from "../../fields/FieldContainers";
 
 export const TaskCustomFieldsRenderer: React.FC<{ task: TaskType }> = ({
   task,
@@ -58,31 +42,28 @@ export const TaskCustomFieldsRenderer: React.FC<{ task: TaskType }> = ({
   }
 
   return (
-    <>
-      <Text strong>Custom fields</Text>
-      <TableContainer>
-        {customFieldsDataEnabled.map((r) => (
-          <TableRow key={r.Id}>
-            <TableKey>
-              <span>{r.FieldName}:</span>
-            </TableKey>
-            <TableValue>
-              <CustomFieldRow
-                key={r.Id}
-                task={task}
-                field={r}
-                fieldValue={
-                  taskCustomFieldValuesData
-                    ? taskCustomFieldValuesData[r.Id]
-                    : undefined
-                }
-                onActivated={onActivatedInput}
-                activeInputId={activeInputId}
-              />
-            </TableValue>
-          </TableRow>
-        ))}
-      </TableContainer>
-    </>
+    <TableContainer>
+      {customFieldsDataEnabled.map((r) => (
+        <TableRow key={r.Id}>
+          <TableKey>
+            <span>{r.FieldName}:</span>
+          </TableKey>
+          <TableValue>
+            <CustomFieldRow
+              key={r.Id}
+              task={task}
+              field={r}
+              fieldValue={
+                taskCustomFieldValuesData
+                  ? taskCustomFieldValuesData[r.Id]
+                  : undefined
+              }
+              onActivated={onActivatedInput}
+              activeInputId={activeInputId}
+            />
+          </TableValue>
+        </TableRow>
+      ))}
+    </TableContainer>
   );
 };

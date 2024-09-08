@@ -9,7 +9,6 @@ import { HttpResult } from "@app/components/shared/HttpResult";
 import { Popover } from "@app/components/shared/primitives/Popover";
 import { Button } from "@app/components/shared/primitives/Button";
 import { Space } from "@app/components/shared/primitives/Space";
-import { TabPane, Tabs } from "@app/components/shared/primitives/Tabs";
 
 const SelectTitle = styled.div`
   font-weight: bold;
@@ -17,9 +16,11 @@ const SelectTitle = styled.div`
 
 type Props = {
   task: TaskType;
+  children: React.ReactNode;
+  type: "in-board" | "in-project";
 };
 
-export const TaskMover: React.FC<Props> = ({ task }) => {
+export const TaskMover: React.FC<Props> = ({ task, children, type }) => {
   const [tempBoardId, setTempBoardId] = React.useState<number>(task.BoardId);
   const [tempColumnId, setTempColumnId] = React.useState<number>(task.ColumnId);
   const boards = useBoards();
@@ -48,7 +49,7 @@ export const TaskMover: React.FC<Props> = ({ task }) => {
     });
   };
 
-  const inThisBoard = (
+  const inBoard = (
     <Space direction="vertical">
       <div>
         <SelectTitle>Column</SelectTitle>
@@ -81,7 +82,7 @@ export const TaskMover: React.FC<Props> = ({ task }) => {
     </Space>
   );
 
-  const otherBoard = (
+  const inProject = (
     <Space direction="vertical">
       <div>
         <SelectTitle>Board</SelectTitle>
@@ -133,26 +134,9 @@ export const TaskMover: React.FC<Props> = ({ task }) => {
   return (
     <Popover
       placement="bottom"
-      content={
-        <Tabs
-          defaultActiveKey="1"
-          size="small"
-          onChange={(activeKey) => {
-            if (activeKey === "in-this-board") {
-              setTempBoardId(task.BoardId);
-            }
-          }}
-        >
-          <TabPane tab="In this board" key="in-this-board">
-            {inThisBoard}
-          </TabPane>
-          <TabPane tab="Other board" key="other-board">
-            {otherBoard}
-          </TabPane>
-        </Tabs>
-      }
+      content={type === "in-board" ? inBoard : inProject}
     >
-      <Button size="small">Move Task</Button>
+      {children}
     </Popover>
   );
 };

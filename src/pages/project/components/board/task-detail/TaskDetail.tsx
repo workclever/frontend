@@ -1,18 +1,17 @@
 import { TaskType } from "@app/types/Project";
 import { UserSelector } from "../../shared/UserSelector";
-import { TaskMover } from "../../shared/TaskMover";
 import React from "react";
 import { useUpdateTaskAssigneeUserMutation } from "@app/services/api";
 import { TaskEditableDescription } from "./TaskEditableDescription";
 import { TaskRelations } from "./task-relations/TaskRelations";
 import { TaskSubtasks } from "./task-subtasks/TaskSubtasks";
 import { TaskCustomFieldsRenderer } from "./custom-fields/TaskCustomFieldsRenderer";
-import { TaskDelete } from "./TaskDelete";
 import { TaskAttachments } from "./TaskAttachments";
 import { Space } from "@app/components/shared/primitives/Space";
 import { Divider } from "@app/components/shared/primitives/Divider";
 import { useAppNavigate } from "@app/hooks/useAppNavigate";
 import { TaskTimeline } from "./timeline/TaskTimeline";
+import { TaskBoardColumn } from "./TaskBoardColumn";
 
 type Props = {
   task: TaskType;
@@ -56,11 +55,7 @@ const Assignee: React.FC<Pick<Props, "task">> = ({ task }) => {
   );
 };
 
-export const TaskDetail: React.FC<Props> = ({
-  task,
-  findSubtasks,
-  onTaskDelete,
-}) => {
+export const TaskDetail: React.FC<Props> = ({ task, findSubtasks }) => {
   const { goToTask } = useAppNavigate();
 
   const onTaskSelect = (task: TaskType) => {
@@ -99,13 +94,10 @@ export const TaskDetail: React.FC<Props> = ({
               <Reporter task={task} />
               <Assignee task={task} />
             </Space>
-            <Space style={{ marginTop: 8 }}>
-              <TaskMover task={task} />
-              <TaskDelete task={task} onTaskDelete={onTaskDelete} />
-            </Space>
           </div>
-          <Divider />
-          <div style={{ padding: 16, paddingTop: 0 }}>
+          <Divider style={{ marginBottom: 8 }} />
+          <div style={{ padding: 16 }}>
+            <TaskBoardColumn task={task} />
             <TaskCustomFieldsRenderer task={task} />
           </div>
         </div>

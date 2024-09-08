@@ -1,6 +1,5 @@
 import { debounce } from "lodash";
 import React from "react";
-import styled from "styled-components";
 import { LoadingSpin } from "@app/components/shared/primitives/LoadingSpin";
 import { useCreateCustomFieldTaskValueMutation } from "@app/services/api";
 import {
@@ -14,13 +13,8 @@ import { CustomFieldRowDate } from "./CustomFieldRowDate";
 import { CustomFieldRowMultiSelect } from "./CustomFieldRowMultiSelect";
 import { CustomFieldRowSelect } from "./CustomFieldRowSelect";
 import { CustomFieldRowText } from "./CustomFieldRowText";
-import { HoverableListItem } from "@app/components/shared/HoverableListItem";
 import { RenderTaskCustomField } from "../../../units/RenderTaskCustomField";
-
-const CustomFieldValuePreview = styled(HoverableListItem)`
-  padding: 4px;
-  margin-bottom: 0px;
-`;
+import { FieldValuePreview } from "../../../fields/FieldContainers";
 
 export const CustomFieldRow: React.FC<{
   task: TaskType;
@@ -59,7 +53,7 @@ export const CustomFieldRow: React.FC<{
   }, [activeInputId, field]);
 
   const getInput = () => {
-    const inputs: { [key: string]: React.ReactNode } = {
+    const inputs: { [key in CustomFieldType]: React.ReactNode } = {
       [CustomFieldType.Text]: (
         <CustomFieldRowText
           field={field}
@@ -126,16 +120,12 @@ export const CustomFieldRow: React.FC<{
     return inputs[field.FieldType];
   };
 
-  return (
-    <span>
-      {editMode ? (
-        getInput()
-      ) : (
-        <CustomFieldValuePreview onClick={onActivate}>
-          <RenderTaskCustomField task={task} customField={field} />{" "}
-          {isLoading && <LoadingSpin size="small" />}
-        </CustomFieldValuePreview>
-      )}
-    </span>
+  return editMode ? (
+    <>{getInput()}</>
+  ) : (
+    <FieldValuePreview onClick={onActivate}>
+      <RenderTaskCustomField task={task} customField={field} />{" "}
+      {isLoading && <LoadingSpin size="small" />}
+    </FieldValuePreview>
   );
 };
