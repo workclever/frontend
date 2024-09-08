@@ -18,6 +18,13 @@ export const useKanbanBoardData = (projectId: number) => {
     const orderedColumnIds = columns
       .slice()
       .sort((a, b) => a.Order - b.Order)
+      .map((r) => {
+        items[r.Id] = {
+          ...r,
+          items: [],
+        };
+        return r;
+      })
       .map((r) => r.Id);
 
     let nonSubtasksFiltered = nonSubtasks;
