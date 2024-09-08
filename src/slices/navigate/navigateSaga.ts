@@ -41,7 +41,7 @@ function* handleGoToBoard({ payload: board }: ReturnType<typeof goToBoard>) {
 
 function* handleGoToTask({ payload: task }: ReturnType<typeof goToTask>) {
   try {
-    const url = `/task/${task.Slug}`;
+    const url = `/project/${task.ProjectId}/board/${task.BoardId}/task/${task.Slug}`;
     yield call(history.push, url);
   } catch (e) {
     console.log({ e });

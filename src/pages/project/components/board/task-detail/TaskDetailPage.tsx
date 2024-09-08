@@ -2,9 +2,11 @@ import { useParams } from "react-router-dom";
 import { TaskDetail } from "./TaskDetail";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { BoardLayout } from "../BoardLayout";
 import { useBoardData } from "../hooks/useBoardData";
-import { loadTaskDetailStarted } from "@app/slices/taskDetail/taskDetailSlice";
+import {
+  loadTaskDetailStarted,
+  setSelectedTaskId,
+} from "@app/slices/taskDetail/taskDetailSlice";
 import { useTask } from "@app/hooks/useTask";
 
 export const TaskDetailPage = () => {
@@ -18,11 +20,16 @@ export const TaskDetailPage = () => {
     if (task) {
       dispatch(loadTaskDetailStarted({ task }));
     }
+
+    return () => {
+      console.log("clel");
+      dispatch(setSelectedTaskId(0));
+    };
   }, [dispatch, task]);
 
-  return (
-    <BoardLayout mode="task">
-      {task && <TaskDetail task={task} findSubtasks={findSubtasks} />}
-    </BoardLayout>
-  );
+  if (!task) {
+    return null;
+  }
+
+  return <TaskDetail task={task} findSubtasks={findSubtasks} />;
 };

@@ -27,6 +27,8 @@ export const TaskEditableTitle: React.FC<Props> = ({ task, onTaskSelect }) => {
           flexDirection: "row",
           width: "100%",
           alignItems: "center",
+          fontSize: 12,
+          fontWeight: "normal",
         }}
       >
         {task.ParentTaskItemId ? (

@@ -32,7 +32,7 @@ const Wrapper = styled.div`
   background-color: white;
 `;
 
-export const BoardHeader: React.FC<{ mode: "board" | "task" }> = ({ mode }) => {
+export const BoardHeader: React.FC = () => {
   const dispatch = useDispatch();
   const boardViewType = useSelector(selectBoardViewType);
 
@@ -88,8 +88,7 @@ export const BoardHeader: React.FC<{ mode: "board" | "task" }> = ({ mode }) => {
 
   return (
     <Wrapper>
-      {mode === "board" && boardComponents}
-      {mode === "task" && taskComponents}
+      {selectedTaskId ? taskComponents : boardComponents}
       <Divider type="vertical" style={{ height: "100%" }} />
       <HeaderRightContent />
     </Wrapper>

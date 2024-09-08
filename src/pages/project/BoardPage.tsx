@@ -3,7 +3,7 @@ import { Button } from "../../components/shared/primitives/Button";
 import { Empty } from "../../components/shared/primitives/Empty";
 import { Space } from "../../components/shared/primitives/Space";
 import { setSelectedProjectId } from "../../slices/project/projectSlice";
-import { useParams } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import React from "react";
 import { BoardLayout } from "./components/board/BoardLayout";
 import { TreeBoardWrapper } from "./components/board/TreeBoardWrapper";
@@ -84,5 +84,10 @@ export const BoardPage = () => {
     return newBoardTrigger();
   };
 
-  return <BoardLayout mode="board">{renderContent()}</BoardLayout>;
+  return (
+    <BoardLayout>
+      <Outlet />
+      {renderContent()}
+    </BoardLayout>
+  );
 };

@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import {
   Routes,
   Route,
-  Outlet,
   unstable_HistoryRouter as HistoryRouter,
 } from "react-router-dom";
 import { BaseLayout } from "./layout/BaseLayout";
@@ -19,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadAppStarted, selectAppLoading } from "./slices/app/appSlice";
 import { TaskDetailPage } from "./pages/project/components/board/task-detail/TaskDetailPage";
 import { CommandMenu } from "./components/shared/cmdk/CommandMenu";
+import { ProjectPage } from "./pages/project/ProjectPage";
 
 const auth = (component: React.ReactElement) => (
   <RequireAuth>{component}</RequireAuth>
@@ -45,10 +45,11 @@ export default function App() {
       <Routes>
         <Route element={<BaseLayout />}>
           <Route path="/" element={auth(<HomePage />)} />
-          <Route path="/project/:projectId" element={auth(<Outlet />)}>
-            <Route path="board/:boardId" element={<BoardPage />} />
+          <Route path="/project/:projectId" element={auth(<ProjectPage />)}>
+            <Route path="board/:boardId" element={<BoardPage />}>
+              <Route path="task/:taskId" element={<TaskDetailPage />} />
+            </Route>
           </Route>
-          <Route path="task/:taskId" element={<TaskDetailPage />} />
           <Route path="/login" element={anon(<LoginPage />)} />
           <Route path="/register" element={anon(<RegisterPage />)} />
           <Route path="/manage" element={auth(<GlobalSettingsPage />)} />
