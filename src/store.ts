@@ -18,7 +18,8 @@ export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
     } else if (action.payload.status === 404) {
       message.error("Error 404, related API endpoint is not found");
     } else if (action.payload.data && action.payload.data.Message) {
-      message.error(action.payload.data.Message);
+      // Do not show to user
+      console.error(action.payload.data.Message);
     } else {
       message.error(
         "Unknown error occured in the API. Please try again or reach administrator."

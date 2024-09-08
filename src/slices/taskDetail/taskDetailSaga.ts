@@ -18,9 +18,10 @@ function* handleLoadTaskDetailStarted({
       api.endpoints.getTask.initiate(payload.task.Id, { forceRefetch: true })
     );
 
-    const data: RtkQueryOutput<TaskType> = yield take(
-      api.endpoints.getTask.matchFulfilled
-    );
+    const data: RtkQueryOutput<TaskType> = yield take([
+      api.endpoints.getTask.matchFulfilled,
+      api.endpoints.getTask.matchRejected,
+    ]);
 
     if (data.payload.Data.ProjectId) {
       yield put(setSelectedProjectId(data.payload.Data.ProjectId));

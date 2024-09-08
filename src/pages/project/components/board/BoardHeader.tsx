@@ -70,18 +70,18 @@ export const BoardHeader: React.FC<{ mode: "board" | "task" }> = ({ mode }) => {
   );
 
   const selectedTaskId = useSelector(selectSelectedTaskId);
-  const { task } = useTask(selectedTaskId);
+  const { isLoading, task } = useTask(selectedTaskId);
 
-  const taskComponents = task ? (
+  const taskComponents = isLoading ? (
     <>
-      <div style={{ marginLeft: 16 }}>
-        <TaskEditableTitle task={task} onTaskSelect={() => {}} />
-      </div>
+      <LoadingSpin size="small" />
       <div style={{ flex: 1 }} />
     </>
   ) : (
     <>
-      <LoadingSpin size="small" />
+      <div style={{ marginLeft: 16 }}>
+        {task && <TaskEditableTitle task={task} onTaskSelect={() => {}} />}
+      </div>
       <div style={{ flex: 1 }} />
     </>
   );

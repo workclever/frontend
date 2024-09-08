@@ -8,7 +8,6 @@ import {
 import { useAppNavigate } from "@app/hooks/useAppNavigate";
 import { useBoards } from "@app/hooks/useBoards";
 import { useColumns } from "@app/hooks/useColumns";
-import { selectSelectedProjectId } from "@app/slices/project/projectSlice";
 import { BoardType, TaskType } from "@app/types/Project";
 import {
   selectSelectedBoardId,
@@ -20,11 +19,10 @@ export const useBoardData = (projectId: number) => {
   const selectedBoardId = useSelector(selectSelectedBoardId);
   const boardFilters = useSelector(selectBoardFilters);
   const { columns } = useColumns(Number(selectedBoardId));
-  const selectedProjectId = useSelector(selectSelectedProjectId);
 
   const { data: { Data: tasks } = {}, isLoading: isTasksLoading } =
-    useListProjectTasksQuery(Number(selectedProjectId), {
-      skip: !selectedProjectId,
+    useListProjectTasksQuery(Number(projectId), {
+      skip: !projectId,
     });
   const boards = useBoards();
   const currentBoard = boards.find(
