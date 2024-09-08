@@ -19,7 +19,7 @@ const Wrapper = styled.div`
   cursor: pointer;
   background-color: white;
   border-radius: 4px;
-  filter: drop-shadow(0px 1px 1px #eaeaea);
+  box-shadow: var(--box-shadow);
   transition: all 100ms ease-in;
 
   &:hover {

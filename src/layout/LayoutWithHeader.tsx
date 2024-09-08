@@ -11,7 +11,7 @@ const Header = styled.div`
   padding: 0px 16px;
   align-items: center;
   gap: 8px;
-  border-bottom: 1px solid #eaeaea;
+  box-shadow: var(--box-shadow);
 `;
 
 const TitleWrapper = styled.div`

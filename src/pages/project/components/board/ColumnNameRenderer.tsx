@@ -31,6 +31,7 @@ const ColumnTreeWrapper = styled.div`
   width: 100%;
   border-bottom: 1px solid #eaeaea;
   background-color: #f7f7f7;
+  box-shadow: var(--box-shadow);
 `;
 
 const ColumnKanbanWrapper = styled.div`

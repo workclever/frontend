@@ -13,3 +13,7 @@ html {
 .crud-editor .ant-pro-card .ant-pro-card-body {
   padding: 0px !important;
 }
+
+:root {
+  --box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}

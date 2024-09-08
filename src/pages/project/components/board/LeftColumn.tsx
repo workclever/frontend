@@ -25,13 +25,14 @@ const Header = styled.div`
   position: fixed;
   left: 0;
   top: 0;
-  border-bottom: 1px solid #eaeaea;
   padding: 14px;
   width: 250px;
   cursor: pointer;
   height: 45px;
   display: flex;
   align-items: center;
+  background-color: white;
+  box-shadow: var(--box-shadow);
 `;
 
 const BottomWrapper = styled.div`

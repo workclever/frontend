@@ -30,6 +30,7 @@ const Wrapper = styled.div`
   z-index: 1;
   border-bottom: 1px solid #eaeaea;
   background-color: white;
+  box-shadow: var(--box-shadow);
 `;
 
 export const BoardHeader: React.FC = () => {
