@@ -24,7 +24,6 @@ import {
   selectBoardViewType,
   selectSelectedBoardId,
 } from "@app/slices/board/boardSlice";
-import { useColumns } from "@app/hooks/useColumns";
 
 const ColumnTreeWrapper = styled.div`
   padding: 8px;
@@ -46,15 +45,13 @@ type FormValuesType = {
   Title: string;
 };
 
-// TODO modularize this comp
 export const ColumnNameRenderer: React.FC<{
-  columnId: number;
+  column: ColumnType;
   toggleOpen?: () => void;
-}> = ({ columnId, toggleOpen }) => {
+}> = ({ column, toggleOpen }) => {
   const { hasAccess } = useMe();
   const [deleteColumn] = useDeleteColumnMutation();
   const selectedProjectId = useSelector(selectSelectedProjectId);
-  const selectedBoardId = useSelector(selectSelectedBoardId);
   const [creatingTask, setCreatingTask] = React.useState(false);
   const [editColumn, showEditColumn] = React.useState(false);
   const hasProjectManagerPermission = hasAccess(
@@ -63,16 +60,7 @@ export const ColumnNameRenderer: React.FC<{
     EntityClasses.Project
   );
 
-  const [createTask] = useCreateTaskMutation();
-
-  const { columns } = useColumns(Number(selectedBoardId));
-  const column = columns.find((r) => r.Id === columnId);
-
   const boardViewType = useSelector(selectBoardViewType);
-
-  if (!column) {
-    return null;
-  }
 
   const menuItems: EnhancedDropdownMenuItem[] = [
     {
@@ -127,6 +115,9 @@ export const ColumnNameRenderer: React.FC<{
 
   const Wrapper =
     boardViewType === "tree" ? ColumnTreeWrapper : ColumnKanbanWrapper;
+
+  const [createTask] = useCreateTaskMutation();
+  const selectedBoardId = useSelector(selectSelectedBoardId);
 
   const onFinish = async (values: FormValuesType) => {
     await createTask({
