@@ -261,7 +261,7 @@ export const TreeBoardWrapper: React.FC<{ projectId: number }> = ({
         return (
           <>
             <ColumnNameRenderer
-              column={item.data}
+              columnId={item.data.Id}
               toggleOpen={() => dispatch(toggleExpandedTreeItem(item.id))}
             />
           </>
@@ -278,7 +278,7 @@ export const TreeBoardWrapper: React.FC<{ projectId: number }> = ({
       )}
       renderNewCardItem={(column) => (
         <div style={{ paddingLeft: 16, paddingTop: 8, paddingBottom: 8 }}>
-          <AddNewTaskInput column={column} />
+          <AddNewTaskInput columnId={column.Id} />
         </div>
       )}
     />

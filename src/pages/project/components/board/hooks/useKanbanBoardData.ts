@@ -1,6 +1,6 @@
 import { useBoardData } from "./useBoardData";
 import React from "react";
-import { ColumnMap } from "../dnd/kanban/types";
+import { ColumnMap } from "@ozgurrgul/dragulax";
 
 export const useKanbanBoardData = (projectId: number) => {
   const {
@@ -19,10 +19,7 @@ export const useKanbanBoardData = (projectId: number) => {
       .slice()
       .sort((a, b) => a.Order - b.Order)
       .map((r) => {
-        items[r.Id] = {
-          ...r,
-          items: [],
-        };
+        items[r.Id] = [];
         return r;
       })
       .map((r) => r.Id);
@@ -54,12 +51,9 @@ export const useKanbanBoardData = (projectId: number) => {
     nonSubtasksFiltered.forEach((task) => {
       if (columns.map((r) => r.Id).indexOf(task.ColumnId) > -1) {
         for (const col of columns) {
-          items[col.Id] = {
-            ...col,
-            items: columnTasks
-              .filter((r) => r.ColumnId === col.Id)
-              .map((r) => r.Id),
-          };
+          items[col.Id] = columnTasks
+            .filter((r) => r.ColumnId === col.Id)
+            .map((r) => r.Id);
         }
       }
     });
