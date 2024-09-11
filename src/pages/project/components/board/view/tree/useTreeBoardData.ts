@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from "react";
 import { ItemId, TreeItem } from "@ozgurrgul/dragulax";
 import { TaskType } from "@app/types/Project";
-import { useBoardData } from "./useBoardData";
+import { useBoardData } from "../../hooks/useBoardData";
 import {
   expandedTreeItemBulk,
   selectTreeExpandedKeys,

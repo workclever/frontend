@@ -5,8 +5,8 @@ import { Space } from "../../components/shared/primitives/Space";
 import { setSelectedProjectId } from "../../slices/project/projectSlice";
 import { Outlet, useParams } from "react-router-dom";
 import React from "react";
-import { TreeBoardWrapper } from "./components/board/TreeBoardWrapper";
-import { KanbanBoardWrapper } from "./components/board/KanbanBoardWrapper";
+import { TreeBoardWrapper } from "./components/board/view/tree/TreeBoardWrapper";
+import { KanbanBoardWrapper } from "./components/board/view/kanban/KanbanBoardWrapper";
 import {
   loadBoardStarted,
   selectBoardLoading,

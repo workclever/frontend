@@ -1,15 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import { TaskIdRenderer } from "@app/components/shared/TaskIdRenderer";
-import { ColHeader } from "./ColumnTreeHeader";
-import { Props } from "./Task";
-import { Space } from "@app/components/shared/primitives/Space";
-import { TaskAssigneeUnit } from "./units/TaskAssigneeUnit";
-import { TaskCommentsUnit } from "./units/TaskCommentsUnit";
-import { RenderTaskCustomFieldsUnit } from "./units/RenderTaskCustomFieldsUnit";
 import { gray } from "@ant-design/colors";
 import { ChevronDownIcon, ChevronRightIcon } from "lucide-react";
 import { TreeItem } from "@ozgurrgul/dragulax";
+import { Props } from "../../Task";
+import { RenderTaskCustomFieldsUnit } from "../../units/RenderTaskCustomFieldsUnit";
+import { TaskAssigneeUnit } from "../../units/TaskAssigneeUnit";
+import { TaskCommentsUnit } from "../../units/TaskCommentsUnit";
+import { ColHeader } from "./ColumnTreeHeader";
+import { Space } from "@app/components/shared/primitives/Space";
 
 const Wrapper = styled.div`
   flex: 1;

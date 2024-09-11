@@ -1,4 +1,4 @@
-import { useBoardData } from "./useBoardData";
+import { useBoardData } from "../../hooks/useBoardData";
 import React from "react";
 import { ColumnMap } from "@ozgurrgul/dragulax";
 

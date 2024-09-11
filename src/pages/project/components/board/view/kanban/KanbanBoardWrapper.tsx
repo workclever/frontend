@@ -1,16 +1,16 @@
 import React from "react";
-import { AddNewColumnInput } from "./AddNewColumnInput";
-import { AddNewTaskInput } from "./AddNewTaskInput";
-import { ColumnNameRenderer } from "./ColumnNameRenderer";
+import { AddNewColumnInput } from "../../AddNewColumnInput";
+import { AddNewTaskInput } from "../../AddNewTaskInput";
+import { ColumnNameRenderer } from "../../ColumnNameRenderer";
 import { DndKanbanBoard } from "@ozgurrgul/dragulax";
 import { TaskCardKanban } from "./TaskCardKanban";
-import { useKanbanBoardData } from "./hooks/useKanbanBoardData";
+import { useKanbanBoardData } from "./useKanbanBoardData";
 import {
   useUpdateColumnOrdersMutation,
   useUpdateTaskOrdersMutation,
   useUpdateTaskPropertyMutation,
 } from "@app/services/api";
-import { TaskMenu } from "./TaskMenu";
+import { TaskMenu } from "../../TaskMenu";
 
 export const KanbanBoardWrapper: React.FC<{
   projectId: number;

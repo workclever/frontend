@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { TaskIdRenderer } from "@app/components/shared/TaskIdRenderer";
-import { Props } from "./Task";
+import { Props } from "../../Task";
 import { Space } from "@app/components/shared/primitives/Space";
 import { blue } from "@ant-design/colors";
-import { TaskAssigneeUnit } from "./units/TaskAssigneeUnit";
-import { TaskSubtasksUnit } from "./units/TaskSubtasksUnit";
-import { TaskCommentsUnit } from "./units/TaskCommentsUnit";
-import { RenderTaskCustomFieldsUnit } from "./units/RenderTaskCustomFieldsUnit";
+import { TaskAssigneeUnit } from "../../units/TaskAssigneeUnit";
+import { TaskSubtasksUnit } from "../../units/TaskSubtasksUnit";
+import { TaskCommentsUnit } from "../../units/TaskCommentsUnit";
+import { RenderTaskCustomFieldsUnit } from "../../units/RenderTaskCustomFieldsUnit";
 
 const Wrapper = styled.div`
   flex: 1;

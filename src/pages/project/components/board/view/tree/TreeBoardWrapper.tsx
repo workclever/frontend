@@ -1,20 +1,20 @@
-import { AddNewColumnInput } from "./AddNewColumnInput";
-import { AddNewTaskInput } from "./AddNewTaskInput";
-import { ColumnNameRenderer } from "./ColumnNameRenderer";
-import { DndTreeBoard, ItemId, MovePosition } from "@ozgurrgul/dragulax";
-import { TaskCardTree } from "./TaskCardTree";
-import { useTreeBoardData } from "./hooks/useTreeBoardData";
+import { LoadingSpin } from "@app/components/shared/primitives/LoadingSpin";
 import {
   useUpdateTaskOrdersMutation,
   useUpdateTaskPropertyMutation,
   useMoveTaskToColumnMutation,
 } from "@app/services/api";
-import { reorderArray } from "./utils/orderUtils";
-import { LoadingSpin } from "@app/components/shared/primitives/LoadingSpin";
-import { useDispatch } from "react-redux";
 import { toggleExpandedTreeItem } from "@app/slices/board/boardSlice";
-import { TaskMenu } from "./TaskMenu";
 import { TaskType } from "@app/types/Project";
+import { ItemId, MovePosition, DndTreeBoard } from "@ozgurrgul/dragulax";
+import { useDispatch } from "react-redux";
+import { AddNewColumnInput } from "../../AddNewColumnInput";
+import { AddNewTaskInput } from "../../AddNewTaskInput";
+import { ColumnNameRenderer } from "../../ColumnNameRenderer";
+import { useTreeBoardData } from "./useTreeBoardData";
+import { TaskMenu } from "../../TaskMenu";
+import { reorderArray } from "../../utils/orderUtils";
+import { TaskCardTree } from "./TaskCardTree";
 
 export const TreeBoardWrapper: React.FC<{ projectId: number }> = ({
   projectId,

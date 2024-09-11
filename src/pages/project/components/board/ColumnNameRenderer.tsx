@@ -16,7 +16,7 @@ import {
 } from "@app/components/shared/EnhancedDropdownMenu";
 import { FlexBasicLayout } from "@app/components/shared/FlexBasicLayout";
 import { EditColumnModal } from "./EditColumnModal";
-import { ColumnTreeHeader } from "./ColumnTreeHeader";
+import { ColumnTreeHeader } from "./view/tree/ColumnTreeHeader";
 import { ModalForm, ProFormText } from "@ant-design/pro-components";
 import { ColumnColor } from "@app/components/shared/ColumnColor";
 import { PencilIcon, PlusIcon, TrashIcon } from "lucide-react";
