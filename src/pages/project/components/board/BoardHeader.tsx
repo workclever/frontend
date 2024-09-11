@@ -1,12 +1,6 @@
-import { Segmented } from "antd";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
-import {
-  selectBoardViewType,
-  setBoardViewType,
-} from "@app/slices/board/boardSlice";
-import { BoardViewType } from "@app/types/Project";
 import { BoardUserAvatars } from "./BoardUserAvatars";
 import { HeaderRightContent } from "@app/layout/HeaderRightContent";
 import { Space } from "@app/components/shared/primitives/Space";
@@ -15,7 +9,6 @@ import { FilterTaskInput } from "./FilterTaskInput";
 import { TaskEditableTitle } from "./task-detail/TaskEditableTitle";
 import { selectSelectedTaskId } from "@app/slices/taskDetail/taskDetailSlice";
 import { useTask } from "@app/hooks/useTask";
-import { NetworkIcon, SquareDashedKanbanIcon } from "lucide-react";
 import { LoadingSpin } from "@app/components/shared/primitives/LoadingSpin";
 
 const Wrapper = styled.div`
@@ -34,15 +27,6 @@ const Wrapper = styled.div`
 `;
 
 export const BoardHeader: React.FC = () => {
-  const dispatch = useDispatch();
-  const boardViewType = useSelector(selectBoardViewType);
-
-  const updateBoardViewType = (type: BoardViewType) => {
-    setTimeout(() => {
-      dispatch(setBoardViewType(type));
-    }, 300);
-  };
-
   const boardComponents = (
     <>
       <Space>
@@ -50,23 +34,6 @@ export const BoardHeader: React.FC = () => {
         <BoardUserAvatars />
       </Space>
       <div style={{ flex: 1 }} />
-      <Segmented
-        size="small"
-        value={boardViewType}
-        onChange={(e) => updateBoardViewType(e as BoardViewType)}
-        options={[
-          {
-            value: "kanban",
-            icon: <SquareDashedKanbanIcon size={12} />,
-            label: "Kanban",
-          },
-          {
-            value: "tree",
-            icon: <NetworkIcon size={12} />,
-            label: "Tree",
-          },
-        ]}
-      />
     </>
   );
 

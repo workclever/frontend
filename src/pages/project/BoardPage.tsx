@@ -15,6 +15,7 @@ import {
 } from "@app/slices/board/boardSlice";
 import { LoadingSpin } from "@app/components/shared/primitives/LoadingSpin";
 import { BoardHeader } from "./components/board/BoardHeader";
+import { BoardViewsHeader } from "./components/board/BoardViewsHeader";
 
 export const BoardPage = () => {
   const dispatch = useDispatch();
@@ -44,6 +45,7 @@ export const BoardPage = () => {
     }
     return (
       <>
+        <BoardViewsHeader />
         {boardViewType === "kanban" && (
           <div style={{ padding: 8 }}>
             <KanbanBoardWrapper
