@@ -115,7 +115,7 @@ export const selectBoardFilters = (state: RootState) =>
 export const selectSelectedBoardViewId = (state: RootState) =>
   state.board.selectedBoardViewId;
 
-export const selectBoardViewType = createSelector(
+export const selectSelectedBoardView = createSelector(
   [
     (state: RootState) => state,
     selectSelectedBoardId,
@@ -129,9 +129,13 @@ export const selectBoardViewType = createSelector(
     const boardViews =
       api.endpoints.listBoardViewsByBoardId.select(selectedBoardId)(state);
 
-    return boardViews.data?.Data.find((r) => r.Id === selectedBoardViewId)
-      ?.Config.Type;
+    return boardViews.data?.Data.find((r) => r.Id === selectedBoardViewId);
   }
+);
+
+export const selectBoardViewType = createSelector(
+  [selectSelectedBoardView],
+  (selectedBoardView) => selectedBoardView?.Config.Type
 );
 
 export const selectTreeExpandedKeys = (state: RootState) =>

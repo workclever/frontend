@@ -28,6 +28,7 @@ export const createCustomFieldValues = {
   FieldName: "",
   FieldType: "" as CustomFieldType,
   Enabled: true,
+  // TODO remove
   ShowInTaskCard: true,
   SelectOptions: [] as CustomFieldSelectOption[],
 };

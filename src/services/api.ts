@@ -124,4 +124,6 @@ export const {
   useDeleteColumnMutation,
   useListBoardViewsByBoardIdQuery,
   useCreateBoardViewMutation,
+  useUpdateBoardViewMutation,
+  useDeleteBoardViewMutation,
 } = api;

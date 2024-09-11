@@ -93,6 +93,7 @@ export type BoardViewKanban = {
   Id: number;
   Config: {
     Type: "kanban";
+    Name: string;
     VisibleCustomFields: number[];
   };
 };
@@ -101,6 +102,7 @@ export type BoardViewTree = {
   Id: number;
   Config: {
     Type: "tree";
+    Name: string;
     VisibleCustomFields: number[];
   };
 };

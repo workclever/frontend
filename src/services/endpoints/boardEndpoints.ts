@@ -46,10 +46,11 @@ export const boardEndpoints = (builder: Builder) => ({
     query: (id) => ({ url: `/Board/GetBoard?boardId=${id}` }),
   }),
   createBoardView: builder.mutation<
-    BaseOutput<unknown>,
+    BaseOutput<BoardView>,
     {
       BoardId: number;
       Type: BoardViewType;
+      Name: string;
     }
   >({
     query: (body) => ({
@@ -62,5 +63,27 @@ export const boardEndpoints = (builder: Builder) => ({
   listBoardViewsByBoardId: builder.query<BaseOutput<BoardView[]>, number>({
     query: (id) => ({ url: `/Board/ListBoardViewsByBoardId?boardId=${id}` }),
     providesTags: ["BoardView"],
+  }),
+  updateBoardView: builder.mutation<
+    BaseOutput<string>,
+    {
+      BoardViewId: number;
+      Name: string;
+      VisibleCustomFields: number[];
+    }
+  >({
+    query: (body) => ({
+      url: "/Board/UpdateBoardView",
+      method: "POST",
+      body,
+    }),
+    invalidatesTags: ["BoardView"],
+  }),
+  deleteBoardView: builder.mutation<BaseOutput<string>, number>({
+    query: (id) => ({
+      url: `/Board/DeleteBoardView?boardViewId=${id}`,
+      method: "DELETE",
+    }),
+    invalidatesTags: ["BoardView"],
   }),
 });

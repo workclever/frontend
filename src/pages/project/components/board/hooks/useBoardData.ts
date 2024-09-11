@@ -13,6 +13,7 @@ import {
   selectSelectedBoardId,
   selectBoardFilters,
   selectBoardViewType,
+  selectSelectedBoardView,
 } from "@app/slices/board/boardSlice";
 
 export const useBoardData = (projectId: number) => {
@@ -32,8 +33,11 @@ export const useBoardData = (projectId: number) => {
   const { data: customFields } = useListCustomFieldsQuery(projectId, {
     skip: !projectId,
   });
+  const selectedBoardView = useSelector(selectSelectedBoardView);
+
   const customFieldsVisibleOnCard = (customFields?.Data || []).filter(
-    (r) => r.ShowInTaskCard && r.Enabled
+    (r) =>
+      r.Enabled && selectedBoardView?.Config.VisibleCustomFields.includes(r.Id)
   );
 
   const { goToTask, goToBoard } = useAppNavigate();
