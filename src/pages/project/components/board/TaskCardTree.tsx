@@ -7,9 +7,9 @@ import { Space } from "@app/components/shared/primitives/Space";
 import { TaskAssigneeUnit } from "./units/TaskAssigneeUnit";
 import { TaskCommentsUnit } from "./units/TaskCommentsUnit";
 import { RenderTaskCustomFieldsUnit } from "./units/RenderTaskCustomFieldsUnit";
-import { TreeItem } from "./dnd/tree/types";
 import { gray } from "@ant-design/colors";
 import { ChevronDownIcon, ChevronRightIcon } from "lucide-react";
+import { TreeItem } from "@ozgurrgul/dragulax";
 
 const Wrapper = styled.div`
   flex: 1;

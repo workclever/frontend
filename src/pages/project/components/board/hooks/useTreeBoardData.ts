@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { ItemId, TreeItem } from "../dnd/tree/types";
+import { ItemId, TreeItem } from "@ozgurrgul/dragulax";
 import { TaskType } from "@app/types/Project";
 import { useBoardData } from "./useBoardData";
 import {
@@ -20,6 +20,7 @@ export const useTreeBoardData = (projectId: number) => {
     isTasksLoading,
     findSubtasks,
     onTaskSelect,
+    findTask,
   } = useBoardData(projectId);
 
   const expandedKeys = useSelector(selectTreeExpandedKeys);
@@ -66,27 +67,34 @@ export const useTreeBoardData = (projectId: number) => {
     const buildTaskTree = (parentId: number): TreeItem[] => {
       const children = tasksByParent[parentId] || [];
       return children.map((task) => ({
-        id: `task-${task.Id}`,
+        id: `item-${task.Id}`,
         children: buildTaskTree(task.Id),
-        isOpen: expandedKeys[`task-${task.Id}`] || false,
-        data: task,
+        isOpen: expandedKeys[`item-${task.Id}`] || false,
       }));
     };
 
     return columns.map((column) => ({
-      id: `column-${column.Id}`,
+      id: `group-${column.Id}`,
       children: buildTaskTree(0).filter(
-        (task) => (task.data as TaskType).ColumnId === column.Id
+        (task) =>
+          (findTask(Number(task.id.split("-")[1])) as TaskType).ColumnId ===
+          column.Id
       ),
-      isOpen: expandedKeys[`column-${column.Id}`] || false,
-      data: column,
+      isOpen: expandedKeys[`group-${column.Id}`] || false,
     }));
-  }, [columns, tasksInBoard, nonSubtasks, boardFilters, expandedKeys]);
+  }, [
+    columns,
+    tasksInBoard,
+    nonSubtasks,
+    boardFilters,
+    expandedKeys,
+    findTask,
+  ]);
 
   useEffect(() => {
     dispatch(
       expandedTreeItemBulk(
-        columns.map((column) => `column-${column.Id}` as ItemId)
+        columns.map((column) => `group-${column.Id}` as ItemId)
       )
     );
   }, [dispatch, columns]);
@@ -99,5 +107,6 @@ export const useTreeBoardData = (projectId: number) => {
     isTasksLoading,
     findSubtasks,
     onTaskSelect,
+    findTask,
   };
 };

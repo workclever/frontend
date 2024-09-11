@@ -1,10 +1,10 @@
-import { type Instruction } from "@atlaskit/pragmatic-drag-and-drop-hitbox/tree-item";
+import { MovePosition } from "@ozgurrgul/dragulax";
 
 export const reorderArray = (
   arr: number[],
   moveId: number,
   targetId: number,
-  position: Instruction["type"]
+  position: MovePosition
 ) => {
   const result = arr.filter((id) => id !== moveId);
   const targetIndex = result.indexOf(targetId);

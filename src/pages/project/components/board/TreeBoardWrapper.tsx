@@ -1,7 +1,7 @@
 import { AddNewColumnInput } from "./AddNewColumnInput";
 import { AddNewTaskInput } from "./AddNewTaskInput";
 import { ColumnNameRenderer } from "./ColumnNameRenderer";
-import { DndTreeBoard } from "./dnd/tree/DndTreeBoard";
+import { DndTreeBoard, ItemId, MovePosition } from "@ozgurrgul/dragulax";
 import { TaskCardTree } from "./TaskCardTree";
 import { useTreeBoardData } from "./hooks/useTreeBoardData";
 import {
@@ -10,11 +10,11 @@ import {
   useMoveTaskToColumnMutation,
 } from "@app/services/api";
 import { reorderArray } from "./utils/orderUtils";
-import { type Instruction } from "@atlaskit/pragmatic-drag-and-drop-hitbox/tree-item";
 import { LoadingSpin } from "@app/components/shared/primitives/LoadingSpin";
 import { useDispatch } from "react-redux";
 import { toggleExpandedTreeItem } from "@app/slices/board/boardSlice";
 import { TaskMenu } from "./TaskMenu";
+import { TaskType } from "@app/types/Project";
 
 export const TreeBoardWrapper: React.FC<{ projectId: number }> = ({
   projectId,
@@ -26,33 +26,36 @@ export const TreeBoardWrapper: React.FC<{ projectId: number }> = ({
     customFieldsVisibleOnCard,
     isTasksLoading,
     onTaskSelect,
+    findTask,
   } = useTreeBoardData(Number(projectId));
 
   const [updateTaskOrders] = useUpdateTaskOrdersMutation();
   const [updateTaskProperty] = useUpdateTaskPropertyMutation();
   const [moveTask] = useMoveTaskToColumnMutation();
 
-  const onMoveItem = (taskId: number, newColumnId: number) => {
-    const task = tasksInBoard.find((r) => r.Id === taskId);
-    if (!task || task.ColumnId === newColumnId) {
-      return;
-    }
-    const newSiblings = tasksInBoard.filter((r) => r.ColumnId === newColumnId);
-    updateTaskOrders({
-      GroupedTasks: {
-        [newColumnId]: newSiblings.map((r) => r.Id).concat(taskId),
-      },
-    });
-  };
+  // const onMoveItem = (taskId: number, newColumnId: number) => {
+  //   const task = tasksInBoard.find((r) => r.Id === taskId);
+  //   if (!task || task.ColumnId === newColumnId) {
+  //     return;
+  //   }
+  //   const newSiblings = tasksInBoard.filter((r) => r.ColumnId === newColumnId);
+  //   updateTaskOrders({
+  //     GroupedTasks: {
+  //       [newColumnId]: newSiblings.map((r) => r.Id).concat(taskId),
+  //     },
+  //   });
+  // };
 
   const onReorderItem = (
-    taskId: number,
-    targetTaskId: number,
-    position: Instruction["type"]
+    itemId: ItemId,
+    targetId: ItemId,
+    position: MovePosition
   ) => {
-    if (taskId === targetTaskId) return;
-    const task = tasksInBoard.find((r) => r.Id === taskId);
-    const targetTask = tasksInBoard.find((r) => r.Id === targetTaskId);
+    if (itemId === targetId) return;
+    const itemIdNumber = Number(itemId.split("-")[1]);
+    const targetIdNumber = Number(targetId.split("-")[1]);
+    const task = tasksInBoard.find((r) => r.Id === itemIdNumber);
+    const targetTask = tasksInBoard.find((r) => r.Id === targetIdNumber);
 
     if (!task || !targetTask) {
       return;
@@ -170,11 +173,14 @@ export const TreeBoardWrapper: React.FC<{ projectId: number }> = ({
     }
   };
 
-  const onMakeChildInTask = (taskId: number, targetTaskId: number) => {
-    if (taskId === targetTaskId) return;
+  const onMakeChildInTask = (itemId: ItemId, targetId: ItemId) => {
+    if (itemId === targetId) return;
 
-    const task = tasksInBoard.find((r) => r.Id === taskId);
-    const targetTask = tasksInBoard.find((r) => r.Id === targetTaskId);
+    const itemIdNumber = Number(itemId.split("-")[1]);
+    const targetIdNumber = Number(targetId.split("-")[1]);
+
+    const task = tasksInBoard.find((r) => r.Id === itemIdNumber);
+    const targetTask = tasksInBoard.find((r) => r.Id === targetIdNumber);
 
     if (!task || !targetTask) {
       return;
@@ -187,7 +193,7 @@ export const TreeBoardWrapper: React.FC<{ projectId: number }> = ({
         Task: task,
         Params: {
           property: "ParentTaskItemId",
-          value: targetTaskId.toString(),
+          value: targetIdNumber.toString(),
         },
       });
     } else {
@@ -203,16 +209,33 @@ export const TreeBoardWrapper: React.FC<{ projectId: number }> = ({
             Task: task,
             Params: {
               property: "ParentTaskItemId",
-              value: targetTaskId.toString(),
+              value: targetIdNumber.toString(),
             },
           });
         });
     }
   };
 
-  const onMakeChildInColumn = (taskId: number, columnIn: number) => {
+  const onMakeChildInColumn = (itemId: ItemId, targetGroupId: ItemId) => {
     // TODO implement
-    console.log("onMakeChildInColumn", { taskId, columnIn });
+    const itemIdNumber = Number(itemId.split("-")[1]);
+    const targetGroupIdNumber = Number(targetGroupId.split("-")[1]);
+
+    const task = tasksInBoard.find((r) => r.Id === itemIdNumber);
+    if (!task) return;
+
+    const isInSameColumn = task.ColumnId === targetGroupIdNumber;
+    if (isInSameColumn) return;
+
+    console.log("onMakeChildInColumn", { itemId, targetGroupId });
+
+    updateTaskProperty({
+      Task: task,
+      Params: {
+        property: "ColumnId",
+        value: targetGroupIdNumber.toString(),
+      },
+    });
   };
 
   if (isTasksLoading) {
@@ -224,10 +247,12 @@ export const TreeBoardWrapper: React.FC<{ projectId: number }> = ({
       items={dndTreeItems}
       toggleOpen={(item) => dispatch(toggleExpandedTreeItem(item.id))}
       renderItem={(item) => {
-        if ("ColumnId" in item.data) {
+        const id = Number(item.id.split("-")[1]);
+        if (item.id.startsWith("item-")) {
+          const task = findTask(id) as TaskType;
           return (
             <TaskMenu
-              task={item.data}
+              task={task}
               triggers={["contextMenu"]}
               menuKeys={[
                 "view",
@@ -243,14 +268,12 @@ export const TreeBoardWrapper: React.FC<{ projectId: number }> = ({
               <div
                 style={{ width: "100%" }}
                 onClick={() => {
-                  if ("ColumnId" in item.data) {
-                    onTaskSelect(item.data);
-                  }
+                  onTaskSelect(task);
                 }}
               >
                 <TaskCardTree
                   treeItem={item}
-                  task={item.data}
+                  task={task}
                   customFields={customFieldsVisibleOnCard}
                   toggleOpen={() => dispatch(toggleExpandedTreeItem(item.id))}
                 />
@@ -259,26 +282,23 @@ export const TreeBoardWrapper: React.FC<{ projectId: number }> = ({
           );
         }
         return (
-          <>
-            <ColumnNameRenderer
-              columnId={item.data.Id}
-              toggleOpen={() => dispatch(toggleExpandedTreeItem(item.id))}
-            />
-          </>
+          <ColumnNameRenderer
+            columnId={id}
+            toggleOpen={() => dispatch(toggleExpandedTreeItem(item.id))}
+          />
         );
       }}
-      onMoveItem={onMoveItem}
       onReorderItem={onReorderItem}
-      onMakeChildInTask={onMakeChildInTask}
-      onMakeChildInColumn={onMakeChildInColumn}
-      renderNewColumnItem={() => (
+      onMakeChildInItem={onMakeChildInTask}
+      onMakeChildInGroup={onMakeChildInColumn}
+      renderNewGroupItem={() => (
         <div style={{ paddingLeft: 16, paddingTop: 8, paddingBottom: 8 }}>
           <AddNewColumnInput />
         </div>
       )}
-      renderNewCardItem={(column) => (
+      renderNewItem={(parentGroupId) => (
         <div style={{ paddingLeft: 16, paddingTop: 8, paddingBottom: 8 }}>
-          <AddNewTaskInput columnId={column.Id} />
+          <AddNewTaskInput columnId={Number(parentGroupId.split("-")[1])} />
         </div>
       )}
     />

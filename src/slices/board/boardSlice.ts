@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
 import { BoardViewType } from "@app/types/Project";
-import { ItemId } from "@app/pages/project/components/board/dnd/tree/types";
+import { ItemId } from "@ozgurrgul/dragulax";
 
 export type BoardFilters = {
   filterText?: string;
@@ -104,7 +104,7 @@ export const selectBoardFilters = (state: RootState) =>
   state.board.boardFilters;
 
 export const selectBoardViewType = (state: RootState) =>
-  state.board.boardViewType[Number(state.board.selectedBoardId)] || "kanban";
+  state.board.boardViewType[Number(state.board.selectedBoardId)] || "tree";
 
 export const selectTreeExpandedKeys = (state: RootState) =>
   state.board.tree.expandedKeys;
