@@ -89,4 +89,22 @@ export type TaskAttachmentType = {
   AttachmentUrl: string;
 };
 
-export type BoardViewType = "kanban" | "tree";
+export type BoardViewKanban = {
+  Id: number;
+  Config: {
+    Type: "kanban";
+    VisibleCustomFields: number[];
+  };
+};
+
+export type BoardViewTree = {
+  Id: number;
+  Config: {
+    Type: "tree";
+    VisibleCustomFields: number[];
+  };
+};
+
+export type BoardView = BoardViewKanban | BoardViewTree;
+
+export type BoardViewType = BoardView["Config"]["Type"];

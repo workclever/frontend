@@ -1,39 +1,64 @@
+import { useListBoardViewsByBoardIdQuery } from "@app/services/api";
 import {
-  selectBoardViewType,
-  setBoardViewType,
+  selectSelectedBoardViewId,
+  setSelectedBoardViewId,
 } from "@app/slices/board/boardSlice";
 import { BoardViewType } from "@app/types/Project";
 import { Segmented } from "antd";
-import { SquareDashedKanbanIcon, NetworkIcon } from "lucide-react";
+import { SquareDashedKanbanIcon, NetworkIcon, PlusIcon } from "lucide-react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { CreateBoardViewModal } from "./CreateBoardViewModal";
+import { Button } from "@app/components/shared/primitives/Button";
 
-export const BoardViewsHeader = () => {
+const Icons: { [boardViewType in BoardViewType]: React.ReactNode } = {
+  kanban: <SquareDashedKanbanIcon size={12} />,
+  tree: <NetworkIcon size={12} />,
+};
+
+export const BoardViewsHeader: React.FC<{ boardId: number }> = ({
+  boardId,
+}) => {
   const dispatch = useDispatch();
-  const boardViewType = useSelector(selectBoardViewType);
+  const selectedBoardViewId = useSelector(selectSelectedBoardViewId);
+  const { data } = useListBoardViewsByBoardIdQuery(boardId);
+  const boardViews = data?.Data || [];
 
-  const updateBoardViewType = (type: BoardViewType) => {
-    dispatch(setBoardViewType(type));
-  };
+  const [showCreateBoardViewModal, setShowCreateBoardViewModal] =
+    useState(false);
+
+  const options = boardViews.map((boardView) => {
+    return {
+      value: boardView.Id,
+      icon: Icons[boardView.Config.Type],
+      label: "noname",
+    };
+  });
 
   return (
-    <div style={{ padding: 8 }}>
-      <Segmented
-        size="small"
-        value={boardViewType}
-        onChange={(e) => updateBoardViewType(e as BoardViewType)}
-        options={[
-          {
-            value: "kanban",
-            icon: <SquareDashedKanbanIcon size={12} />,
-            label: "Kanban",
-          },
-          {
-            value: "tree",
-            icon: <NetworkIcon size={12} />,
-            label: "Tree",
-          },
-        ]}
-      />
-    </div>
+    <>
+      <div style={{ padding: 8, display: "flex", alignItems: "center" }}>
+        <Segmented
+          value={selectedBoardViewId}
+          onChange={(e) => {
+            dispatch(setSelectedBoardViewId(e));
+          }}
+          options={options}
+        />
+        <Button
+          type="dashed"
+          style={{ marginLeft: 4 }}
+          onClick={() => setShowCreateBoardViewModal(true)}
+        >
+          New view <PlusIcon size={12} />
+        </Button>
+      </div>
+      {showCreateBoardViewModal && (
+        <CreateBoardViewModal
+          boardId={boardId}
+          onExit={() => setShowCreateBoardViewModal(false)}
+        />
+      )}
+    </>
   );
 };

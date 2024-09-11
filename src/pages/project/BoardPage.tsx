@@ -45,7 +45,7 @@ export const BoardPage = () => {
     }
     return (
       <>
-        <BoardViewsHeader />
+        <BoardViewsHeader boardId={Number(boardId)} />
         {boardViewType === "kanban" && (
           <div style={{ padding: 8 }}>
             <KanbanBoardWrapper

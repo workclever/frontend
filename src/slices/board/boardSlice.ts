@@ -1,7 +1,8 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
 import { BoardViewType } from "@app/types/Project";
 import { ItemId } from "@ozgurrgul/dragulax";
+import { api } from "@app/services/api";
 
 export type BoardFilters = {
   filterText?: string;
@@ -10,6 +11,7 @@ export type BoardFilters = {
 
 interface BoardState {
   selectedBoardId?: number;
+  selectedBoardViewId?: number;
   loading: boolean;
   boardFilters: BoardFilters;
   boardViewType: {
@@ -52,6 +54,12 @@ export const boardSlice = createSlice({
       state.selectedBoardId = action.payload;
       state.boardFilters = {};
     },
+    setSelectedBoardViewId: (
+      state,
+      action: PayloadAction<number | undefined>
+    ) => {
+      state.selectedBoardViewId = action.payload;
+    },
     setBoardFilter: <K extends keyof BoardState["boardFilters"]>(
       state: BoardState,
       action: PayloadAction<SetBoardFilterPayload<K>>
@@ -89,6 +97,7 @@ export const {
   loadBoardStarted,
   loadBoardFinished,
   setSelectedBoardId,
+  setSelectedBoardViewId,
   setBoardFilter,
   setBoardViewType,
   expandedTreeItemBulk,
@@ -103,8 +112,27 @@ export const selectSelectedBoardId = (state: RootState) =>
 export const selectBoardFilters = (state: RootState) =>
   state.board.boardFilters;
 
-export const selectBoardViewType = (state: RootState) =>
-  state.board.boardViewType[Number(state.board.selectedBoardId)] || "tree";
+export const selectSelectedBoardViewId = (state: RootState) =>
+  state.board.selectedBoardViewId;
+
+export const selectBoardViewType = createSelector(
+  [
+    (state: RootState) => state,
+    selectSelectedBoardId,
+    selectSelectedBoardViewId,
+  ],
+  (state, selectedBoardId, selectedBoardViewId) => {
+    if (!selectedBoardId || !selectedBoardViewId) {
+      return undefined;
+    }
+
+    const boardViews =
+      api.endpoints.listBoardViewsByBoardId.select(selectedBoardId)(state);
+
+    return boardViews.data?.Data.find((r) => r.Id === selectedBoardViewId)
+      ?.Config.Type;
+  }
+);
 
 export const selectTreeExpandedKeys = (state: RootState) =>
   state.board.tree.expandedKeys;

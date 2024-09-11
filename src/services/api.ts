@@ -122,4 +122,6 @@ export const {
   useSendTaskToTopOrBottomMutation,
   useListAllBoardsQuery,
   useDeleteColumnMutation,
+  useListBoardViewsByBoardIdQuery,
+  useCreateBoardViewMutation,
 } = api;

@@ -1,5 +1,5 @@
 import { BaseOutput } from "../../types/BaseOutput";
-import { BoardType } from "../../types/Project";
+import { BoardType, BoardView, BoardViewType } from "../../types/Project";
 import { Builder } from "../types";
 
 export const boardEndpoints = (builder: Builder) => ({
@@ -44,5 +44,23 @@ export const boardEndpoints = (builder: Builder) => ({
   }),
   getBoard: builder.query<BaseOutput<BoardType>, number>({
     query: (id) => ({ url: `/Board/GetBoard?boardId=${id}` }),
+  }),
+  createBoardView: builder.mutation<
+    BaseOutput<unknown>,
+    {
+      BoardId: number;
+      Type: BoardViewType;
+    }
+  >({
+    query: (body) => ({
+      url: "/Board/CreateBoardView",
+      method: "POST",
+      body,
+    }),
+    invalidatesTags: ["BoardView"],
+  }),
+  listBoardViewsByBoardId: builder.query<BaseOutput<BoardView[]>, number>({
+    query: (id) => ({ url: `/Board/ListBoardViewsByBoardId?boardId=${id}` }),
+    providesTags: ["BoardView"],
   }),
 });

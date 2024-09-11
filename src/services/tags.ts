@@ -6,6 +6,7 @@ export const TagTypes = [
   "TaskComments",
   "TaskAttachment",
   "Board",
+  "BoardView",
   "User",
   "UserRole",
   "ProjectManagers",
@@ -21,4 +22,4 @@ export const TagTypes = [
   "Column",
 ] as const;
 
-export type TagTypesType = typeof TagTypes[number];
+export type TagTypesType = (typeof TagTypes)[number];
