@@ -216,6 +216,7 @@ export const TreeBoardWrapper: React.FC<{ projectId: number }> = ({
     }
   };
 
+  // TODO when dragging an item to in between 2 items, we call onReorder item. make use of that and remove onMakeChildInColumn?
   const onMakeChildInColumn = (itemId: ItemId, targetGroupId: ItemId) => {
     // TODO implement
     const itemIdNumber = Number(itemId.split("-")[1]);
