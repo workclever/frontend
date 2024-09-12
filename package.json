@@ -11,7 +11,7 @@
     "@elastic/eui": "^95.9.0",
     "@emotion/css": "^11.13.0",
     "@emotion/react": "^11.13.3",
-    "@ozgurrgul/dragulax": "^0.0.25",
+    "@ozgurrgul/dragulax": "^0.0.28",
     "@reduxjs/toolkit": "^1.8.1",
     "@types/jest": "^27.5.1",
     "@types/node": "^16.11.36",

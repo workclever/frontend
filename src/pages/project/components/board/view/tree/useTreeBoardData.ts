@@ -9,7 +9,6 @@ import { useBoardData } from "../../hooks/useBoardData";
 import {
   expandedTreeItemBulk,
   selectTreeExpandedKeys,
-  selectBoardViewGroupKey,
 } from "@app/slices/board/boardSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { applyBoardFilters } from "../shared/boardFilterUtils";
@@ -81,10 +80,10 @@ export const useTreeBoardData = (projectId: number) => {
     customFields,
     taskCustomFieldValuesMap,
     customFieldsVisibleOnCard,
+    groupBy,
   } = useBoardData(projectId);
 
   const expandedKeys = useSelector(selectTreeExpandedKeys);
-  const groupBy = useSelector(selectBoardViewGroupKey);
 
   const dndData: TreeItem[] = React.useMemo(() => {
     const filteredTasks = applyBoardFilters(nonSubtasks, boardFilters);
@@ -164,5 +163,6 @@ export const useTreeBoardData = (projectId: number) => {
     findSubtasks,
     onTaskSelect,
     findTask,
+    groupBy,
   };
 };

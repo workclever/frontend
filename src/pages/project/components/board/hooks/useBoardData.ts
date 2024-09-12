@@ -15,12 +15,14 @@ import {
   selectBoardFilters,
   selectBoardViewType,
   selectSelectedBoardView,
+  selectBoardViewGroupKey,
 } from "@app/slices/board/boardSlice";
 
 export const useBoardData = (projectId: number) => {
   const selectedBoardId = useSelector(selectSelectedBoardId);
   const boardFilters = useSelector(selectBoardFilters);
   const { columns } = useColumns(Number(selectedBoardId));
+  const groupBy = useSelector(selectBoardViewGroupKey);
 
   const { data: { Data: tasks } = {}, isLoading: isTasksLoading } =
     useListProjectTasksQuery(Number(projectId), {
@@ -115,5 +117,6 @@ export const useBoardData = (projectId: number) => {
     customFields: customFields?.Data || [],
     customFieldsVisibleOnCard,
     taskCustomFieldValuesMap: taskCustomFieldValues?.Data || {},
+    groupBy,
   };
 };

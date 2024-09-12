@@ -1,5 +1,5 @@
 import React from "react";
-import { ColumnMap } from "@ozgurrgul/dragulax";
+import { GroupMap } from "@ozgurrgul/dragulax";
 import {
   BoardGroupableKey,
   CustomFieldBoardGroupableKey,
@@ -8,8 +8,6 @@ import {
 import { useBoardData } from "../../hooks/useBoardData";
 import { applyBoardFilters } from "../shared/boardFilterUtils";
 import { TaskCustomFields } from "@app/types/CustomField";
-import { useSelector } from "react-redux";
-import { selectBoardViewGroupKey } from "@app/slices/board/boardSlice";
 import {
   getAllDistinctGroupValuesPerGroupableKey,
   getGroupValue,
@@ -21,24 +19,28 @@ const groupTasks = (
   distinctGroupValues: number[],
   tasks: TaskType[],
   groupableKey: BoardGroupableKey
-): { dndColumnMap: ColumnMap; orderedColumnIds: number[] } => {
-  const dndColumnMap: ColumnMap = {};
+): GroupMap => {
+  const groupMap: GroupMap = {};
   distinctGroupValues.map((groupId) => {
-    dndColumnMap[groupId] = [];
+    groupMap[groupId] = {
+      cards: [],
+    };
   });
   tasks.forEach((task) => {
     const groupValue = getGroupValue(task, groupableKey);
 
-    if (!dndColumnMap[groupValue]) {
-      dndColumnMap[groupValue] = [];
+    if (!groupMap[groupValue]) {
+      groupMap[groupValue] = {
+        cards: [],
+      };
     }
 
-    dndColumnMap[groupValue].push(task.Id);
+    groupMap[groupValue].cards.push({
+      id: task.Id,
+      data: task,
+    });
   });
-  return {
-    dndColumnMap,
-    orderedColumnIds: distinctGroupValues,
-  };
+  return groupMap;
 };
 
 const groupTasksByCustomField = (
@@ -46,10 +48,12 @@ const groupTasksByCustomField = (
   tasks: TaskType[],
   taskCustomFieldValuesMap: TaskCustomFields,
   groupByCustomFieldId: CustomFieldBoardGroupableKey
-): { dndColumnMap: ColumnMap; orderedColumnIds: number[] } => {
-  const dndColumnMap: ColumnMap = {};
+): GroupMap => {
+  const groupMap: GroupMap = {};
   distinctGroupValues.map((groupId) => {
-    dndColumnMap[groupId] = [];
+    groupMap[groupId] = {
+      cards: [],
+    };
   });
   const customFieldId = Number(
     groupByCustomFieldId.split(CUSTOM_FIELD_PREFIX)[1]
@@ -64,17 +68,19 @@ const groupTasksByCustomField = (
       customFieldValue = FIELD_UNASSIGNED;
     }
 
-    if (!dndColumnMap[customFieldValue]) {
-      dndColumnMap[customFieldValue] = [];
+    if (!groupMap[customFieldValue]) {
+      groupMap[customFieldValue] = {
+        cards: [],
+      };
     }
 
-    dndColumnMap[customFieldValue].push(task.Id);
+    groupMap[customFieldValue].cards.push({
+      id: task.Id,
+      data: task,
+    });
   });
 
-  return {
-    dndColumnMap,
-    orderedColumnIds: distinctGroupValues,
-  };
+  return groupMap;
 };
 
 export const useKanbanBoardData = (projectId: number) => {
@@ -87,9 +93,8 @@ export const useKanbanBoardData = (projectId: number) => {
     findTask,
     taskCustomFieldValuesMap,
     customFieldsVisibleOnCard,
+    groupBy,
   } = useBoardData(projectId);
-
-  const groupBy = useSelector(selectBoardViewGroupKey);
 
   const dndData = React.useMemo(() => {
     const distinctGroupValuesPerGroupableKey =
@@ -119,5 +124,6 @@ export const useKanbanBoardData = (projectId: number) => {
     onTaskSelect,
     findTask,
     customFieldsVisibleOnCard,
+    groupBy,
   };
 };

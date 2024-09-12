@@ -112,7 +112,7 @@ export const taskEndpoints = (builder: Builder) => ({
     BaseOutput<string>,
     {
       Task: TaskType;
-      Params: UpdateTaskPropertyParams;
+      Params: UpdateTaskPropertyParams[];
     }
   >({
     query: (body) => ({
@@ -120,12 +120,10 @@ export const taskEndpoints = (builder: Builder) => ({
       method: "POST",
       body: {
         TaskId: body.Task.Id,
-        Property: body.Params.property,
-        Value:
-          typeof body.Params.value === "undefined" ? null : body.Params.value,
+        Params: body.Params,
       },
     }),
-    invalidatesTags: ["ChangeLog"],
+    invalidatesTags: ["ChangeLog", "Task"],
     async onQueryStarted({ Task, Params }, { dispatch, queryFulfilled }) {
       const { undoLocal } = taskUpdateLocalState(Task, Params, dispatch);
       try {

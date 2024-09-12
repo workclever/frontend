@@ -1,103 +1,133 @@
 import React from "react";
 import { AddNewColumnInput } from "../../AddNewColumnInput";
 import { AddNewTaskInput } from "../../AddNewTaskInput";
-import { DndKanbanBoard } from "@ozgurrgul/dragulax";
+import { DndKanbanBoard, GroupItem, MoveEdge } from "@ozgurrgul/dragulax";
 import { KanbanBoardItem } from "./KanbanBoardItem";
 import { useKanbanBoardData } from "./useKanbanBoardData";
-import {
-  useUpdateColumnOrdersMutation,
-  useUpdateTaskOrdersMutation,
-  useUpdateTaskPropertyMutation,
-} from "@app/services/api";
+import { useUpdateTaskPropertyMutation } from "@app/services/api";
 import { TaskMenu } from "../../TaskMenu";
 import { KanbanBoardColumnName } from "./KanbanBoardColumnName";
+import { TaskType } from "@app/types/Project";
+
+const getNewOrderByDestinationIndex = (
+  destinationCards: GroupItem["cards"],
+  destinationIndex: number,
+  draggedCardId: number // Pass the ID of the dragged card
+): number => {
+  // Exclude the dragged card from the list
+  const filteredCards = destinationCards.filter(
+    (card) => card.id !== draggedCardId
+  );
+
+  if (filteredCards.length === 0) {
+    return 100000; // Initial order value when the destination is empty
+  }
+
+  if (destinationIndex === 0) {
+    // Place the new card before the first card
+    const firstOrder = (filteredCards[0].data as TaskType).Order;
+    return firstOrder / 2; // Position it between 0 and the first order
+  }
+
+  if (destinationIndex >= filteredCards.length) {
+    // Place the new card after the last card
+    const lastOrder = (filteredCards[filteredCards.length - 1].data as TaskType)
+      .Order;
+    return lastOrder + 100000; // Keep enough gap for future additions
+  }
+
+  // Get the previous and next orders from the filtered list
+  const prevOrder = (filteredCards[destinationIndex - 1].data as TaskType)
+    .Order;
+  const nextOrder = (filteredCards[destinationIndex].data as TaskType).Order;
+
+  // Check if the dragged item is being moved below its original position
+  if (prevOrder === nextOrder) {
+    // Handle edge case where dragged card was next to its original position
+    return nextOrder + 100000;
+  }
+
+  // Calculate the new order by averaging the two adjacent orders
+  return (prevOrder + nextOrder) / 2;
+};
 
 export const KanbanBoardWrapper: React.FC<{
   projectId: number;
   boardId: number;
-}> = ({ projectId, boardId }) => {
+}> = ({ projectId }) => {
   const {
-    dndData,
+    dndData: groupMap,
     customFieldsVisibleOnCard,
     findSubtasks,
     onTaskSelect,
     findTask,
+    groupBy,
   } = useKanbanBoardData(projectId);
 
-  const [updateColumnOrders] = useUpdateColumnOrdersMutation();
-  const [updateTaskOrders] = useUpdateTaskOrdersMutation();
   const [updateTaskProperty] = useUpdateTaskPropertyMutation();
 
-  const onReorderColumn = (orderedColumnIds: number[]) => {
-    updateColumnOrders({
-      BoardId: boardId,
-      ColumnIds: orderedColumnIds,
-    });
-  };
-
-  const onReorderCardInColumn = (
-    columnId: number,
-    orderedColumnIds: number[]
+  const onMoveCard = (
+    itemId: number,
+    destinationGroupId: number,
+    destinationIndex: number,
+    edge: MoveEdge | null
   ) => {
-    updateTaskOrders({
-      GroupedTasks: {
-        [columnId]: orderedColumnIds,
-      },
-    });
-  };
+    const task = findTask(itemId);
+    if (!task) return;
 
-  const onMoveCardToOtherColumn = (
-    cardId: number,
-    finishColumnId: number,
-    newOrderedColumnIds: {
-      start: {
-        columnId: number;
-        orderedCardIds: number[];
-      };
-      finish: {
-        columnId: number;
-        orderedCardIds: number[];
-      };
-    }
-  ) => {
-    updateTaskProperty({
-      Task: findTask(cardId),
-      Params: {
-        property: "ColumnId",
-        value: finishColumnId.toString(),
-      },
-    })
-      .unwrap()
-      .then(() => {
-        updateTaskOrders({
-          GroupedTasks: {
-            [newOrderedColumnIds.start.columnId]:
-              newOrderedColumnIds.start.orderedCardIds,
-            [newOrderedColumnIds.finish.columnId]:
-              newOrderedColumnIds.finish.orderedCardIds,
+    const destinationGroup = groupMap[destinationGroupId];
+    if (!destinationGroup) return;
+
+    console.log("drop", {
+      itemId,
+      destinationGroupId,
+      destinationGroup,
+      destinationIndex,
+      edge,
+    });
+
+    const newOrder = getNewOrderByDestinationIndex(
+      destinationGroup.cards,
+      destinationIndex,
+      itemId
+    );
+
+    console.log({ newOrder });
+
+    // Putting at the top
+    if (groupBy === "ColumnId") {
+      updateTaskProperty({
+        Task: task,
+        Params: [
+          {
+            property: "ColumnId",
+            value: destinationGroupId.toString(),
           },
-        });
+          {
+            property: "Order",
+            value: newOrder.toString(),
+          },
+        ],
       });
+    }
+
+    return;
   };
 
   return (
     <DndKanbanBoard
-      dndColumnMap={dndData.dndColumnMap}
-      orderedColumnIds={dndData.orderedColumnIds}
-      columnGap={8}
-      columnWidth={250}
-      columnStyle={{
+      groupMap={groupMap}
+      groupGap={8}
+      groupWidth={250}
+      groupStyle={{
         backgroundColor: "#fafafa",
         boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
         borderRadius: "10px",
         position: "relative",
       }}
-      onReorderColumn={onReorderColumn}
-      onReorderCardInColumn={onReorderCardInColumn}
-      onMoveCardToOtherColumn={onMoveCardToOtherColumn}
-      renderColumnHeader={(columnId) => (
+      renderGroupHeader={(group, groupId) => (
         <div>
-          <KanbanBoardColumnName columnId={columnId} />
+          <KanbanBoardColumnName columnId={groupId} />
         </div>
       )}
       renderCard={(cardId) => {
@@ -130,7 +160,7 @@ export const KanbanBoardWrapper: React.FC<{
           </div>
         );
       }}
-      renderNewColumnItem={() => (
+      renderNewGroupItem={() => (
         <div style={{ marginTop: 8 }}>
           <AddNewColumnInput />
         </div>
@@ -142,6 +172,7 @@ export const KanbanBoardWrapper: React.FC<{
           </div>
         );
       }}
+      onMoveCard={onMoveCard}
     />
   );
 };

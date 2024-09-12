@@ -16,10 +16,12 @@ export const EditTaskTitleModal: React.FC<{
   const onFinish = (values: FormValuesType) => {
     update({
       Task: task,
-      Params: {
-        property: "Title",
-        value: values.Title,
-      },
+      Params: [
+        {
+          property: "Title",
+          value: values.Title,
+        },
+      ],
     });
   };
 

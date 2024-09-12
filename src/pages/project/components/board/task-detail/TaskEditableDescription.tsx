@@ -15,10 +15,12 @@ export const TaskEditableDescription: React.FC<Props> = ({ task }) => {
   const onChange = (e: string) => {
     update({
       Task: task,
-      Params: {
-        property: "Description",
-        value: e,
-      },
+      Params: [
+        {
+          property: "Description",
+          value: e,
+        },
+      ],
     });
   };
 

@@ -90,10 +90,12 @@ export const TreeBoardWrapper: React.FC<{ projectId: number }> = ({
         // First set parent to new one or remove it
         updateTaskProperty({
           Task: task,
-          Params: {
-            property: "ParentTaskItemId",
-            value: targetTask.ParentTaskItemId?.toString() ?? null,
-          },
+          Params: [
+            {
+              property: "ParentTaskItemId",
+              value: targetTask.ParentTaskItemId?.toString() ?? null,
+            },
+          ],
         })
           .unwrap()
           .then(() => {
@@ -126,10 +128,12 @@ export const TreeBoardWrapper: React.FC<{ projectId: number }> = ({
         );
         updateTaskProperty({
           Task: task,
-          Params: {
-            property: "ParentTaskItemId",
-            value: targetTask.ParentTaskItemId.toString(),
-          },
+          Params: [
+            {
+              property: "ParentTaskItemId",
+              value: targetTask.ParentTaskItemId.toString(),
+            },
+          ],
         })
           .unwrap()
           .then(() => {
@@ -156,10 +160,12 @@ export const TreeBoardWrapper: React.FC<{ projectId: number }> = ({
 
         updateTaskProperty({
           Task: task,
-          Params: {
-            property: "ParentTaskItemId",
-            value: targetTask.ParentTaskItemId?.toString() ?? null,
-          },
+          Params: [
+            {
+              property: "ParentTaskItemId",
+              value: targetTask.ParentTaskItemId?.toString() ?? null,
+            },
+          ],
         })
           .unwrap()
           .then(() => {
@@ -191,10 +197,12 @@ export const TreeBoardWrapper: React.FC<{ projectId: number }> = ({
     if (isInSameColumn) {
       updateTaskProperty({
         Task: task,
-        Params: {
-          property: "ParentTaskItemId",
-          value: targetIdNumber.toString(),
-        },
+        Params: [
+          {
+            property: "ParentTaskItemId",
+            value: targetIdNumber.toString(),
+          },
+        ],
       });
     } else {
       // First move the task to column
@@ -207,10 +215,12 @@ export const TreeBoardWrapper: React.FC<{ projectId: number }> = ({
         .then(() => {
           updateTaskProperty({
             Task: task,
-            Params: {
-              property: "ParentTaskItemId",
-              value: targetIdNumber.toString(),
-            },
+            Params: [
+              {
+                property: "ParentTaskItemId",
+                value: targetIdNumber.toString(),
+              },
+            ],
           });
         });
     }
@@ -232,10 +242,12 @@ export const TreeBoardWrapper: React.FC<{ projectId: number }> = ({
 
     updateTaskProperty({
       Task: task,
-      Params: {
-        property: "ColumnId",
-        value: targetGroupIdNumber.toString(),
-      },
+      Params: [
+        {
+          property: "ColumnId",
+          value: targetGroupIdNumber.toString(),
+        },
+      ],
     });
   };
 
