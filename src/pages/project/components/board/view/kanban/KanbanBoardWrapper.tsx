@@ -6,7 +6,7 @@ import { KanbanBoardItem } from "./KanbanBoardItem";
 import { useKanbanBoardData } from "./useKanbanBoardData";
 import { useUpdateTaskPropertyMutation } from "@app/services/api";
 import { TaskMenu } from "../../TaskMenu";
-import { KanbanBoardColumnName } from "./KanbanBoardColumnName";
+import { KanbanBoardGroupName } from "./KanbanBoardGroupName";
 import { TaskType } from "@app/types/Project";
 
 const getNewOrderByDestinationIndex = (
@@ -92,8 +92,6 @@ export const KanbanBoardWrapper: React.FC<{
       itemId
     );
 
-    console.log({ newOrder });
-
     // Putting at the top
     if (groupBy === "ColumnId") {
       updateTaskProperty({
@@ -127,7 +125,11 @@ export const KanbanBoardWrapper: React.FC<{
       }}
       renderGroupHeader={(group, groupId) => (
         <div>
-          <KanbanBoardColumnName columnId={groupId} />
+          <KanbanBoardGroupName
+            groupBy={groupBy}
+            group={group}
+            groupId={groupId}
+          />
         </div>
       )}
       renderCard={(cardId) => {
@@ -160,11 +162,13 @@ export const KanbanBoardWrapper: React.FC<{
           </div>
         );
       }}
-      renderNewGroupItem={() => (
-        <div style={{ marginTop: 8 }}>
-          <AddNewColumnInput />
-        </div>
-      )}
+      renderNewGroupItem={() =>
+        groupBy === "ColumnId" && (
+          <div style={{ marginTop: 8 }}>
+            <AddNewColumnInput />
+          </div>
+        )
+      }
       renderNewCardItem={(columnId) => {
         return (
           <div>
