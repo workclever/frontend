@@ -1,6 +1,6 @@
-import { TaskCustomFields } from "@app/types/CustomField";
+import { CustomFieldValue, TaskCustomFields } from "@app/types/CustomField";
 import { ColumnType, TaskType, BoardGroupableKey } from "@app/types/Project";
-import { CUSTOM_FIELD_PREFIX } from "./constants";
+import { CUSTOM_FIELD_PREFIX, FIELD_UNASSIGNED } from "./constants";
 
 export const getGroupValue = <T>(item: T, key: BoardGroupableKey): number => {
   const value = item[key as keyof T];
@@ -19,7 +19,7 @@ export const getGroupValue = <T>(item: T, key: BoardGroupableKey): number => {
   return numericValue;
 };
 
-const getDistinctValues = (arr: number[]): number[] => {
+const getDistinctValues = (arr: CustomFieldValue[]): CustomFieldValue[] => {
   return [...new Set(arr)];
 };
 
@@ -32,7 +32,7 @@ export const getAllDistinctGroupValuesPerGroupableKey = ({
   tasks: TaskType[];
   taskCustomFieldValuesMap: TaskCustomFields;
 }) => {
-  const map: { [key in BoardGroupableKey]: number[] } = {
+  const map: { [key in BoardGroupableKey]: CustomFieldValue[] } = {
     ColumnId: columns.map((r) => r.Id),
     ReporterUserId: tasks.map((r) => r.ReporterUserId),
   };
@@ -47,14 +47,13 @@ export const getAllDistinctGroupValuesPerGroupableKey = ({
       if (!map[mapKey]) {
         map[mapKey] = [];
       }
-      // TODO dont cast number
       if (
         typeof customFieldValue === "undefined" ||
         customFieldValue === null
       ) {
-        map[mapKey].push(-1);
+        map[mapKey].push(FIELD_UNASSIGNED);
       } else {
-        map[mapKey].push(Number(customFieldValue));
+        map[mapKey].push(customFieldValue);
       }
     }
   }

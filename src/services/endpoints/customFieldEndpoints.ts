@@ -3,6 +3,7 @@ import {
   CustomField,
   CustomFieldSelectOption,
   CustomFieldType,
+  CustomFieldValue,
   TaskCustomFields,
 } from "../../types/CustomField";
 import { Builder } from "../types";
@@ -75,7 +76,7 @@ export const customFieldEndpoints = (builder: Builder) => ({
     {
       TaskId: number;
       CustomFieldId: number;
-      Value: string;
+      Value: CustomFieldValue;
     }
   >({
     query: (body) => ({

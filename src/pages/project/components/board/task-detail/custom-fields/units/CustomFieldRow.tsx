@@ -27,7 +27,7 @@ export const CustomFieldRow: React.FC<{
   const [createCustomFieldTaskValue, { isLoading }] =
     useCreateCustomFieldTaskValueMutation();
 
-  const onUpdateValue = (newValue: string | number | number[] | boolean) => {
+  const onUpdateValue = (newValue: CustomFieldValue) => {
     createCustomFieldTaskValue({
       TaskId: task.Id,
       CustomFieldId: field.Id,

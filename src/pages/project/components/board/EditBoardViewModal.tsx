@@ -13,6 +13,7 @@ import { BoardGroupableKey, BoardView } from "@app/types/Project";
 import { Space } from "antd";
 import { useSelector } from "react-redux";
 import { CUSTOM_FIELD_PREFIX } from "./view/shared/constants";
+import { CustomFieldType } from "@app/types/CustomField";
 
 type FormValuesType = {
   Name: string;
@@ -51,9 +52,14 @@ export const EditBoardViewDrawer: React.FC<{
   ];
 
   const customFieldGroupByOptions = () => {
-    return (customFields?.Data || []).map((r) => {
-      return { label: r.FieldName, value: `${CUSTOM_FIELD_PREFIX}${r.Id}` };
-    });
+    return (
+      (customFields?.Data || [])
+        // TODO user can't group by multi select options for now due to bug in kanban rendering
+        .filter((r) => r.FieldType !== CustomFieldType.MultiSelect)
+        .map((r) => {
+          return { label: r.FieldName, value: `${CUSTOM_FIELD_PREFIX}${r.Id}` };
+        })
+    );
   };
 
   return (

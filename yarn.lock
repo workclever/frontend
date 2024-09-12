@@ -2414,10 +2414,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@ozgurrgul/dragulax@^0.0.28":
-  version "0.0.28"
-  resolved "https://npm.pkg.github.com/download/@ozgurrgul/dragulax/0.0.28/4542397918d6c1e08d0c48740a1d1433d2f2840b#4542397918d6c1e08d0c48740a1d1433d2f2840b"
-  integrity sha512-WdtyDt1E/zT80u8eItZH3ra/GYVBhfmKLy10r46WU9dwrzWw7ysz3ri6+nfVo618hkzmseWj6BWquVNodXfzLQ==
+"@ozgurrgul/dragulax@^0.0.30":
+  version "0.0.30"
+  resolved "https://npm.pkg.github.com/download/@ozgurrgul/dragulax/0.0.30/85b5ea142ff6c2c8c49e9011540263f2b8519b53#85b5ea142ff6c2c8c49e9011540263f2b8519b53"
+  integrity sha512-Hjaiorgc4LmnB8zNUrH//SlFsabvJpHnPRRPBk1bZnEWxvIEmlenXnPJ8STwePP3eeSsXtVyr910yJ0/oIRYxw==
   dependencies:
     "@rollup/plugin-commonjs" "^26.0.1"
     react "^18.3.1"

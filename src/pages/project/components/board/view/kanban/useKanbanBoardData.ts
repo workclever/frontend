@@ -1,5 +1,5 @@
 import React from "react";
-import { GroupMap } from "@ozgurrgul/dragulax";
+import { GroupArray } from "@ozgurrgul/dragulax";
 import {
   BoardGroupableKey,
   CustomFieldBoardGroupableKey,
@@ -7,7 +7,7 @@ import {
 } from "@app/types/Project";
 import { useBoardData } from "../../hooks/useBoardData";
 import { applyBoardFilters } from "../shared/boardFilterUtils";
-import { TaskCustomFields } from "@app/types/CustomField";
+import { CustomFieldValue, TaskCustomFields } from "@app/types/CustomField";
 import {
   getAllDistinctGroupValuesPerGroupableKey,
   getGroupValue,
@@ -16,26 +16,25 @@ import { sortBy } from "lodash";
 import { CUSTOM_FIELD_PREFIX, FIELD_UNASSIGNED } from "../shared/constants";
 
 const groupTasks = (
-  distinctGroupValues: number[],
+  distinctGroupValues: CustomFieldValue[],
   tasks: TaskType[],
   groupableKey: BoardGroupableKey
-): GroupMap => {
-  const groupMap: GroupMap = {};
-  distinctGroupValues.map((groupId) => {
-    groupMap[groupId] = {
+): GroupArray => {
+  const groupMap: GroupArray = [];
+  distinctGroupValues.map((customFieldValue) => {
+    groupMap.push({
+      groupId: String(customFieldValue),
       cards: [],
-    };
+      data: { groupValues: customFieldValue },
+    });
   });
   tasks.forEach((task) => {
     const groupValue = getGroupValue(task, groupableKey);
-
-    if (!groupMap[groupValue]) {
-      groupMap[groupValue] = {
-        cards: [],
-      };
+    const localMap = groupMap.find((r) => r.groupId === String(groupValue));
+    if (!localMap) {
+      return;
     }
-
-    groupMap[groupValue].cards.push({
+    localMap.cards.push({
       id: task.Id,
       data: task,
     });
@@ -44,43 +43,46 @@ const groupTasks = (
 };
 
 const groupTasksByCustomField = (
-  distinctGroupValues: number[],
+  distinctGroupValues: CustomFieldValue[],
   tasks: TaskType[],
   taskCustomFieldValuesMap: TaskCustomFields,
   groupByCustomFieldId: CustomFieldBoardGroupableKey
-): GroupMap => {
-  const groupMap: GroupMap = {};
-  distinctGroupValues.map((groupId) => {
-    groupMap[groupId] = {
+): GroupArray => {
+  const groupMap: GroupArray = [];
+  distinctGroupValues.map((customFieldValue) => {
+    groupMap.push({
+      groupId: String(customFieldValue),
       cards: [],
-    };
+      data: {
+        customFieldId: groupByCustomFieldId,
+        groupValues: customFieldValue,
+      },
+    });
   });
   const customFieldId = Number(
     groupByCustomFieldId.split(CUSTOM_FIELD_PREFIX)[1]
   );
 
   tasks.forEach((task) => {
-    let customFieldValue =
-      // TODO dont cast number
-      Number(taskCustomFieldValuesMap[task.Id]?.[customFieldId]) || null;
+    let customFieldValue = taskCustomFieldValuesMap[task.Id]?.[customFieldId];
 
-    if (!customFieldValue) {
+    if (typeof customFieldValue !== "boolean" && !customFieldValue) {
       customFieldValue = FIELD_UNASSIGNED;
     }
 
-    if (!groupMap[customFieldValue]) {
-      groupMap[customFieldValue] = {
-        cards: [],
-      };
+    const localMap = groupMap.find(
+      (r) => r.groupId === String(customFieldValue)
+    );
+    if (!localMap) {
+      return;
     }
-
-    groupMap[customFieldValue].cards.push({
+    localMap.cards.push({
       id: task.Id,
       data: task,
     });
   });
 
-  return groupMap;
+  return groupMap.sort((a, b) => a.groupId.localeCompare(b.groupId));
 };
 
 export const useKanbanBoardData = (projectId: number) => {

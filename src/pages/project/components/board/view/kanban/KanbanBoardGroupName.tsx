@@ -13,14 +13,11 @@ const Wrapper = styled.div`
 export const KanbanBoardGroupName: React.FC<{
   groupBy: BoardGroupableKey;
   group: GroupItem;
-  groupId: number;
-}> = ({ groupBy, group, groupId }) => {
+}> = ({ groupBy, group }) => {
   return (
     <Wrapper>
-      <div
-        style={{ display: "flex", flex: 1, marginBottom: 0, color: "black" }}
-      >
-        <GroupName groupBy={groupBy} group={group} groupId={groupId} />
+      <div style={{ display: "flex", flex: 1, color: "gray" }}>
+        <GroupName groupBy={groupBy} group={group} />
       </div>
     </Wrapper>
   );

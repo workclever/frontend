@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from "react";
 import { ItemId, TreeItem } from "@ozgurrgul/dragulax";
 import {
