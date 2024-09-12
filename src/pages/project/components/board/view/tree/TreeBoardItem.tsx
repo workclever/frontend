@@ -44,12 +44,12 @@ const ArrowIcon = ({
   );
 };
 
-interface TaskCardTreeProps extends Pick<Props, "task" | "customFields"> {
+interface TreeBoardItemProps extends Pick<Props, "task" | "customFields"> {
   treeItem: TreeItem;
   toggleOpen: () => void;
 }
 
-export const TaskCardTree: React.FC<TaskCardTreeProps> = ({
+export const TreeBoardItem: React.FC<TreeBoardItemProps> = ({
   treeItem,
   task,
   customFields,

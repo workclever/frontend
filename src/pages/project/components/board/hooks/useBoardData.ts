@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import {
   useListCustomFieldsQuery,
   useListProjectTasksQuery,
+  useListTaskCustomFieldValuesByBoardQuery,
 } from "@app/services/api";
 import { useAppNavigate } from "@app/hooks/useAppNavigate";
 import { useBoards } from "@app/hooks/useBoards";
@@ -39,6 +40,9 @@ export const useBoardData = (projectId: number) => {
     (r) =>
       r.Enabled && selectedBoardView?.Config.VisibleCustomFields.includes(r.Id)
   );
+
+  const { data: taskCustomFieldValues } =
+    useListTaskCustomFieldValuesByBoardQuery(Number(selectedBoardId));
 
   const { goToTask, goToBoard } = useAppNavigate();
 
@@ -108,7 +112,8 @@ export const useBoardData = (projectId: number) => {
     tasksInBoard,
     isTasksLoading,
     boardFilters,
-    customFields,
+    customFields: customFields?.Data || [],
     customFieldsVisibleOnCard,
+    taskCustomFieldValuesMap: taskCustomFieldValues?.Data || {},
   };
 };

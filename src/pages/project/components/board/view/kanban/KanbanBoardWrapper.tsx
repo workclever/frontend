@@ -1,9 +1,8 @@
 import React from "react";
 import { AddNewColumnInput } from "../../AddNewColumnInput";
 import { AddNewTaskInput } from "../../AddNewTaskInput";
-import { ColumnNameRenderer } from "../../ColumnNameRenderer";
 import { DndKanbanBoard } from "@ozgurrgul/dragulax";
-import { TaskCardKanban } from "./TaskCardKanban";
+import { KanbanBoardItem } from "./KanbanBoardItem";
 import { useKanbanBoardData } from "./useKanbanBoardData";
 import {
   useUpdateColumnOrdersMutation,
@@ -11,6 +10,7 @@ import {
   useUpdateTaskPropertyMutation,
 } from "@app/services/api";
 import { TaskMenu } from "../../TaskMenu";
+import { KanbanBoardColumnName } from "./KanbanBoardColumnName";
 
 export const KanbanBoardWrapper: React.FC<{
   projectId: number;
@@ -97,7 +97,7 @@ export const KanbanBoardWrapper: React.FC<{
       onMoveCardToOtherColumn={onMoveCardToOtherColumn}
       renderColumnHeader={(columnId) => (
         <div>
-          <ColumnNameRenderer columnId={columnId} />
+          <KanbanBoardColumnName columnId={columnId} />
         </div>
       )}
       renderCard={(cardId) => {
@@ -120,7 +120,7 @@ export const KanbanBoardWrapper: React.FC<{
             >
               {/* <div> needed to pass mouse events from dropdown */}
               <div onClick={() => onTaskSelect(task)}>
-                <TaskCardKanban
+                <KanbanBoardItem
                   task={task}
                   findSubtasks={findSubtasks}
                   customFields={customFieldsVisibleOnCard}

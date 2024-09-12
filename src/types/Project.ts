@@ -89,12 +89,19 @@ export type TaskAttachmentType = {
   AttachmentUrl: string;
 };
 
+export type CustomFieldBoardGroupableKey = `CustomField_${number}`;
+export type BoardGroupableKey =
+  | "ColumnId"
+  | "ReporterUserId"
+  | CustomFieldBoardGroupableKey;
+
 export type BoardViewKanban = {
   Id: number;
   Config: {
     Type: "kanban";
     Name: string;
     VisibleCustomFields: number[];
+    GroupKey: BoardGroupableKey;
   };
 };
 
@@ -104,6 +111,7 @@ export type BoardViewTree = {
     Type: "tree";
     Name: string;
     VisibleCustomFields: number[];
+    GroupKey: BoardGroupableKey;
   };
 };
 

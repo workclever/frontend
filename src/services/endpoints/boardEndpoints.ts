@@ -1,5 +1,10 @@
 import { BaseOutput } from "../../types/BaseOutput";
-import { BoardType, BoardView, BoardViewType } from "../../types/Project";
+import {
+  BoardGroupableKey,
+  BoardType,
+  BoardView,
+  BoardViewType,
+} from "../../types/Project";
 import { Builder } from "../types";
 
 export const boardEndpoints = (builder: Builder) => ({
@@ -70,6 +75,7 @@ export const boardEndpoints = (builder: Builder) => ({
       BoardViewId: number;
       Name: string;
       VisibleCustomFields: number[];
+      GroupKey: BoardGroupableKey;
     }
   >({
     query: (body) => ({

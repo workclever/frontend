@@ -10,11 +10,11 @@ import { ItemId, MovePosition, DndTreeBoard } from "@ozgurrgul/dragulax";
 import { useDispatch } from "react-redux";
 import { AddNewColumnInput } from "../../AddNewColumnInput";
 import { AddNewTaskInput } from "../../AddNewTaskInput";
-import { ColumnNameRenderer } from "../../ColumnNameRenderer";
 import { useTreeBoardData } from "./useTreeBoardData";
 import { TaskMenu } from "../../TaskMenu";
 import { reorderArray } from "../../utils/orderUtils";
-import { TaskCardTree } from "./TaskCardTree";
+import { TreeBoardItem } from "./TreeBoardItem";
+import { TreeBoardColumnName } from "./TreeBoardColumnName";
 
 export const TreeBoardWrapper: React.FC<{ projectId: number }> = ({
   projectId,
@@ -272,7 +272,7 @@ export const TreeBoardWrapper: React.FC<{ projectId: number }> = ({
                   onTaskSelect(task);
                 }}
               >
-                <TaskCardTree
+                <TreeBoardItem
                   treeItem={item}
                   task={task}
                   customFields={customFieldsVisibleOnCard}
@@ -283,7 +283,7 @@ export const TreeBoardWrapper: React.FC<{ projectId: number }> = ({
           );
         }
         return (
-          <ColumnNameRenderer
+          <TreeBoardColumnName
             columnId={id}
             toggleOpen={() => dispatch(toggleExpandedTreeItem(item.id))}
           />

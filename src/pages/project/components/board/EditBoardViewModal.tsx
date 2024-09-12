@@ -9,13 +9,15 @@ import {
   useUpdateBoardViewMutation,
 } from "@app/services/api";
 import { selectSelectedProjectId } from "@app/slices/project/projectSlice";
-import { BoardView } from "@app/types/Project";
+import { BoardGroupableKey, BoardView } from "@app/types/Project";
 import { Space } from "antd";
 import { useSelector } from "react-redux";
+import { CUSTOM_FIELD_PREFIX } from "./view/shared/constants";
 
 type FormValuesType = {
   Name: string;
   VisibleCustomFields: number[];
+  GroupKey: BoardGroupableKey;
 };
 
 export const EditBoardViewDrawer: React.FC<{
@@ -33,6 +35,24 @@ export const EditBoardViewDrawer: React.FC<{
       BoardViewId: boardView.Id,
       Name: values.Name,
       VisibleCustomFields: values.VisibleCustomFields || [],
+      GroupKey: values.GroupKey,
+    });
+  };
+
+  const defaultGroupByOptions = [
+    {
+      label: "Column",
+      value: "ColumnId",
+    },
+    {
+      label: "Reporter",
+      value: "ReporterUserId",
+    },
+  ];
+
+  const customFieldGroupByOptions = () => {
+    return (customFields?.Data || []).map((r) => {
+      return { label: r.FieldName, value: `${CUSTOM_FIELD_PREFIX}${r.Id}` };
     });
   };
 
@@ -47,6 +67,7 @@ export const EditBoardViewDrawer: React.FC<{
       initialValues={{
         Name: boardView.Config.Name,
         VisibleCustomFields: boardView.Config.VisibleCustomFields,
+        GroupKey: boardView.Config.GroupKey,
       }}
       autoFocusFirstInput
       drawerProps={{
@@ -81,6 +102,12 @@ export const EditBoardViewDrawer: React.FC<{
           };
         })}
         mode="multiple"
+        placeholder="Visible custom fields on each board view item"
+      />
+      <ProFormSelect
+        name="GroupKey"
+        label="Group by"
+        options={[...defaultGroupByOptions, ...customFieldGroupByOptions()]}
         placeholder="Visible custom fields on each board view item"
       />
       <HttpResult error={createError} result={createResult} />

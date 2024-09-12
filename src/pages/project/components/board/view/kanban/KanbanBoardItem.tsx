@@ -27,7 +27,7 @@ const Wrapper = styled.div`
   }
 `;
 
-export const TaskCardKanban: React.FC<
+export const KanbanBoardItem: React.FC<
   Pick<Props, "task" | "customFields" | "findSubtasks">
 > = ({ task, customFields, findSubtasks }) => {
   return (

@@ -138,6 +138,11 @@ export const selectBoardViewType = createSelector(
   (selectedBoardView) => selectedBoardView?.Config.Type
 );
 
+export const selectBoardViewGroupKey = createSelector(
+  [selectSelectedBoardView],
+  (selectedBoardView) => selectedBoardView?.Config.GroupKey || "ColumnId"
+);
+
 export const selectTreeExpandedKeys = (state: RootState) =>
   state.board.tree.expandedKeys;
 
